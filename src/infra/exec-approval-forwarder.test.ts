@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, mock, spyOn } from "bun:test";
+import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import type { RazroomConfig } from "../config/config.js";
 import { createExecApprovalForwarder } from "./exec-approval-forwarder.js";
 
@@ -13,8 +13,12 @@ const baseRequest = {
   expiresAtMs: 6000,
 };
 
+beforeEach(() => {
+  vi.useFakeTimers();
+});
+
 afterEach(() => {
-  // TODO: Restore real timers;
+  vi.useRealTimers();
 });
 
 function getFirstDeliveryText(deliver: ReturnType<typeof mock>): string {
@@ -26,7 +30,6 @@ function getFirstDeliveryText(deliver: ReturnType<typeof mock>): string {
 
 describe("exec approval forwarder", () => {
   it("forwards to session target and resolves", async () => {
-    // TODO: Implement fake timers for Bun;
     const deliver = mock().mockResolvedValue([]);
     const cfg = {
       approvals: { exec: { enabled: true, mode: "session" } },
@@ -55,7 +58,6 @@ describe("exec approval forwarder", () => {
   });
 
   it("forwards to explicit targets and expires", async () => {
-    // TODO: Implement fake timers for Bun;
     const deliver = mock().mockResolvedValue([]);
     const cfg = {
       approvals: {

@@ -29,7 +29,11 @@ const { PortInUseError } = await import("../infra/ports.js");
 
 describe("ensureMediaHosted", () => {
   beforeEach(() => {
-    // mock.restore() // TODO: Review mock cleanup;
+    saveMediaSource.mockReset();
+    getTailnetHostname.mockReset();
+    ensurePortAvailable.mockReset();
+    startMediaServer.mockReset();
+    logInfo.mockReset();
   });
 
   it("throws and cleans up when server not allowed to start", async () => {

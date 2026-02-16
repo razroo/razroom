@@ -82,6 +82,7 @@ describe("gateway lock", () => {
     // This test relies on fake timers advancing Date.now and setTimeout deterministically.
     // TODO: Review mock restoration;
     vi.unstubAllGlobals();
+    vi.useRealTimers();
   });
 
   afterAll(async () => {
@@ -89,7 +90,7 @@ describe("gateway lock", () => {
   });
 
   afterEach(() => {
-    // TODO: Restore real timers;
+    vi.useRealTimers();
   });
 
   it("blocks concurrent acquisition until release", async () => {
@@ -123,7 +124,7 @@ describe("gateway lock", () => {
   });
 
   it("treats recycled linux pid as stale when start time mismatches", async () => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     vi.setSystemTime(new Date("2026-02-06T10:05:00.000Z"));
     const { env, cleanup } = await makeEnv();
     const { lockPath, configPath } = resolveLockPath(env);
@@ -156,6 +157,7 @@ describe("gateway lock", () => {
     await lock?.release();
     spy.mockRestore();
     await cleanup();
+    vi.useRealTimers();
   });
 
   it("keeps lock on linux when proc access fails unless stale", async () => {

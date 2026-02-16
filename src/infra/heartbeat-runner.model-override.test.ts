@@ -59,6 +59,7 @@ async function withHeartbeatFixture(
 }
 
 beforeEach(() => {
+  vi.restoreAllMocks();
   const runtime = createPluginRuntime();
   setTelegramRuntime(runtime);
   setWhatsAppRuntime(runtime);
@@ -71,7 +72,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  // TODO: Review mock restoration;
+  vi.restoreAllMocks();
 });
 
 describe("runHeartbeatOnce – heartbeat model override", () => {

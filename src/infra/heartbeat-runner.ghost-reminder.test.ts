@@ -17,6 +17,7 @@ import { enqueueSystemEvent, resetSystemEventsForTest } from "./system-events.js
 mock("jiti", () => ({ createJiti: () => () => ({}) }));
 
 beforeEach(() => {
+  vi.restoreAllMocks();
   const runtime = createPluginRuntime();
   setTelegramRuntime(runtime);
   setActivePluginRegistry(
@@ -27,7 +28,7 @@ beforeEach(() => {
 
 afterEach(() => {
   resetSystemEventsForTest();
-  // TODO: Review mock restoration;
+  vi.restoreAllMocks();
 });
 
 describe("Ghost reminder bug (issue #13317)", () => {

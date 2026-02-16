@@ -262,49 +262,53 @@ describe("gateway bonjour advertiser", () => {
     // Allow advertiser to run in unit tests.
     delete process.env.VITEST;
     process.env.NODE_ENV = "development";
+    vi.useFakeTimers();
+    try {
+      spyOn(os, "hostname").mockReturnValue("test-host");
+      process.env.RAZROOM_MDNS_HOSTNAME = "test-host";
 
-    // TODO: Implement fake timers for Bun;
-    spyOn(os, "hostname").mockReturnValue("test-host");
-    process.env.RAZROOM_MDNS_HOSTNAME = "test-host";
+      const destroy = mock().mockResolvedValue(undefined);
+      const advertise = vi
+        .fn()
+        .mockRejectedValueOnce(new Error("boom")) // initial advertise fails
+        .mockResolvedValue(undefined); // watchdog retry succeeds
 
-    const destroy = mock().mockResolvedValue(undefined);
-    const advertise = vi
-      .fn()
-      .mockRejectedValueOnce(new Error("boom")) // initial advertise fails
-      .mockResolvedValue(undefined); // watchdog retry succeeds
+      createService.mockImplementation((options: Record<string, unknown>) => {
+        return {
+          advertise,
+          destroy,
+          serviceState: "unannounced",
+          on: mock(),
+          getFQDN: () =>
+            `${asString(options.type, "service")}.${asString(options.domain, "local")}.`,
+          getHostname: () => asString(options.hostname, "unknown"),
+          getPort: () => Number(options.port ?? -1),
+        };
+      });
 
-    createService.mockImplementation((options: Record<string, unknown>) => {
-      return {
-        advertise,
-        destroy,
-        serviceState: "unannounced",
-        on: mock(),
-        getFQDN: () => `${asString(options.type, "service")}.${asString(options.domain, "local")}.`,
-        getHostname: () => asString(options.hostname, "unknown"),
-        getPort: () => Number(options.port ?? -1),
-      };
-    });
+      const started = await startGatewayBonjourAdvertiser({
+        gatewayPort: 18789,
+        sshPort: 2222,
+      });
 
-    const started = await startGatewayBonjourAdvertiser({
-      gatewayPort: 18789,
-      sshPort: 2222,
-    });
+      // initial advertise attempt happens immediately
+      expect(advertise).toHaveBeenCalledTimes(1);
 
-    // initial advertise attempt happens immediately
-    expect(advertise).toHaveBeenCalledTimes(1);
+      // allow promise rejection handler to run
+      await Promise.resolve();
+      expect(logWarn).toHaveBeenCalledWith(expect.stringContaining("advertise failed"));
 
-    // allow promise rejection handler to run
-    await Promise.resolve();
-    expect(logWarn).toHaveBeenCalledWith(expect.stringContaining("advertise failed"));
+      // watchdog should attempt re-advertise at the 60s interval tick
+      await vi.advanceTimersByTimeAsync(60_000);
+      expect(advertise).toHaveBeenCalledTimes(2);
 
-    // watchdog should attempt re-advertise at the 60s interval tick
-    await vi.advanceTimersByTimeAsync(60_000);
-    expect(advertise).toHaveBeenCalledTimes(2);
+      await started.stop();
 
-    await started.stop();
-
-    await vi.advanceTimersByTimeAsync(120_000);
-    expect(advertise).toHaveBeenCalledTimes(2);
+      await vi.advanceTimersByTimeAsync(120_000);
+      expect(advertise).toHaveBeenCalledTimes(2);
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it("handles advertise throwing synchronously", async () => {
