@@ -453,6 +453,7 @@ describe("runMessageAction sendAttachment hydration", () => {
   });
 
   it("rewrites sandboxed media paths for sendAttachment", async () => {
+    vi.mocked(loadWebMedia).mockClear();
     const cfg = {
       channels: {
         bluebubbles: {
