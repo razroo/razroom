@@ -8,7 +8,7 @@ inputs:
     required: false
     default: "22.x"
   pnpm-version:
-    description: pnpm version for corepack.
+    description: pnpm version to install.
     required: false
     default: "10.23.0"
   install-bun:
@@ -59,7 +59,7 @@ runs:
       run: |
         node -v
         npm -v
-        pnpm -v
+        pnpm --config.package-manager-strict=false -v
         if command -v bun &>/dev/null; then bun -v; fi
 
     - name: Capture node path
@@ -74,10 +74,10 @@ runs:
         export PATH="$NODE_BIN:$PATH"
         which node
         node -v
-        pnpm -v
+        pnpm --config.package-manager-strict=false -v
         LOCKFILE_FLAG=""
         if [ "${{ inputs.frozen-lockfile }}" = "true" ]; then
           LOCKFILE_FLAG="--frozen-lockfile"
         fi
-        pnpm install $LOCKFILE_FLAG --ignore-scripts=false --config.engine-strict=false --config.enable-pre-post-scripts=true || \
-        pnpm install $LOCKFILE_FLAG --ignore-scripts=false --config.engine-strict=false --config.enable-pre-post-scripts=true
+        pnpm install $LOCKFILE_FLAG --ignore-scripts=false --config.engine-strict=false --config.enable-pre-post-scripts=true --config.package-manager-strict=false || \
+        pnpm install $LOCKFILE_FLAG --ignore-scripts=false --config.engine-strict=false --config.enable-pre-post-scripts=true --config.package-manager-strict=false

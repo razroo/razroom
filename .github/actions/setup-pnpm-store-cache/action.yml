@@ -18,7 +18,7 @@ runs:
         set -euo pipefail
         for attempt in 1 2 3; do
           if npm install --global "pnpm@${{ inputs.pnpm-version }}"; then
-            pnpm -v
+            pnpm --config.package-manager-strict=false -v
             exit 0
           fi
           echo "pnpm install failed (attempt $attempt/3). Retrying..."
@@ -29,7 +29,7 @@ runs:
     - name: Resolve pnpm store path
       id: pnpm-store
       shell: bash
-      run: echo "path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
+      run: echo "path=$(pnpm --config.package-manager-strict=false store path --silent)" >> "$GITHUB_OUTPUT"
 
     - name: Restore pnpm store cache
       uses: actions/cache@v4

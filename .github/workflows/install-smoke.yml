@@ -38,7 +38,7 @@ jobs:
           set -euo pipefail
           for attempt in 1 2 3; do
             if npm install --global pnpm@10.23.0; then
-              pnpm -v
+              pnpm --config.package-manager-strict=false -v
               exit 0
             fi
             echo "pnpm install failed (attempt $attempt/3). Retrying..."
@@ -47,7 +47,7 @@ jobs:
           exit 1
 
       - name: Install pnpm deps (minimal)
-        run: pnpm install --ignore-scripts --frozen-lockfile
+        run: pnpm install --ignore-scripts --frozen-lockfile --config.package-manager-strict=false
 
       - name: Run installer docker tests
         env:
@@ -57,4 +57,4 @@ jobs:
           RAZROOM_INSTALL_SMOKE_SKIP_CLI: "1"
           RAZROOM_INSTALL_SMOKE_SKIP_NONROOT: ${{ github.event_name == 'pull_request' && '1' || '0' }}
           RAZROOM_INSTALL_SMOKE_SKIP_PREVIOUS: "1"
-        run: pnpm test:install:smoke
+        run: pnpm --config.package-manager-strict=false test:install:smoke

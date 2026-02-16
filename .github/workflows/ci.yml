@@ -365,7 +365,7 @@ jobs:
           node -v
           npm -v
           bun -v
-          pnpm -v
+          pnpm --config.package-manager-strict=false -v
 
       - name: Capture node path
         run: echo "NODE_BIN=$(dirname \"$(node -p \"process.execPath\")\")" >> "$GITHUB_ENV"
@@ -377,8 +377,8 @@ jobs:
           export PATH="$NODE_BIN:$PATH"
           which node
           node -v
-          pnpm -v
-          pnpm install --frozen-lockfile --ignore-scripts=false --config.engine-strict=false --config.enable-pre-post-scripts=true || pnpm install --frozen-lockfile --ignore-scripts=false --config.engine-strict=false --config.enable-pre-post-scripts=true
+          pnpm --config.package-manager-strict=false -v
+          pnpm install --frozen-lockfile --ignore-scripts=false --config.engine-strict=false --config.enable-pre-post-scripts=true --config.package-manager-strict=false || pnpm install --frozen-lockfile --ignore-scripts=false --config.engine-strict=false --config.enable-pre-post-scripts=true --config.package-manager-strict=false
 
       - name: Configure vitest JSON reports
         if: matrix.task == 'test'
