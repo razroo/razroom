@@ -1,6 +1,6 @@
 import "./test-helpers.js";
-import fs from "node:fs/promises";
 import { describe, expect, it, mock, spyOn } from "bun:test";
+import fs from "node:fs/promises";
 import type { RazroomConfig } from "../config/config.js";
 import { installWebAutoReplyUnitTestHooks, makeSessionStore } from "./auto-reply.test-harness.js";
 import { buildMentionConfig } from "./auto-reply/mentions.js";

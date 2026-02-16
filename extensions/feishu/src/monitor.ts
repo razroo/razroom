@@ -1,11 +1,11 @@
 import * as Lark from "@larksuiteoapi/node-sdk";
-import * as http from "http";
 import {
   type ClawdbotConfig,
   type RuntimeEnv,
   type HistoryEntry,
   installRequestBodyLimitGuard,
 } from "@razroo/razroom/plugin-sdk";
+import * as http from "http";
 import type { ResolvedFeishuAccount } from "./types.js";
 import { resolveFeishuAccount, listEnabledFeishuAccounts } from "./accounts.js";
 import { handleFeishuMessage, type FeishuMessageEvent, type FeishuBotAddedEvent } from "./bot.js";

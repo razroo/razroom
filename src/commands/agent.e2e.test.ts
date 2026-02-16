@@ -1,6 +1,6 @@
+import { beforeEach, describe, expect, it, type MockInstance, mock, spyOn } from "bun:test";
 import fs from "node:fs";
 import path from "node:path";
-import { beforeEach, describe, expect, it, type MockInstance, mock, spyOn } from "bun:test";
 import { withTempHome as withTempHomeBase } from "../../test/helpers/temp-home.js";
 
 mock("../agents/pi-embedded.js", () => ({

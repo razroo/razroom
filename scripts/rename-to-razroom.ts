@@ -24,11 +24,26 @@ const stats: RenameStats = {
 };
 
 // File extensions to process
-const PROCESSABLE_EXTENSIONS = [
-  ".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs",
-  ".json", ".md", ".mdx", ".yaml", ".yml", ".toml",
-  ".txt", ".sh", ".bash", ".html", ".css", ".scss"
-];
+const PROCESSABLE_EXTENSIONS = new Set([
+  ".ts",
+  ".tsx",
+  ".js",
+  ".jsx",
+  ".mjs",
+  ".cjs",
+  ".json",
+  ".md",
+  ".mdx",
+  ".yaml",
+  ".yml",
+  ".toml",
+  ".txt",
+  ".sh",
+  ".bash",
+  ".html",
+  ".css",
+  ".scss",
+]);
 
 // Directories to skip
 const SKIP_DIRS = ["node_modules", ".git", "dist", ".next", ".turbo"];
@@ -110,7 +125,7 @@ function processFile(filePath: string): void {
 
   // Check if file should be processed
   const ext = filePath.substring(filePath.lastIndexOf("."));
-  if (!PROCESSABLE_EXTENSIONS.includes(ext)) {
+  if (!PROCESSABLE_EXTENSIONS.has(ext)) {
     return;
   }
 
@@ -164,9 +179,7 @@ function processDirectory(dirPath: string): void {
  * Rename specific important files
  */
 function renameImportantFiles(): void {
-  const renames = [
-    { from: "razroom.mjs", to: "razroom.mjs" },
-  ];
+  const renames = [{ from: "razroom.mjs", to: "razroom.mjs" }];
 
   for (const { from, to } of renames) {
     try {

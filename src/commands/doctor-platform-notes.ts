@@ -87,9 +87,7 @@ export async function noteMacLaunchctlGatewayEnvOverrides(
     (deps?.noteFn ?? note)(lines.join("\n"), "Gateway (macOS)");
   }
 
-  const tokenEntries = [
-    ["RAZROOM_GATEWAY_TOKEN", await getenv("RAZROOM_GATEWAY_TOKEN")],
-  ] as const;
+  const tokenEntries = [["RAZROOM_GATEWAY_TOKEN", await getenv("RAZROOM_GATEWAY_TOKEN")]] as const;
   const passwordEntries = [
     ["RAZROOM_GATEWAY_PASSWORD", await getenv("RAZROOM_GATEWAY_PASSWORD")],
   ] as const;

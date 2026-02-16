@@ -1,7 +1,7 @@
+import { afterEach, describe, expect, it } from "bun:test";
 import { spawn } from "node:child_process";
 import path from "node:path";
 import process from "node:process";
-import { afterEach, describe, expect, it } from "bun:test";
 import { attachChildProcessBridge } from "./child-process-bridge.js";
 
 function waitForLine(stream: NodeJS.ReadableStream, timeoutMs = 2000): Promise<string> {

@@ -40,10 +40,7 @@ export function applyOnboardAuthAgentModelsAndProviders(
   };
 }
 
-export function applyAgentDefaultModelPrimary(
-  cfg: RazroomConfig,
-  primary: string,
-): RazroomConfig {
+export function applyAgentDefaultModelPrimary(cfg: RazroomConfig, primary: string): RazroomConfig {
   const existingFallbacks = extractAgentDefaultModelFallbacks(cfg.agents?.defaults?.model);
   return {
     ...cfg,

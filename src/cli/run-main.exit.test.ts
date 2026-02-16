@@ -1,5 +1,5 @@
-import process from "node:process";
 import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
+import process from "node:process";
 
 const tryRouteCliMock = vi.hoisted(() => mock());
 const loadDotEnvMock = vi.hoisted(() => mock());

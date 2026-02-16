@@ -39,9 +39,7 @@ describe("argv helpers", () => {
     expect(getFlagValue(["node", "razroom", "status", "--timeout", "5000"], "--timeout")).toBe(
       "5000",
     );
-    expect(getFlagValue(["node", "razroom", "status", "--timeout=2500"], "--timeout")).toBe(
-      "2500",
-    );
+    expect(getFlagValue(["node", "razroom", "status", "--timeout=2500"], "--timeout")).toBe("2500");
     expect(getFlagValue(["node", "razroom", "status", "--timeout"], "--timeout")).toBeNull();
     expect(getFlagValue(["node", "razroom", "status", "--timeout", "--json"], "--timeout")).toBe(
       null,

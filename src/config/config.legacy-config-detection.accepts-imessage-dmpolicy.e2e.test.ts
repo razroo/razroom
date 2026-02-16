@@ -1,6 +1,6 @@
+import { describe, expect, it, mock, spyOn } from "bun:test";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { describe, expect, it, mock, spyOn } from "bun:test";
 
 const { loadConfig, migrateLegacyConfig, readConfigFileSnapshot, validateConfigObject } =
   await vi.importActual<typeof import("./config.js")>("./config.js");

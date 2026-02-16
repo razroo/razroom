@@ -1,6 +1,6 @@
+import { describe, expect, it } from "bun:test";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { describe, expect, it } from "bun:test";
 import type { RazroomConfig } from "../config/config.js";
 import { resolveRazroomAgentDir } from "./agent-paths.js";
 import {

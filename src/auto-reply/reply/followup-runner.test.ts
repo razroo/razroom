@@ -1,7 +1,7 @@
+import { describe, expect, it, mock, spyOn } from "bun:test";
 import fs from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { describe, expect, it, mock, spyOn } from "bun:test";
 import type { FollowupRun } from "./queue.js";
 import { loadSessionStore, saveSessionStore, type SessionEntry } from "../../config/sessions.js";
 import { createMockTypingController } from "./test-helpers.js";

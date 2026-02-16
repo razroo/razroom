@@ -1,6 +1,6 @@
+import { describe, expect, it, mock, spyOn } from "bun:test";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { describe, expect, it, mock, spyOn } from "bun:test";
 import { installEmbeddingManagerFixture } from "./embedding-manager.test-harness.js";
 
 const fx = installEmbeddingManagerFixture({

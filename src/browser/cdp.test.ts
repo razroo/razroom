@@ -1,5 +1,5 @@
-import { createServer } from "node:http";
 import { afterEach, describe, expect, it } from "bun:test";
+import { createServer } from "node:http";
 import { WebSocketServer } from "ws";
 import { rawDataToString } from "../infra/ws.js";
 import { createTargetViaCdp, evaluateJavaScript, normalizeCdpWsUrl, snapshotAria } from "./cdp.js";

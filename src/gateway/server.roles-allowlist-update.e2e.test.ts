@@ -1,7 +1,7 @@
+import { afterAll, beforeAll, describe, expect, test, mock, spyOn } from "bun:test";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { afterAll, beforeAll, describe, expect, test, mock, spyOn } from "bun:test";
 import { WebSocket } from "ws";
 import { CONFIG_PATH } from "../config/config.js";
 import { GATEWAY_CLIENT_MODES, GATEWAY_CLIENT_NAMES } from "../utils/message-channel.js";

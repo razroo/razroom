@@ -1,5 +1,5 @@
-import path from "node:path";
 import { describe, expect, it } from "bun:test";
+import path from "node:path";
 import { expandHomePrefix, resolveEffectiveHomeDir, resolveRequiredHomeDir } from "./home-dir.js";
 
 describe("resolveEffectiveHomeDir", () => {
@@ -10,9 +10,7 @@ describe("resolveEffectiveHomeDir", () => {
       USERPROFILE: "C:/Users/other",
     } as NodeJS.ProcessEnv;
 
-    expect(resolveEffectiveHomeDir(env, () => "/fallback")).toBe(
-      path.resolve("/srv/razroom-home"),
-    );
+    expect(resolveEffectiveHomeDir(env, () => "/fallback")).toBe(path.resolve("/srv/razroom-home"));
   });
 
   it("falls back to HOME then USERPROFILE then homedir", () => {

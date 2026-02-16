@@ -3,9 +3,9 @@
 // Replaces tsdown bundler
 
 import { build, Glob } from "bun";
-import { buildConfig, type BuildEntry } from "../bun-build.config";
-import { join, dirname, basename } from "path";
 import { mkdirSync, existsSync } from "fs";
+import { join, dirname, basename } from "path";
+import { buildConfig, type BuildEntry } from "../bun-build.config";
 
 // Resolve glob patterns to actual file paths
 async function resolveGlobs(patterns: string[]): Promise<string[]> {
@@ -71,11 +71,7 @@ async function buildEntry(entry: BuildEntry): Promise<void> {
         naming: basename(entryPoint, ".ts") + ".js",
         define: entry.env || {},
         // Externalize all dependencies and built-in modules
-        external: [
-          ...deps,
-          "node:*",
-          "bun:*",
-        ],
+        external: [...deps, "node:*", "bun:*"],
       });
 
       if (!result.success) {

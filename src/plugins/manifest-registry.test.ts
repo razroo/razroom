@@ -1,8 +1,8 @@
+import { afterEach, describe, expect, it } from "bun:test";
 import { randomUUID } from "node:crypto";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { afterEach, describe, expect, it } from "bun:test";
 import type { PluginCandidate } from "./discovery.js";
 import { loadPluginManifestRegistry } from "./manifest-registry.js";
 

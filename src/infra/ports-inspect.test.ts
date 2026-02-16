@@ -1,5 +1,5 @@
-import net from "node:net";
 import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
+import net from "node:net";
 
 const runCommandWithTimeoutMock = mock();
 

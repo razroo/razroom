@@ -1,4 +1,14 @@
-import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, test, mock, spyOn } from "bun:test";
+import {
+  afterAll,
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  test,
+  mock,
+  spyOn,
+} from "bun:test";
 import { WebSocket } from "ws";
 import { GATEWAY_CLIENT_MODES, GATEWAY_CLIENT_NAMES } from "../utils/message-channel.js";
 import { buildDeviceAuthPayload } from "./device-auth.js";

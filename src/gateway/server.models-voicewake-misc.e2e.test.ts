@@ -1,8 +1,8 @@
+import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import fs from "node:fs/promises";
 import { createServer } from "node:net";
 import os from "node:os";
 import path from "node:path";
-import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { WebSocket } from "ws";
 import type { ChannelOutboundAdapter } from "../channels/plugins/types.js";
 import { getChannelPlugin } from "../channels/plugins/index.js";

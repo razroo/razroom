@@ -1,6 +1,6 @@
+import { describe, expect, it } from "bun:test";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { describe, expect, it } from "bun:test";
 import { resolveSkillsPromptForRun } from "./skills.js";
 
 async function _writeSkill(params: {

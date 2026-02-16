@@ -1,7 +1,7 @@
-import fsSync from "node:fs";
-import path from "node:path";
-import "./monitor-inbox.test-harness.js";
 import { describe, expect, it, mock, spyOn } from "bun:test";
+import fsSync from "node:fs";
+import "./monitor-inbox.test-harness.js";
+import path from "node:path";
 import { monitorWebInbox } from "./inbound.js";
 import {
   DEFAULT_ACCOUNT_ID,

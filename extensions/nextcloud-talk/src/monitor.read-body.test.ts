@@ -1,6 +1,6 @@
 import type { IncomingMessage } from "node:http";
-import { EventEmitter } from "node:events";
 import { describe, expect, it } from "bun:test";
+import { EventEmitter } from "node:events";
 import { readNextcloudTalkWebhookBody } from "./monitor.js";
 
 function createMockRequest(chunks: string[]): IncomingMessage {

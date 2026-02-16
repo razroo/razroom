@@ -1,8 +1,8 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
+import { describe, expect, test, mock, spyOn } from "bun:test";
 import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { describe, expect, test, mock, spyOn } from "bun:test";
 import type { ResolvedGatewayAuth } from "./auth.js";
 import { createGatewayHttpServer } from "./server-http.js";
 

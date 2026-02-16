@@ -1,5 +1,5 @@
-import { EventEmitter } from "node:events";
 import { describe, expect, it, mock, spyOn } from "bun:test";
+import { EventEmitter } from "node:events";
 import { waitForDiscordGatewayStop } from "./monitor.gateway.js";
 
 describe("waitForDiscordGatewayStop", () => {

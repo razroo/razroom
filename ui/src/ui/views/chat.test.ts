@@ -1,5 +1,5 @@
-import { render } from "lit";
 import { describe, expect, it, mock, spyOn } from "bun:test";
+import { render } from "lit";
 import type { SessionsListResult } from "../types.ts";
 import { renderChat, type ChatProps } from "./chat.ts";
 

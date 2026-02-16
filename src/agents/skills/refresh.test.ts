@@ -1,6 +1,6 @@
+import { describe, expect, it, mock, spyOn } from "bun:test";
 import os from "node:os";
 import path from "node:path";
-import { describe, expect, it, mock, spyOn } from "bun:test";
 
 const watchMock = mock(() => ({
   on: mock(),

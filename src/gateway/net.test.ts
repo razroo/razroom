@@ -1,5 +1,5 @@
-import os from "node:os";
 import { afterEach, describe, expect, it, mock, spyOn } from "bun:test";
+import os from "node:os";
 import {
   isPrivateOrLoopbackAddress,
   isTrustedProxyAddress,

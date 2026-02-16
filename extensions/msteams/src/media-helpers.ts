@@ -2,13 +2,13 @@
  * MIME type detection and filename extraction for MSTeams media attachments.
  */
 
-import path from "node:path";
 import {
   detectMime,
   extensionForMime,
   extractOriginalFilename,
   getFileExtension,
 } from "@razroo/razroom/plugin-sdk";
+import path from "node:path";
 
 /**
  * Detect MIME type from URL extension or data URL.

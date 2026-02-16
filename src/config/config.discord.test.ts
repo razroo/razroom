@@ -1,6 +1,6 @@
+import { afterEach, beforeEach, describe, expect, it } from "bun:test";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { afterEach, beforeEach, describe, expect, it } from "bun:test";
 import { loadConfig } from "./config.js";
 import { withTempHome } from "./test-helpers.js";
 

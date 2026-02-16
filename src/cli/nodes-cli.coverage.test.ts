@@ -1,5 +1,5 @@
-import { Command } from "commander";
 import { beforeAll, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
+import { Command } from "commander";
 
 const callGateway = mock(async (opts: { method?: string }) => {
   if (opts.method === "node.list") {

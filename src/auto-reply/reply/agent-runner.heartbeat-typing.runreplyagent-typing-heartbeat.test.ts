@@ -1,7 +1,7 @@
+import { afterAll, beforeAll, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import fs from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { afterAll, beforeAll, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import * as sessions from "../../config/sessions.js";
 import {
   createMinimalRun,

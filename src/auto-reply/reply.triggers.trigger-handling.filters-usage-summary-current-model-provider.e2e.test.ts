@@ -1,6 +1,6 @@
+import { beforeAll, describe, expect, it } from "bun:test";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-import { beforeAll, describe, expect, it } from "bun:test";
 import { normalizeTestText } from "../../test/helpers/normalize-text.js";
 import {
   getProviderUsageMocks,

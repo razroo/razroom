@@ -1,5 +1,5 @@
-import type { MatrixClient } from "@vector-im/matrix-bot-sdk";
 import type { PluginRuntime, RuntimeLogger } from "@razroo/razroom/plugin-sdk";
+import type { MatrixClient } from "@vector-im/matrix-bot-sdk";
 import type { MatrixAuth } from "../client.js";
 import type { MatrixRawEvent } from "./types.js";
 import { EventType } from "./types.js";

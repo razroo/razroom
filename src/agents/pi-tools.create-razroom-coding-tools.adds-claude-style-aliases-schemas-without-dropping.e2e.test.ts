@@ -1,12 +1,12 @@
 import type { AgentTool } from "@mariozechner/pi-agent-core";
+import { describe, expect, it, mock, spyOn } from "bun:test";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { describe, expect, it, mock, spyOn } from "bun:test";
 import "./test-helpers/fast-coding-tools.js";
-import { createRazroomTools } from "./razroom-tools.js";
 import { __testing, createRazroomCodingTools } from "./pi-tools.js";
 import { createSandboxedReadTool } from "./pi-tools.read.js";
+import { createRazroomTools } from "./razroom-tools.js";
 import { createHostSandboxFsBridge } from "./test-helpers/host-sandbox-fs-bridge.js";
 import { createBrowserTool } from "./tools/browser-tool.js";
 

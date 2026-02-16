@@ -1,6 +1,6 @@
+import { afterEach, describe, expect, test } from "bun:test";
 import { createServer as createHttpsServer } from "node:https";
 import { createServer } from "node:net";
-import { afterEach, describe, expect, test } from "bun:test";
 import { WebSocketServer } from "ws";
 import { rawDataToString } from "../infra/ws.js";
 import { GatewayClient } from "./client.js";

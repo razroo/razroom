@@ -1,8 +1,8 @@
+import { afterAll, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import { randomUUID } from "node:crypto";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { afterAll, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 
 const fixtureRoot = path.join(os.tmpdir(), `razroom-hook-install-${randomUUID()}`);
 let tempDirIndex = 0;

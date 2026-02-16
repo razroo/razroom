@@ -11,10 +11,10 @@ title: "Installer Internals"
 
 Razroom ships three installer scripts, served from `razroom.ai`.
 
-| Script                             | Platform             | What it does                                                                                 |
-| ---------------------------------- | -------------------- | -------------------------------------------------------------------------------------------- |
+| Script                             | Platform             | What it does                                                                                |
+| ---------------------------------- | -------------------- | ------------------------------------------------------------------------------------------- |
 | [`install.sh`](#installsh)         | macOS / Linux / WSL  | Installs Node if needed, installs Razroom via npm (default) or git, and can run onboarding. |
-| [`install-cli.sh`](#install-clish) | macOS / Linux / WSL  | Installs Node + Razroom into a local prefix (`~/.razroom`). No root required.              |
+| [`install-cli.sh`](#install-clish) | macOS / Linux / WSL  | Installs Node + Razroom into a local prefix (`~/.razroom`). No root required.               |
 | [`install.ps1`](#installps1)       | Windows (PowerShell) | Installs Node if needed, installs Razroom via npm (default) or git, and can run onboarding. |
 
 ## Quick commands
@@ -126,28 +126,28 @@ The script exits with code `2` for invalid method selection or invalid `--instal
 <AccordionGroup>
   <Accordion title="Flags reference">
 
-| Flag                            | Description                                                |
-| ------------------------------- | ---------------------------------------------------------- |
-| `--install-method npm\|git`     | Choose install method (default: `npm`). Alias: `--method`  |
-| `--npm`                         | Shortcut for npm method                                    |
-| `--git`                         | Shortcut for git method. Alias: `--github`                 |
-| `--version <version\|dist-tag>` | npm version or dist-tag (default: `latest`)                |
-| `--beta`                        | Use beta dist-tag if available, else fallback to `latest`  |
+| Flag                            | Description                                               |
+| ------------------------------- | --------------------------------------------------------- |
+| `--install-method npm\|git`     | Choose install method (default: `npm`). Alias: `--method` |
+| `--npm`                         | Shortcut for npm method                                   |
+| `--git`                         | Shortcut for git method. Alias: `--github`                |
+| `--version <version\|dist-tag>` | npm version or dist-tag (default: `latest`)               |
+| `--beta`                        | Use beta dist-tag if available, else fallback to `latest` |
 | `--git-dir <path>`              | Checkout directory (default: `~/razroom`). Alias: `--dir` |
-| `--no-git-update`               | Skip `git pull` for existing checkout                      |
-| `--no-prompt`                   | Disable prompts                                            |
-| `--no-onboard`                  | Skip onboarding                                            |
-| `--onboard`                     | Enable onboarding                                          |
-| `--dry-run`                     | Print actions without applying changes                     |
-| `--verbose`                     | Enable debug output (`set -x`, npm notice-level logs)      |
-| `--help`                        | Show usage (`-h`)                                          |
+| `--no-git-update`               | Skip `git pull` for existing checkout                     |
+| `--no-prompt`                   | Disable prompts                                           |
+| `--no-onboard`                  | Skip onboarding                                           |
+| `--onboard`                     | Enable onboarding                                         |
+| `--dry-run`                     | Print actions without applying changes                    |
+| `--verbose`                     | Enable debug output (`set -x`, npm notice-level logs)     |
+| `--help`                        | Show usage (`-h`)                                         |
 
   </Accordion>
 
   <Accordion title="Environment variables reference">
 
-| Variable                                    | Description                                   |
-| ------------------------------------------- | --------------------------------------------- |
+| Variable                                   | Description                                   |
+| ------------------------------------------ | --------------------------------------------- |
 | `RAZROOM_INSTALL_METHOD=git\|npm`          | Install method                                |
 | `RAZROOM_VERSION=latest\|next\|<semver>`   | npm version or dist-tag                       |
 | `RAZROOM_BETA=0\|1`                        | Use beta if available                         |
@@ -158,7 +158,7 @@ The script exits with code `2` for invalid method selection or invalid `--instal
 | `RAZROOM_DRY_RUN=1`                        | Dry run mode                                  |
 | `RAZROOM_VERBOSE=1`                        | Debug mode                                    |
 | `RAZROOM_NPM_LOGLEVEL=error\|warn\|notice` | npm log level                                 |
-| `SHARP_IGNORE_GLOBAL_LIBVIPS=0\|1`          | Control sharp/libvips behavior (default: `1`) |
+| `SHARP_IGNORE_GLOBAL_LIBVIPS=0\|1`         | Control sharp/libvips behavior (default: `1`) |
 
   </Accordion>
 </AccordionGroup>
@@ -215,11 +215,11 @@ Designed for environments where you want everything under a local prefix (defaul
 
 | Flag                   | Description                                                                     |
 | ---------------------- | ------------------------------------------------------------------------------- |
-| `--prefix <path>`      | Install prefix (default: `~/.razroom`)                                         |
-| `--version <ver>`      | Razroom version or dist-tag (default: `latest`)                                |
+| `--prefix <path>`      | Install prefix (default: `~/.razroom`)                                          |
+| `--version <ver>`      | Razroom version or dist-tag (default: `latest`)                                 |
 | `--node-version <ver>` | Node version (default: `22.22.0`)                                               |
 | `--json`               | Emit NDJSON events                                                              |
-| `--onboard`            | Run `razroom onboard` after install                                            |
+| `--onboard`            | Run `razroom onboard` after install                                             |
 | `--no-onboard`         | Skip onboarding (default)                                                       |
 | `--set-npm-prefix`     | On Linux, force npm prefix to `~/.npm-global` if current prefix is not writable |
 | `--help`               | Show usage (`-h`)                                                               |
@@ -228,15 +228,15 @@ Designed for environments where you want everything under a local prefix (defaul
 
   <Accordion title="Environment variables reference">
 
-| Variable                                    | Description                                                                       |
-| ------------------------------------------- | --------------------------------------------------------------------------------- |
+| Variable                                   | Description                                                                       |
+| ------------------------------------------ | --------------------------------------------------------------------------------- |
 | `RAZROOM_PREFIX=<path>`                    | Install prefix                                                                    |
-| `RAZROOM_VERSION=<ver>`                    | Razroom version or dist-tag                                                      |
+| `RAZROOM_VERSION=<ver>`                    | Razroom version or dist-tag                                                       |
 | `RAZROOM_NODE_VERSION=<ver>`               | Node version                                                                      |
 | `RAZROOM_NO_ONBOARD=1`                     | Skip onboarding                                                                   |
 | `RAZROOM_NPM_LOGLEVEL=error\|warn\|notice` | npm log level                                                                     |
 | `RAZROOM_GIT_DIR=<path>`                   | Legacy cleanup lookup path (used when removing old `Peekaboo` submodule checkout) |
-| `SHARP_IGNORE_GLOBAL_LIBVIPS=0\|1`          | Control sharp/libvips behavior (default: `1`)                                     |
+| `SHARP_IGNORE_GLOBAL_LIBVIPS=0\|1`         | Control sharp/libvips behavior (default: `1`)                                     |
 
   </Accordion>
 </AccordionGroup>
@@ -299,21 +299,21 @@ Designed for environments where you want everything under a local prefix (defaul
 <AccordionGroup>
   <Accordion title="Flags reference">
 
-| Flag                      | Description                                            |
-| ------------------------- | ------------------------------------------------------ |
-| `-InstallMethod npm\|git` | Install method (default: `npm`)                        |
-| `-Tag <tag>`              | npm dist-tag (default: `latest`)                       |
+| Flag                      | Description                                           |
+| ------------------------- | ----------------------------------------------------- |
+| `-InstallMethod npm\|git` | Install method (default: `npm`)                       |
+| `-Tag <tag>`              | npm dist-tag (default: `latest`)                      |
 | `-GitDir <path>`          | Checkout directory (default: `%USERPROFILE%\razroom`) |
-| `-NoOnboard`              | Skip onboarding                                        |
-| `-NoGitUpdate`            | Skip `git pull`                                        |
-| `-DryRun`                 | Print actions only                                     |
+| `-NoOnboard`              | Skip onboarding                                       |
+| `-NoGitUpdate`            | Skip `git pull`                                       |
+| `-DryRun`                 | Print actions only                                    |
 
   </Accordion>
 
   <Accordion title="Environment variables reference">
 
-| Variable                           | Description        |
-| ---------------------------------- | ------------------ |
+| Variable                          | Description        |
+| --------------------------------- | ------------------ |
 | `RAZROOM_INSTALL_METHOD=git\|npm` | Install method     |
 | `RAZROOM_GIT_DIR=<path>`          | Checkout directory |
 | `RAZROOM_NO_ONBOARD=1`            | Skip onboarding    |

@@ -1,6 +1,6 @@
 import type { AddressInfo } from "node:net";
-import { createServer } from "node:http";
 import { afterEach, describe, expect, it } from "bun:test";
+import { createServer } from "node:http";
 import WebSocket from "ws";
 import {
   ensureChromeExtensionRelayServer,

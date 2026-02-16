@@ -1,5 +1,5 @@
-import path from "node:path";
 import { describe, expect, it } from "bun:test";
+import path from "node:path";
 import type { SandboxContext } from "./types.js";
 import {
   buildSandboxFsMounts,

@@ -30,32 +30,29 @@ function convertTestFile(filePath: string): boolean {
     const original = content;
 
     // 1. Replace Vitest imports with Bun test imports
-    content = content.replace(
-      /import\s+{([^}]+)}\s+from\s+["']vitest["']/g,
-      (match, imports) => {
-        // Parse imported items
-        const items = imports.split(",").map((s: string) => s.trim());
+    content = content.replace(/import\s+{([^}]+)}\s+from\s+["']vitest["']/g, (match, imports) => {
+      // Parse imported items
+      const items = imports.split(",").map((s: string) => s.trim());
 
-        // Map vitest exports to bun:test exports
-        const mapped = items.map((item: string) => {
-          // Handle 'vi' -> needs to be replaced with individual imports
-          if (item === "vi") {
-            return "mock, spyOn";
-          }
-          return item;
-        });
+      // Map vitest exports to bun:test exports
+      const mapped = items.map((item: string) => {
+        // Handle 'vi' -> needs to be replaced with individual imports
+        if (item === "vi") {
+          return "mock, spyOn";
+        }
+        return item;
+      });
 
-        // Remove duplicates
-        const unique = [...new Set(mapped.flatMap((s: string) => s.split(",").map(x => x.trim())))];
+      // Remove duplicates
+      const unique = [...new Set(mapped.flatMap((s: string) => s.split(",").map((x) => x.trim())))];
 
-        return `import { ${unique.join(", ")} } from "bun:test"`;
-      }
-    );
+      return `import { ${unique.join(", ")} } from "bun:test"`;
+    });
 
     // 2. Replace @vitest/* imports
     content = content.replace(
       /import\s+{([^}]+)}\s+from\s+["']@vitest\/([^"']+)["']/g,
-      'import { $1 } from "bun:test"'
+      'import { $1 } from "bun:test"',
     );
 
     // 3. Replace vi.spyOn with spyOn
@@ -68,10 +65,16 @@ function convertTestFile(filePath: string): boolean {
     content = content.replace(/\bvi\.mock\b/g, "mock");
 
     // 6. Replace vi.clearAllMocks
-    content = content.replace(/\bvi\.clearAllMocks\(\)/g, "// mock.restore() // TODO: Review mock cleanup");
+    content = content.replace(
+      /\bvi\.clearAllMocks\(\)/g,
+      "// mock.restore() // TODO: Review mock cleanup",
+    );
 
     // 7. Replace vi.resetAllMocks
-    content = content.replace(/\bvi\.resetAllMocks\(\)/g, "// mock.restore() // TODO: Review mock reset");
+    content = content.replace(
+      /\bvi\.resetAllMocks\(\)/g,
+      "// mock.restore() // TODO: Review mock reset",
+    );
 
     // 8. Replace vi.restoreAllMocks
     content = content.replace(/\bvi\.restoreAllMocks\(\)/g, "// TODO: Review mock restoration");

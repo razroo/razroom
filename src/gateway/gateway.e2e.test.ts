@@ -1,8 +1,8 @@
+import { describe, expect, it } from "bun:test";
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { describe, expect, it } from "bun:test";
 import { startGatewayServer } from "./server.js";
 import {
   connectDeviceAuthReq,

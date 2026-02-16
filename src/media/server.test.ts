@@ -1,8 +1,8 @@
 import type { AddressInfo } from "node:net";
+import { afterAll, beforeAll, describe, expect, it, mock, spyOn } from "bun:test";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { afterAll, beforeAll, describe, expect, it, mock, spyOn } from "bun:test";
 
 let MEDIA_DIR = "";
 const cleanOldMedia = mock().mockResolvedValue(undefined);

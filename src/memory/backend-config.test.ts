@@ -1,5 +1,5 @@
-import path from "node:path";
 import { describe, expect, it } from "bun:test";
+import path from "node:path";
 import type { RazroomConfig } from "../config/config.js";
 import { resolveAgentWorkspaceDir } from "../agents/agent-scope.js";
 import { resolveMemoryBackendConfig } from "./backend-config.js";

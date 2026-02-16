@@ -1,5 +1,5 @@
-import path from "node:path";
 import { describe, expect, it } from "bun:test";
+import path from "node:path";
 import { parseScreenRecordPayload, screenRecordTempPath } from "./nodes-screen.js";
 
 describe("nodes screen helpers", () => {

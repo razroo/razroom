@@ -1,7 +1,7 @@
+import { afterEach, describe, expect, it, mock, spyOn } from "bun:test";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { afterEach, describe, expect, it, mock, spyOn } from "bun:test";
 import type { RuntimeEnv } from "../runtime.js";
 import type { WizardPrompter } from "../wizard/prompts.js";
 import type { AuthChoice } from "./onboard-types.js";

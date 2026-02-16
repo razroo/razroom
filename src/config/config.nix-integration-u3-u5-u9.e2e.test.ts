@@ -1,6 +1,6 @@
+import { describe, expect, it } from "bun:test";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { describe, expect, it } from "bun:test";
 import {
   createConfigIO,
   DEFAULT_GATEWAY_PORT,
@@ -82,9 +82,7 @@ describe("Nix integration (U3, U5, U9)", () => {
 
     it("CONFIG_PATH respects RAZROOM_CONFIG_PATH override", () => {
       expect(
-        resolveConfigPathCandidate(
-          envWith({ RAZROOM_CONFIG_PATH: "/nix/store/abc/razroom.json" }),
-        ),
+        resolveConfigPathCandidate(envWith({ RAZROOM_CONFIG_PATH: "/nix/store/abc/razroom.json" })),
       ).toBe(path.resolve("/nix/store/abc/razroom.json"));
     });
 
@@ -171,9 +169,7 @@ describe("Nix integration (U3, U5, U9)", () => {
         expect(cfg.plugins?.load?.paths?.[0]).toBe(path.join(home, "plugins", "demo-plugin"));
         expect(cfg.agents?.defaults?.workspace).toBe(path.join(home, "ws-default"));
         expect(cfg.agents?.list?.[0]?.workspace).toBe(path.join(home, "ws-agent"));
-        expect(cfg.agents?.list?.[0]?.agentDir).toBe(
-          path.join(home, ".razroom", "agents", "main"),
-        );
+        expect(cfg.agents?.list?.[0]?.agentDir).toBe(path.join(home, ".razroom", "agents", "main"));
         expect(cfg.agents?.list?.[0]?.sandbox?.workspaceRoot).toBe(path.join(home, "sandbox-root"));
         expect(cfg.channels?.whatsapp?.accounts?.personal?.authDir).toBe(
           path.join(home, ".razroom", "credentials", "wa-personal"),
@@ -200,10 +196,7 @@ describe("Nix integration (U3, U5, U9)", () => {
 
     it("falls back to config when env is invalid", () => {
       expect(
-        resolveGatewayPort(
-          { gateway: { port: 19003 } },
-          envWith({ RAZROOM_GATEWAY_PORT: "nope" }),
-        ),
+        resolveGatewayPort({ gateway: { port: 19003 } }, envWith({ RAZROOM_GATEWAY_PORT: "nope" })),
       ).toBe(19003);
     });
   });

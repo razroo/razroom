@@ -1,5 +1,5 @@
-import JSON5 from "json5";
 import { describe, expect, it } from "bun:test";
+import JSON5 from "json5";
 import { parseFrontmatterBlock } from "./frontmatter.js";
 
 describe("parseFrontmatterBlock", () => {

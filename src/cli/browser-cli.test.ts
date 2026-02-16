@@ -1,5 +1,5 @@
-import { Command } from "commander";
 import { describe, expect, it } from "bun:test";
+import { Command } from "commander";
 
 describe("browser CLI --browser-profile flag", () => {
   it("parses --browser-profile from parent command options", () => {

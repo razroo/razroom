@@ -1,6 +1,6 @@
 import "./isolated-agent.mocks.js";
-import fs from "node:fs/promises";
 import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
+import fs from "node:fs/promises";
 import type { CliDeps } from "../cli/deps.js";
 import { loadModelCatalog } from "../agents/model-catalog.js";
 import { runEmbeddedPiAgent } from "../agents/pi-embedded.js";

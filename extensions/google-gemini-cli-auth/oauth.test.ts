@@ -1,5 +1,5 @@
-import { join, parse } from "node:path";
 import { describe, expect, it, mock, spyOn, beforeEach, afterEach } from "bun:test";
+import { join, parse } from "node:path";
 
 mock("razroom/plugin-sdk", () => ({
   isWSL2Sync: () => false,

@@ -33,9 +33,7 @@ describe("shared/frontmatter", () => {
 
   test("resolveRazroomManifestBlock returns undefined for invalid input", () => {
     expect(resolveRazroomManifestBlock({ frontmatter: {} })).toBeUndefined();
-    expect(
-      resolveRazroomManifestBlock({ frontmatter: { metadata: "not-json5" } }),
-    ).toBeUndefined();
+    expect(resolveRazroomManifestBlock({ frontmatter: { metadata: "not-json5" } })).toBeUndefined();
     expect(
       resolveRazroomManifestBlock({ frontmatter: { metadata: "{ nope: { a: 1 } }" } }),
     ).toBeUndefined();

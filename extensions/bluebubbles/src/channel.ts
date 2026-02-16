@@ -1,4 +1,8 @@
-import type { ChannelAccountSnapshot, ChannelPlugin, RazroomConfig } from "@razroo/razroom/plugin-sdk";
+import type {
+  ChannelAccountSnapshot,
+  ChannelPlugin,
+  RazroomConfig,
+} from "@razroo/razroom/plugin-sdk";
 import {
   applyAccountNameToChannelSection,
   buildChannelConfigSchema,

@@ -1,7 +1,7 @@
+import { describe, expect, it } from "bun:test";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { describe, expect, it } from "bun:test";
 import { saveAuthProfileStore } from "./auth-profiles.js";
 import { ensurePiAuthJsonFromAuthProfiles } from "./pi-auth-json.js";
 

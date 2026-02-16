@@ -1,5 +1,5 @@
-import { fetch as realFetch } from "undici";
 import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
+import { fetch as realFetch } from "undici";
 import {
   getBrowserControlServerBaseUrl,
   getBrowserControlServerTestState,

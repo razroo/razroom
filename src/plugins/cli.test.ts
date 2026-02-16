@@ -1,5 +1,5 @@
-import { Command } from "commander";
 import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
+import { Command } from "commander";
 
 const mocks = vi.hoisted(() => ({
   memoryRegister: mock(),

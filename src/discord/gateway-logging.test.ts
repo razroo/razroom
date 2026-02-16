@@ -1,5 +1,5 @@
-import { EventEmitter } from "node:events";
 import { afterEach, describe, expect, it, mock, spyOn } from "bun:test";
+import { EventEmitter } from "node:events";
 
 mock("../globals.js", () => ({
   logVerbose: mock(),

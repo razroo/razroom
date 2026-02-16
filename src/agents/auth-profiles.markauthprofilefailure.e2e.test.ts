@@ -1,7 +1,7 @@
+import { describe, expect, it } from "bun:test";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { describe, expect, it } from "bun:test";
 import { ensureAuthProfileStore, markAuthProfileFailure } from "./auth-profiles.js";
 
 describe("markAuthProfileFailure", () => {

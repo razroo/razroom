@@ -1,5 +1,5 @@
-import * as fs from "node:fs/promises";
 import { afterAll, beforeAll, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
+import * as fs from "node:fs/promises";
 import { parseCameraSnapPayload, parseCameraClipPayload } from "./nodes-camera.js";
 import { callGateway, installBaseProgramMocks, runTui, runtime } from "./program.test-mocks.js";
 

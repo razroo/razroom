@@ -1,9 +1,9 @@
 import type { AddressInfo } from "node:net";
+import { afterAll, beforeAll, describe, expect, it, mock, spyOn } from "bun:test";
 import fs from "node:fs/promises";
 import { createServer } from "node:http";
 import os from "node:os";
 import path from "node:path";
-import { afterAll, beforeAll, describe, expect, it, mock, spyOn } from "bun:test";
 import { WebSocket } from "ws";
 import { rawDataToString } from "../infra/ws.js";
 import { defaultRuntime } from "../runtime.js";

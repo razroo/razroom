@@ -1,5 +1,5 @@
-import path from "node:path";
 import { describe, expect, it } from "bun:test";
+import path from "node:path";
 import { formatCliCommand } from "./command-format.js";
 import { applyCliProfileEnv, parseCliProfileArgs } from "./profile.js";
 
@@ -96,9 +96,7 @@ describe("applyCliProfileEnv", () => {
 
     const resolvedHome = path.resolve("/srv/razroom-home");
     expect(env.RAZROOM_STATE_DIR).toBe(path.join(resolvedHome, ".razroom-work"));
-    expect(env.RAZROOM_CONFIG_PATH).toBe(
-      path.join(resolvedHome, ".razroom-work", "razroom.json"),
-    );
+    expect(env.RAZROOM_CONFIG_PATH).toBe(path.join(resolvedHome, ".razroom-work", "razroom.json"));
   });
 });
 
@@ -150,9 +148,7 @@ describe("formatCliCommand", () => {
   });
 
   it("handles command with no args after razroom", () => {
-    expect(formatCliCommand("razroom", { RAZROOM_PROFILE: "test" })).toBe(
-      "razroom --profile test",
-    );
+    expect(formatCliCommand("razroom", { RAZROOM_PROFILE: "test" })).toBe("razroom --profile test");
   });
 
   it("handles pnpm wrapper", () => {

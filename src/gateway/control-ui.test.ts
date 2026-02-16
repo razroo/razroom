@@ -1,8 +1,8 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
+import { describe, expect, it, mock, spyOn } from "bun:test";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { describe, expect, it, mock, spyOn } from "bun:test";
 import { handleControlUiHttpRequest } from "./control-ui.js";
 
 const makeResponse = (): {

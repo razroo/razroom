@@ -1,5 +1,5 @@
-import path from "node:path";
 import { afterEach, beforeAll, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
+import path from "node:path";
 
 const state = vi.hoisted(() => ({
   dirs: new Set<string>(),

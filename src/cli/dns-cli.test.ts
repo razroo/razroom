@@ -1,5 +1,5 @@
-import { Command } from "commander";
 import { describe, expect, it, mock, spyOn } from "bun:test";
+import { Command } from "commander";
 
 const { registerDnsCli } = await import("./dns-cli.js");
 

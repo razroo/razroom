@@ -1,6 +1,6 @@
 import "./reply.directive.directive-behavior.e2e-mocks.js";
-import path from "node:path";
 import { describe, expect, it, mock, spyOn } from "bun:test";
+import path from "node:path";
 import { loadSessionStore, resolveSessionKey, saveSessionStore } from "../config/sessions.js";
 import {
   installDirectiveBehaviorE2EHooks,

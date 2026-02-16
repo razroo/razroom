@@ -1,8 +1,8 @@
+import { afterAll, afterEach, beforeAll, describe, expect, it, mock, spyOn } from "bun:test";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import sharp from "sharp";
-import { afterAll, afterEach, beforeAll, describe, expect, it, mock, spyOn } from "bun:test";
 import * as ssrf from "../infra/net/ssrf.js";
 import { optimizeImageToPng } from "../media/image-ops.js";
 import { loadWebMedia, loadWebMediaRaw, optimizeImageToJpeg } from "./media.js";

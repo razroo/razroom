@@ -1,16 +1,14 @@
+import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 
 mock("./tools/gateway.js", () => ({
   callGatewayTool: mock(),
 }));
 
 mock("./tools/nodes-utils.js", () => ({
-  listNodes: mock(async () => [
-    { nodeId: "node-1", commands: ["system.run"], platform: "darwin" },
-  ]),
+  listNodes: mock(async () => [{ nodeId: "node-1", commands: ["system.run"], platform: "darwin" }]),
   resolveNodeIdFromList: mock((nodes: Array<{ nodeId: string }>) => nodes[0]?.nodeId),
 }));
 

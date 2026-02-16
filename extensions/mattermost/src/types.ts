@@ -1,4 +1,8 @@
-import type { BlockStreamingCoalesceConfig, DmPolicy, GroupPolicy } from "@razroo/razroom/plugin-sdk";
+import type {
+  BlockStreamingCoalesceConfig,
+  DmPolicy,
+  GroupPolicy,
+} from "@razroo/razroom/plugin-sdk";
 
 export type MattermostChatMode = "oncall" | "onmessage" | "onchar";
 

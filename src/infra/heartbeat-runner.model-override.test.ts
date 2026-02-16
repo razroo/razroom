@@ -1,7 +1,7 @@
+import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import type { RazroomConfig } from "../config/config.js";
 import { telegramPlugin } from "../../extensions/telegram/src/channel.js";
 import { setTelegramRuntime } from "../../extensions/telegram/src/runtime.js";

@@ -193,14 +193,10 @@ describe("diagnostics-otel service", () => {
     });
 
     expect(telemetryState.counters.get("razroom.webhook.received")?.add).toHaveBeenCalled();
-    expect(
-      telemetryState.histograms.get("razroom.webhook.duration_ms")?.record,
-    ).toHaveBeenCalled();
+    expect(telemetryState.histograms.get("razroom.webhook.duration_ms")?.record).toHaveBeenCalled();
     expect(telemetryState.counters.get("razroom.message.queued")?.add).toHaveBeenCalled();
     expect(telemetryState.counters.get("razroom.message.processed")?.add).toHaveBeenCalled();
-    expect(
-      telemetryState.histograms.get("razroom.message.duration_ms")?.record,
-    ).toHaveBeenCalled();
+    expect(telemetryState.histograms.get("razroom.message.duration_ms")?.record).toHaveBeenCalled();
     expect(telemetryState.histograms.get("razroom.queue.wait_ms")?.record).toHaveBeenCalled();
     expect(telemetryState.counters.get("razroom.session.stuck")?.add).toHaveBeenCalled();
     expect(

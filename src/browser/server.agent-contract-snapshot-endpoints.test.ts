@@ -1,5 +1,5 @@
-import { fetch as realFetch } from "undici";
 import { describe, expect, it } from "bun:test";
+import { fetch as realFetch } from "undici";
 import { DEFAULT_AI_SNAPSHOT_MAX_CHARS } from "./constants.js";
 import {
   getBrowserControlServerBaseUrl,

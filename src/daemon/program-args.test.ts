@@ -1,5 +1,5 @@
-import path from "node:path";
 import { afterEach, describe, expect, it, mock, spyOn } from "bun:test";
+import path from "node:path";
 
 const fsMocks = vi.hoisted(() => ({
   access: mock(),
@@ -24,7 +24,9 @@ afterEach(() => {
 describe("resolveGatewayProgramArguments", () => {
   it("uses realpath-resolved dist entry when running via npx shim", async () => {
     const argv1 = path.resolve("/tmp/.npm/_npx/63c3/node_modules/.bin/razroom");
-    const entryPath = path.resolve("/tmp/.npm/_npx/63c3/node_modules/@razroo/razroom/dist/entry.js");
+    const entryPath = path.resolve(
+      "/tmp/.npm/_npx/63c3/node_modules/@razroo/razroom/dist/entry.js",
+    );
     process.argv = ["node", argv1];
     fsMocks.realpath.mockResolvedValue(entryPath);
     fsMocks.access.mockImplementation(async (target: string) => {
@@ -67,7 +69,9 @@ describe("resolveGatewayProgramArguments", () => {
 
   it("falls back to node_modules package dist when .bin path is not resolved", async () => {
     const argv1 = path.resolve("/tmp/.npm/_npx/63c3/node_modules/.bin/razroom");
-    const indexPath = path.resolve("/tmp/.npm/_npx/63c3/node_modules/@razroo/razroom/dist/index.js");
+    const indexPath = path.resolve(
+      "/tmp/.npm/_npx/63c3/node_modules/@razroo/razroom/dist/index.js",
+    );
     process.argv = ["node", argv1];
     fsMocks.realpath.mockRejectedValue(new Error("no realpath"));
     fsMocks.access.mockImplementation(async (target: string) => {

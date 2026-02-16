@@ -1,5 +1,5 @@
-import crypto from "node:crypto";
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
+import crypto from "node:crypto";
 import { WebSocket } from "ws";
 import {
   deriveDeviceIdFromPublicKey,

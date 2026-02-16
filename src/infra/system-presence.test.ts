@@ -1,5 +1,5 @@
-import { randomUUID } from "node:crypto";
 import { describe, expect, it } from "bun:test";
+import { randomUUID } from "node:crypto";
 import { listSystemPresence, updateSystemPresence, upsertPresence } from "./system-presence.js";
 
 describe("system-presence", () => {

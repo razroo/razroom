@@ -1,9 +1,9 @@
+import { describe, expect, it } from "bun:test";
 import { randomBytes, randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import { createServer } from "node:net";
 import os from "node:os";
 import path from "node:path";
-import { describe, expect, it } from "bun:test";
 import { parseModelRef } from "../agents/model-selection.js";
 import { loadConfig } from "../config/config.js";
 import { isTruthyEnvValue } from "../infra/env.js";
@@ -243,9 +243,7 @@ describeLive("gateway live (cli backend)", () => {
 
     const cliCommand = process.env.RAZROOM_LIVE_CLI_BACKEND_COMMAND ?? providerDefaults?.command;
     if (!cliCommand) {
-      throw new Error(
-        `RAZROOM_LIVE_CLI_BACKEND_COMMAND is required for provider "${providerId}".`,
-      );
+      throw new Error(`RAZROOM_LIVE_CLI_BACKEND_COMMAND is required for provider "${providerId}".`);
     }
     const baseCliArgs =
       parseJsonStringArray(

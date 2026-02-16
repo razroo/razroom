@@ -1,9 +1,9 @@
+import { describe, expect, it, mock, spyOn } from "bun:test";
 import crypto from "node:crypto";
 import fsSync from "node:fs";
 import os from "node:os";
-import path from "node:path";
 import "./monitor-inbox.test-harness.js";
-import { describe, expect, it, mock, spyOn } from "bun:test";
+import path from "node:path";
 import { setLoggerOverride } from "../logging.js";
 import { monitorWebInbox } from "./inbound.js";
 import {

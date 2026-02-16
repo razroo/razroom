@@ -1,7 +1,7 @@
+import { describe, expect, it } from "bun:test";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { describe, expect, it } from "bun:test";
 
 async function withTempDir<T>(run: (dir: string) => Promise<T>): Promise<T> {
   const dir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-run-node-"));

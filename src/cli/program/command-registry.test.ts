@@ -1,5 +1,5 @@
-import { Command } from "commander";
 import { describe, expect, it, mock, spyOn } from "bun:test";
+import { Command } from "commander";
 import type { ProgramContext } from "./context.js";
 
 // Perf: `registerCoreCliByName(...)` dynamically imports registrar modules.

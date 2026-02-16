@@ -1,7 +1,7 @@
+import { afterEach, beforeEach, describe, expect, it } from "bun:test";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { afterEach, beforeEach, describe, expect, it } from "bun:test";
 import type { MsgContext } from "../src/auto-reply/templating.js";
 import type { RazroomConfig } from "../src/config/config.js";
 import { applyMediaUnderstanding } from "../src/media-understanding/apply.js";

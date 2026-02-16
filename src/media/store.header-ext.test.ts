@@ -1,6 +1,6 @@
+import { afterAll, beforeAll, describe, expect, it, mock, spyOn } from "bun:test";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { afterAll, beforeAll, describe, expect, it, mock, spyOn } from "bun:test";
 
 const realOs = await vi.importActual<typeof import("node:os")>("node:os");
 const HOME = path.join(realOs.tmpdir(), "razroom-home-header-ext-test");

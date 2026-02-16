@@ -1,9 +1,9 @@
+import { describe, expect, it } from "bun:test";
 import JSZip from "jszip";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import * as tar from "tar";
-import { describe, expect, it } from "bun:test";
 import type { ReleaseAsset } from "./signal-install.js";
 import { extractSignalCliArchive, looksLikeArchive, pickAsset } from "./signal-install.js";
 

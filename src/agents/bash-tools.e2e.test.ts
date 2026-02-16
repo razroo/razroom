@@ -1,6 +1,6 @@
+import { afterEach, beforeEach, describe, expect, it } from "bun:test";
 import fs from "node:fs";
 import path from "node:path";
-import { afterEach, beforeEach, describe, expect, it } from "bun:test";
 import { peekSystemEvents, resetSystemEventsForTest } from "../infra/system-events.js";
 import { sleep } from "../utils.js";
 import { getFinishedSession, resetProcessRegistryForTests } from "./bash-process-registry.js";

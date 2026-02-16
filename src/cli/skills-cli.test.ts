@@ -1,7 +1,7 @@
+import { afterAll, beforeAll, describe, expect, it, mock, spyOn } from "bun:test";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { afterAll, beforeAll, describe, expect, it, mock, spyOn } from "bun:test";
 import type { SkillStatusEntry, SkillStatusReport } from "../agents/skills-status.js";
 import type { SkillEntry } from "../agents/skills.js";
 import { formatSkillInfo, formatSkillsCheck, formatSkillsList } from "./skills-cli.format.js";

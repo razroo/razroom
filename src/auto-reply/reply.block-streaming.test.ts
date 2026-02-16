@@ -1,7 +1,7 @@
+import { afterAll, beforeAll, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { afterAll, beforeAll, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import { loadModelCatalog } from "../agents/model-catalog.js";
 import { getReplyFromConfig } from "./reply.js";
 

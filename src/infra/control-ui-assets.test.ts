@@ -1,6 +1,6 @@
+import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 
 type FakeFsEntry = { kind: "file"; content: string } | { kind: "dir" };
 

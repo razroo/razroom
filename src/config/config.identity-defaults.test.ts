@@ -1,6 +1,6 @@
+import { describe, expect, it } from "bun:test";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { describe, expect, it } from "bun:test";
 import { DEFAULT_AGENT_MAX_CONCURRENT, DEFAULT_SUBAGENT_MAX_CONCURRENT } from "./agent-limits.js";
 import { loadConfig } from "./config.js";
 import { withTempHome } from "./home-env.test-harness.js";

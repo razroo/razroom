@@ -1,6 +1,6 @@
+import { describe, expect, it, mock, spyOn } from "bun:test";
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
-import { describe, expect, it, mock, spyOn } from "bun:test";
 import { setLoggerOverride } from "../logging.js";
 import {
   installWebAutoReplyTestHomeHooks,

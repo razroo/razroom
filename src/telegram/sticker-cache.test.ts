@@ -1,6 +1,6 @@
+import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import fs from "node:fs";
 import path from "node:path";
-import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import {
   cacheSticker,
   getAllCachedStickers,

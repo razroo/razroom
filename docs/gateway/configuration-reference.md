@@ -1345,7 +1345,7 @@ Defaults for Talk mode (macOS/iOS/Android).
 | `group:automation` | `cron`, `gateway`                                                                        |
 | `group:messaging`  | `message`                                                                                |
 | `group:nodes`      | `nodes`                                                                                  |
-| `group:razroom`   | All built-in tools (excludes provider plugins)                                           |
+| `group:razroom`    | All built-in tools (excludes provider plugins)                                           |
 
 ### `tools.allow` / `tools.deny`
 

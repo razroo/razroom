@@ -1,6 +1,6 @@
 import type { Server } from "node:http";
-import fs from "node:fs/promises";
 import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
+import fs from "node:fs/promises";
 
 const mocks = vi.hoisted(() => ({
   saveMediaSource: mock(),

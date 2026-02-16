@@ -1,5 +1,5 @@
-import sharp from "sharp";
 import { describe, expect, it } from "bun:test";
+import sharp from "sharp";
 import { sanitizeContentBlocksImages, sanitizeImageBlocks } from "./tool-images.js";
 
 describe("tool image sanitizing", () => {

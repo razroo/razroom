@@ -1,5 +1,5 @@
-import { PassThrough } from "node:stream";
 import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
+import { PassThrough } from "node:stream";
 import {
   installLaunchAgent,
   isLaunchAgentListed,

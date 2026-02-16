@@ -1,5 +1,5 @@
-import { Command } from "commander";
 import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
+import { Command } from "commander";
 
 const { acpAction, registerAcpCli } = vi.hoisted(() => {
   const action = mock();

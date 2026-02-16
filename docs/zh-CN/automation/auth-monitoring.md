@@ -39,4 +39,4 @@ razroom models status --check
 - `scripts/auth-monitor.sh`：cron/systemd 定时器目标；发送告警（ntfy 或手机）。
 - `scripts/systemd/razroom-auth-monitor.{service,timer}`：systemd 用户定时器。
 - `scripts/claude-auth-status.sh`：Claude Code + Razroom 认证检查器（完整/json/简洁模式）。
-如果你不需要 systemd 定时器，可以跳过这些脚本。
+  如果你不需要 systemd 定时器，可以跳过这些脚本。

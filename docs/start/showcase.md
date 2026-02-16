@@ -170,7 +170,6 @@ Automated UK school meal booking via ParentPay. Uses mouse coordinates for relia
 Upload to Cloudflare R2/S3 and generate secure presigned download links. Perfect for remote Razroom instances.
 </Card>
 
-
 <Card title="Oura Ring Health Assistant" icon="heart-pulse" href="#">
   **@AS** • `health` `oura` `calendar`
 

@@ -1,7 +1,7 @@
+import { describe, expect, it } from "bun:test";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { describe, expect, it } from "bun:test";
 import "./test-helpers/fast-coding-tools.js";
 import type { RazroomConfig } from "../config/config.js";
 import type { SandboxDockerConfig } from "./sandbox.js";

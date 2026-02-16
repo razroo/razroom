@@ -2,9 +2,9 @@
  * Tests for Nostr Profile HTTP Handler
  */
 
+import { describe, it, expect, mock, spyOn, beforeEach } from "bun:test";
 import { IncomingMessage, ServerResponse } from "node:http";
 import { Socket } from "node:net";
-import { describe, it, expect, mock, spyOn, beforeEach } from "bun:test";
 import {
   createNostrProfileHttpHandler,
   type NostrProfileHttpContext,

@@ -1,8 +1,8 @@
+import { afterAll, describe, expect, it } from "bun:test";
 import { randomUUID } from "node:crypto";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { afterAll, describe, expect, it } from "bun:test";
 import { resolvePluginTools } from "./tools.js";
 
 type TempPlugin = { dir: string; file: string; id: string };

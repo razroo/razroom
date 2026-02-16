@@ -1,7 +1,7 @@
-import type { IncomingMessage, ServerResponse } from "node:http";
 import type { RazroomConfig, PluginRuntime } from "@razroo/razroom/plugin-sdk";
-import { EventEmitter } from "node:events";
+import type { IncomingMessage, ServerResponse } from "node:http";
 import { describe, expect, it, mock, spyOn } from "bun:test";
+import { EventEmitter } from "node:events";
 import type { ResolvedGoogleChatAccount } from "./accounts.js";
 import { verifyGoogleChatRequest } from "./auth.js";
 import { handleGoogleChatWebhookRequest, registerGoogleChatWebhookTarget } from "./monitor.js";

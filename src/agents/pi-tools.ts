@@ -22,7 +22,6 @@ import {
   type ProcessToolDefaults,
 } from "./bash-tools.js";
 import { listChannelAgentTools } from "./channel-tools.js";
-import { createRazroomTools } from "./razroom-tools.js";
 import { wrapToolWithAbortSignal } from "./pi-tools.abort.js";
 import { wrapToolWithBeforeToolCallHook } from "./pi-tools.before-tool-call.js";
 import {
@@ -44,6 +43,7 @@ import {
   wrapToolParamNormalization,
 } from "./pi-tools.read.js";
 import { cleanToolSchemaForGemini, normalizeToolParameters } from "./pi-tools.schema.js";
+import { createRazroomTools } from "./razroom-tools.js";
 import { getSubagentDepthFromSessionStore } from "./subagent-depth.js";
 import {
   applyToolPolicyPipeline,

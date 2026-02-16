@@ -1,5 +1,5 @@
-import JSZip from "jszip";
 import { describe, expect, it } from "bun:test";
+import JSZip from "jszip";
 import {
   detectMime,
   extensionForMime,

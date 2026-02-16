@@ -165,9 +165,7 @@ export function extractHookToken(req: IncomingMessage): string | undefined {
     }
   }
   const headerToken =
-    typeof req.headers["x-razroom-token"] === "string"
-      ? req.headers["x-razroom-token"].trim()
-      : "";
+    typeof req.headers["x-razroom-token"] === "string" ? req.headers["x-razroom-token"].trim() : "";
   if (headerToken) {
     return headerToken;
   }

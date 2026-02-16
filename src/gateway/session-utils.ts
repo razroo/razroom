@@ -421,10 +421,7 @@ function resolveDefaultStoreAgentId(cfg: RazroomConfig): string {
   return normalizeAgentId(resolveDefaultAgentId(cfg));
 }
 
-export function resolveSessionStoreKey(params: {
-  cfg: RazroomConfig;
-  sessionKey: string;
-}): string {
+export function resolveSessionStoreKey(params: { cfg: RazroomConfig; sessionKey: string }): string {
   const raw = params.sessionKey.trim();
   if (!raw) {
     return raw;

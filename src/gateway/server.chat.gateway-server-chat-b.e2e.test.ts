@@ -1,7 +1,7 @@
+import { describe, expect, test, mock, spyOn } from "bun:test";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { describe, expect, test, mock, spyOn } from "bun:test";
 import { __setMaxChatHistoryMessagesBytesForTest } from "./server-constants.js";
 import {
   connectOk,

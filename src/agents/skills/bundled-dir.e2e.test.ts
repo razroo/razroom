@@ -1,8 +1,8 @@
+import { afterEach, describe, expect, it } from "bun:test";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import { afterEach, describe, expect, it } from "bun:test";
 import { resolveBundledSkillsDir } from "./bundled-dir.js";
 
 async function writeSkill(dir: string, name: string) {

@@ -1,6 +1,6 @@
 import type { Bot } from "grammy";
-import path from "node:path";
 import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
+import path from "node:path";
 import { STATE_DIR } from "../config/paths.js";
 
 const createTelegramDraftStream = vi.hoisted(() => mock());

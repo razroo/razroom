@@ -1,9 +1,9 @@
+import { afterEach, describe, expect, it } from "bun:test";
 import { spawn } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import { afterEach, describe, expect, it } from "bun:test";
 
 const waitForReady = async (
   proc: ReturnType<typeof spawn>,

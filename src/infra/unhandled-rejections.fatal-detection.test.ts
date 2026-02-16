@@ -1,5 +1,15 @@
+import {
+  describe,
+  it,
+  expect,
+  mock,
+  spyOn,
+  beforeAll,
+  afterAll,
+  beforeEach,
+  afterEach,
+} from "bun:test";
 import process from "node:process";
-import { describe, it, expect, mock, spyOn, beforeAll, afterAll, beforeEach, afterEach } from "bun:test";
 import { installUnhandledRejectionHandler } from "./unhandled-rejections.js";
 
 describe("installUnhandledRejectionHandler - fatal detection", () => {

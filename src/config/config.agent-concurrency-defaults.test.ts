@@ -1,6 +1,6 @@
+import { describe, expect, it } from "bun:test";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { describe, expect, it } from "bun:test";
 import {
   DEFAULT_AGENT_MAX_CONCURRENT,
   DEFAULT_SUBAGENT_MAX_CONCURRENT,

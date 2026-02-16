@@ -1,5 +1,5 @@
-import { ReadableStream } from "node:stream/web";
 import { afterEach, describe, expect, it, mock, spyOn } from "bun:test";
+import { ReadableStream } from "node:stream/web";
 import type { VoyageBatchOutputLine, VoyageBatchRequest } from "./batch-voyage.js";
 import type { VoyageEmbeddingClient } from "./embeddings-voyage.js";
 

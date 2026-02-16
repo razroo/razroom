@@ -1,6 +1,6 @@
+import { describe, expect, it, mock, spyOn } from "bun:test";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { describe, expect, it, mock, spyOn } from "bun:test";
 import { DEFAULT_COPILOT_API_BASE_URL } from "../providers/github-copilot-token.js";
 import {
   installModelsConfigTestHooks,

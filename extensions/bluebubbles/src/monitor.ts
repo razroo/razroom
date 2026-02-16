@@ -1,5 +1,5 @@
-import type { IncomingMessage, ServerResponse } from "node:http";
 import type { RazroomConfig } from "@razroo/razroom/plugin-sdk";
+import type { IncomingMessage, ServerResponse } from "node:http";
 import { timingSafeEqual } from "node:crypto";
 import {
   normalizeWebhookMessage,
@@ -117,10 +117,7 @@ type BlueBubblesDebouncer = {
  */
 const targetDebouncers = new Map<WebhookTarget, BlueBubblesDebouncer>();
 
-function resolveBlueBubblesDebounceMs(
-  config: RazroomConfig,
-  core: BlueBubblesCoreRuntime,
-): number {
+function resolveBlueBubblesDebounceMs(config: RazroomConfig, core: BlueBubblesCoreRuntime): number {
   const inbound = config.messages?.inbound;
   const hasExplicitDebounce =
     typeof inbound?.debounceMs === "number" || typeof inbound?.byChannel?.bluebubbles === "number";

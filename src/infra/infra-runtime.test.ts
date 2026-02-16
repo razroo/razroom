@@ -1,5 +1,5 @@
-import os from "node:os";
 import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
+import os from "node:os";
 import type { runExec } from "../process/exec.js";
 import type { RuntimeEnv } from "../runtime.js";
 import { ensureBinary } from "./binaries.js";

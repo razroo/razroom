@@ -1,5 +1,5 @@
-import { readFileSync } from "node:fs";
 import { type BaseTokenResolution, DEFAULT_ACCOUNT_ID } from "@razroo/razroom/plugin-sdk";
+import { readFileSync } from "node:fs";
 import type { ZaloConfig } from "./types.js";
 
 export type ZaloTokenResolution = BaseTokenResolution & {

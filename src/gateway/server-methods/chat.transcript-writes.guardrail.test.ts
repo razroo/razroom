@@ -1,6 +1,6 @@
+import { describe, expect, it } from "bun:test";
 import fs from "node:fs";
 import { fileURLToPath } from "node:url";
-import { describe, expect, it } from "bun:test";
 
 // Guardrail: the "empty post-compaction context" regression came from gateway code appending
 // Pi transcript message entries as raw JSONL without `parentId`.

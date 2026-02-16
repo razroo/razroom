@@ -1,6 +1,6 @@
 import type { IncomingMessage } from "node:http";
-import { EventEmitter } from "node:events";
 import { describe, expect, it } from "bun:test";
+import { EventEmitter } from "node:events";
 import { readLineWebhookRequestBody } from "./webhook-node.js";
 
 function createMockRequest(chunks: string[]): IncomingMessage {

@@ -1,5 +1,5 @@
-import fs from "node:fs/promises";
 import { beforeAll, describe, expect, it } from "bun:test";
+import fs from "node:fs/promises";
 import { loadSessionStore } from "../config/sessions.js";
 import {
   installTriggerHandlingE2eTestHooks,

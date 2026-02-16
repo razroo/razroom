@@ -1,6 +1,6 @@
+import { beforeAll, describe, expect, it } from "bun:test";
 import fs from "node:fs/promises";
 import { join } from "node:path";
-import { beforeAll, describe, expect, it } from "bun:test";
 import {
   getRunEmbeddedPiAgentMock,
   installTriggerHandlingE2eTestHooks,

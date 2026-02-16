@@ -1,8 +1,8 @@
+import { describe, expect, it } from "bun:test";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
-import { describe, expect, it } from "bun:test";
 import { MINIMAX_API_BASE_URL, MINIMAX_CN_API_BASE_URL } from "./onboard-auth.js";
 import { OPENAI_DEFAULT_MODEL } from "./openai-model-default.js";
 
@@ -730,27 +730,24 @@ describe("onboard (non-interactive): provider auth", () => {
   }, 60_000);
 
   it("fails custom provider auth when compatibility is invalid", async () => {
-    await withOnboardEnv(
-      "razroom-onboard-custom-provider-invalid-compat-",
-      async ({ runtime }) => {
-        await expect(
-          runNonInteractive(
-            {
-              nonInteractive: true,
-              authChoice: "custom-api-key",
-              customBaseUrl: "https://models.custom.local/v1",
-              customModelId: "local-large",
-              customCompatibility: "xmlrpc",
-              skipHealth: true,
-              skipChannels: true,
-              skipSkills: true,
-              json: true,
-            },
-            runtime,
-          ),
-        ).rejects.toThrow('Invalid --custom-compatibility (use "openai" or "anthropic").');
-      },
-    );
+    await withOnboardEnv("razroom-onboard-custom-provider-invalid-compat-", async ({ runtime }) => {
+      await expect(
+        runNonInteractive(
+          {
+            nonInteractive: true,
+            authChoice: "custom-api-key",
+            customBaseUrl: "https://models.custom.local/v1",
+            customModelId: "local-large",
+            customCompatibility: "xmlrpc",
+            skipHealth: true,
+            skipChannels: true,
+            skipSkills: true,
+            json: true,
+          },
+          runtime,
+        ),
+      ).rejects.toThrow('Invalid --custom-compatibility (use "openai" or "anthropic").');
+    });
   }, 60_000);
 
   it("fails custom provider auth when explicit provider id is invalid", async () => {

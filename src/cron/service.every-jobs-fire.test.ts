@@ -1,6 +1,6 @@
+import { describe, expect, it, mock, spyOn } from "bun:test";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { describe, expect, it, mock, spyOn } from "bun:test";
 import type { CronEvent } from "./service.js";
 import { CronService } from "./service.js";
 import {

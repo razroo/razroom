@@ -374,8 +374,8 @@ razroom pairing list feishu
 
 ## Gateway management commands
 
-| Command                    | Description                   |
-| -------------------------- | ----------------------------- |
+| Command                   | Description                   |
+| ------------------------- | ----------------------------- |
 | `razroom gateway status`  | Show gateway status           |
 | `razroom gateway install` | Install/start gateway service |
 | `razroom gateway stop`    | Stop gateway service          |

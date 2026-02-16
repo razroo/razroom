@@ -1,5 +1,5 @@
-import { Command } from "commander";
 import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
+import { Command } from "commander";
 
 const callGateway = mock(async () => ({ ok: true }));
 const resolveGatewayProgramArguments = mock(async () => ({

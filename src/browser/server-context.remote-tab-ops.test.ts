@@ -1,7 +1,7 @@
+import { afterAll, afterEach, beforeAll, describe, expect, it, mock, spyOn } from "bun:test";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { afterAll, afterEach, beforeAll, describe, expect, it, mock, spyOn } from "bun:test";
 import type { BrowserServerState } from "./server-context.js";
 import * as cdpModule from "./cdp.js";
 import * as pwAiModule from "./pw-ai-module.js";

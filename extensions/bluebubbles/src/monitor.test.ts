@@ -1,8 +1,8 @@
-import type { IncomingMessage, ServerResponse } from "node:http";
 import type { RazroomConfig, PluginRuntime } from "@razroo/razroom/plugin-sdk";
-import { EventEmitter } from "node:events";
+import type { IncomingMessage, ServerResponse } from "node:http";
 import { removeAckReactionAfterReply, shouldAckReaction } from "@razroo/razroom/plugin-sdk";
 import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
+import { EventEmitter } from "node:events";
 import type { ResolvedBlueBubblesAccount } from "./accounts.js";
 import {
   handleBlueBubblesWebhookRequest,
@@ -86,15 +86,13 @@ function createMockRuntime(): PluginRuntime {
       loadWebMedia: mock() as unknown as PluginRuntime["media"]["loadWebMedia"],
       detectMime: mock() as unknown as PluginRuntime["media"]["detectMime"],
       mediaKindFromMime: mock() as unknown as PluginRuntime["media"]["mediaKindFromMime"],
-      isVoiceCompatibleAudio:
-        mock() as unknown as PluginRuntime["media"]["isVoiceCompatibleAudio"],
+      isVoiceCompatibleAudio: mock() as unknown as PluginRuntime["media"]["isVoiceCompatibleAudio"],
       getImageMetadata: mock() as unknown as PluginRuntime["media"]["getImageMetadata"],
       resizeToJpeg: mock() as unknown as PluginRuntime["media"]["resizeToJpeg"],
     },
     tools: {
       createMemoryGetTool: mock() as unknown as PluginRuntime["tools"]["createMemoryGetTool"],
-      createMemorySearchTool:
-        mock() as unknown as PluginRuntime["tools"]["createMemorySearchTool"],
+      createMemorySearchTool: mock() as unknown as PluginRuntime["tools"]["createMemorySearchTool"],
       registerMemoryCli: mock() as unknown as PluginRuntime["tools"]["registerMemoryCli"],
     },
     channel: {

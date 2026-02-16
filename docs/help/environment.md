@@ -76,10 +76,10 @@ See [Configuration: Env var substitution](/gateway/configuration#env-var-substit
 
 ## Path-related env vars
 
-| Variable               | Purpose                                                                                                                                                                          |
-| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Variable              | Purpose                                                                                                                                                                        |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `RAZROOM_HOME`        | Override the home directory used for all internal path resolution (`~/.razroom/`, agent dirs, sessions, credentials). Useful when running Razroom as a dedicated service user. |
-| `RAZROOM_STATE_DIR`   | Override the state directory (default `~/.razroom`).                                                                                                                            |
+| `RAZROOM_STATE_DIR`   | Override the state directory (default `~/.razroom`).                                                                                                                           |
 | `RAZROOM_CONFIG_PATH` | Override the config file path (default `~/.razroom/razroom.json`).                                                                                                             |
 
 ### `RAZROOM_HOME`

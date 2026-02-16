@@ -1,8 +1,8 @@
 import { CURRENT_SESSION_VERSION } from "@mariozechner/pi-coding-agent";
+import { describe, expect, it, mock, spyOn } from "bun:test";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { describe, expect, it, mock, spyOn } from "bun:test";
 import type { GatewayRequestContext } from "./types.js";
 
 // Guardrail: Ensure gateway "injected" assistant transcript messages are appended via SessionManager,

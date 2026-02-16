@@ -1,5 +1,5 @@
-import net from "node:net";
 import { describe, expect, it, mock, spyOn } from "bun:test";
+import net from "node:net";
 import { CHUTES_TOKEN_ENDPOINT, CHUTES_USERINFO_ENDPOINT } from "../agents/chutes-oauth.js";
 import { loginChutes } from "./chutes-oauth.js";
 

@@ -1,8 +1,8 @@
+import { describe, expect, it } from "bun:test";
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { describe, expect, it } from "bun:test";
 import { GatewayClient } from "../src/gateway/client.js";
 import { startGatewayServer } from "../src/gateway/server.js";
 import { getDeterministicFreePortBlock } from "../src/test-utils/ports.js";

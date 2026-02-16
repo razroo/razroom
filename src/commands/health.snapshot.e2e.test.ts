@@ -1,7 +1,7 @@
+import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import type { HealthSummary } from "./health.js";
 import { telegramPlugin } from "../../extensions/telegram/src/channel.js";
 import { setActivePluginRegistry } from "../plugins/runtime.js";

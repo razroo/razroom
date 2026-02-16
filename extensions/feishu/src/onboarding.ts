@@ -5,7 +5,11 @@ import type {
   DmPolicy,
   WizardPrompter,
 } from "@razroo/razroom/plugin-sdk";
-import { addWildcardAllowFrom, DEFAULT_ACCOUNT_ID, formatDocsLink } from "@razroo/razroom/plugin-sdk";
+import {
+  addWildcardAllowFrom,
+  DEFAULT_ACCOUNT_ID,
+  formatDocsLink,
+} from "@razroo/razroom/plugin-sdk";
 import type { FeishuConfig } from "./types.js";
 import { resolveFeishuCredentials } from "./accounts.js";
 import { probeFeishu } from "./probe.js";

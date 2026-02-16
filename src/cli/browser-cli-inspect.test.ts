@@ -1,5 +1,5 @@
-import { Command } from "commander";
 import { afterEach, describe, expect, it, mock, spyOn } from "bun:test";
+import { Command } from "commander";
 
 const gatewayMocks = vi.hoisted(() => ({
   callGatewayFromCli: mock(async () => ({

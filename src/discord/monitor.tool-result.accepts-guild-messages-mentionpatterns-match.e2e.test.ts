@@ -1,7 +1,7 @@
 import type { Client } from "@buape/carbon";
 import { ChannelType, MessageType } from "@buape/carbon";
-import { Routes } from "discord-api-types/v10";
 import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
+import { Routes } from "discord-api-types/v10";
 import { createReplyDispatcherWithTyping } from "../auto-reply/reply/reply-dispatcher.js";
 import { __resetDiscordChannelInfoCacheForTest } from "./monitor/message-utils.js";
 

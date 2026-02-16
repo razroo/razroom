@@ -1,9 +1,9 @@
 import type { ButtonInteraction, ComponentData } from "@buape/carbon";
+import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import { Routes } from "discord-api-types/v10";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import type { DiscordExecApprovalConfig } from "../../config/types.discord.js";
 import { clearSessionStoreCacheForTest } from "../../config/sessions.js";
 import {

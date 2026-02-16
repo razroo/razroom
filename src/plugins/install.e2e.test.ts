@@ -1,10 +1,10 @@
+import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import JSZip from "jszip";
 import { randomUUID } from "node:crypto";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import * as tar from "tar";
-import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import * as skillScanner from "../security/skill-scanner.js";
 
 mock("../process/exec.js", () => ({

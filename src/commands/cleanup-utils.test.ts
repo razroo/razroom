@@ -1,5 +1,5 @@
-import path from "node:path";
 import { describe, expect, test } from "bun:test";
+import path from "node:path";
 import type { RazroomConfig } from "../config/config.js";
 import { buildCleanupPlan } from "./cleanup-utils.js";
 

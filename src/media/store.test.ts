@@ -1,9 +1,9 @@
+import { afterAll, beforeAll, describe, expect, it } from "bun:test";
 import JSZip from "jszip";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import sharp from "sharp";
-import { afterAll, beforeAll, describe, expect, it } from "bun:test";
 import { isPathWithinBase } from "../../test/helpers/paths.js";
 
 describe("media store", () => {

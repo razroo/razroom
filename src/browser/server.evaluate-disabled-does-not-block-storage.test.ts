@@ -1,6 +1,6 @@
+import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import { createServer, type AddressInfo } from "node:net";
 import { fetch as realFetch } from "undici";
-import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 
 let testPort = 0;
 let prevGatewayPort: string | undefined;

@@ -1,5 +1,5 @@
-import { Command } from "commander";
 import { describe, expect, it, mock, spyOn } from "bun:test";
+import { Command } from "commander";
 
 const callGatewayFromCli = mock(async (method: string, _opts: unknown, params?: unknown) => {
   if (method === "cron.status") {

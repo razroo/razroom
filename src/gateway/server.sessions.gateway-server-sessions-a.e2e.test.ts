@@ -1,7 +1,7 @@
+import { afterAll, beforeAll, beforeEach, describe, expect, test, mock, spyOn } from "bun:test";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { afterAll, beforeAll, beforeEach, describe, expect, test, mock, spyOn } from "bun:test";
 import { WebSocket } from "ws";
 import { DEFAULT_PROVIDER } from "../agents/defaults.js";
 import {

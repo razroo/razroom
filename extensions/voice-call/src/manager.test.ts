@@ -1,6 +1,6 @@
+import { describe, expect, it } from "bun:test";
 import os from "node:os";
 import path from "node:path";
-import { describe, expect, it } from "bun:test";
 import type { VoiceCallProvider } from "./providers/base.js";
 import type {
   HangupCallInput,

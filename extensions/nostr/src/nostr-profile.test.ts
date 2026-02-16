@@ -1,5 +1,5 @@
-import { verifyEvent, getPublicKey } from "nostr-tools";
 import { describe, expect, it, mock, spyOn, beforeEach } from "bun:test";
+import { verifyEvent, getPublicKey } from "nostr-tools";
 import type { NostrProfile } from "./config-schema.js";
 import {
   createProfileEvent,

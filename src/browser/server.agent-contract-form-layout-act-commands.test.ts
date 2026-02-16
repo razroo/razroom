@@ -1,6 +1,6 @@
+import { describe, expect, it } from "bun:test";
 import path from "node:path";
 import { fetch as realFetch } from "undici";
-import { describe, expect, it } from "bun:test";
 import { DEFAULT_UPLOAD_DIR } from "./paths.js";
 import {
   getBrowserControlServerBaseUrl,

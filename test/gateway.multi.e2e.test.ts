@@ -1,3 +1,4 @@
+import { afterAll, describe, expect, it } from "bun:test";
 import { type ChildProcessWithoutNullStreams, spawn } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
@@ -5,7 +6,6 @@ import { request as httpRequest } from "node:http";
 import net from "node:net";
 import os from "node:os";
 import path from "node:path";
-import { afterAll, describe, expect, it } from "bun:test";
 import { GatewayClient } from "../src/gateway/client.js";
 import { loadOrCreateDeviceIdentity } from "../src/infra/device-identity.js";
 import { sleep } from "../src/utils.js";

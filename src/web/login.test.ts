@@ -1,5 +1,5 @@
-import { EventEmitter } from "node:events";
 import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
+import { EventEmitter } from "node:events";
 import { resetLogger, setLoggerOverride } from "../logging.js";
 
 mock("./session.js", () => {

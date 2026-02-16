@@ -133,10 +133,7 @@ export function isHeartbeatEnabledForAgent(cfg: RazroomConfig, agentId?: string)
   return resolvedAgentId === resolveDefaultAgentId(cfg);
 }
 
-function resolveHeartbeatConfig(
-  cfg: RazroomConfig,
-  agentId?: string,
-): HeartbeatConfig | undefined {
+function resolveHeartbeatConfig(cfg: RazroomConfig, agentId?: string): HeartbeatConfig | undefined {
   const defaults = cfg.agents?.defaults?.heartbeat;
   if (!agentId) {
     return defaults;

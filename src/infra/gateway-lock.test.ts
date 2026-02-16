@@ -1,9 +1,19 @@
+import {
+  afterAll,
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  mock,
+  spyOn,
+} from "bun:test";
 import { createHash } from "node:crypto";
 import fsSync from "node:fs";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import { resolveConfigPath, resolveGatewayLockDir, resolveStateDir } from "../config/paths.js";
 import { acquireGatewayLock, GatewayLockError } from "./gateway-lock.js";
 

@@ -1,7 +1,7 @@
+import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import { EventEmitter } from "node:events";
 import path from "node:path";
 import { Readable } from "node:stream";
-import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import type { RazroomConfig } from "../config/config.js";
 
 type SpawnCall = {

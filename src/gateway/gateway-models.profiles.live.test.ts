@@ -1,10 +1,10 @@
 import type { Api, Model } from "@mariozechner/pi-ai";
+import { describe, it } from "bun:test";
 import { randomBytes, randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import { createServer } from "node:net";
 import os from "node:os";
 import path from "node:path";
-import { describe, it } from "bun:test";
 import type { RazroomConfig, ModelProviderConfig } from "../config/types.js";
 import { resolveRazroomAgentDir } from "../agents/agent-paths.js";
 import { resolveAgentWorkspaceDir } from "../agents/agent-scope.js";

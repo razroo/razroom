@@ -1,7 +1,7 @@
+import { describe, expect, it } from "bun:test";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { describe, expect, it } from "bun:test";
 import { copyA2uiAssets } from "../../scripts/canvas-a2ui-copy.js";
 
 describe("canvas a2ui copy", () => {

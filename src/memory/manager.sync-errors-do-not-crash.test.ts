@@ -1,7 +1,7 @@
+import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import { getMemorySearchManager, type MemoryIndexManager } from "./index.js";
 
 mock("chokidar", () => ({

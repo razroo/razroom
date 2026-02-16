@@ -1,6 +1,6 @@
+import { afterEach, describe, expect, it, mock, spyOn } from "bun:test";
 import { mkdir } from "node:fs/promises";
 import { join } from "node:path";
-import { afterEach, describe, expect, it, mock, spyOn } from "bun:test";
 import { withTempHome as withTempHomeBase } from "../../test/helpers/temp-home.js";
 
 mock("../agents/pi-embedded.js", () => ({

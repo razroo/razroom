@@ -1,7 +1,7 @@
+import { afterEach, describe, expect, it } from "bun:test";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { afterEach, describe, expect, it } from "bun:test";
 import { captureEnv } from "../test-utils/env.js";
 import { resolveRazroomAgentDir } from "./agent-paths.js";
 

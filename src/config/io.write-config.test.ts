@@ -1,7 +1,7 @@
+import { afterAll, beforeAll, describe, expect, it, mock, spyOn } from "bun:test";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { afterAll, beforeAll, describe, expect, it, mock, spyOn } from "bun:test";
 import { createConfigIO } from "./io.js";
 
 describe("config io write", () => {

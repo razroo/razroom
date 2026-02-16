@@ -1,7 +1,7 @@
+import { beforeAll, describe, expect, it, mock, spyOn } from "bun:test";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { beforeAll, describe, expect, it, mock, spyOn } from "bun:test";
 
 // Avoid importing the full chat command registry for reserved-name calculation.
 mock("./commands-registry.js", () => ({

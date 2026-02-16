@@ -1,5 +1,5 @@
-import fs from "node:fs/promises";
 import { beforeAll, describe, expect, it } from "bun:test";
+import fs from "node:fs/promises";
 import {
   getRunEmbeddedPiAgentMock,
   installTriggerHandlingE2eTestHooks,

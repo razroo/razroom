@@ -1,7 +1,7 @@
+import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import type { RazroomConfig } from "../config/config.js";
 import { slackPlugin } from "../../extensions/slack/src/channel.js";
 import { setSlackRuntime } from "../../extensions/slack/src/runtime.js";

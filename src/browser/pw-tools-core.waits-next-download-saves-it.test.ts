@@ -1,5 +1,5 @@
-import path from "node:path";
 import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
+import path from "node:path";
 import {
   getPwToolsCoreSessionMocks,
   installPwToolsCoreTestHooks,
@@ -128,12 +128,7 @@ describe("pw-tools-core", () => {
     const res = await p;
     const outPath = vi.mocked(saveAs).mock.calls[0]?.[0];
     expect(typeof outPath).toBe("string");
-    const expectedRootedDownloadsDir = path.join(
-      path.sep,
-      "tmp",
-      "razroom-preferred",
-      "downloads",
-    );
+    const expectedRootedDownloadsDir = path.join(path.sep, "tmp", "razroom-preferred", "downloads");
     const expectedDownloadsTail = `${path.join("tmp", "razroom-preferred", "downloads")}${path.sep}`;
     expect(path.dirname(String(outPath))).toBe(expectedRootedDownloadsDir);
     expect(path.basename(String(outPath))).toMatch(/-file\.bin$/);

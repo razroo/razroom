@@ -1,9 +1,9 @@
+import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import JSZip from "jszip";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import * as tar from "tar";
-import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import { installSkill } from "./skills-install.js";
 
 const runCommandWithTimeoutMock = mock();

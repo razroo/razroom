@@ -1,6 +1,6 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
-import { EventEmitter } from "node:events";
 import { describe, expect, it } from "bun:test";
+import { EventEmitter } from "node:events";
 import {
   installRequestBodyLimitGuard,
   isRequestBodyLimitError,

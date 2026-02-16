@@ -1,5 +1,5 @@
-import { render } from "lit";
 import { describe, expect, it, mock, spyOn } from "bun:test";
+import { render } from "lit";
 import { analyzeConfigSchema, renderConfigForm } from "./views/config-form.ts";
 
 const rootSchema = {

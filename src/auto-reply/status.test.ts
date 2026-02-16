@@ -1,6 +1,6 @@
+import { afterEach, describe, expect, it, mock, spyOn } from "bun:test";
 import fs from "node:fs";
 import path from "node:path";
-import { afterEach, describe, expect, it, mock, spyOn } from "bun:test";
 import type { RazroomConfig } from "../config/config.js";
 import { normalizeTestText } from "../../test/helpers/normalize-text.js";
 import { withTempHome } from "../../test/helpers/temp-home.js";

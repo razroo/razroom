@@ -1,5 +1,5 @@
-import os from "node:os";
 import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
+import os from "node:os";
 import * as logging from "../logging.js";
 
 const mocks = vi.hoisted(() => ({

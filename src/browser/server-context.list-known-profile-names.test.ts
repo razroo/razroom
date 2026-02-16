@@ -31,10 +31,6 @@ describe("browser server-context listKnownProfileNames", () => {
       ]),
     };
 
-    expect(listKnownProfileNames(state).toSorted()).toEqual([
-      "chrome",
-      "razroom",
-      "stale-removed",
-    ]);
+    expect(listKnownProfileNames(state).toSorted()).toEqual(["chrome", "razroom", "stale-removed"]);
   });
 });

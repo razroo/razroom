@@ -1,7 +1,7 @@
 import type { ChildProcess } from "node:child_process";
+import { describe, expect, it, mock, spyOn } from "bun:test";
 import { EventEmitter } from "node:events";
 import { PassThrough } from "node:stream";
-import { describe, expect, it, mock, spyOn } from "bun:test";
 import { spawnWithFallback } from "./spawn-utils.js";
 
 function createStubChild() {

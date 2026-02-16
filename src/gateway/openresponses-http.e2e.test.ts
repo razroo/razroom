@@ -1,6 +1,6 @@
+import { afterAll, beforeAll, describe, expect, it } from "bun:test";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { afterAll, beforeAll, describe, expect, it } from "bun:test";
 import { HISTORY_CONTEXT_MARKER } from "../auto-reply/reply/history.js";
 import { CURRENT_MESSAGE_MARKER } from "../auto-reply/reply/mentions.js";
 import { emitAgentEvent } from "../infra/agent-events.js";

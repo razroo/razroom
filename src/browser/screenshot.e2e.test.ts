@@ -1,5 +1,5 @@
-import sharp from "sharp";
 import { describe, expect, it } from "bun:test";
+import sharp from "sharp";
 import { normalizeBrowserScreenshot } from "./screenshot.js";
 
 describe("browser screenshot normalization", () => {

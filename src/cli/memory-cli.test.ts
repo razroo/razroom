@@ -1,8 +1,8 @@
+import { afterEach, describe, expect, it, mock, spyOn } from "bun:test";
 import { Command } from "commander";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { afterEach, describe, expect, it, mock, spyOn } from "bun:test";
 
 const getMemorySearchManager = mock();
 const loadConfig = mock(() => ({}));

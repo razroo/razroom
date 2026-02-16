@@ -1,6 +1,6 @@
+import { afterEach, describe, expect, it, mock, spyOn } from "bun:test";
 import fs from "node:fs/promises";
 import { basename, join } from "node:path";
-import { afterEach, describe, expect, it, mock, spyOn } from "bun:test";
 import type { MsgContext, TemplateContext } from "../templating.js";
 import { withTempHome as withTempHomeBase } from "../../test/helpers/temp-home.js";
 

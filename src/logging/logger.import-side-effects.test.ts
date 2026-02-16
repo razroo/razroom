@@ -1,5 +1,5 @@
-import fs from "node:fs";
 import { afterEach, describe, expect, it, mock, spyOn } from "bun:test";
+import fs from "node:fs";
 
 describe("logger import side effects", () => {
   afterEach(() => {

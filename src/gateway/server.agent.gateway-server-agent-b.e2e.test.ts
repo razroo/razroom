@@ -1,7 +1,17 @@
+import {
+  afterAll,
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  test,
+  mock,
+  spyOn,
+} from "bun:test";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, test, mock, spyOn } from "bun:test";
 import { WebSocket } from "ws";
 import type { ChannelPlugin } from "../channels/plugins/types.js";
 import { whatsappPlugin } from "../../extensions/whatsapp/src/channel.js";

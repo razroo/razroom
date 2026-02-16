@@ -1,5 +1,5 @@
-import path from "node:path";
 import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
+import path from "node:path";
 import { formatToolAggregate, formatToolPrefix, shortenMeta, shortenPath } from "./tool-meta.js";
 
 // Use path.resolve so inputs match the resolved HOME on every platform.

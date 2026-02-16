@@ -1,9 +1,9 @@
 import { type Api, completeSimple, type Model } from "@mariozechner/pi-ai";
+import { describe, expect, it } from "bun:test";
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { describe, expect, it } from "bun:test";
 import {
   ANTHROPIC_SETUP_TOKEN_PREFIX,
   validateAnthropicSetupToken,

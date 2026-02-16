@@ -1,7 +1,7 @@
+import { describe, expect, it } from "bun:test";
 import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { describe, expect, it } from "bun:test";
 import { resolveApiKeyForProvider } from "./model-auth.js";
 import { buildNvidiaProvider, resolveImplicitProviders } from "./models-config.providers.js";
 

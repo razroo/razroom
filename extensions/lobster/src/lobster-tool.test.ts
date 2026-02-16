@@ -1,9 +1,9 @@
+import { afterAll, beforeAll, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import { EventEmitter } from "node:events";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { PassThrough } from "node:stream";
-import { afterAll, beforeAll, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import type { RazroomPluginApi, RazroomPluginToolContext } from "../../../src/plugins/types.js";
 
 const spawnState = vi.hoisted(() => ({

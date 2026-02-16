@@ -1,7 +1,7 @@
+import { describe, it, expect } from "bun:test";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { describe, it, expect } from "bun:test";
 import {
   createConfigIO,
   readConfigFileSnapshotForWrite,

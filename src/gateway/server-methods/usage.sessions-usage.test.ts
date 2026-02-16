@@ -1,7 +1,7 @@
+import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 
 mock("../../config/config.js", () => {
   return {

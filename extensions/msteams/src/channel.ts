@@ -1,4 +1,8 @@
-import type { ChannelMessageActionName, ChannelPlugin, RazroomConfig } from "@razroo/razroom/plugin-sdk";
+import type {
+  ChannelMessageActionName,
+  ChannelPlugin,
+  RazroomConfig,
+} from "@razroo/razroom/plugin-sdk";
 import {
   buildBaseChannelStatusSummary,
   buildChannelConfigSchema,

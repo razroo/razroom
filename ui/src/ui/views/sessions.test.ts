@@ -1,5 +1,5 @@
-import { render } from "lit";
 import { describe, expect, it } from "bun:test";
+import { render } from "lit";
 import type { SessionsListResult } from "../types.ts";
 import { renderSessions, type SessionsProps } from "./sessions.ts";
 

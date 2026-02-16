@@ -1,6 +1,6 @@
+import { describe, expect, it, mock, spyOn } from "bun:test";
 import { spawn } from "node:child_process";
 import { EventEmitter } from "node:events";
-import { describe, expect, it, mock, spyOn } from "bun:test";
 
 mock("node:child_process", () => {
   const spawn = mock(() => {

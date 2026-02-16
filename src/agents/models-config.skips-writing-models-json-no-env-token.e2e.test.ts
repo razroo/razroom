@@ -1,6 +1,6 @@
+import { describe, expect, it } from "bun:test";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { describe, expect, it } from "bun:test";
 import { resolveRazroomAgentDir } from "./agent-paths.js";
 import {
   CUSTOM_PROXY_MODELS_CONFIG,

@@ -1,7 +1,7 @@
+import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { randomUUID } from "node:crypto";
 import os from "node:os";
 import path from "node:path";
-import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { WebSocket } from "ws";
 import { emitAgentEvent } from "../infra/agent-events.js";
 import {

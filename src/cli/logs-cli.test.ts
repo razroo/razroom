@@ -1,5 +1,5 @@
-import { Command } from "commander";
 import { afterEach, describe, expect, it, mock, spyOn } from "bun:test";
+import { Command } from "commander";
 import { formatLogTimestamp } from "./logs-cli.js";
 
 const callGatewayFromCli = mock();

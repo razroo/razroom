@@ -1,5 +1,5 @@
-import crypto from "node:crypto";
 import { describe, expect, it } from "bun:test";
+import crypto from "node:crypto";
 import { validateLineSignature } from "./signature.js";
 
 const sign = (body: string, secret: string) =>

@@ -1,4 +1,8 @@
-import type { ChannelOnboardingAdapter, RazroomConfig, WizardPrompter } from "@razroo/razroom/plugin-sdk";
+import type {
+  ChannelOnboardingAdapter,
+  RazroomConfig,
+  WizardPrompter,
+} from "@razroo/razroom/plugin-sdk";
 import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "@razroo/razroom/plugin-sdk/account-id";
 import {
   listMattermostAccountIds,

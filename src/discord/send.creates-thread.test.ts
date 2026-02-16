@@ -1,6 +1,6 @@
 import { RateLimitError } from "@buape/carbon";
-import { ChannelType, Routes } from "discord-api-types/v10";
 import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
+import { ChannelType, Routes } from "discord-api-types/v10";
 import {
   addRoleDiscord,
   banMemberDiscord,

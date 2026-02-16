@@ -1,8 +1,8 @@
+import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import type { SessionEntry } from "../../config/sessions.js";
 import type { TemplateContext } from "../templating.js";
 import type { FollowupRun, QueueSettings } from "./queue.js";

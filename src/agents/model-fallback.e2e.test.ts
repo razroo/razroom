@@ -1,8 +1,8 @@
+import { describe, expect, it, mock, spyOn } from "bun:test";
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { describe, expect, it, mock, spyOn } from "bun:test";
 import type { RazroomConfig } from "../config/config.js";
 import type { AuthProfileStore } from "./auth-profiles.js";
 import { saveAuthProfileStore } from "./auth-profiles.js";

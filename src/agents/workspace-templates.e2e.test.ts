@@ -1,8 +1,8 @@
+import { describe, expect, it } from "bun:test";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import { describe, expect, it } from "bun:test";
 import {
   resetWorkspaceTemplateDirCache,
   resolveWorkspaceTemplateDir,

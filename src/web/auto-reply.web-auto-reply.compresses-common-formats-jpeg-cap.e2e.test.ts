@@ -1,6 +1,6 @@
+import { describe, expect, it, mock, spyOn } from "bun:test";
 import crypto from "node:crypto";
 import sharp from "sharp";
-import { describe, expect, it, mock, spyOn } from "bun:test";
 import { monitorWebChannel } from "./auto-reply.js";
 import {
   installWebAutoReplyTestHomeHooks,

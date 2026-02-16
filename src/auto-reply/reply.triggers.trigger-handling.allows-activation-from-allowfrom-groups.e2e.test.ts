@@ -1,5 +1,5 @@
-import { join } from "node:path";
 import { beforeAll, describe, expect, it } from "bun:test";
+import { join } from "node:path";
 import {
   getRunEmbeddedPiAgentMock,
   installTriggerHandlingE2eTestHooks,
