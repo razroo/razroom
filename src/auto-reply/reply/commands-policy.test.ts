@@ -95,7 +95,7 @@ function buildParams(commandBody: string, cfg: RazroomConfig, ctxOverrides?: Par
 
 describe("handleCommands /allowlist", () => {
   beforeEach(() => {
-    // mock.restore() // TODO: Review mock cleanup;
+    vi.clearAllMocks();
   });
 
   it("lists config + store allowFrom entries", async () => {

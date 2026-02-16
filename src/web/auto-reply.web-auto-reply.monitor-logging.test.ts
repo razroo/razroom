@@ -14,7 +14,7 @@ describe("web auto-reply monitor logging", () => {
   installWebAutoReplyUnitTestHooks();
 
   it("emits heartbeat logs with connection metadata", async () => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     const logPath = `/tmp/razroom-heartbeat-${crypto.randomUUID()}.log`;
     setLoggerOverride({ level: "trace", file: logPath });
 
@@ -54,6 +54,7 @@ describe("web auto-reply monitor logging", () => {
     expect(content).toMatch(/web-heartbeat/);
     expect(content).toMatch(/connectionId/);
     expect(content).toMatch(/messagesHandled/);
+    vi.useRealTimers();
   });
 
   it("logs outbound replies to file", async () => {

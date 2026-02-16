@@ -155,7 +155,7 @@ function baseParams(
 
 describe("runPreparedReply media-only handling", () => {
   beforeEach(() => {
-    // mock.restore() // TODO: Review mock cleanup;
+    vi.clearAllMocks();
   });
 
   it("allows media-only prompts and preserves thread context in queued followups", async () => {

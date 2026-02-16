@@ -5,11 +5,11 @@ import { createTypingController } from "./typing.js";
 
 describe("typing controller", () => {
   afterEach(() => {
-    // TODO: Restore real timers;
+    vi.useRealTimers();
   });
 
   it("stops after run completion and dispatcher idle", async () => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     const onReplyStart = mock(async () => {});
     const typing = createTypingController({
       onReplyStart,
@@ -20,20 +20,20 @@ describe("typing controller", () => {
     await typing.startTypingLoop();
     expect(onReplyStart).toHaveBeenCalledTimes(1);
 
-    // TODO: Advance timers(2_000);
+    await vi.advanceTimersByTimeAsync(2_000);
     expect(onReplyStart).toHaveBeenCalledTimes(3);
 
     typing.markRunComplete();
-    // TODO: Advance timers(1_000);
+    await vi.advanceTimersByTimeAsync(1_000);
     expect(onReplyStart).toHaveBeenCalledTimes(4);
 
     typing.markDispatchIdle();
-    // TODO: Advance timers(2_000);
+    await vi.advanceTimersByTimeAsync(2_000);
     expect(onReplyStart).toHaveBeenCalledTimes(4);
   });
 
   it("keeps typing until both idle and run completion are set", async () => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     const onReplyStart = mock(async () => {});
     const typing = createTypingController({
       onReplyStart,
@@ -45,16 +45,16 @@ describe("typing controller", () => {
     expect(onReplyStart).toHaveBeenCalledTimes(1);
 
     typing.markDispatchIdle();
-    // TODO: Advance timers(2_000);
+    await vi.advanceTimersByTimeAsync(2_000);
     expect(onReplyStart).toHaveBeenCalledTimes(3);
 
     typing.markRunComplete();
-    // TODO: Advance timers(2_000);
+    await vi.advanceTimersByTimeAsync(2_000);
     expect(onReplyStart).toHaveBeenCalledTimes(3);
   });
 
   it("does not start typing after run completion", async () => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     const onReplyStart = mock(async () => {});
     const typing = createTypingController({
       onReplyStart,
@@ -64,12 +64,12 @@ describe("typing controller", () => {
 
     typing.markRunComplete();
     await typing.startTypingOnText("late text");
-    // TODO: Advance timers(2_000);
+    await vi.advanceTimersByTimeAsync(2_000);
     expect(onReplyStart).not.toHaveBeenCalled();
   });
 
   it("does not restart typing after it has stopped", async () => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     const onReplyStart = mock(async () => {});
     const typing = createTypingController({
       onReplyStart,
@@ -83,12 +83,12 @@ describe("typing controller", () => {
     typing.markRunComplete();
     typing.markDispatchIdle();
 
-    // TODO: Advance timers(5_000);
+    await vi.advanceTimersByTimeAsync(5_000);
     expect(onReplyStart).toHaveBeenCalledTimes(1);
 
     // Late callbacks should be ignored and must not restart the interval.
     await typing.startTypingOnText("late tool result");
-    // TODO: Advance timers(5_000);
+    await vi.advanceTimersByTimeAsync(5_000);
     expect(onReplyStart).toHaveBeenCalledTimes(1);
   });
 });

@@ -23,12 +23,12 @@ const { createWaSocket } = await import("./session.js");
 
 describe("web login", () => {
   beforeEach(() => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     // mock.restore() // TODO: Review mock cleanup;
   });
 
   afterEach(() => {
-    // TODO: Restore real timers;
+    vi.useRealTimers();
     resetLogger();
     setLoggerOverride(null);
   });

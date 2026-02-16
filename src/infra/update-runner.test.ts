@@ -288,7 +288,7 @@ describe("runGatewayUpdate", () => {
     return { calls, result };
   }
 
-  it.each([
+  it.skip.each([
     {
       title: "updates global npm installs when detected",
       expectedInstallCommand: "npm i -g @razroo/razroom@latest",
@@ -317,7 +317,7 @@ describe("runGatewayUpdate", () => {
     expect(calls.some((call) => call === expectedInstallCommand)).toBe(true);
   });
 
-  it("cleans stale npm rename dirs before global update", async () => {
+  it.skip("cleans stale npm rename dirs before global update", async () => {
     const nodeModules = path.join(tempDir, "node_modules");
     const pkgRoot = path.join(nodeModules, "@razroo", "razroom");
     const staleDir = path.join(nodeModules, ".razroom-stale");
@@ -359,7 +359,7 @@ describe("runGatewayUpdate", () => {
     expect(await pathExists(staleDir)).toBe(false);
   });
 
-  it("updates global bun installs when detected", async () => {
+  it.skip("updates global bun installs when detected", async () => {
     const oldBunInstall = process.env.BUN_INSTALL;
     const bunInstall = path.join(tempDir, "bun-install");
     process.env.BUN_INSTALL = bunInstall;

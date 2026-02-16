@@ -66,7 +66,7 @@ describe("runtime-guard", () => {
       pathEnv: "/usr/bin",
     };
     expect(() => assertSupportedRuntime(runtime, details)).toThrow("exit");
-    expect(runtime.error).toHaveBeenCalledWith(expect.stringContaining("requires Node"));
+    expect(runtime.error).toHaveBeenCalledWith(expect.stringContaining("Node >=22.12.0"));
   });
 
   it("returns silently when runtime meets requirements", () => {

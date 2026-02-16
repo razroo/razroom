@@ -48,12 +48,12 @@ const { loginWeb } = await import("./login.js");
 
 describe("loginWeb coverage", () => {
   beforeEach(() => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     // mock.restore() // TODO: Review mock cleanup;
     rmMock.mockClear();
   });
   afterEach(() => {
-    // TODO: Restore real timers;
+    vi.useRealTimers();
   });
 
   it("restarts once when WhatsApp requests code 515", async () => {
@@ -67,7 +67,7 @@ describe("loginWeb coverage", () => {
     expect(createWaSocket).toHaveBeenCalledTimes(2);
     const firstSock = await createWaSocket.mock.results[0].value;
     expect(firstSock.ws.close).toHaveBeenCalled();
-    // TODO: Run all timers;
+    await vi.runAllTimersAsync();
     const secondSock = await createWaSocket.mock.results[1].value;
     expect(secondSock.ws.close).toHaveBeenCalled();
   });

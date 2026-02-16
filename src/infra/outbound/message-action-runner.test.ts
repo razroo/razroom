@@ -41,6 +41,7 @@ const whatsappConfig = {
 
 describe("runMessageAction context isolation", () => {
   beforeEach(async () => {
+    vi.clearAllMocks();
     const { createPluginRuntime } = await import("../../plugins/runtime/index.js");
     const { setSlackRuntime } = await import("../../../extensions/slack/src/runtime.js");
     const { setTelegramRuntime } = await import("../../../extensions/telegram/src/runtime.js");

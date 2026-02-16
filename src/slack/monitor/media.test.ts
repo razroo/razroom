@@ -171,7 +171,7 @@ describe("resolveSlackMedia", () => {
 
   afterEach(() => {
     globalThis.fetch = originalFetch;
-    // TODO: Review mock restoration;
+    vi.restoreAllMocks();
   });
 
   it("prefers url_private_download over url_private", async () => {

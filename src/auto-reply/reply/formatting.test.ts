@@ -28,11 +28,11 @@ describe("parseAudioTag", () => {
 
 describe("block reply coalescer", () => {
   afterEach(() => {
-    // TODO: Restore real timers;
+    vi.useRealTimers();
   });
 
   it("coalesces chunks within the idle window", async () => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     const flushes: string[] = [];
     const coalescer = createBlockReplyCoalescer({
       config: { minChars: 1, maxChars: 200, idleMs: 100, joiner: " " },
@@ -51,7 +51,7 @@ describe("block reply coalescer", () => {
   });
 
   it("waits until minChars before idle flush", async () => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     const flushes: string[] = [];
     const coalescer = createBlockReplyCoalescer({
       config: { minChars: 10, maxChars: 200, idleMs: 50, joiner: " " },
@@ -91,7 +91,7 @@ describe("block reply coalescer", () => {
   });
 
   it("still accumulates when flushOnEnqueue is not set (default)", async () => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     const flushes: string[] = [];
     const coalescer = createBlockReplyCoalescer({
       config: { minChars: 1, maxChars: 2000, idleMs: 100, joiner: "\n\n" },

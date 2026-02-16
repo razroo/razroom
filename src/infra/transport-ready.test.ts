@@ -14,11 +14,11 @@ mock("./backoff.js", () => ({
 
 describe("waitForTransportReady", () => {
   beforeEach(() => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
-    // TODO: Restore real timers;
+    vi.useRealTimers();
   });
 
   it("returns when the check succeeds and logs after the delay", async () => {

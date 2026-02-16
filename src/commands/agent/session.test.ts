@@ -26,7 +26,7 @@ const { resolveSessionKeyForRequest } = await import("./session.js");
 
 describe("resolveSessionKeyForRequest", () => {
   beforeEach(() => {
-    // mock.restore() // TODO: Review mock cleanup;
+    vi.clearAllMocks();
     mocks.listAgentIds.mockReturnValue(["main"]);
   });
 

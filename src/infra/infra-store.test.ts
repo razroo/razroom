@@ -79,17 +79,17 @@ describe("infra store", () => {
   describe("channel activity", () => {
     beforeEach(() => {
       resetChannelActivityForTest();
-      // TODO: Implement fake timers for Bun;
+      vi.useFakeTimers();
       vi.setSystemTime(new Date("2026-01-08T00:00:00Z"));
     });
 
     afterEach(() => {
-      // TODO: Restore real timers;
+      vi.useRealTimers();
     });
 
-    it("records inbound/outbound separately", () => {
+    it("records inbound/outbound separately", async () => {
       recordChannelActivity({ channel: "telegram", direction: "inbound" });
-      // TODO: Advance timers(1000);
+      await vi.advanceTimersByTimeAsync(1000);
       recordChannelActivity({ channel: "telegram", direction: "outbound" });
       const res = getChannelActivity({ channel: "telegram" });
       expect(res.inboundAt).toBe(1767830400000);

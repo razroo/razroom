@@ -124,8 +124,8 @@ describe("createEditorSubmitHandler", () => {
 });
 
 describe("createSubmitBurstCoalescer", () => {
-  it("coalesces rapid single-line submits into one multiline submit when enabled", () => {
-    // TODO: Implement fake timers for Bun;
+  it("coalesces rapid single-line submits into one multiline submit when enabled", async () => {
+    vi.useFakeTimers();
     const submit = mock();
     let now = 1_000;
     const onSubmit = createSubmitBurstCoalescer({
@@ -143,11 +143,11 @@ describe("createSubmitBurstCoalescer", () => {
 
     expect(submit).not.toHaveBeenCalled();
 
-    // TODO: Advance timers(50);
+    await vi.advanceTimersByTimeAsync(50);
 
     expect(submit).toHaveBeenCalledTimes(1);
     expect(submit).toHaveBeenCalledWith("Line 1\nLine 2\nLine 3");
-    // TODO: Restore real timers;
+    vi.useRealTimers();
   });
 
   it("passes through immediately when disabled", () => {

@@ -480,7 +480,7 @@ describe("runReplyAgent block streaming", () => {
   });
 
   it("returns the final payload when onBlockReply times out", async () => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     let sawAbort = false;
 
     const onBlockReply = mock((_payload, context) => {
@@ -581,6 +581,7 @@ describe("runReplyAgent block streaming", () => {
 
     expect(sawAbort).toBe(true);
     expect(result).toMatchObject({ text: "Final message" });
+    vi.useRealTimers();
   });
 });
 
@@ -1087,7 +1088,7 @@ describe("runReplyAgent response usage footer", () => {
 
 describe("runReplyAgent transient HTTP retry", () => {
   it("retries once after transient 521 HTML failure and then succeeds", async () => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     runEmbeddedPiAgentMock
       .mockRejectedValueOnce(
         new Error(
@@ -1162,5 +1163,6 @@ describe("runReplyAgent transient HTTP retry", () => {
 
     const payload = Array.isArray(result) ? result[0] : result;
     expect(payload?.text).toContain("Recovered response");
+    vi.useRealTimers();
   });
 });

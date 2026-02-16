@@ -10,7 +10,7 @@ mock("../../gateway/call.js", () => ({
 
 describe("/approve command", () => {
   beforeEach(() => {
-    // mock.restore() // TODO: Review mock cleanup;
+    vi.clearAllMocks();
   });
 
   it("rejects invalid usage", async () => {

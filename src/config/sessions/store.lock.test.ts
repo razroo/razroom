@@ -289,7 +289,7 @@ describe("session store lock (Promise chain mutex)", () => {
   });
 
   it("times out queued operations strictly and does not run them later", async () => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     try {
       const { storePath } = await makeTmpStore({
         x: { sessionId: "x", updatedAt: 100 },
@@ -326,7 +326,7 @@ describe("session store lock (Promise chain mutex)", () => {
       await vi.runOnlyPendingTimersAsync();
       expect(timedOutRan).toBe(false);
     } finally {
-      // TODO: Restore real timers;
+      vi.useRealTimers();
     }
   });
 

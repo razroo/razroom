@@ -27,8 +27,8 @@ afterEach(async () => {
 describe("legacy state dir auto-migration", () => {
   it("follows legacy symlink when it points at another legacy dir (razroom -> razroom)", async () => {
     const root = await makeTempRoot();
+    const legacyDir = path.join(root, ".razroom-actual");
     const legacySymlink = path.join(root, ".razroom");
-    const legacyDir = path.join(root, ".razroom");
 
     fs.mkdirSync(legacyDir, { recursive: true });
     fs.writeFileSync(path.join(legacyDir, "marker.txt"), "ok", "utf-8");

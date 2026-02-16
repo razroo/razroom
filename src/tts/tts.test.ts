@@ -55,7 +55,7 @@ const {
 
 describe("tts", () => {
   beforeEach(() => {
-    // mock.restore() // TODO: Review mock cleanup;
+    vi.clearAllMocks();
     vi.mocked(completeSimple).mockResolvedValue({
       content: [{ type: "text", text: "Summary" }],
     });

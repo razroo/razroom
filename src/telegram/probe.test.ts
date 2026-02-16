@@ -7,13 +7,13 @@ describe("probeTelegram retry logic", () => {
   let fetchMock: Mock;
 
   beforeEach(() => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     fetchMock = mock();
     global.fetch = fetchMock;
   });
 
   afterEach(() => {
-    // TODO: Restore real timers;
+    vi.useRealTimers();
     // TODO: Review mock restoration;
   });
 

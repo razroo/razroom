@@ -230,7 +230,7 @@ describe("sendMessageTelegram", () => {
   });
 
   it("retries on transient errors with retry_after", async () => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     const chatId = "123";
     const err = Object.assign(new Error("429"), {
       parameters: { retry_after: 0.5 },
@@ -257,7 +257,7 @@ describe("sendMessageTelegram", () => {
     await expect(promise).resolves.toEqual({ messageId: "1", chatId });
     expect(setTimeoutSpy.mock.calls[0]?.[1]).toBe(500);
     setTimeoutSpy.mockRestore();
-    // TODO: Restore real timers;
+    vi.useRealTimers();
   });
 
   it("does not retry on non-transient errors", async () => {

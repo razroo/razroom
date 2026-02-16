@@ -106,7 +106,7 @@ describe("createReplyDispatcher", () => {
   });
 
   it("delays block replies after the first when humanDelay is natural", async () => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     const randomSpy = spyOn(Math, "random").mockReturnValue(0);
     const deliver = mock().mockResolvedValue(undefined);
     const dispatcher = createReplyDispatcher({
@@ -130,11 +130,11 @@ describe("createReplyDispatcher", () => {
     expect(deliver).toHaveBeenCalledTimes(2);
 
     randomSpy.mockRestore();
-    // TODO: Restore real timers;
+    vi.useRealTimers();
   });
 
   it("uses custom bounds for humanDelay and clamps when max <= min", async () => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     const deliver = mock().mockResolvedValue(undefined);
     const dispatcher = createReplyDispatcher({
       deliver,
@@ -153,7 +153,7 @@ describe("createReplyDispatcher", () => {
     await dispatcher.waitForIdle();
     expect(deliver).toHaveBeenCalledTimes(2);
 
-    // TODO: Restore real timers;
+    vi.useRealTimers();
   });
 });
 

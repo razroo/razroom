@@ -50,7 +50,7 @@ describe("retryAsync", () => {
   });
 
   it("uses retryAfterMs when provided", async () => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     const fn = mock().mockRejectedValueOnce(new Error("boom")).mockResolvedValueOnce("ok");
     const delays: number[] = [];
     const promise = retryAsync(fn, {
@@ -64,11 +64,11 @@ describe("retryAsync", () => {
     await vi.runAllTimersAsync();
     await expect(promise).resolves.toBe("ok");
     expect(delays[0]).toBe(500);
-    // TODO: Restore real timers;
+    vi.useRealTimers();
   });
 
   it("clamps retryAfterMs to maxDelayMs", async () => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     const fn = mock().mockRejectedValueOnce(new Error("boom")).mockResolvedValueOnce("ok");
     const delays: number[] = [];
     const promise = retryAsync(fn, {
@@ -82,6 +82,6 @@ describe("retryAsync", () => {
     await vi.runAllTimersAsync();
     await expect(promise).resolves.toBe("ok");
     expect(delays[0]).toBe(100);
-    // TODO: Restore real timers;
+    vi.useRealTimers();
   });
 });

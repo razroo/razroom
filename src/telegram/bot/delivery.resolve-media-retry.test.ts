@@ -56,13 +56,13 @@ function makeCtx(
 
 describe("resolveMedia getFile retry", () => {
   beforeEach(() => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     fetchRemoteMedia.mockReset();
     saveMediaBuffer.mockReset();
   });
 
   afterEach(() => {
-    // TODO: Restore real timers;
+    vi.useRealTimers();
   });
 
   it("retries getFile on transient failure and succeeds on second attempt", async () => {

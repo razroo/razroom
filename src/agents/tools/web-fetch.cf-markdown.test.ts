@@ -62,7 +62,7 @@ describe("web_fetch Cloudflare Markdown for Agents", () => {
     // @ts-expect-error restore
     global.fetch = priorFetch;
     lookupMock.mockReset();
-    // TODO: Review mock restoration;
+    vi.restoreAllMocks();
   });
 
   it("sends Accept header preferring text/markdown", async () => {
