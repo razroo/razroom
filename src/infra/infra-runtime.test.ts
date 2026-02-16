@@ -48,12 +48,16 @@ describe("infra runtime", () => {
   });
 
   describe("createTelegramRetryRunner", () => {
-    afterEach(() => {
-      // TODO: Restore real timers;
+    beforeEach(() => {
+      vi.useFakeTimers();
+    });
+
+    afterEach(async () => {
+      await vi.runOnlyPendingTimersAsync();
+      vi.useRealTimers();
     });
 
     it("retries when custom shouldRetry matches non-telegram error", async () => {
-      // TODO: Implement fake timers for Bun;
       const runner = createTelegramRetryRunner({
         retry: { attempts: 2, minDelayMs: 0, maxDelayMs: 0, jitter: 0 },
         shouldRetry: (err) => err instanceof Error && err.message === "boom",
@@ -71,14 +75,14 @@ describe("infra runtime", () => {
   describe("restart authorization", () => {
     beforeEach(() => {
       __testing.resetSigusr1State();
-      // TODO: Implement fake timers for Bun;
+      vi.useFakeTimers();
       spyOn(process, "kill").mockImplementation(() => true);
     });
 
     afterEach(async () => {
       await vi.runOnlyPendingTimersAsync();
-      // TODO: Restore real timers;
-      // TODO: Review mock restoration;
+      vi.useRealTimers();
+      vi.restoreAllMocks();
       __testing.resetSigusr1State();
     });
 
@@ -126,25 +130,27 @@ describe("infra runtime", () => {
   describe("pre-restart deferral check", () => {
     beforeEach(() => {
       __testing.resetSigusr1State();
-      // TODO: Implement fake timers for Bun;
+      vi.useFakeTimers();
       spyOn(process, "kill").mockImplementation(() => true);
     });
 
     afterEach(async () => {
       await vi.runOnlyPendingTimersAsync();
-      // TODO: Restore real timers;
-      // TODO: Review mock restoration;
+      vi.useRealTimers();
+      vi.restoreAllMocks();
       __testing.resetSigusr1State();
     });
 
     it("emits SIGUSR1 immediately when no deferral check is registered", async () => {
       const emitSpy = spyOn(process, "emit");
+      const sigusr1EmitCount = () =>
+        emitSpy.mock.calls.filter((args) => args[0] === "SIGUSR1").length;
       const handler = () => {};
       process.on("SIGUSR1", handler);
       try {
         scheduleGatewaySigusr1Restart({ delayMs: 0 });
         await vi.advanceTimersByTimeAsync(0);
-        expect(emitSpy).toHaveBeenCalledWith("SIGUSR1");
+        expect(sigusr1EmitCount()).toBeGreaterThan(0);
       } finally {
         process.removeListener("SIGUSR1", handler);
       }
@@ -152,13 +158,15 @@ describe("infra runtime", () => {
 
     it("emits SIGUSR1 immediately when deferral check returns 0", async () => {
       const emitSpy = spyOn(process, "emit");
+      const sigusr1EmitCount = () =>
+        emitSpy.mock.calls.filter((args) => args[0] === "SIGUSR1").length;
       const handler = () => {};
       process.on("SIGUSR1", handler);
       try {
         setPreRestartDeferralCheck(() => 0);
         scheduleGatewaySigusr1Restart({ delayMs: 0 });
         await vi.advanceTimersByTimeAsync(0);
-        expect(emitSpy).toHaveBeenCalledWith("SIGUSR1");
+        expect(sigusr1EmitCount()).toBeGreaterThan(0);
       } finally {
         process.removeListener("SIGUSR1", handler);
       }
@@ -166,6 +174,8 @@ describe("infra runtime", () => {
 
     it("defers SIGUSR1 until deferral check returns 0", async () => {
       const emitSpy = spyOn(process, "emit");
+      const sigusr1EmitCount = () =>
+        emitSpy.mock.calls.filter((args) => args[0] === "SIGUSR1").length;
       const handler = () => {};
       process.on("SIGUSR1", handler);
       try {
@@ -175,16 +185,16 @@ describe("infra runtime", () => {
 
         // After initial delay fires, deferral check returns 2 — should NOT emit yet
         await vi.advanceTimersByTimeAsync(0);
-        expect(emitSpy).not.toHaveBeenCalledWith("SIGUSR1");
+        expect(sigusr1EmitCount()).toBe(0);
 
         // After one poll (500ms), still pending
         await vi.advanceTimersByTimeAsync(500);
-        expect(emitSpy).not.toHaveBeenCalledWith("SIGUSR1");
+        expect(sigusr1EmitCount()).toBe(0);
 
         // Drain pending work
         pending = 0;
         await vi.advanceTimersByTimeAsync(500);
-        expect(emitSpy).toHaveBeenCalledWith("SIGUSR1");
+        expect(sigusr1EmitCount()).toBeGreaterThan(0);
       } finally {
         process.removeListener("SIGUSR1", handler);
       }
@@ -192,6 +202,8 @@ describe("infra runtime", () => {
 
     it("emits SIGUSR1 after deferral timeout even if still pending", async () => {
       const emitSpy = spyOn(process, "emit");
+      const sigusr1EmitCount = () =>
+        emitSpy.mock.calls.filter((args) => args[0] === "SIGUSR1").length;
       const handler = () => {};
       process.on("SIGUSR1", handler);
       try {
@@ -200,11 +212,11 @@ describe("infra runtime", () => {
 
         // Fire initial timeout
         await vi.advanceTimersByTimeAsync(0);
-        expect(emitSpy).not.toHaveBeenCalledWith("SIGUSR1");
+        expect(sigusr1EmitCount()).toBe(0);
 
         // Advance past the 30s max deferral wait
         await vi.advanceTimersByTimeAsync(30_000);
-        expect(emitSpy).toHaveBeenCalledWith("SIGUSR1");
+        expect(sigusr1EmitCount()).toBeGreaterThan(0);
       } finally {
         process.removeListener("SIGUSR1", handler);
       }
@@ -212,6 +224,8 @@ describe("infra runtime", () => {
 
     it("emits SIGUSR1 if deferral check throws", async () => {
       const emitSpy = spyOn(process, "emit");
+      const sigusr1EmitCount = () =>
+        emitSpy.mock.calls.filter((args) => args[0] === "SIGUSR1").length;
       const handler = () => {};
       process.on("SIGUSR1", handler);
       try {
@@ -220,7 +234,7 @@ describe("infra runtime", () => {
         });
         scheduleGatewaySigusr1Restart({ delayMs: 0 });
         await vi.advanceTimersByTimeAsync(0);
-        expect(emitSpy).toHaveBeenCalledWith("SIGUSR1");
+        expect(sigusr1EmitCount()).toBeGreaterThan(0);
       } finally {
         process.removeListener("SIGUSR1", handler);
       }
