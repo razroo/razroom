@@ -1,5 +1,5 @@
-import type { AnyAgentTool, RazroomPluginApi } from "razroom/plugin-sdk";
-import { emptyPluginConfigSchema } from "razroom/plugin-sdk";
+import type { AnyAgentTool, RazroomPluginApi } from "@razroo/razroom/plugin-sdk";
+import { emptyPluginConfigSchema } from "@razroo/razroom/plugin-sdk";
 import { zalouserDock, zalouserPlugin } from "./src/channel.js";
 import { setZalouserRuntime } from "./src/runtime.js";
 import { ZalouserToolSchema, executeZalouserTool } from "./src/tool.js";

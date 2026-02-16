@@ -1,1 +1,1 @@
-export { promptAccountId } from "razroom/plugin-sdk";
+export { promptAccountId } from "@razroo/razroom/plugin-sdk";

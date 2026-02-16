@@ -1,5 +1,5 @@
 {
-  "name": "@razroom/matrix",
+  "name": "@razroo/matrix",
   "version": "2026.2.15",
   "description": "Razroom Matrix channel plugin",
   "type": "module",
@@ -11,7 +11,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "razroom": "workspace:*"
+    "@razroo/razroom": "workspace:*"
   },
   "razroom": {
     "extensions": [
@@ -28,7 +28,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@razroom/matrix",
+      "npmSpec": "@razroo/matrix",
       "localPath": "extensions/matrix",
       "defaultChoice": "npm"
     }

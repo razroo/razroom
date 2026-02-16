@@ -23,7 +23,7 @@ Razroom.app 不再捆绑 Node/Bun 或 Gateway 网关运行时。macOS 应用期�
 你需要在 Mac 上安装 Node 22+，然后全局安装 `razroom`：
 
 ```bash
-npm install -g razroom@<version>
+npm install -g @razroo/razroom@<version>
 ```
 
 macOS 应用的**安装 CLI**按钮通过 npm/pnpm 运行相同的流程（不推荐使用 bun 作为 Gateway 网关运行时）。

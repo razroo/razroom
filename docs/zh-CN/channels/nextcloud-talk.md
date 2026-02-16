@@ -23,7 +23,7 @@ Nextcloud Talk 以插件形式提供，不包含在核心安装包中。
 通过 CLI 安装（npm 仓库）：
 
 ```bash
-razroom plugins install @razroom/nextcloud-talk
+razroom plugins install @razroo/nextcloud-talk
 ```
 
 本地检出安装（从 git 仓库运行时）：

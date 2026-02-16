@@ -4,8 +4,8 @@ import type {
   ClawdbotConfig,
   DmPolicy,
   WizardPrompter,
-} from "razroom/plugin-sdk";
-import { addWildcardAllowFrom, DEFAULT_ACCOUNT_ID, formatDocsLink } from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
+import { addWildcardAllowFrom, DEFAULT_ACCOUNT_ID, formatDocsLink } from "@razroo/razroom/plugin-sdk";
 import type { FeishuConfig } from "./types.js";
 import { resolveFeishuCredentials } from "./accounts.js";
 import { probeFeishu } from "./probe.js";

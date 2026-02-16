@@ -1,4 +1,4 @@
-import type { RazroomConfig } from "razroom/plugin-sdk";
+import type { RazroomConfig } from "@razroo/razroom/plugin-sdk";
 import {
   createReplyPrefixOptions,
   logAckFailure,
@@ -6,7 +6,7 @@ import {
   logTypingFailure,
   resolveAckReaction,
   resolveControlCommandGate,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import type {
   BlueBubblesCoreRuntime,
   BlueBubblesRuntimeEnv,

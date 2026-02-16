@@ -1,4 +1,4 @@
-import type { ChannelAccountSnapshot, ChannelPlugin, RazroomConfig } from "razroom/plugin-sdk";
+import type { ChannelAccountSnapshot, ChannelPlugin, RazroomConfig } from "@razroo/razroom/plugin-sdk";
 import {
   applyAccountNameToChannelSection,
   buildChannelConfigSchema,
@@ -12,7 +12,7 @@ import {
   resolveBlueBubblesGroupRequireMention,
   resolveBlueBubblesGroupToolPolicy,
   setAccountEnabledInConfigSection,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import {
   listBlueBubblesAccountIds,
   type ResolvedBlueBubblesAccount,

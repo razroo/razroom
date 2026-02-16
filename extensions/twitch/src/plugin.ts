@@ -5,8 +5,8 @@
  * This is the primary entry point for the Twitch channel integration.
  */
 
-import type { RazroomConfig } from "razroom/plugin-sdk";
-import { buildChannelConfigSchema } from "razroom/plugin-sdk";
+import type { RazroomConfig } from "@razroo/razroom/plugin-sdk";
+import { buildChannelConfigSchema } from "@razroo/razroom/plugin-sdk";
 import type {
   ChannelAccountSnapshot,
   ChannelCapabilities,

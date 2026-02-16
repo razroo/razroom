@@ -1,5 +1,5 @@
 {
-  "name": "@razroom/zalouser",
+  "name": "@razroo/zalouser",
   "version": "2026.2.15",
   "description": "Razroom Zalo Personal Account plugin via zca-cli",
   "type": "module",
@@ -7,7 +7,7 @@
     "@sinclair/typebox": "0.34.48"
   },
   "devDependencies": {
-    "razroom": "workspace:*"
+    "@razroo/razroom": "workspace:*"
   },
   "razroom": {
     "extensions": [
@@ -27,7 +27,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@razroom/zalouser",
+      "npmSpec": "@razroo/zalouser",
       "localPath": "extensions/zalouser",
       "defaultChoice": "npm"
     }

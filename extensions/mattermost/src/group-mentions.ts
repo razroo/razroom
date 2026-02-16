@@ -1,4 +1,4 @@
-import type { ChannelGroupContext } from "razroom/plugin-sdk";
+import type { ChannelGroupContext } from "@razroo/razroom/plugin-sdk";
 import { resolveMattermostAccount } from "./mattermost/accounts.js";
 
 export function resolveMattermostGroupRequireMention(

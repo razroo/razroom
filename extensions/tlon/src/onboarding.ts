@@ -1,4 +1,4 @@
-import type { RazroomConfig } from "razroom/plugin-sdk";
+import type { RazroomConfig } from "@razroo/razroom/plugin-sdk";
 import {
   formatDocsLink,
   promptAccountId,
@@ -6,7 +6,7 @@ import {
   normalizeAccountId,
   type ChannelOnboardingAdapter,
   type WizardPrompter,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import type { TlonResolvedAccount } from "./types.js";
 import { listTlonAccountIds, resolveTlonAccount } from "./types.js";
 import { isBlockedUrbitHostname, validateUrbitBaseUrl } from "./urbit/base-url.js";

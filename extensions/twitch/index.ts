@@ -1,5 +1,5 @@
-import type { RazroomPluginApi } from "razroom/plugin-sdk";
-import { emptyPluginConfigSchema } from "razroom/plugin-sdk";
+import type { RazroomPluginApi } from "@razroo/razroom/plugin-sdk";
+import { emptyPluginConfigSchema } from "@razroo/razroom/plugin-sdk";
 import { twitchPlugin } from "./src/plugin.js";
 import { setTwitchRuntime } from "./src/runtime.js";
 

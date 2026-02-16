@@ -5,13 +5,13 @@ import type {
   DmPolicy,
   WizardPrompter,
   MSTeamsTeamConfig,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import {
   addWildcardAllowFrom,
   DEFAULT_ACCOUNT_ID,
   formatDocsLink,
   promptChannelAccessConfig,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import {
   parseMSTeamsTeamEntry,
   resolveMSTeamsChannelAllowlist,

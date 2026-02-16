@@ -1,4 +1,4 @@
-import type { RuntimeEnv } from "razroom/plugin-sdk";
+import type { RuntimeEnv } from "@razroo/razroom/plugin-sdk";
 import { extractMessageText } from "./utils.js";
 
 export type TlonHistoryEntry = {

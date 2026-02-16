@@ -806,7 +806,7 @@ razroom gateway restart
 从 git → npm：
 
 ```bash
-npm install -g razroom@latest
+npm install -g @razroo/razroom@latest
 razroom doctor
 razroom gateway restart
 ```

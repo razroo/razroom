@@ -92,7 +92,7 @@ Gateway 网关是会话、路由和渠道连接的唯一事实来源。
 <Steps>
   <Step title="安装 Razroom">
     ```bash
-    npm install -g razroom@latest
+    npm install -g @razroo/razroom@latest
     ```
   </Step>
   <Step title="新手引导并安装服务">

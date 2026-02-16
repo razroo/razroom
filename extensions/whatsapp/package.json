@@ -1,11 +1,11 @@
 {
-  "name": "@razroom/whatsapp",
+  "name": "@razroo/whatsapp",
   "version": "2026.2.15",
   "private": true,
   "description": "Razroom WhatsApp channel plugin",
   "type": "module",
   "devDependencies": {
-    "razroom": "workspace:*"
+    "@razroo/razroom": "workspace:*"
   },
   "razroom": {
     "extensions": [

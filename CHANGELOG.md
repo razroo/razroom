@@ -814,7 +814,7 @@ Docs: https://docs.razroom.ai
 
 ### Changes
 
-- Rebrand: rename the npm package/CLI to `razroom`, add a `razroom` compatibility shim, and move extensions to the `@razroom/*` scope.
+- Rebrand: rename the npm package/CLI to `razroom`, add a `razroom` compatibility shim, and move extensions to the `@razroo/*` scope.
 - Onboarding: strengthen security warning copy for beta + access control expectations.
 - Onboarding: add Venice API key to non-interactive flow. (#1893) Thanks @jonisjongithub.
 - Config: auto-migrate legacy state/config paths and keep config resolution consistent across legacy filenames.
@@ -1385,7 +1385,7 @@ Thanks @AlexMikhalev, @CoreyH, @John-Rood, @KrauseFx, @MaudeBot, @Nachx639, @Nic
 
 - Hooks: add hooks system with bundled hooks, CLI tooling, and docs. (#1028) — thanks @ThomsenDrake. https://docs.razroom.ai/hooks
 - Media: add inbound media understanding (image/audio/video) with provider + CLI fallbacks. https://docs.razroom.ai/nodes/media-understanding
-- Plugins: add Zalo Personal plugin (`@razroom/zalouser`) and unify channel directory for plugins. (#1032) — thanks @suminhthanh. https://docs.razroom.ai/plugins/zalouser
+- Plugins: add Zalo Personal plugin (`@razroo/zalouser`) and unify channel directory for plugins. (#1032) — thanks @suminhthanh. https://docs.razroom.ai/plugins/zalouser
 - Models: add Vercel AI Gateway auth choice + onboarding updates. (#1016) — thanks @timolins. https://docs.razroom.ai/providers/vercel-ai-gateway
 - Sessions: add `session.identityLinks` for cross-platform DM session li nking. (#1033) — thanks @thewilloftheshadow. https://docs.razroom.ai/concepts/session
 - Web search: add `country`/`language` parameters (schema + Brave API) and docs. (#1046) — thanks @YuriNachos. https://docs.razroom.ai/tools/web
@@ -1502,7 +1502,7 @@ Thanks @AlexMikhalev, @CoreyH, @John-Rood, @KrauseFx, @MaudeBot, @Nachx639, @Nic
 ### Breaking
 
 - **BREAKING:** iOS minimum version is now 18.0 to support Textual markdown rendering in native chat. (#702)
-- **BREAKING:** Microsoft Teams is now a plugin; install `@razroom/msteams` via `razroom plugins install @razroom/msteams`.
+- **BREAKING:** Microsoft Teams is now a plugin; install `@razroo/msteams` via `razroom plugins install @razroo/msteams`.
 - **BREAKING:** Channel auth now prefers config over env for Discord/Telegram/Matrix (env is fallback only). (#1040) — thanks @thewilloftheshadow.
 
 ### Changes

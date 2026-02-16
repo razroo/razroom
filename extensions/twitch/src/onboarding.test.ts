@@ -11,7 +11,7 @@
  * - setTwitchAccount config updates
  */
 
-import type { WizardPrompter } from "razroom/plugin-sdk";
+import type { WizardPrompter } from "@razroo/razroom/plugin-sdk";
 import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import type { TwitchAccountConfig } from "./types.js";
 

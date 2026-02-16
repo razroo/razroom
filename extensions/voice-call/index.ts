@@ -1,4 +1,4 @@
-import type { GatewayRequestHandlerOptions, RazroomPluginApi } from "razroom/plugin-sdk";
+import type { GatewayRequestHandlerOptions, RazroomPluginApi } from "@razroo/razroom/plugin-sdk";
 import { Type } from "@sinclair/typebox";
 import type { CoreConfig } from "./src/core-bridge.js";
 import { registerVoiceCallCli } from "./src/cli.js";

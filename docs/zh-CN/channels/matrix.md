@@ -25,7 +25,7 @@ Matrix 作为插件提供，不包含在核心安装中。
 通过 CLI 安装（npm 仓库）：
 
 ```bash
-razroom plugins install @razroom/matrix
+razroom plugins install @razroo/matrix
 ```
 
 本地检出（从 git 仓库运行时）：
@@ -41,7 +41,7 @@ razroom plugins install ./extensions/matrix
 ## 设置
 
 1. 安装 Matrix 插件：
-   - 从 npm：`razroom plugins install @razroom/matrix`
+   - 从 npm：`razroom plugins install @razroo/matrix`
    - 从本地检出：`razroom plugins install ./extensions/matrix`
 2. 在主服务器上创建 Matrix 账户：
    - 在 [https://matrix.org/ecosystem/hosting/](https://matrix.org/ecosystem/hosting/) 浏览托管选项

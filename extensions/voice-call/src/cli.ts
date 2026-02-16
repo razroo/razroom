@@ -2,7 +2,7 @@ import type { Command } from "commander";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { sleep } from "razroom/plugin-sdk";
+import { sleep } from "@razroo/razroom/plugin-sdk";
 import type { VoiceCallConfig } from "./config.js";
 import type { VoiceCallRuntime } from "./runtime.js";
 import { resolveUserPath } from "./utils.js";

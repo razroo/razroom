@@ -1,4 +1,4 @@
-import type { RazroomConfig } from "razroom/plugin-sdk";
+import type { RazroomConfig } from "@razroo/razroom/plugin-sdk";
 import { describe, expect, it, mock, spyOn, beforeEach } from "bun:test";
 import { bluebubblesMessageActions } from "./actions.js";
 import { getCachedBlueBubblesPrivateApiStatus } from "./probe.js";

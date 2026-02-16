@@ -1,4 +1,4 @@
-import type { RazroomConfig } from "razroom/plugin-sdk";
+import type { RazroomConfig } from "@razroo/razroom/plugin-sdk";
 import { RefreshingAuthProvider, StaticAuthProvider } from "@twurple/auth";
 import { ChatClient, LogLevel } from "@twurple/chat";
 import type { ChannelLogSink, TwitchAccountConfig, TwitchChatMessage } from "./types.js";

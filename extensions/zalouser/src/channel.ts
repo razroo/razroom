@@ -6,7 +6,7 @@ import type {
   ChannelPlugin,
   RazroomConfig,
   GroupToolPolicyConfig,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import {
   applyAccountNameToChannelSection,
   buildChannelConfigSchema,
@@ -19,7 +19,7 @@ import {
   normalizeAccountId,
   resolveChannelAccountConfigBasePath,
   setAccountEnabledInConfigSection,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import type { ZcaFriend, ZcaGroup, ZcaUserInfo } from "./types.js";
 import {
   listZalouserAccountIds,

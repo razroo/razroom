@@ -3,7 +3,7 @@ import {
   parseChatTargetPrefixesOrThrow,
   resolveServicePrefixedAllowTarget,
   resolveServicePrefixedTarget,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 
 export type BlueBubblesService = "imessage" | "sms" | "auto";
 

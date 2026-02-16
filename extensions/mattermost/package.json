@@ -1,11 +1,11 @@
 {
-  "name": "@razroom/mattermost",
+  "name": "@razroo/mattermost",
   "version": "2026.2.15",
   "private": true,
   "description": "Razroom Mattermost channel plugin",
   "type": "module",
   "devDependencies": {
-    "razroom": "workspace:*"
+    "@razroo/razroom": "workspace:*"
   },
   "razroom": {
     "extensions": [
@@ -21,7 +21,7 @@
       "order": 65
     },
     "install": {
-      "npmSpec": "@razroom/mattermost",
+      "npmSpec": "@razroo/mattermost",
       "localPath": "extensions/mattermost",
       "defaultChoice": "npm"
     }

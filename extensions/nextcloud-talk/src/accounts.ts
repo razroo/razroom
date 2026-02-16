@@ -1,5 +1,5 @@
 import { readFileSync } from "node:fs";
-import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "razroom/plugin-sdk/account-id";
+import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "@razroo/razroom/plugin-sdk/account-id";
 import type { CoreConfig, NextcloudTalkAccountConfig } from "./types.js";
 
 function isTruthyEnvValue(value?: string): boolean {

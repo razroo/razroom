@@ -234,9 +234,9 @@ export function loadRazroomPlugins(options: PluginLoadOptions = {}): PluginRegis
       ...(pluginSdkAlias || pluginSdkAccountIdAlias
         ? {
             alias: {
-              ...(pluginSdkAlias ? { "razroom/plugin-sdk": pluginSdkAlias } : {}),
+              ...(pluginSdkAlias ? { "@razroo/razroom/plugin-sdk": pluginSdkAlias } : {}),
               ...(pluginSdkAccountIdAlias
-                ? { "razroom/plugin-sdk/account-id": pluginSdkAccountIdAlias }
+                ? { "@razroo/razroom/plugin-sdk/account-id": pluginSdkAccountIdAlias }
                 : {}),
             },
           }

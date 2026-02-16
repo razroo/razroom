@@ -1,4 +1,4 @@
-import type { SsrFPolicy } from "razroom/plugin-sdk";
+import type { SsrFPolicy } from "@razroo/razroom/plugin-sdk";
 import { validateUrbitBaseUrl } from "./base-url.js";
 import { UrbitUrlError } from "./errors.js";
 

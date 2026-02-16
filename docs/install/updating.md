@@ -31,7 +31,7 @@ Notes:
 
   The installer will `git pull --rebase` **only** if the repo is clean.
 
-- For **global installs**, the script uses `npm install -g razroom@latest` under the hood.
+- For **global installs**, the script uses `npm install -g @razroo/razroom@latest` under the hood.
 - Legacy note: `razroom` remains available as a compatibility shim.
 
 ## Before you update
@@ -48,11 +48,11 @@ Notes:
 Global install (pick one):
 
 ```bash
-npm i -g razroom@latest
+npm i -g @razroo/razroom@latest
 ```
 
 ```bash
-pnpm add -g razroom@latest
+pnpm add -g @razroo/razroom@latest
 ```
 
 We do **not** recommend Bun for the Gateway runtime (WhatsApp/Telegram bugs).
@@ -184,14 +184,14 @@ Runbook + exact service labels: [Gateway runbook](/gateway)
 Install a known-good version (replace `<version>` with the last working one):
 
 ```bash
-npm i -g razroom@<version>
+npm i -g @razroo/razroom@<version>
 ```
 
 ```bash
-pnpm add -g razroom@<version>
+pnpm add -g @razroo/razroom@<version>
 ```
 
-Tip: to see the current published version, run `npm view razroom version`.
+Tip: to see the current published version, run `npm view @razroo/razroom version`.
 
 Then restart + re-run doctor:
 

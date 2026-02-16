@@ -65,7 +65,7 @@ describe("installPluginFromArchive", () => {
     fs.writeFileSync(
       path.join(pkgDir, "package.json"),
       JSON.stringify({
-        name: "@razroom/voice-call",
+        name: "@razroo/voice-call",
         version: "0.0.1",
         razroom: { extensions: ["./dist/index.js"] },
       }),
@@ -103,7 +103,7 @@ describe("installPluginFromArchive", () => {
     fs.writeFileSync(
       path.join(pkgDir, "package.json"),
       JSON.stringify({
-        name: "@razroom/voice-call",
+        name: "@razroo/voice-call",
         version: "0.0.1",
         razroom: { extensions: ["./dist/index.js"] },
       }),
@@ -145,7 +145,7 @@ describe("installPluginFromArchive", () => {
     zip.file(
       "package/package.json",
       JSON.stringify({
-        name: "@razroom/zipper",
+        name: "@razroo/zipper",
         version: "0.0.1",
         razroom: { extensions: ["./dist/index.js"] },
       }),
@@ -179,7 +179,7 @@ describe("installPluginFromArchive", () => {
     fs.writeFileSync(
       path.join(pkgDir, "package.json"),
       JSON.stringify({
-        name: "@razroom/voice-call",
+        name: "@razroo/voice-call",
         version: "0.0.1",
         razroom: { extensions: ["./dist/index.js"] },
       }),
@@ -197,7 +197,7 @@ describe("installPluginFromArchive", () => {
       fs.writeFileSync(
         path.join(pkgDir, "package.json"),
         JSON.stringify({
-          name: "@razroom/voice-call",
+          name: "@razroo/voice-call",
           version: "0.0.2",
           razroom: { extensions: ["./dist/index.js"] },
         }),
@@ -312,7 +312,7 @@ describe("installPluginFromArchive", () => {
     fs.mkdirSync(pkgDir, { recursive: true });
     fs.writeFileSync(
       path.join(pkgDir, "package.json"),
-      JSON.stringify({ name: "@razroom/nope", version: "0.0.1" }),
+      JSON.stringify({ name: "@razroo/nope", version: "0.0.1" }),
       "utf-8",
     );
 
@@ -457,7 +457,7 @@ describe("installPluginFromDir", () => {
     fs.writeFileSync(
       path.join(pluginDir, "package.json"),
       JSON.stringify({
-        name: "@razroom/test-plugin",
+        name: "@razroo/test-plugin",
         version: "0.0.1",
         razroom: { extensions: ["./dist/index.js"] },
         dependencies: { "left-pad": "1.3.0" },
@@ -501,7 +501,7 @@ describe("installPluginFromNpmSpec", () => {
     fs.writeFileSync(
       path.join(pkgDir, "package.json"),
       JSON.stringify({
-        name: "@razroom/voice-call",
+        name: "@razroo/voice-call",
         version: "0.0.1",
         razroom: { extensions: ["./dist/index.js"] },
       }),
@@ -528,7 +528,7 @@ describe("installPluginFromNpmSpec", () => {
 
     const { installPluginFromNpmSpec } = await import("./install.js");
     const result = await installPluginFromNpmSpec({
-      spec: "@razroom/voice-call@0.0.1",
+      spec: "@razroo/voice-call@0.0.1",
       extensionsDir,
       logger: { info: () => {}, warn: () => {} },
     });
@@ -543,7 +543,7 @@ describe("installPluginFromNpmSpec", () => {
       throw new Error("expected npm pack call");
     }
     const [argv, options] = packCall;
-    expect(argv).toEqual(["npm", "pack", "@razroom/voice-call@0.0.1", "--ignore-scripts"]);
+    expect(argv).toEqual(["npm", "pack", "@razroo/voice-call@0.0.1", "--ignore-scripts"]);
     expect(options?.env).toMatchObject({ NPM_CONFIG_IGNORE_SCRIPTS: "true" });
 
     expect(packTmpDir).not.toBe("");

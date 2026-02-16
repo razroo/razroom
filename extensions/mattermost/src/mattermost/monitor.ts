@@ -4,7 +4,7 @@ import type {
   RazroomConfig,
   ReplyPayload,
   RuntimeEnv,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import {
   buildAgentMediaPayload,
   createReplyPrefixOptions,
@@ -18,7 +18,7 @@ import {
   resolveControlCommandGate,
   resolveChannelMediaMaxBytes,
   type HistoryEntry,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import { getMattermostRuntime } from "../runtime.js";
 import { resolveMattermostAccount } from "./accounts.js";
 import {

@@ -144,7 +144,7 @@ ssh youruser@192.168.64.X
 在 VM 内：
 
 ```bash
-npm install -g razroom@latest
+npm install -g @razroo/razroom@latest
 razroom onboard --install-daemon
 ```
 

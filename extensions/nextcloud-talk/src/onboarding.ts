@@ -8,7 +8,7 @@ import {
   type ChannelOnboardingDmPolicy,
   type RazroomConfig,
   type WizardPrompter,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import type { CoreConfig, DmPolicy } from "./types.js";
 import {
   listNextcloudTalkAccountIds,

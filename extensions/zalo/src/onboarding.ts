@@ -3,13 +3,13 @@ import type {
   ChannelOnboardingDmPolicy,
   RazroomConfig,
   WizardPrompter,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import {
   addWildcardAllowFrom,
   DEFAULT_ACCOUNT_ID,
   normalizeAccountId,
   promptAccountId,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import { listZaloAccountIds, resolveDefaultZaloAccountId, resolveZaloAccount } from "./accounts.js";
 
 const channel = "zalo" as const;

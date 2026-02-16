@@ -1,4 +1,4 @@
-import { isBlockedHostname, isPrivateIpAddress } from "razroom/plugin-sdk";
+import { isBlockedHostname, isPrivateIpAddress } from "@razroo/razroom/plugin-sdk";
 
 export type UrbitBaseUrlValidation =
   | { ok: true; baseUrl: string; hostname: string }

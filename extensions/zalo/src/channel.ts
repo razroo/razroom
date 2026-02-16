@@ -3,7 +3,7 @@ import type {
   ChannelDock,
   ChannelPlugin,
   RazroomConfig,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import {
   applyAccountNameToChannelSection,
   buildChannelConfigSchema,
@@ -17,7 +17,7 @@ import {
   PAIRING_APPROVED_MESSAGE,
   resolveChannelAccountConfigBasePath,
   setAccountEnabledInConfigSection,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import {
   listZaloAccountIds,
   resolveDefaultZaloAccountId,

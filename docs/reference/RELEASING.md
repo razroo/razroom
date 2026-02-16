@@ -69,7 +69,7 @@ When the operator says “release”, immediately do this preflight (no extra qu
 - [ ] Confirm git status is clean; commit and push as needed.
 - [ ] `npm login` (verify 2FA) if needed.
 - [ ] `npm publish --access public` (use `--tag beta` for pre-releases).
-- [ ] Verify the registry: `npm view razroom version`, `npm view razroom dist-tags`, and `npx -y razroom@X.Y.Z --version` (or `--help`).
+- [ ] Verify the registry: `npm view @razroo/razroom version`, `npm view @razroo/razroom dist-tags`, and `npx -y @razroo/razroom@X.Y.Z --version` (or `--help`).
 
 ### Troubleshooting (notes from 2.0.0-beta2 release)
 
@@ -77,7 +77,7 @@ When the operator says “release”, immediately do this preflight (no extra qu
 - **npm auth web loop for dist-tags**: use legacy auth to get an OTP prompt:
   - `NPM_CONFIG_AUTH_TYPE=legacy npm dist-tag add razroom@X.Y.Z latest`
 - **`npx` verification fails with `ECOMPROMISED: Lock compromised`**: retry with a fresh cache:
-  - `NPM_CONFIG_CACHE=/tmp/npm-cache-$(date +%s) npx -y razroom@X.Y.Z --version`
+  - `NPM_CONFIG_CACHE=/tmp/npm-cache-$(date +%s) npx -y @razroo/razroom@X.Y.Z --version`
 - **Tag needs repointing after a late fix**: force-update and push the tag, then ensure the GitHub release assets still match:
   - `git tag -f vX.Y.Z && git push -f origin vX.Y.Z`
 
@@ -87,12 +87,12 @@ When the operator says “release”, immediately do this preflight (no extra qu
 - [ ] Create/refresh the GitHub release for `vX.Y.Z` with **title `razroom X.Y.Z`** (not just the tag); body should include the **full** changelog section for that version (Highlights + Changes + Fixes), inline (no bare links), and **must not repeat the title inside the body**.
 - [ ] Attach artifacts: `npm pack` tarball (optional), `Razroom-X.Y.Z.zip`, and `Razroom-X.Y.Z.dSYM.zip` (if generated).
 - [ ] Commit the updated `appcast.xml` and push it (Sparkle feeds from main).
-- [ ] From a clean temp directory (no `package.json`), run `npx -y razroom@X.Y.Z send --help` to confirm install/CLI entrypoints work.
+- [ ] From a clean temp directory (no `package.json`), run `npx -y @razroo/razroom@X.Y.Z send --help` to confirm install/CLI entrypoints work.
 - [ ] Announce/share release notes.
 
 ## Plugin publish scope (npm)
 
-We only publish **existing npm plugins** under the `@razroom/*` scope. Bundled
+We only publish **existing npm plugins** under the `@razroo/*` scope. Bundled
 plugins that are not on npm stay **disk-tree only** (still shipped in
 `extensions/**`).
 
@@ -104,18 +104,18 @@ Process to derive the list:
 
 Current npm plugin list (update as needed):
 
-- @razroom/bluebubbles
-- @razroom/diagnostics-otel
-- @razroom/discord
-- @razroom/feishu
-- @razroom/lobster
-- @razroom/matrix
-- @razroom/msteams
-- @razroom/nextcloud-talk
-- @razroom/nostr
-- @razroom/voice-call
-- @razroom/zalo
-- @razroom/zalouser
+- @razroo/bluebubbles
+- @razroo/diagnostics-otel
+- @razroo/discord
+- @razroo/feishu
+- @razroo/lobster
+- @razroo/matrix
+- @razroo/msteams
+- @razroo/nextcloud-talk
+- @razroo/nostr
+- @razroo/voice-call
+- @razroo/zalo
+- @razroo/zalouser
 
 Release notes must also call out **new optional bundled plugins** that are **not
 on by default** (example: `tlon`).

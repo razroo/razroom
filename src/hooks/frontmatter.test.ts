@@ -201,7 +201,7 @@ describe("resolveRazroomMetadata", () => {
           events: ["command"],
           install: [
             { id: "bundled", kind: "bundled", label: "Bundled with Razroom" },
-            { id: "npm", kind: "npm", package: "@razroom/hook" },
+            { id: "npm", kind: "npm", package: "@razroo/hook" },
           ],
         },
       }),
@@ -211,7 +211,7 @@ describe("resolveRazroomMetadata", () => {
     expect(result?.install).toHaveLength(2);
     expect(result?.install?.[0].kind).toBe("bundled");
     expect(result?.install?.[1].kind).toBe("npm");
-    expect(result?.install?.[1].package).toBe("@razroom/hook");
+    expect(result?.install?.[1].package).toBe("@razroo/hook");
   });
 
   it("handles os restrictions", () => {

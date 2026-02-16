@@ -1,4 +1,4 @@
-# @razroom/twitch
+# @razroo/twitch
 
 Twitch channel plugin for Razroom.
 
@@ -11,7 +11,7 @@ razroom plugins install ./extensions/twitch
 ## Install (npm)
 
 ```bash
-razroom plugins install @razroom/twitch
+razroom plugins install @razroo/twitch
 ```
 
 Onboarding: select Twitch and confirm the install prompt to fetch the plugin automatically.

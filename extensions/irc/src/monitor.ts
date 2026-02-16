@@ -1,4 +1,4 @@
-import type { RuntimeEnv } from "razroom/plugin-sdk";
+import type { RuntimeEnv } from "@razroo/razroom/plugin-sdk";
 import type { CoreConfig, IrcInboundMessage } from "./types.js";
 import { resolveIrcAccount } from "./accounts.js";
 import { connectIrcClient, type IrcClient } from "./client.js";

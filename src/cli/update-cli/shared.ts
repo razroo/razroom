@@ -39,8 +39,8 @@ export type UpdateWizardOptions = {
 const RAZROOM_REPO_URL = "https://github.com/razroom/razroom.git";
 const MAX_LOG_CHARS = 8000;
 
-export const DEFAULT_PACKAGE_NAME = "razroom";
-const CORE_PACKAGE_NAMES = new Set([DEFAULT_PACKAGE_NAME]);
+export const DEFAULT_PACKAGE_NAME = "@razroo/razroom";
+const CORE_PACKAGE_NAMES = new Set([DEFAULT_PACKAGE_NAME, "razroom"]);
 
 export function normalizeTag(value?: string | null): string | null {
   if (!value) {
@@ -49,6 +49,9 @@ export function normalizeTag(value?: string | null): string | null {
   const trimmed = value.trim();
   if (!trimmed) {
     return null;
+  }
+  if (trimmed.startsWith("@razroo/razroom@")) {
+    return trimmed.slice("@razroo/razroom@".length);
   }
   if (trimmed.startsWith("razroom@")) {
     return trimmed.slice("razroom@".length);

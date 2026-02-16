@@ -7,7 +7,7 @@
  */
 
 import type * as LanceDB from "@lancedb/lancedb";
-import type { RazroomPluginApi } from "razroom/plugin-sdk";
+import type { RazroomPluginApi } from "@razroo/razroom/plugin-sdk";
 import { Type } from "@sinclair/typebox";
 import { randomUUID } from "node:crypto";
 import OpenAI from "openai";

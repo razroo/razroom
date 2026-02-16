@@ -3,7 +3,7 @@ import {
   TtsConfigSchema,
   TtsModeSchema,
   TtsProviderSchema,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import { z } from "zod";
 
 // -----------------------------------------------------------------------------

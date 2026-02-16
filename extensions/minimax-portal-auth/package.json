@@ -1,11 +1,11 @@
 {
-  "name": "@razroom/minimax-portal-auth",
+  "name": "@razroo/minimax-portal-auth",
   "version": "2026.2.15",
   "private": true,
   "description": "Razroom MiniMax Portal OAuth provider plugin",
   "type": "module",
   "devDependencies": {
-    "razroom": "workspace:*"
+    "@razroo/razroom": "workspace:*"
   },
   "razroom": {
     "extensions": [

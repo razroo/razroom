@@ -1,5 +1,5 @@
 import type { MatrixClient } from "@vector-im/matrix-bot-sdk";
-import type { MarkdownTableMode, ReplyPayload, RuntimeEnv } from "razroom/plugin-sdk";
+import type { MarkdownTableMode, ReplyPayload, RuntimeEnv } from "@razroo/razroom/plugin-sdk";
 import { getMatrixRuntime } from "../../runtime.js";
 import { sendMessageMatrix } from "../send.js";
 

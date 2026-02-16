@@ -665,7 +665,7 @@ kill -9 <PID> # 最后手段
 
 ```bash
 razroom --version
-npm install -g razroom@<version>
+npm install -g @razroo/razroom@<version>
 ```
 
 ## 调试模式

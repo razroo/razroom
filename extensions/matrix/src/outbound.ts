@@ -1,4 +1,4 @@
-import type { ChannelOutboundAdapter } from "razroom/plugin-sdk";
+import type { ChannelOutboundAdapter } from "@razroo/razroom/plugin-sdk";
 import { sendMessageMatrix, sendPollMatrix } from "./matrix/send.js";
 import { getMatrixRuntime } from "./runtime.js";
 

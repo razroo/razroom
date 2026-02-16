@@ -1,4 +1,4 @@
-import type { RazroomConfig } from "razroom/plugin-sdk";
+import type { RazroomConfig } from "@razroo/razroom/plugin-sdk";
 import { describe, expect, it, mock, spyOn } from "bun:test";
 
 const probeFeishuMock = vi.hoisted(() => mock());

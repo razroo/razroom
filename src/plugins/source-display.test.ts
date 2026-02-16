@@ -6,10 +6,10 @@ describe("formatPluginSourceForTable", () => {
     const out = formatPluginSourceForTable(
       {
         origin: "bundled",
-        source: "/opt/homebrew/lib/node_modules/razroom/extensions/bluebubbles/index.ts",
+        source: "/opt/homebrew/lib/node_modules/@razroo/razroom/extensions/bluebubbles/index.ts",
       },
       {
-        stock: "/opt/homebrew/lib/node_modules/razroom/extensions",
+        stock: "/opt/homebrew/lib/node_modules/@razroo/razroom/extensions",
         global: "/Users/x/.razroom/extensions",
         workspace: "/Users/x/ws/.razroom/extensions",
       },
@@ -25,7 +25,7 @@ describe("formatPluginSourceForTable", () => {
         source: "/Users/x/ws/.razroom/extensions/matrix/index.ts",
       },
       {
-        stock: "/opt/homebrew/lib/node_modules/razroom/extensions",
+        stock: "/opt/homebrew/lib/node_modules/@razroo/razroom/extensions",
         global: "/Users/x/.razroom/extensions",
         workspace: "/Users/x/ws/.razroom/extensions",
       },
@@ -41,7 +41,7 @@ describe("formatPluginSourceForTable", () => {
         source: "/Users/x/.razroom/extensions/zalo/index.js",
       },
       {
-        stock: "/opt/homebrew/lib/node_modules/razroom/extensions",
+        stock: "/opt/homebrew/lib/node_modules/@razroo/razroom/extensions",
         global: "/Users/x/.razroom/extensions",
         workspace: "/Users/x/ws/.razroom/extensions",
       },

@@ -36,7 +36,7 @@ Nostr 是一个去中心化的社交网络协议。此渠道使 Razroom 能够�
 ### 手动安装
 
 ```bash
-razroom plugins install @razroom/nostr
+razroom plugins install @razroo/nostr
 ```
 
 使用本地 checkout（开发工作流）：

@@ -1,4 +1,4 @@
-import type { RazroomConfig } from "razroom/plugin-sdk";
+import type { RazroomConfig } from "@razroo/razroom/plugin-sdk";
 import crypto from "node:crypto";
 import path from "node:path";
 import { resolveBlueBubblesAccount } from "./accounts.js";

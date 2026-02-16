@@ -1,11 +1,11 @@
 {
-  "name": "@razroom/imessage",
+  "name": "@razroo/imessage",
   "version": "2026.2.15",
   "private": true,
   "description": "Razroom iMessage channel plugin",
   "type": "module",
   "devDependencies": {
-    "razroom": "workspace:*"
+    "@razroo/razroom": "workspace:*"
   },
   "razroom": {
     "extensions": [

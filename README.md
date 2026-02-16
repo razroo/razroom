@@ -47,8 +47,8 @@ Model note: while any model is supported, I strongly recommend **Anthropic Pro/M
 Runtime: **Node ≥22**.
 
 ```bash
-npm install -g razroom@latest
-# or: pnpm add -g razroom@latest
+npm install -g @razroo/razroom@latest
+# or: pnpm add -g @razroo/razroom@latest
 
 razroom onboard --install-daemon
 ```

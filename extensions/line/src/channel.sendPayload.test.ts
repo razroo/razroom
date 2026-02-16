@@ -1,4 +1,4 @@
-import type { RazroomConfig, PluginRuntime } from "razroom/plugin-sdk";
+import type { RazroomConfig, PluginRuntime } from "@razroo/razroom/plugin-sdk";
 import { describe, expect, it, mock, spyOn } from "bun:test";
 import { linePlugin } from "./channel.js";
 import { setLineRuntime } from "./runtime.js";

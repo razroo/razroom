@@ -1,4 +1,4 @@
-import type { ChannelGroupContext, GroupToolPolicyConfig } from "razroom/plugin-sdk";
+import type { ChannelGroupContext, GroupToolPolicyConfig } from "@razroo/razroom/plugin-sdk";
 import type { CoreConfig } from "./types.js";
 import { resolveMatrixAccountConfig } from "./matrix/accounts.js";
 import { resolveMatrixRoomConfig } from "./matrix/monitor/rooms.js";

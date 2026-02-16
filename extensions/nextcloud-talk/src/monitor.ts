@@ -4,7 +4,7 @@ import {
   isRequestBodyLimitError,
   readRequestBodyWithLimit,
   requestBodyErrorToText,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import type {
   CoreConfig,
   NextcloudTalkInboundMessage,

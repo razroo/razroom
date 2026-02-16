@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "razroom/plugin-sdk";
+import type { PluginRuntime } from "@razroo/razroom/plugin-sdk";
 import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import { setMSTeamsRuntime } from "./runtime.js";
 

@@ -22,7 +22,7 @@ Matrix ships as a plugin and is not bundled with the core install.
 Install via CLI (npm registry):
 
 ```bash
-razroom plugins install @razroom/matrix
+razroom plugins install @razroo/matrix
 ```
 
 Local checkout (when running from a git repo):
@@ -39,7 +39,7 @@ Details: [Plugins](/tools/plugin)
 ## Setup
 
 1. Install the Matrix plugin:
-   - From npm: `razroom plugins install @razroom/matrix`
+   - From npm: `razroom plugins install @razroo/matrix`
    - From a local checkout: `razroom plugins install ./extensions/matrix`
 2. Create a Matrix account on a homeserver:
    - Browse hosting options at [https://matrix.org/ecosystem/hosting/](https://matrix.org/ecosystem/hosting/)

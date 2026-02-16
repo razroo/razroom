@@ -2,14 +2,14 @@ import type {
   ChannelMessageActionAdapter,
   ChannelMessageActionName,
   RazroomConfig,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import {
   createActionGate,
   jsonResult,
   readNumberParam,
   readReactionParams,
   readStringParam,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import { listEnabledGoogleChatAccounts, resolveGoogleChatAccount } from "./accounts.js";
 import {
   createGoogleChatReaction,

@@ -1,5 +1,5 @@
-import type { RazroomPluginApi } from "razroom/plugin-sdk";
-import { emptyPluginConfigSchema } from "razroom/plugin-sdk";
+import type { RazroomPluginApi } from "@razroo/razroom/plugin-sdk";
+import { emptyPluginConfigSchema } from "@razroo/razroom/plugin-sdk";
 import { signalPlugin } from "./src/channel.js";
 import { setSignalRuntime } from "./src/runtime.js";
 

@@ -19,9 +19,9 @@
     "useDefineForClassFields": false,
     "paths": {
       "*": ["./*"],
-      "razroom/plugin-sdk": ["./src/plugin-sdk/index.ts"],
-      "razroom/plugin-sdk/*": ["./src/plugin-sdk/*.ts"],
-      "razroom/plugin-sdk/account-id": ["./src/plugin-sdk/account-id.ts"]
+      "@razroo/razroom/plugin-sdk": ["./src/plugin-sdk/index.ts"],
+      "@razroo/razroom/plugin-sdk/*": ["./src/plugin-sdk/*.ts"],
+      "@razroo/razroom/plugin-sdk/account-id": ["./src/plugin-sdk/account-id.ts"]
     }
   },
   "include": ["src/**/*", "ui/**/*", "extensions/**/*"],

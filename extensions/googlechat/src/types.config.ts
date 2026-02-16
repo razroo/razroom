@@ -1,3 +1,3 @@
-import type { GoogleChatAccountConfig, GoogleChatConfig } from "razroom/plugin-sdk";
+import type { GoogleChatAccountConfig, GoogleChatConfig } from "@razroo/razroom/plugin-sdk";
 
 export type { GoogleChatAccountConfig, GoogleChatConfig };

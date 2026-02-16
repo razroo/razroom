@@ -1,4 +1,4 @@
-# @razroom/zalo
+# @razroo/zalo
 
 Zalo channel plugin for Razroom (Bot API).
 
@@ -11,7 +11,7 @@ razroom plugins install ./extensions/zalo
 ## Install (npm)
 
 ```bash
-razroom plugins install @razroom/zalo
+razroom plugins install @razroo/zalo
 ```
 
 Onboarding: select Zalo and confirm the install prompt to fetch the plugin automatically.

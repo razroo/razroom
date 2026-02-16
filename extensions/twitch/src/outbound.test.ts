@@ -9,7 +9,7 @@
  * - Abort signal handling
  */
 
-import type { RazroomConfig } from "razroom/plugin-sdk";
+import type { RazroomConfig } from "@razroo/razroom/plugin-sdk";
 import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import { twitchOutbound } from "./outbound.js";
 

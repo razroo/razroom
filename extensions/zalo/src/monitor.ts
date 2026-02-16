@@ -1,12 +1,12 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
-import type { RazroomConfig, MarkdownTableMode } from "razroom/plugin-sdk";
+import type { RazroomConfig, MarkdownTableMode } from "@razroo/razroom/plugin-sdk";
 import {
   createReplyPrefixOptions,
   normalizeWebhookPath,
   readJsonBodyWithLimit,
   resolveWebhookPath,
   requestBodyErrorToText,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import type { ResolvedZaloAccount } from "./accounts.js";
 import {
   ZaloApiError,

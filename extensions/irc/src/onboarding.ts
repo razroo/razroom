@@ -8,7 +8,7 @@ import {
   type ChannelOnboardingDmPolicy,
   type DmPolicy,
   type WizardPrompter,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import type { CoreConfig, IrcAccountConfig, IrcNickServConfig } from "./types.js";
 import { listIrcAccountIds, resolveDefaultIrcAccountId, resolveIrcAccount } from "./accounts.js";
 import {

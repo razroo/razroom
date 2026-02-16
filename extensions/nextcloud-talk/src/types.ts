@@ -3,7 +3,7 @@ import type {
   DmConfig,
   DmPolicy,
   GroupPolicy,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 
 export type { DmPolicy, GroupPolicy };
 

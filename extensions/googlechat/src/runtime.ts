@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "razroom/plugin-sdk";
+import type { PluginRuntime } from "@razroo/razroom/plugin-sdk";
 
 let runtime: PluginRuntime | null = null;
 

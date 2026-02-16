@@ -3,7 +3,7 @@ import {
   type RazroomPluginApi,
   type ProviderAuthContext,
   type ProviderAuthResult,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 
 const DEFAULT_BASE_URL = "http://localhost:3000/v1";
 const DEFAULT_API_KEY = "n/a";

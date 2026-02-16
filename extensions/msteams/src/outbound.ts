@@ -1,4 +1,4 @@
-import type { ChannelOutboundAdapter } from "razroom/plugin-sdk";
+import type { ChannelOutboundAdapter } from "@razroo/razroom/plugin-sdk";
 import { createMSTeamsPollStoreFs } from "./polls.js";
 import { getMSTeamsRuntime } from "./runtime.js";
 import { sendMessageMSTeams, sendPollMSTeams } from "./send.js";

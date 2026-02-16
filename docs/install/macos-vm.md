@@ -137,7 +137,7 @@ Replace `youruser` with the account you created, and the IP with your VM's IP.
 Inside the VM:
 
 ```bash
-npm install -g razroom@latest
+npm install -g @razroo/razroom@latest
 razroom onboard --install-daemon
 ```
 

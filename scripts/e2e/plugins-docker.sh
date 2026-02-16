@@ -84,7 +84,7 @@ NODE
   mkdir -p "$pack_dir/package"
   cat > "$pack_dir/package/package.json" <<'"'"'JSON'"'"'
 {
-  "name": "@razroom/demo-plugin-tgz",
+  "name": "@razroo/demo-plugin-tgz",
   "version": "0.0.1",
   "razroom": { "extensions": ["./index.js"] }
 }
@@ -131,7 +131,7 @@ NODE
   dir_plugin="$(mktemp -d "/tmp/razroom-plugin-dir.XXXXXX")"
   cat > "$dir_plugin/package.json" <<'"'"'JSON'"'"'
 {
-  "name": "@razroom/demo-plugin-dir",
+  "name": "@razroo/demo-plugin-dir",
   "version": "0.0.1",
   "razroom": { "extensions": ["./index.js"] }
 }
@@ -178,7 +178,7 @@ NODE
   mkdir -p "$file_pack_dir/package"
   cat > "$file_pack_dir/package/package.json" <<'"'"'JSON'"'"'
 {
-  "name": "@razroom/demo-plugin-file",
+  "name": "@razroo/demo-plugin-file",
   "version": "0.0.1",
   "razroom": { "extensions": ["./index.js"] }
 }

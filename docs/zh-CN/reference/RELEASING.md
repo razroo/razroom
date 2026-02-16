@@ -75,7 +75,7 @@ x-i18n:
 - [ ] 确认 git 状态干净；根据需要提交并推送。
 - [ ] 如需要，`npm login`（验证 2FA）。
 - [ ] `npm publish --access public`（预发布版本使用 `--tag beta`）。
-- [ ] 验证注册表：`npm view razroom version`、`npm view razroom dist-tags` 和 `npx -y razroom@X.Y.Z --version`（或 `--help`）。
+- [ ] 验证注册表：`npm view @razroo/razroom version`、`npm view @razroo/razroom dist-tags` 和 `npx -y @razroo/razroom@X.Y.Z --version`（或 `--help`）。
 
 ### 故障排除（来自 2.0.0-beta2 发布的笔记）
 
@@ -83,7 +83,7 @@ x-i18n:
 - **npm auth dist-tags 的 Web 循环**：使用旧版认证以获取 OTP 提示：
   - `NPM_CONFIG_AUTH_TYPE=legacy npm dist-tag add razroom@X.Y.Z latest`
 - **`npx` 验证失败并显示 `ECOMPROMISED: Lock compromised`**：使用新缓存重试：
-  - `NPM_CONFIG_CACHE=/tmp/npm-cache-$(date +%s) npx -y razroom@X.Y.Z --version`
+  - `NPM_CONFIG_CACHE=/tmp/npm-cache-$(date +%s) npx -y @razroo/razroom@X.Y.Z --version`
 - **延迟修复后需要重新指向标签**：强制更新并推送标签，然后确保 GitHub 发布资产仍然匹配：
   - `git tag -f vX.Y.Z && git push -f origin vX.Y.Z`
 
@@ -93,12 +93,12 @@ x-i18n:
 - [ ] 为 `vX.Y.Z` 创建/刷新 GitHub 发布，**标题为 `razroom X.Y.Z`**（不仅仅是标签）；正文应包含该版本的**完整**变更日志部分（亮点 + 更改 + 修复），内联显示（无裸链接），且**不得在正文中重复标题**。
 - [ ] 附加产物：`npm pack` tarball（可选）、`Razroom-X.Y.Z.zip` 和 `Razroom-X.Y.Z.dSYM.zip`（如果生成）。
 - [ ] 提交更新后的 `appcast.xml` 并推送（Sparkle 从 main 获取源）。
-- [ ] 从干净的临时目录（无 `package.json`），运行 `npx -y razroom@X.Y.Z send --help` 确认安装/CLI 入口点正常工作。
+- [ ] 从干净的临时目录（无 `package.json`），运行 `npx -y @razroo/razroom@X.Y.Z send --help` 确认安装/CLI 入口点正常工作。
 - [ ] 宣布/分享发布说明。
 
 ## 插件发布范围（npm）
 
-我们只发布 `@razroom/*` 范围下的**现有 npm 插件**。不在 npm 上的内置插件保持**仅磁盘树**（仍在 `extensions/**` 中发布）。
+我们只发布 `@razroo/*` 范围下的**现有 npm 插件**。不在 npm 上的内置插件保持**仅磁盘树**（仍在 `extensions/**` 中发布）。
 
 获取列表的流程：
 
@@ -108,16 +108,16 @@ x-i18n:
 
 当前 npm 插件列表（根据需要更新）：
 
-- @razroom/bluebubbles
-- @razroom/diagnostics-otel
-- @razroom/discord
-- @razroom/lobster
-- @razroom/matrix
-- @razroom/msteams
-- @razroom/nextcloud-talk
-- @razroom/nostr
-- @razroom/voice-call
-- @razroom/zalo
-- @razroom/zalouser
+- @razroo/bluebubbles
+- @razroo/diagnostics-otel
+- @razroo/discord
+- @razroo/lobster
+- @razroo/matrix
+- @razroo/msteams
+- @razroo/nextcloud-talk
+- @razroo/nostr
+- @razroo/voice-call
+- @razroo/zalo
+- @razroo/zalouser
 
 发布说明还必须标注**默认未启用**的**新可选内置插件**（例如：`tlon`）。

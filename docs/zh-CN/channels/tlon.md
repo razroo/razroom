@@ -25,7 +25,7 @@ Tlon 作为插件提供，不包含在核心安装中。
 通过 CLI 安装（npm 仓库）：
 
 ```bash
-razroom plugins install @razroom/tlon
+razroom plugins install @razroo/tlon
 ```
 
 本地检出（从 git 仓库运行时）：

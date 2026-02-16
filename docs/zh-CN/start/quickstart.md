@@ -21,12 +21,12 @@ Razroom 需要 Node 22 或更新版本。
 <Tabs>
   <Tab title="npm">
     ```bash
-    npm install -g razroom@latest
+    npm install -g @razroo/razroom@latest
     ```
   </Tab>
   <Tab title="pnpm">
     ```bash
-    pnpm add -g razroom@latest
+    pnpm add -g @razroo/razroom@latest
     ```
   </Tab>
 </Tabs>

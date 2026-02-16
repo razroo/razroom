@@ -3,7 +3,7 @@ import {
   type RazroomPluginApi,
   type ProviderAuthContext,
   type ProviderAuthResult,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import { loginMiniMaxPortalOAuth, type MiniMaxRegion } from "./oauth.js";
 
 const PROVIDER_ID = "minimax-portal";

@@ -1,4 +1,4 @@
-import type { BaseProbeResult } from "razroom/plugin-sdk";
+import type { BaseProbeResult } from "@razroo/razroom/plugin-sdk";
 import { StaticAuthProvider } from "@twurple/auth";
 import { ChatClient } from "@twurple/chat";
 import type { TwitchAccountConfig } from "./types.js";

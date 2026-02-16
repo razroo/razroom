@@ -116,7 +116,7 @@ If you used a profile, delete the matching task name and `~\.razroom-<profile>\g
 
 ### Normal install (install.sh / npm / pnpm / bun)
 
-If you used `https://razroom.ai/install.sh` or `install.ps1`, the CLI was installed with `npm install -g razroom@latest`.
+If you used `https://razroom.ai/install.sh` or `install.ps1`, the CLI was installed with `npm install -g @razroo/razroom@latest`.
 Remove it with `npm rm -g razroom` (or `pnpm remove -g` / `bun remove -g` if you installed that way).
 
 ### Source checkout (git clone)

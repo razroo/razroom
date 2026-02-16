@@ -27,7 +27,7 @@ If you use a remote Gateway, install/configure it on the **machine running the G
 ### Option A: install from npm
 
 ```bash
-razroom plugins install @razroom/zalouser
+razroom plugins install @razroo/zalouser
 ```
 
 Restart the Gateway afterwards.

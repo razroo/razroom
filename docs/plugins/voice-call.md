@@ -36,7 +36,7 @@ If you use a remote Gateway, install/configure the plugin on the **machine runni
 ### Option A: install from npm (recommended)
 
 ```bash
-razroom plugins install @razroom/voice-call
+razroom plugins install @razroo/voice-call
 ```
 
 Restart the Gateway afterwards.

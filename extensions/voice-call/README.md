@@ -1,4 +1,4 @@
-# @razroom/voice-call
+# @razroo/voice-call
 
 Official Voice Call plugin for **Razroom**.
 
@@ -17,7 +17,7 @@ Plugin system: `https://docs.razroom.ai/plugin`
 ### Option A: install via Razroom (recommended)
 
 ```bash
-razroom plugins install @razroom/voice-call
+razroom plugins install @razroo/voice-call
 ```
 
 Restart the Gateway afterwards.

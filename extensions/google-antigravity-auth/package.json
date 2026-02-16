@@ -1,11 +1,11 @@
 {
-  "name": "@razroom/google-antigravity-auth",
+  "name": "@razroo/google-antigravity-auth",
   "version": "2026.2.15",
   "private": true,
   "description": "Razroom Google Antigravity OAuth provider plugin",
   "type": "module",
   "devDependencies": {
-    "razroom": "workspace:*"
+    "@razroo/razroom": "workspace:*"
   },
   "razroom": {
     "extensions": [

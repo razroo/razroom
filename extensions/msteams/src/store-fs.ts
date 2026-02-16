@@ -1,7 +1,7 @@
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
-import { safeParseJson } from "razroom/plugin-sdk";
+import { safeParseJson } from "@razroo/razroom/plugin-sdk";
 import { withFileLock as withPathLock } from "./file-lock.js";
 
 const STORE_LOCK_OPTIONS = {

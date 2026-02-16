@@ -1,10 +1,10 @@
 {
-  "name": "@razroom/nextcloud-talk",
+  "name": "@razroo/nextcloud-talk",
   "version": "2026.2.15",
   "description": "Razroom Nextcloud Talk channel plugin",
   "type": "module",
   "devDependencies": {
-    "razroom": "workspace:*"
+    "@razroo/razroom": "workspace:*"
   },
   "razroom": {
     "extensions": [
@@ -25,7 +25,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@razroom/nextcloud-talk",
+      "npmSpec": "@razroo/nextcloud-talk",
       "localPath": "extensions/nextcloud-talk",
       "defaultChoice": "npm"
     }

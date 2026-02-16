@@ -13,7 +13,7 @@ Status: experimental. Direct messages only; groups coming soon per Zalo docs.
 
 Zalo ships as a plugin and is not bundled with the core install.
 
-- Install via CLI: `razroom plugins install @razroom/zalo`
+- Install via CLI: `razroom plugins install @razroo/zalo`
 - Or select **Zalo** during onboarding and confirm the install prompt
 - Details: [Plugins](/tools/plugin)
 
@@ -21,7 +21,7 @@ Zalo ships as a plugin and is not bundled with the core install.
 
 1. Install the Zalo plugin:
    - From a source checkout: `razroom plugins install ./extensions/zalo`
-   - From npm (if published): `razroom plugins install @razroom/zalo`
+   - From npm (if published): `razroom plugins install @razroo/zalo`
    - Or pick **Zalo** in onboarding and confirm the install prompt
 2. Set the token:
    - Env: `ZALO_BOT_TOKEN=...`

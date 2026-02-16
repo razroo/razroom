@@ -2,7 +2,7 @@ import {
   emptyPluginConfigSchema,
   type RazroomPluginApi,
   type ProviderAuthContext,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import { loginQwenPortalOAuth } from "./oauth.js";
 
 const PROVIDER_ID = "qwen-portal";

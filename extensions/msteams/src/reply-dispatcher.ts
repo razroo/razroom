@@ -6,7 +6,7 @@ import {
   type RazroomConfig,
   type MSTeamsReplyStyle,
   type RuntimeEnv,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import type { MSTeamsAccessTokenProvider } from "./attachments/types.js";
 import type { StoredConversationReference } from "./conversation-store.js";
 import type { MSTeamsMonitorLogger } from "./monitor-types.js";

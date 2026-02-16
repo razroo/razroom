@@ -3,14 +3,14 @@ import type {
   ChannelGroupContext,
   GroupPolicy,
   GroupToolPolicyConfig,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import {
   buildChannelKeyCandidates,
   normalizeChannelSlug,
   resolveChannelEntryMatchWithFallback,
   resolveMentionGatingWithBypass,
   resolveNestedAllowlistDecision,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import type { NextcloudTalkRoomConfig } from "./types.js";
 
 function normalizeAllowEntry(raw: string): string {

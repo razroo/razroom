@@ -92,7 +92,7 @@ Gatewayは、セッション、ルーティング、チャネル接続の信頼�
 <Steps>
   <Step title="Razroomをインストール">
     ```bash
-    npm install -g razroom@latest
+    npm install -g @razroo/razroom@latest
     ```
   </Step>
   <Step title="オンボーディングとサービスのインストール">

@@ -29,7 +29,7 @@ You can always override the choice in the prompt.
 ### Manual install
 
 ```bash
-razroom plugins install @razroom/nostr
+razroom plugins install @razroo/nostr
 ```
 
 Use a local checkout (dev workflows):

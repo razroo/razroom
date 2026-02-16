@@ -1,11 +1,11 @@
 {
-  "name": "@razroom/line",
+  "name": "@razroo/line",
   "version": "2026.2.15",
   "private": true,
   "description": "Razroom LINE channel plugin",
   "type": "module",
   "devDependencies": {
-    "razroom": "workspace:*"
+    "@razroo/razroom": "workspace:*"
   },
   "razroom": {
     "extensions": [
@@ -22,7 +22,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@razroom/line",
+      "npmSpec": "@razroo/line",
       "localPath": "extensions/line",
       "defaultChoice": "npm"
     }

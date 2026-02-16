@@ -1,11 +1,11 @@
 {
-  "name": "@razroom/memory-core",
+  "name": "@razroo/memory-core",
   "version": "2026.2.15",
   "private": true,
   "description": "Razroom core memory search plugin",
   "type": "module",
   "devDependencies": {
-    "razroom": "workspace:*"
+    "@razroo/razroom": "workspace:*"
   },
   "peerDependencies": {
     "razroom": ">=2026.1.26"

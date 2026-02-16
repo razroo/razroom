@@ -1,5 +1,5 @@
 import type * as Lark from "@larksuiteoapi/node-sdk";
-import type { RazroomPluginApi } from "razroom/plugin-sdk";
+import type { RazroomPluginApi } from "@razroo/razroom/plugin-sdk";
 import { Type } from "@sinclair/typebox";
 import { Readable } from "stream";
 import { listEnabledFeishuAccounts } from "./accounts.js";

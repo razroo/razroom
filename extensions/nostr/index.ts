@@ -1,5 +1,5 @@
-import type { RazroomPluginApi } from "razroom/plugin-sdk";
-import { emptyPluginConfigSchema } from "razroom/plugin-sdk";
+import type { RazroomPluginApi } from "@razroo/razroom/plugin-sdk";
+import { emptyPluginConfigSchema } from "@razroo/razroom/plugin-sdk";
 import type { NostrProfile } from "./src/config-schema.js";
 import { nostrPlugin } from "./src/channel.js";
 import { createNostrProfileHttpHandler } from "./src/nostr-profile-http.js";

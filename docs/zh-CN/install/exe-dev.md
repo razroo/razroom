@@ -118,7 +118,7 @@ server {
 ## 更新
 
 ```bash
-npm i -g razroom@latest
+npm i -g @razroo/razroom@latest
 razroom doctor
 razroom gateway restart
 razroom health

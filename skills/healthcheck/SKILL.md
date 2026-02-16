@@ -199,7 +199,7 @@ If not found, `razroom cron add --name <name> ...`.
 Also offer a periodic version check so the user can decide when to update (numbered):
 
 1. `razroom update status` (preferred for source checkouts and channels)
-2. `npm view razroom version` (published npm version)
+2. `npm view @razroo/razroom version` (published npm version)
 
 ## Razroom command accuracy
 

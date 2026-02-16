@@ -133,7 +133,7 @@
 
 ### Highlights
 
-- First public release of the @razroom/voice-call plugin.
+- First public release of the @razroo/voice-call plugin.
 
 ### Features
 

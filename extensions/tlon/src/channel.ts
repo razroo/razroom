@@ -4,12 +4,12 @@ import type {
   ChannelPlugin,
   ChannelSetupInput,
   RazroomConfig,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import {
   applyAccountNameToChannelSection,
   DEFAULT_ACCOUNT_ID,
   normalizeAccountId,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import { tlonChannelConfigSchema } from "./config-schema.js";
 import { monitorTlonProvider } from "./monitor/index.js";
 import { tlonOnboardingAdapter } from "./onboarding.js";

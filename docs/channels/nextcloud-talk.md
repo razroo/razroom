@@ -16,7 +16,7 @@ Nextcloud Talk ships as a plugin and is not bundled with the core install.
 Install via CLI (npm registry):
 
 ```bash
-razroom plugins install @razroom/nextcloud-talk
+razroom plugins install @razroo/nextcloud-talk
 ```
 
 Local checkout (when running from a git repo):

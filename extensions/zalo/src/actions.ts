@@ -2,8 +2,8 @@ import type {
   ChannelMessageActionAdapter,
   ChannelMessageActionName,
   RazroomConfig,
-} from "razroom/plugin-sdk";
-import { jsonResult, readStringParam } from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
+import { jsonResult, readStringParam } from "@razroo/razroom/plugin-sdk";
 import { listEnabledZaloAccounts } from "./accounts.js";
 import { sendMessageZalo } from "./send.js";
 

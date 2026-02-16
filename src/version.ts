@@ -1,7 +1,7 @@
 import { createRequire } from "node:module";
 
 declare const __RAZROOM_VERSION__: string | undefined;
-const CORE_PACKAGE_NAME = "razroom";
+const CORE_PACKAGE_NAME = "@razroo/razroom";
 
 const PACKAGE_JSON_CANDIDATES = [
   "../package.json",

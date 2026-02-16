@@ -1,5 +1,5 @@
 {
-  "name": "@razroom/tlon",
+  "name": "@razroo/tlon",
   "version": "2026.2.15",
   "private": true,
   "description": "Razroom Tlon/Urbit channel plugin",
@@ -8,7 +8,7 @@
     "@urbit/aura": "^3.0.0"
   },
   "devDependencies": {
-    "razroom": "workspace:*"
+    "@razroo/razroom": "workspace:*"
   },
   "razroom": {
     "extensions": [
@@ -25,7 +25,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@razroom/tlon",
+      "npmSpec": "@razroo/tlon",
       "localPath": "extensions/tlon",
       "defaultChoice": "npm"
     }

@@ -1,4 +1,4 @@
-import type { RazroomConfig } from "razroom/plugin-sdk";
+import type { RazroomConfig } from "@razroo/razroom/plugin-sdk";
 import type { ZaloFetch } from "./api.js";
 import { resolveZaloAccount } from "./accounts.js";
 import { sendMessage, sendPhoto } from "./api.js";

@@ -1,10 +1,10 @@
-import type { ChannelMeta, ChannelPlugin, ClawdbotConfig } from "razroom/plugin-sdk";
+import type { ChannelMeta, ChannelPlugin, ClawdbotConfig } from "@razroo/razroom/plugin-sdk";
 import {
   buildBaseChannelStatusSummary,
   createDefaultChannelRuntimeState,
   DEFAULT_ACCOUNT_ID,
   PAIRING_APPROVED_MESSAGE,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import type { ResolvedFeishuAccount, FeishuConfig } from "./types.js";
 import {
   resolveFeishuAccount,

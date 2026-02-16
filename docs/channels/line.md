@@ -22,7 +22,7 @@ are not supported.
 Install the LINE plugin:
 
 ```bash
-razroom plugins install @razroom/line
+razroom plugins install @razroo/line
 ```
 
 Local checkout (when running from a git repo):

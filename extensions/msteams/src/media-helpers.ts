@@ -8,7 +8,7 @@ import {
   extensionForMime,
   extractOriginalFilename,
   getFileExtension,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 
 /**
  * Detect MIME type from URL extension or data URL.

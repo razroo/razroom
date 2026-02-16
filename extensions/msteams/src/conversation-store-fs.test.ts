@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "razroom/plugin-sdk";
+import type { PluginRuntime } from "@razroo/razroom/plugin-sdk";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

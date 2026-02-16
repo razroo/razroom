@@ -81,7 +81,7 @@ LOGINCTL
   npm install -g --prefix /tmp/npm-prefix "/app/$pkg_tgz"
 
 	  npm_bin="/tmp/npm-prefix/bin/razroom"
-	  npm_root="/tmp/npm-prefix/lib/node_modules/razroom"
+	  npm_root="/tmp/npm-prefix/lib/node_modules/@razroo/razroom"
 	  if [ -f "$npm_root/dist/index.mjs" ]; then
 	    npm_entry="$npm_root/dist/index.mjs"
 	  else

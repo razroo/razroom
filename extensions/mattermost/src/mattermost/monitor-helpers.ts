@@ -1,8 +1,8 @@
-import type { RazroomConfig } from "razroom/plugin-sdk";
+import type { RazroomConfig } from "@razroo/razroom/plugin-sdk";
 import type WebSocket from "ws";
 import { Buffer } from "node:buffer";
 
-export { createDedupeCache } from "razroom/plugin-sdk";
+export { createDedupeCache } from "@razroo/razroom/plugin-sdk";
 
 export type ResponsePrefixContext = {
   model?: string;

@@ -1,1 +1,1 @@
-export * from "razroom";
+export * from "@razroo/razroom";

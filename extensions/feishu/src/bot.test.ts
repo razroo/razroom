@@ -1,4 +1,4 @@
-import type { ClawdbotConfig, PluginRuntime, RuntimeEnv } from "razroom/plugin-sdk";
+import type { ClawdbotConfig, PluginRuntime, RuntimeEnv } from "@razroo/razroom/plugin-sdk";
 import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import type { FeishuMessageEvent } from "./bot.js";
 import { handleFeishuMessage } from "./bot.js";

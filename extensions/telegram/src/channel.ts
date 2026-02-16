@@ -28,7 +28,7 @@ import {
   type RazroomConfig,
   type ResolvedTelegramAccount,
   type TelegramProbe,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import { getTelegramRuntime } from "./runtime.js";
 
 const meta = getChatChannelMeta("telegram");

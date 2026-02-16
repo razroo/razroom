@@ -1,4 +1,4 @@
-import { buildChannelConfigSchema } from "razroom/plugin-sdk";
+import { buildChannelConfigSchema } from "@razroo/razroom/plugin-sdk";
 import { z } from "zod";
 
 const ShipSchema = z.string().min(1);

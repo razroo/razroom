@@ -9,7 +9,7 @@ import {
   type LineConfig,
   type LineChannelData,
   type ResolvedLineAccount,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import { getLineRuntime } from "./runtime.js";
 
 // LINE channel metadata

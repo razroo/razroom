@@ -52,7 +52,7 @@ The macOS app expects a global `razroom` CLI install to manage background tasks.
 Alternatively, install it manually:
 
 ```bash
-npm install -g razroom@<version>
+npm install -g @razroo/razroom@<version>
 ```
 
 ## Troubleshooting

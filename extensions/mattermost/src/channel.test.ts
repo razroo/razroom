@@ -1,5 +1,5 @@
-import type { RazroomConfig } from "razroom/plugin-sdk";
-import { createReplyPrefixOptions } from "razroom/plugin-sdk";
+import type { RazroomConfig } from "@razroo/razroom/plugin-sdk";
+import { createReplyPrefixOptions } from "@razroo/razroom/plugin-sdk";
 import { describe, expect, it } from "bun:test";
 import { mattermostPlugin } from "./channel.js";
 

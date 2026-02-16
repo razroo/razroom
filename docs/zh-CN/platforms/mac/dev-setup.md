@@ -59,7 +59,7 @@ macOS 应用期望全局安装 `razroom` CLI 来管理后台任务。
 或者，手动安装：
 
 ```bash
-npm install -g razroom@<version>
+npm install -g @razroo/razroom@<version>
 ```
 
 ## 故障排除

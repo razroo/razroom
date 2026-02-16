@@ -6,7 +6,7 @@ import {
   type ChannelMessageActionContext,
   type ChannelMessageActionName,
   type ChannelToolSend,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import type { CoreConfig } from "./types.js";
 import { resolveMatrixAccount } from "./matrix/accounts.js";
 import { handleMatrixAction } from "./tool-actions.js";

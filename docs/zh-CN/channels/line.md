@@ -25,7 +25,7 @@ LINE 通过 LINE Messaging API 连接到 Razroom。该插件作为 webhook 接�
 安装 LINE 插件：
 
 ```bash
-razroom plugins install @razroom/line
+razroom plugins install @razroo/line
 ```
 
 本地检出（从 git 仓库运行时）：

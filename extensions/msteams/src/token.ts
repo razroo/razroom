@@ -1,4 +1,4 @@
-import type { MSTeamsConfig } from "razroom/plugin-sdk";
+import type { MSTeamsConfig } from "@razroo/razroom/plugin-sdk";
 
 export type MSTeamsCredentials = {
   appId: string;

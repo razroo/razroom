@@ -1,4 +1,4 @@
-import type { ChannelAccountSnapshot, ChannelStatusIssue } from "razroom/plugin-sdk";
+import type { ChannelAccountSnapshot, ChannelStatusIssue } from "@razroo/razroom/plugin-sdk";
 
 type ZalouserAccountStatus = {
   accountId?: unknown;

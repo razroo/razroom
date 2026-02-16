@@ -2,8 +2,8 @@ import type {
   AllowlistMatch,
   ChannelGroupContext,
   GroupToolPolicyConfig,
-} from "razroom/plugin-sdk";
-import { resolveAllowlistMatchSimple } from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
+import { resolveAllowlistMatchSimple } from "@razroo/razroom/plugin-sdk";
 import type { FeishuConfig, FeishuGroupConfig } from "./types.js";
 
 export type FeishuAllowlistMatch = AllowlistMatch<"wildcard" | "id" | "name">;

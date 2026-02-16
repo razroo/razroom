@@ -1,5 +1,5 @@
 {
-  "name": "@razroom/diagnostics-otel",
+  "name": "@razroo/diagnostics-otel",
   "version": "2026.2.15",
   "description": "Razroom diagnostics OpenTelemetry exporter",
   "type": "module",
@@ -17,7 +17,7 @@
     "@opentelemetry/semantic-conventions": "^1.39.0"
   },
   "devDependencies": {
-    "razroom": "workspace:*"
+    "@razroo/razroom": "workspace:*"
   },
   "razroom": {
     "extensions": [

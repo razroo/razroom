@@ -3,14 +3,14 @@ import type {
   ChannelOnboardingDmPolicy,
   RazroomConfig,
   WizardPrompter,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import {
   addWildcardAllowFrom,
   DEFAULT_ACCOUNT_ID,
   normalizeAccountId,
   promptAccountId,
   promptChannelAccessConfig,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import type { ZcaFriend, ZcaGroup } from "./types.js";
 import {
   listZalouserAccountIds,

@@ -1,4 +1,4 @@
-import { normalizeAccountId } from "razroom/plugin-sdk/account-id";
+import { normalizeAccountId } from "@razroo/razroom/plugin-sdk/account-id";
 import type { CoreConfig } from "../../types.js";
 import type { MatrixActionClient, MatrixActionClientOpts } from "./types.js";
 import { getMatrixRuntime } from "../../runtime.js";

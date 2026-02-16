@@ -38,8 +38,8 @@ Razroom 是 **Pi** 智能体的 WhatsApp + Telegram + Discord + iMessage Gateway
 - 助手的第二个手机号码（SIM/eSIM/预付费）
 
 ```bash
-npm install -g razroom@latest
-# 或：pnpm add -g razroom@latest
+npm install -g @razroo/razroom@latest
+# 或：pnpm add -g @razroo/razroom@latest
 ```
 
 从源代码（开发）：

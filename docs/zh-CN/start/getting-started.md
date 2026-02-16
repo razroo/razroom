@@ -71,11 +71,11 @@ iwr -useb https://razroom.ai/install.ps1 | iex
 替代方案（全局安装）：
 
 ```bash
-npm install -g razroom@latest
+npm install -g @razroo/razroom@latest
 ```
 
 ```bash
-pnpm add -g razroom@latest
+pnpm add -g @razroo/razroom@latest
 ```
 
 ## 2) 运行新手引导向导（并安装服务）

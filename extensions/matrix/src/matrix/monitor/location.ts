@@ -3,7 +3,7 @@ import {
   formatLocationText,
   toLocationContext,
   type NormalizedLocation,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import { EventType } from "./types.js";
 
 export type MatrixLocationPayload = {

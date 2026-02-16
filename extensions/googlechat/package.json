@@ -1,5 +1,5 @@
 {
-  "name": "@razroom/googlechat",
+  "name": "@razroo/googlechat",
   "version": "2026.2.15",
   "private": true,
   "description": "Razroom Google Chat channel plugin",
@@ -8,7 +8,7 @@
     "google-auth-library": "^10.5.0"
   },
   "devDependencies": {
-    "razroom": "workspace:*"
+    "@razroo/razroom": "workspace:*"
   },
   "peerDependencies": {
     "razroom": ">=2026.1.26"
@@ -32,7 +32,7 @@
       "order": 55
     },
     "install": {
-      "npmSpec": "@razroom/googlechat",
+      "npmSpec": "@razroo/googlechat",
       "localPath": "extensions/googlechat",
       "defaultChoice": "npm"
     }

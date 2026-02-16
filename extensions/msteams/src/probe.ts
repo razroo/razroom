@@ -1,4 +1,4 @@
-import type { BaseProbeResult, MSTeamsConfig } from "razroom/plugin-sdk";
+import type { BaseProbeResult, MSTeamsConfig } from "@razroo/razroom/plugin-sdk";
 import { formatUnknownError } from "./errors.js";
 import { loadMSTeamsSdkWithAuth } from "./sdk.js";
 import { resolveMSTeamsCredentials } from "./token.js";

@@ -1,5 +1,5 @@
 {
-  "name": "@razroom/memory-lancedb",
+  "name": "@razroo/memory-lancedb",
   "version": "2026.2.15",
   "private": true,
   "description": "Razroom LanceDB-backed long-term memory plugin with auto-recall/capture",
@@ -10,7 +10,7 @@
     "openai": "^6.22.0"
   },
   "devDependencies": {
-    "razroom": "workspace:*"
+    "@razroo/razroom": "workspace:*"
   },
   "razroom": {
     "extensions": [

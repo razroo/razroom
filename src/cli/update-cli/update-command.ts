@@ -613,7 +613,7 @@ export async function updateCommand(opts: UpdateCommandOptions): Promise<void> {
       );
       defaultRuntime.log(
         theme.muted(
-          `Examples: \`${replaceCliName("npm i -g razroom@latest", CLI_NAME)}\` or \`${replaceCliName("pnpm add -g razroom@latest", CLI_NAME)}\``,
+          `Examples: \`${replaceCliName("npm i -g @razroo/razroom@latest", CLI_NAME)}\` or \`${replaceCliName("pnpm add -g @razroo/razroom@latest", CLI_NAME)}\``,
         ),
       );
     }

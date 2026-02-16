@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
-import type { RazroomConfig } from "razroom/plugin-sdk";
+import type { RazroomConfig } from "@razroo/razroom/plugin-sdk";
 import {
   createReplyPrefixOptions,
   normalizeWebhookPath,
@@ -7,7 +7,7 @@ import {
   resolveWebhookPath,
   requestBodyErrorToText,
   resolveMentionGatingWithBypass,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import type {
   GoogleChatAnnotation,
   GoogleChatAttachment,

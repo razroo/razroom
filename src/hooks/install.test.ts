@@ -157,7 +157,7 @@ describe("installHooksFromPath", () => {
     fs.writeFileSync(
       path.join(pkgDir, "package.json"),
       JSON.stringify({
-        name: "@razroom/test-hooks",
+        name: "@razroo/test-hooks",
         version: "0.0.1",
         razroom: { hooks: ["./hooks/one-hook"] },
         dependencies: { "left-pad": "1.3.0" },
@@ -260,7 +260,7 @@ describe("installHooksFromNpmSpec", () => {
 
     const hooksDir = path.join(stateDir, "hooks");
     const result = await installHooksFromNpmSpec({
-      spec: "@razroom/test-hooks@0.0.1",
+      spec: "@razroo/test-hooks@0.0.1",
       hooksDir,
       logger: { info: () => {}, warn: () => {} },
     });
@@ -280,7 +280,7 @@ describe("installHooksFromNpmSpec", () => {
       throw new Error("expected npm pack call");
     }
     const [argv, options] = packCall;
-    expect(argv).toEqual(["npm", "pack", "@razroom/test-hooks@0.0.1", "--ignore-scripts"]);
+    expect(argv).toEqual(["npm", "pack", "@razroo/test-hooks@0.0.1", "--ignore-scripts"]);
     expect(options?.env).toMatchObject({ NPM_CONFIG_IGNORE_SCRIPTS: "true" });
 
     expect(packTmpDir).not.toBe("");

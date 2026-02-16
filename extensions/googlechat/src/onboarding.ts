@@ -1,4 +1,4 @@
-import type { RazroomConfig, DmPolicy } from "razroom/plugin-sdk";
+import type { RazroomConfig, DmPolicy } from "@razroo/razroom/plugin-sdk";
 import {
   addWildcardAllowFrom,
   formatDocsLink,
@@ -9,7 +9,7 @@ import {
   DEFAULT_ACCOUNT_ID,
   normalizeAccountId,
   migrateBaseNameToDefaultAccount,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import {
   listGoogleChatAccountIds,
   resolveDefaultGoogleChatAccountId,

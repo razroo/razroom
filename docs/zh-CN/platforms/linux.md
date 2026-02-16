@@ -23,7 +23,7 @@ Gateway 网关在 Linux 上完全支持。**Node 是推荐的运行时**。
 ## 新手快速路径（VPS）
 
 1. 安装 Node 22+
-2. `npm i -g razroom@latest`
+2. `npm i -g @razroo/razroom@latest`
 3. `razroom onboard --install-daemon`
 4. 从你的笔记本电脑：`ssh -N -L 18789:127.0.0.1:18789 <user>@<host>`
 5. 打开 `http://127.0.0.1:18789/` 并粘贴你的令牌

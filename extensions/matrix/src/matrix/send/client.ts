@@ -1,5 +1,5 @@
 import type { MatrixClient } from "@vector-im/matrix-bot-sdk";
-import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "razroom/plugin-sdk/account-id";
+import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "@razroo/razroom/plugin-sdk/account-id";
 import type { CoreConfig } from "../../types.js";
 import { getMatrixRuntime } from "../../runtime.js";
 import { getActiveMatrixClient, getAnyActiveMatrixClient } from "../active-client.js";

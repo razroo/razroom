@@ -41,7 +41,7 @@
 
 - Access: stable path is `ssh exe.dev` then `ssh vm-name` (assume SSH key already set).
 - SSH flaky: use exe.dev web terminal or Shelley (web agent); keep a tmux session for long ops.
-- Update: `sudo npm i -g razroom@latest` (global install needs root on `/usr/lib/node_modules`).
+- Update: `sudo npm i -g @razroo/razroom@latest` (global install needs root on `/usr/lib/node_modules`).
 - Config: use `razroom config set ...`; ensure `gateway.mode=local` is set.
 - Discord: store raw token only (no `DISCORD_BOT_TOKEN=` prefix).
 - Restart: stop old gateway and run:

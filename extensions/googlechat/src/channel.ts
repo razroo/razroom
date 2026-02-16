@@ -17,8 +17,8 @@ import {
   type ChannelPlugin,
   type ChannelStatusIssue,
   type RazroomConfig,
-} from "razroom/plugin-sdk";
-import { GoogleChatConfigSchema } from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
+import { GoogleChatConfigSchema } from "@razroo/razroom/plugin-sdk";
 import {
   listGoogleChatAccountIds,
   resolveDefaultGoogleChatAccountId,

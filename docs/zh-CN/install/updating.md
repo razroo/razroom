@@ -33,7 +33,7 @@ curl -fsSL https://razroom.ai/install.sh | bash
   curl -fsSL https://razroom.ai/install.sh | bash -s -- --install-method git --no-onboard
   ```
   安装程序**仅**在仓库干净时才会执行 `git pull --rebase`。
-- 对于**全局安装**，脚本底层使用 `npm install -g razroom@latest`。
+- 对于**全局安装**，脚本底层使用 `npm install -g @razroo/razroom@latest`。
 - 旧版说明：`razroom` 仍可作为兼容性垫片使用。
 
 ## 更新之前
@@ -50,11 +50,11 @@ curl -fsSL https://razroom.ai/install.sh | bash
 全局安装（选择一个）：
 
 ```bash
-npm i -g razroom@latest
+npm i -g @razroo/razroom@latest
 ```
 
 ```bash
-pnpm add -g razroom@latest
+pnpm add -g @razroo/razroom@latest
 ```
 
 我们**不**推荐将 Bun 用于 Gateway 网关运行时（WhatsApp/Telegram 有 bug）。
@@ -186,14 +186,14 @@ razroom logs --follow
 安装已知良好的版本（将 `<version>` 替换为最后可用的版本）：
 
 ```bash
-npm i -g razroom@<version>
+npm i -g @razroo/razroom@<version>
 ```
 
 ```bash
-pnpm add -g razroom@<version>
+pnpm add -g @razroo/razroom@<version>
 ```
 
-提示：要查看当前发布的版本，运行 `npm view razroom version`。
+提示：要查看当前发布的版本，运行 `npm view @razroo/razroom version`。
 
 然后重启 + 重新运行 doctor：
 

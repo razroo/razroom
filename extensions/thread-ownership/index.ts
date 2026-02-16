@@ -1,4 +1,4 @@
-import type { RazroomConfig, RazroomPluginApi } from "razroom/plugin-sdk";
+import type { RazroomConfig, RazroomPluginApi } from "@razroo/razroom/plugin-sdk";
 
 type ThreadOwnershipConfig = {
   forwarderUrl?: string;

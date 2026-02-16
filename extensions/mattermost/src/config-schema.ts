@@ -4,7 +4,7 @@ import {
   GroupPolicySchema,
   MarkdownConfigSchema,
   requireOpenAllowFrom,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import { z } from "zod";
 
 const MattermostAccountSchemaBase = z

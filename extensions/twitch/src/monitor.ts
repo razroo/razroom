@@ -5,8 +5,8 @@
  * resolves agent routes, and handles replies.
  */
 
-import type { ReplyPayload, RazroomConfig } from "razroom/plugin-sdk";
-import { createReplyPrefixOptions } from "razroom/plugin-sdk";
+import type { ReplyPayload, RazroomConfig } from "@razroo/razroom/plugin-sdk";
+import { createReplyPrefixOptions } from "@razroo/razroom/plugin-sdk";
 import type { TwitchAccountConfig, TwitchChatMessage } from "./types.js";
 import { checkTwitchAccessControl } from "./access-control.js";
 import { getOrCreateClientManager } from "./client-manager-registry.js";

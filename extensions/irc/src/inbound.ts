@@ -4,7 +4,7 @@ import {
   resolveControlCommandGate,
   type RazroomConfig,
   type RuntimeEnv,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import type { ResolvedIrcAccount } from "./accounts.js";
 import type { CoreConfig, IrcInboundMessage } from "./types.js";
 import { normalizeIrcAllowlist, resolveIrcAllowlistMatch } from "./normalize.js";

@@ -1,10 +1,10 @@
 {
-  "name": "@razroom/bluebubbles",
+  "name": "@razroo/bluebubbles",
   "version": "2026.2.15",
   "description": "Razroom BlueBubbles channel plugin",
   "type": "module",
   "devDependencies": {
-    "razroom": "workspace:*"
+    "@razroo/razroom": "workspace:*"
   },
   "razroom": {
     "extensions": [
@@ -28,7 +28,7 @@
       "order": 75
     },
     "install": {
-      "npmSpec": "@razroom/bluebubbles",
+      "npmSpec": "@razroo/bluebubbles",
       "localPath": "extensions/bluebubbles",
       "defaultChoice": "npm"
     }

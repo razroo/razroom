@@ -104,7 +104,7 @@ mock("razroom/plugin-sdk", async () => {
   };
 });
 
-import { emitDiagnosticEvent } from "razroom/plugin-sdk";
+import { emitDiagnosticEvent } from "@razroo/razroom/plugin-sdk";
 import { createDiagnosticsOtelService } from "./service.js";
 
 describe("diagnostics-otel service", () => {

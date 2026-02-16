@@ -1,4 +1,4 @@
-import type { LookupFn, SsrFPolicy } from "razroom/plugin-sdk";
+import type { LookupFn, SsrFPolicy } from "@razroo/razroom/plugin-sdk";
 import { Readable } from "node:stream";
 import { ensureUrbitChannelOpen, pokeUrbitChannel, scryUrbitPath } from "./channel-ops.js";
 import { getUrbitContext, normalizeUrbitCookie } from "./context.js";

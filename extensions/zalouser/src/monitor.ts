@@ -1,6 +1,6 @@
 import type { ChildProcess } from "node:child_process";
-import type { RazroomConfig, MarkdownTableMode, RuntimeEnv } from "razroom/plugin-sdk";
-import { createReplyPrefixOptions, mergeAllowlist, summarizeMapping } from "razroom/plugin-sdk";
+import type { RazroomConfig, MarkdownTableMode, RuntimeEnv } from "@razroo/razroom/plugin-sdk";
+import { createReplyPrefixOptions, mergeAllowlist, summarizeMapping } from "@razroo/razroom/plugin-sdk";
 import type { ResolvedZalouserAccount, ZcaFriend, ZcaGroup, ZcaMessage } from "./types.js";
 import { getZalouserRuntime } from "./runtime.js";
 import { sendMessageZalouser } from "./send.js";

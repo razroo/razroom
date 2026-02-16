@@ -1,5 +1,5 @@
-import type { RazroomPluginApi } from "razroom/plugin-sdk";
-import { emptyPluginConfigSchema } from "razroom/plugin-sdk";
+import type { RazroomPluginApi } from "@razroo/razroom/plugin-sdk";
+import { emptyPluginConfigSchema } from "@razroo/razroom/plugin-sdk";
 import { bluebubblesPlugin } from "./src/channel.js";
 import { handleBlueBubblesWebhookRequest } from "./src/monitor.js";
 import { setBlueBubblesRuntime } from "./src/runtime.js";

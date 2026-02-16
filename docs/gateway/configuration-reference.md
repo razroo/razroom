@@ -341,7 +341,7 @@ WhatsApp runs through the gateway's web channel (Baileys Web). It starts automat
 
 ### Mattermost
 
-Mattermost ships as a plugin: `razroom plugins install @razroom/mattermost`.
+Mattermost ships as a plugin: `razroom plugins install @razroo/mattermost`.
 
 ```json5
 {

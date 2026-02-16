@@ -1,11 +1,11 @@
 {
-  "name": "@razroom/telegram",
+  "name": "@razroo/telegram",
   "version": "2026.2.15",
   "private": true,
   "description": "Razroom Telegram channel plugin",
   "type": "module",
   "devDependencies": {
-    "razroom": "workspace:*"
+    "@razroo/razroom": "workspace:*"
   },
   "razroom": {
     "extensions": [

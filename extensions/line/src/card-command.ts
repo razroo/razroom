@@ -1,4 +1,4 @@
-import type { LineChannelData, RazroomPluginApi, ReplyPayload } from "razroom/plugin-sdk";
+import type { LineChannelData, RazroomPluginApi, ReplyPayload } from "@razroo/razroom/plugin-sdk";
 import {
   createActionCard,
   createImageCard,
@@ -7,7 +7,7 @@ import {
   createReceiptCard,
   type CardAction,
   type ListItem,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 
 const CARD_USAGE = `Usage: /card <type> "title" "body" [options]
 

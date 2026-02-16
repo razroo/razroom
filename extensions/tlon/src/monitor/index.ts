@@ -1,6 +1,6 @@
-import type { RuntimeEnv, ReplyPayload, RazroomConfig } from "razroom/plugin-sdk";
+import type { RuntimeEnv, ReplyPayload, RazroomConfig } from "@razroo/razroom/plugin-sdk";
 import { format } from "node:util";
-import { createReplyPrefixOptions } from "razroom/plugin-sdk";
+import { createReplyPrefixOptions } from "@razroo/razroom/plugin-sdk";
 import { getTlonRuntime } from "../runtime.js";
 import { normalizeShip, parseChannelNest } from "../targets.js";
 import { resolveTlonAccount } from "../types.js";

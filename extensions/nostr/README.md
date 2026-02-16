@@ -1,4 +1,4 @@
-# @razroom/nostr
+# @razroo/nostr
 
 Nostr DM channel plugin for Razroom using NIP-04 encrypted direct messages.
 
@@ -13,7 +13,7 @@ This extension adds Nostr as a messaging channel to Razroom. It enables your bot
 ## Installation
 
 ```bash
-razroom plugins install @razroom/nostr
+razroom plugins install @razroo/nostr
 ```
 
 ## Quick Setup

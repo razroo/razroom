@@ -11,6 +11,6 @@
     "./cli-entry": "./bin/razroom.js"
   },
   "dependencies": {
-    "razroom": "workspace:*"
+    "@razroo/razroom": "workspace:*"
   }
 }

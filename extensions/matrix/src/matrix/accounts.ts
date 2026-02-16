@@ -1,4 +1,4 @@
-import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "razroom/plugin-sdk/account-id";
+import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "@razroo/razroom/plugin-sdk/account-id";
 import type { CoreConfig, MatrixConfig } from "../types.js";
 import { resolveMatrixConfigForAccount } from "./client.js";
 import { credentialsMatchConfig, loadMatrixCredentials } from "./credentials.js";

@@ -1,5 +1,5 @@
-import type { RazroomConfig } from "razroom/plugin-sdk";
-import { loadWebMedia, resolveChannelMediaMaxBytes } from "razroom/plugin-sdk";
+import type { RazroomConfig } from "@razroo/razroom/plugin-sdk";
+import { loadWebMedia, resolveChannelMediaMaxBytes } from "@razroo/razroom/plugin-sdk";
 import { createMSTeamsConversationStoreFs } from "./conversation-store-fs.js";
 import {
   classifyMSTeamsSendError,

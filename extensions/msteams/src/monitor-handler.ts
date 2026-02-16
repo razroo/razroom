@@ -1,4 +1,4 @@
-import type { RazroomConfig, RuntimeEnv } from "razroom/plugin-sdk";
+import type { RazroomConfig, RuntimeEnv } from "@razroo/razroom/plugin-sdk";
 import type { MSTeamsConversationStore } from "./conversation-store.js";
 import type { MSTeamsAdapter } from "./messenger.js";
 import type { MSTeamsMonitorLogger } from "./monitor-types.js";

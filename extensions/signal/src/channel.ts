@@ -24,7 +24,7 @@ import {
   type ChannelMessageActionAdapter,
   type ChannelPlugin,
   type ResolvedSignalAccount,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import { getSignalRuntime } from "./runtime.js";
 
 const signalMessageActions: ChannelMessageActionAdapter = {

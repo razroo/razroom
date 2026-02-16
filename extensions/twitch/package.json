@@ -1,5 +1,5 @@
 {
-  "name": "@razroom/twitch",
+  "name": "@razroo/twitch",
   "version": "2026.2.15",
   "private": true,
   "description": "Razroom Twitch channel plugin",
@@ -11,7 +11,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "razroom": "workspace:*"
+    "@razroo/razroom": "workspace:*"
   },
   "razroom": {
     "extensions": [

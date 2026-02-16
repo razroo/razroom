@@ -1,4 +1,4 @@
-import type { BaseProbeResult } from "razroom/plugin-sdk";
+import type { BaseProbeResult } from "@razroo/razroom/plugin-sdk";
 import type {
   BlockStreamingCoalesceConfig,
   DmConfig,
@@ -8,7 +8,7 @@ import type {
   GroupToolPolicyConfig,
   MarkdownConfig,
   RazroomConfig,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 
 export type IrcChannelConfig = {
   requireMention?: boolean;

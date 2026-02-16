@@ -19,7 +19,7 @@ Mattermost ships as a plugin and is not bundled with the core install.
 Install via CLI (npm registry):
 
 ```bash
-razroom plugins install @razroom/mattermost
+razroom plugins install @razroo/mattermost
 ```
 
 Local checkout (when running from a git repo):

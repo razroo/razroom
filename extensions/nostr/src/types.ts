@@ -1,4 +1,4 @@
-import type { RazroomConfig } from "razroom/plugin-sdk";
+import type { RazroomConfig } from "@razroo/razroom/plugin-sdk";
 import type { NostrProfile } from "./config-schema.js";
 import { getPublicKeyFromPrivate } from "./nostr-bus.js";
 import { DEFAULT_RELAYS } from "./nostr-bus.js";

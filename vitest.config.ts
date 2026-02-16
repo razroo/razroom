@@ -11,14 +11,14 @@ const ciWorkers = isWindows ? 2 : 3;
 
 export default defineConfig({
   resolve: {
-    // Keep this ordered: the base `razroom/plugin-sdk` alias is a prefix match.
+    // Keep this ordered: the base `@razroo/razroom/plugin-sdk` alias is a prefix match.
     alias: [
       {
-        find: "razroom/plugin-sdk/account-id",
+        find: "@razroo/razroom/plugin-sdk/account-id",
         replacement: path.join(repoRoot, "src", "plugin-sdk", "account-id.ts"),
       },
       {
-        find: "razroom/plugin-sdk",
+        find: "@razroo/razroom/plugin-sdk",
         replacement: path.join(repoRoot, "src", "plugin-sdk", "index.ts"),
       },
     ],

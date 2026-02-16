@@ -4,14 +4,14 @@ import type {
   RazroomConfig,
   DmPolicy,
   WizardPrompter,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import {
   DEFAULT_ACCOUNT_ID,
   addWildcardAllowFrom,
   formatDocsLink,
   normalizeAccountId,
   promptAccountId,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import {
   listBlueBubblesAccountIds,
   resolveBlueBubblesAccount,

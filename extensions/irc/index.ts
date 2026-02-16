@@ -1,5 +1,5 @@
-import type { ChannelPlugin, RazroomPluginApi } from "razroom/plugin-sdk";
-import { emptyPluginConfigSchema } from "razroom/plugin-sdk";
+import type { ChannelPlugin, RazroomPluginApi } from "@razroo/razroom/plugin-sdk";
+import { emptyPluginConfigSchema } from "@razroo/razroom/plugin-sdk";
 import { ircPlugin } from "./src/channel.js";
 import { setIrcRuntime } from "./src/runtime.js";
 

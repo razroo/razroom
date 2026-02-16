@@ -24,7 +24,7 @@ Explainable: keeps core installs lighter and lets MS Teams dependencies update i
 Install via CLI (npm registry):
 
 ```bash
-razroom plugins install @razroom/msteams
+razroom plugins install @razroo/msteams
 ```
 
 Local checkout (when running from a git repo):
@@ -239,7 +239,7 @@ This is often easier than hand-editing JSON manifests.
 ## Setup (minimal text-only)
 
 1. **Install the Microsoft Teams plugin**
-   - From npm: `razroom plugins install @razroom/msteams`
+   - From npm: `razroom plugins install @razroo/msteams`
    - From a local checkout: `razroom plugins install ./extensions/msteams`
 
 2. **Bot registration**

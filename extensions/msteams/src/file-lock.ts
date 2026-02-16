@@ -1,1 +1,1 @@
-export { withFileLock } from "razroom/plugin-sdk";
+export { withFileLock } from "@razroo/razroom/plugin-sdk";

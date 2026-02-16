@@ -1,4 +1,4 @@
-import type { RazroomConfig } from "razroom/plugin-sdk";
+import type { RazroomConfig } from "@razroo/razroom/plugin-sdk";
 import type { ResolvedBlueBubblesAccount } from "./accounts.js";
 import type { BlueBubblesAccountConfig } from "./types.js";
 import { getBlueBubblesRuntime } from "./runtime.js";

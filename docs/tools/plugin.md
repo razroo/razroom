@@ -28,7 +28,7 @@ razroom plugins list
 2. Install an official plugin (example: Voice Call):
 
 ```bash
-razroom plugins install @razroom/voice-call
+razroom plugins install @razroo/voice-call
 ```
 
 Npm specs are **registry-only** (package name + optional version/tag). Git/URL/file
@@ -40,15 +40,15 @@ See [Voice Call](/plugins/voice-call) for a concrete example plugin.
 
 ## Available plugins (official)
 
-- Microsoft Teams is plugin-only as of 2026.1.15; install `@razroom/msteams` if you use Teams.
+- Microsoft Teams is plugin-only as of 2026.1.15; install `@razroo/msteams` if you use Teams.
 - Memory (Core) — bundled memory search plugin (enabled by default via `plugins.slots.memory`)
 - Memory (LanceDB) — bundled long-term memory plugin (auto-recall/capture; set `plugins.slots.memory = "memory-lancedb"`)
-- [Voice Call](/plugins/voice-call) — `@razroom/voice-call`
-- [Zalo Personal](/plugins/zalouser) — `@razroom/zalouser`
-- [Matrix](/channels/matrix) — `@razroom/matrix`
-- [Nostr](/channels/nostr) — `@razroom/nostr`
-- [Zalo](/channels/zalo) — `@razroom/zalo`
-- [Microsoft Teams](/channels/msteams) — `@razroom/msteams`
+- [Voice Call](/plugins/voice-call) — `@razroo/voice-call`
+- [Zalo Personal](/plugins/zalouser) — `@razroo/zalouser`
+- [Matrix](/channels/matrix) — `@razroo/matrix`
+- [Nostr](/channels/nostr) — `@razroo/nostr`
+- [Zalo](/channels/zalo) — `@razroo/zalo`
+- [Microsoft Teams](/channels/msteams) — `@razroo/msteams`
 - Google Antigravity OAuth (provider auth) — bundled as `google-antigravity-auth` (disabled by default)
 - Gemini CLI OAuth (provider auth) — bundled as `google-gemini-cli-auth` (disabled by default)
 - Qwen OAuth (provider auth) — bundled as `qwen-portal-auth` (disabled by default)
@@ -154,7 +154,7 @@ Example:
 
 ```json
 {
-  "name": "@razroom/nextcloud-talk",
+  "name": "@razroo/nextcloud-talk",
   "razroom": {
     "extensions": ["./index.ts"],
     "channel": {
@@ -168,7 +168,7 @@ Example:
       "aliases": ["nc-talk", "nc"]
     },
     "install": {
-      "npmSpec": "@razroom/nextcloud-talk",
+      "npmSpec": "@razroo/nextcloud-talk",
       "localPath": "extensions/nextcloud-talk",
       "defaultChoice": "npm"
     }
@@ -293,7 +293,7 @@ razroom plugins install ./extensions/voice-call # relative path ok
 razroom plugins install ./plugin.tgz           # install from a local tarball
 razroom plugins install ./plugin.zip           # install from a local zip
 razroom plugins install -l ./extensions/voice-call # link (no copy) for dev
-razroom plugins install @razroom/voice-call # install from npm
+razroom plugins install @razroo/voice-call # install from npm
 razroom plugins update <id>
 razroom plugins update --all
 razroom plugins enable <id>
@@ -320,7 +320,7 @@ event-driven automation without a separate hook pack install.
 ### Example
 
 ```
-import { registerPluginHooksFromDir } from "razroom/plugin-sdk";
+import { registerPluginHooksFromDir } from "@razroo/razroom/plugin-sdk";
 
 export default function register(api) {
   registerPluginHooksFromDir(api, "./hooks");
@@ -632,7 +632,7 @@ it’s present in your workspace/managed skills locations.
 Recommended packaging:
 
 - Main package: `razroom` (this repo)
-- Plugins: separate npm packages under `@razroom/*` (example: `@razroom/voice-call`)
+- Plugins: separate npm packages under `@razroo/*` (example: `@razroo/voice-call`)
 
 Publishing contract:
 

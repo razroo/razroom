@@ -1,7 +1,7 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
-import type { RazroomConfig, PluginRuntime } from "razroom/plugin-sdk";
+import type { RazroomConfig, PluginRuntime } from "@razroo/razroom/plugin-sdk";
 import { EventEmitter } from "node:events";
-import { removeAckReactionAfterReply, shouldAckReaction } from "razroom/plugin-sdk";
+import { removeAckReactionAfterReply, shouldAckReaction } from "@razroo/razroom/plugin-sdk";
 import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import type { ResolvedBlueBubblesAccount } from "./accounts.js";
 import {

@@ -1,4 +1,4 @@
-import type { RuntimeEnv, WizardPrompter } from "razroom/plugin-sdk";
+import type { RuntimeEnv, WizardPrompter } from "@razroo/razroom/plugin-sdk";
 import { describe, expect, it, mock, spyOn } from "bun:test";
 import type { CoreConfig } from "./types.js";
 import { ircOnboardingAdapter } from "./onboarding.js";

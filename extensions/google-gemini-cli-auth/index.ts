@@ -3,7 +3,7 @@ import {
   emptyPluginConfigSchema,
   type RazroomPluginApi,
   type ProviderAuthContext,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import { loginGeminiCliOAuth } from "./oauth.js";
 
 const PROVIDER_ID = "google-gemini-cli";

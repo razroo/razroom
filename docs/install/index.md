@@ -71,7 +71,7 @@ The **installer script** is the recommended way to install Razroom. It handles N
     <Tabs>
       <Tab title="npm">
         ```bash
-        npm install -g razroom@latest
+        npm install -g @razroo/razroom@latest
         razroom onboard --install-daemon
         ```
 
@@ -79,7 +79,7 @@ The **installer script** is the recommended way to install Razroom. It handles N
           If you have libvips installed globally (common on macOS via Homebrew) and `sharp` fails, force prebuilt binaries:
 
           ```bash
-          SHARP_IGNORE_GLOBAL_LIBVIPS=1 npm install -g razroom@latest
+          SHARP_IGNORE_GLOBAL_LIBVIPS=1 npm install -g @razroo/razroom@latest
           ```
 
           If you see `sharp: Please add node-gyp to your dependencies`, either install build tooling (macOS: Xcode CLT + `npm install -g node-gyp`) or use the env var above.
@@ -87,7 +87,7 @@ The **installer script** is the recommended way to install Razroom. It handles N
       </Tab>
       <Tab title="pnpm">
         ```bash
-        pnpm add -g razroom@latest
+        pnpm add -g @razroo/razroom@latest
         pnpm approve-builds -g        # approve razroom, node-llama-cpp, sharp, etc.
         razroom onboard --install-daemon
         ```

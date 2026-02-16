@@ -5,7 +5,7 @@ import {
   type ClawdbotConfig,
   type ReplyPayload,
   type RuntimeEnv,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import type { MentionTarget } from "./mention.js";
 import { resolveFeishuAccount } from "./accounts.js";
 import { createFeishuClient } from "./client.js";

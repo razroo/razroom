@@ -26,7 +26,7 @@ Mattermost 以插件形式提供，不包含在核心安装中。
 通过 CLI 安装（npm 注册表）：
 
 ```bash
-razroom plugins install @razroom/mattermost
+razroom plugins install @razroo/mattermost
 ```
 
 本地检出（从 git 仓库运行时）：

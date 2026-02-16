@@ -1,4 +1,4 @@
-import type { ClawdbotConfig } from "razroom/plugin-sdk";
+import type { ClawdbotConfig } from "@razroo/razroom/plugin-sdk";
 import { resolveFeishuAccount } from "./accounts.js";
 import { createFeishuClient } from "./client.js";
 

@@ -1,6 +1,6 @@
-import type { DmPolicy, GroupPolicy } from "razroom/plugin-sdk";
+import type { DmPolicy, GroupPolicy } from "@razroo/razroom/plugin-sdk";
 
-export type { DmPolicy, GroupPolicy } from "razroom/plugin-sdk";
+export type { DmPolicy, GroupPolicy } from "@razroo/razroom/plugin-sdk";
 
 export type BlueBubblesGroupConfig = {
   /** If true, only respond in this group when mentioned. */

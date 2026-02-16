@@ -28,7 +28,7 @@ import {
   SlackConfigSchema,
   type ChannelPlugin,
   type ResolvedSlackAccount,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import { getSlackRuntime } from "./runtime.js";
 
 const meta = getChatChannelMeta("slack");

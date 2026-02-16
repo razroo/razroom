@@ -1,4 +1,4 @@
-import type { ChannelDirectoryEntry } from "razroom/plugin-sdk";
+import type { ChannelDirectoryEntry } from "@razroo/razroom/plugin-sdk";
 import { describe, expect, it, mock, spyOn, beforeEach } from "bun:test";
 import { listMatrixDirectoryPeersLive } from "./directory-live.js";
 import { resolveMatrixTargets } from "./resolve-targets.js";

@@ -1,6 +1,6 @@
-import type { RazroomPluginApi } from "razroom/plugin-sdk";
+import type { RazroomPluginApi } from "@razroo/razroom/plugin-sdk";
 import os from "node:os";
-import { approveDevicePairing, listDevicePairing } from "razroom/plugin-sdk";
+import { approveDevicePairing, listDevicePairing } from "@razroo/razroom/plugin-sdk";
 
 const DEFAULT_GATEWAY_PORT = 18789;
 

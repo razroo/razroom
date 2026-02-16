@@ -34,7 +34,7 @@ const baseEntry: ChannelPluginCatalogEntry = {
     blurb: "Test",
   },
   install: {
-    npmSpec: "@razroom/zalo",
+    npmSpec: "@razroo/zalo",
     localPath: "extensions/zalo",
   },
 };
@@ -69,10 +69,10 @@ describe("ensureOnboardingPluginInstalled", () => {
     expect(result.cfg.plugins?.entries?.zalo?.enabled).toBe(true);
     expect(result.cfg.plugins?.allow).toContain("zalo");
     expect(result.cfg.plugins?.installs?.zalo?.source).toBe("npm");
-    expect(result.cfg.plugins?.installs?.zalo?.spec).toBe("@razroom/zalo");
+    expect(result.cfg.plugins?.installs?.zalo?.spec).toBe("@razroo/zalo");
     expect(result.cfg.plugins?.installs?.zalo?.installPath).toBe("/tmp/zalo");
     expect(installPluginFromNpmSpec).toHaveBeenCalledWith(
-      expect.objectContaining({ spec: "@razroom/zalo" }),
+      expect.objectContaining({ spec: "@razroo/zalo" }),
     );
   });
 

@@ -220,7 +220,7 @@ razroom hooks install ./my-hook-pack
 razroom hooks install ./my-hook-pack.zip
 
 # NPM 包
-razroom hooks install @razroom/my-hook-pack
+razroom hooks install @razroo/my-hook-pack
 
 # 链接本地目录而不复制
 razroom hooks install -l ./my-hook-pack

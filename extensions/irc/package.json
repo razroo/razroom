@@ -1,10 +1,10 @@
 {
-  "name": "@razroom/irc",
+  "name": "@razroo/irc",
   "version": "2026.2.15",
   "description": "Razroom IRC channel plugin",
   "type": "module",
   "devDependencies": {
-    "razroom": "workspace:*"
+    "@razroo/razroom": "workspace:*"
   },
   "razroom": {
     "extensions": [

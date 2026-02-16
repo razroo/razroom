@@ -1,5 +1,5 @@
 import type { AddressInfo } from "node:net";
-import type { RazroomConfig, PluginRuntime } from "razroom/plugin-sdk";
+import type { RazroomConfig, PluginRuntime } from "@razroo/razroom/plugin-sdk";
 import { createServer } from "node:http";
 import { describe, expect, it, mock, spyOn } from "bun:test";
 import type { ResolvedZaloAccount } from "./types.js";

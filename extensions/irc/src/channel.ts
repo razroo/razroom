@@ -7,7 +7,7 @@ import {
   setAccountEnabledInConfigSection,
   deleteAccountFromConfigSection,
   type ChannelPlugin,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import type { CoreConfig, IrcProbe } from "./types.js";
 import {
   listIrcAccountIds,

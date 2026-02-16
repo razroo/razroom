@@ -9,7 +9,7 @@ import {
   type PluginRuntime,
   type RuntimeEnv,
   type RuntimeLogger,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import type { CoreConfig, MatrixRoomConfig, ReplyToMode } from "../../types.js";
 import type { MatrixRawEvent, RoomMessageEventContent } from "./types.js";
 import { fetchEventSummary } from "../actions/summary.js";

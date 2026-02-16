@@ -32,7 +32,7 @@ razroom plugins list
 2. 安装官方插件（例如：Voice Call）：
 
 ```bash
-razroom plugins install @razroom/voice-call
+razroom plugins install @razroo/voice-call
 ```
 
 3. 重启 Gateway 网关，然后在 `plugins.entries.<id>.config` 下配置。
@@ -41,15 +41,15 @@ razroom plugins install @razroom/voice-call
 
 ## 可用插件（官方）
 
-- 从 2026.1.15 起 Microsoft Teams 仅作为插件提供；如果使用 Teams，请安装 `@razroom/msteams`。
+- 从 2026.1.15 起 Microsoft Teams 仅作为插件提供；如果使用 Teams，请安装 `@razroo/msteams`。
 - Memory (Core) — 捆绑的记忆搜索插件（通过 `plugins.slots.memory` 默认启用）
 - Memory (LanceDB) — 捆绑的长期记忆插件（自动召回/捕获；设置 `plugins.slots.memory = "memory-lancedb"`）
-- [Voice Call](/plugins/voice-call) — `@razroom/voice-call`
-- [Zalo Personal](/plugins/zalouser) — `@razroom/zalouser`
-- [Matrix](/channels/matrix) — `@razroom/matrix`
-- [Nostr](/channels/nostr) — `@razroom/nostr`
-- [Zalo](/channels/zalo) — `@razroom/zalo`
-- [Microsoft Teams](/channels/msteams) — `@razroom/msteams`
+- [Voice Call](/plugins/voice-call) — `@razroo/voice-call`
+- [Zalo Personal](/plugins/zalouser) — `@razroo/zalouser`
+- [Matrix](/channels/matrix) — `@razroo/matrix`
+- [Nostr](/channels/nostr) — `@razroo/nostr`
+- [Zalo](/channels/zalo) — `@razroo/zalo`
+- [Microsoft Teams](/channels/msteams) — `@razroo/msteams`
 - Google Antigravity OAuth（提供商认证）— 作为 `google-antigravity-auth` 捆绑（默认禁用）
 - Gemini CLI OAuth（提供商认证）— 作为 `google-gemini-cli-auth` 捆绑（默认禁用）
 - Qwen OAuth（提供商认证）— 作为 `qwen-portal-auth` 捆绑（默认禁用）
@@ -141,7 +141,7 @@ Razroom 按顺序扫描：
 
 ```json
 {
-  "name": "@razroom/nextcloud-talk",
+  "name": "@razroo/nextcloud-talk",
   "razroom": {
     "extensions": ["./index.ts"],
     "channel": {
@@ -155,7 +155,7 @@ Razroom 按顺序扫描：
       "aliases": ["nc-talk", "nc"]
     },
     "install": {
-      "npmSpec": "@razroom/nextcloud-talk",
+      "npmSpec": "@razroo/nextcloud-talk",
       "localPath": "extensions/nextcloud-talk",
       "defaultChoice": "npm"
     }
@@ -271,7 +271,7 @@ razroom plugins install ./extensions/voice-call # relative path ok
 razroom plugins install ./plugin.tgz           # install from a local tarball
 razroom plugins install ./plugin.zip           # install from a local zip
 razroom plugins install -l ./extensions/voice-call # link (no copy) for dev
-razroom plugins install @razroom/voice-call # install from npm
+razroom plugins install @razroo/voice-call # install from npm
 razroom plugins update <id>
 razroom plugins update --all
 razroom plugins enable <id>
@@ -297,7 +297,7 @@ razroom plugins doctor
 ### 示例
 
 ```
-import { registerPluginHooksFromDir } from "razroom/plugin-sdk";
+import { registerPluginHooksFromDir } from "@razroo/razroom/plugin-sdk";
 
 export default function register(api) {
   registerPluginHooksFromDir(api, "./hooks");
@@ -600,7 +600,7 @@ export default function (api) {
 推荐的打包方式：
 
 - 主包：`razroom`（本仓库）
-- 插件：`@razroom/*` 下的独立 npm 包（例如：`@razroom/voice-call`）
+- 插件：`@razroo/*` 下的独立 npm 包（例如：`@razroo/voice-call`）
 
 发布契约：
 

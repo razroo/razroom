@@ -1,4 +1,4 @@
-import type { LookupFn, SsrFPolicy } from "razroom/plugin-sdk";
+import type { LookupFn, SsrFPolicy } from "@razroo/razroom/plugin-sdk";
 import { UrbitAuthError } from "./errors.js";
 import { urbitFetch } from "./fetch.js";
 

@@ -1,5 +1,5 @@
 import type * as Lark from "@larksuiteoapi/node-sdk";
-import type { RazroomPluginApi } from "razroom/plugin-sdk";
+import type { RazroomPluginApi } from "@razroo/razroom/plugin-sdk";
 import { listEnabledFeishuAccounts } from "./accounts.js";
 import { createFeishuClient } from "./client.js";
 import { FeishuDriveSchema, type FeishuDriveParams } from "./drive-schema.js";

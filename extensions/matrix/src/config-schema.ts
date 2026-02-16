@@ -1,4 +1,4 @@
-import { MarkdownConfigSchema, ToolPolicySchema } from "razroom/plugin-sdk";
+import { MarkdownConfigSchema, ToolPolicySchema } from "@razroo/razroom/plugin-sdk";
 import { z } from "zod";
 
 const allowFromEntry = z.union([z.string(), z.number()]);

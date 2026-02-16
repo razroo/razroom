@@ -25,7 +25,7 @@ import {
   type ChannelMessageActionAdapter,
   type ChannelPlugin,
   type ResolvedDiscordAccount,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import { getDiscordRuntime } from "./runtime.js";
 
 const meta = getChatChannelMeta("discord");

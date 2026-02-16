@@ -108,7 +108,7 @@ describe("discoverRazroomPlugins", () => {
     fs.writeFileSync(
       path.join(globalExt, "package.json"),
       JSON.stringify({
-        name: "@razroom/voice-call",
+        name: "@razroo/voice-call",
         razroom: { extensions: ["./src/index.ts"] },
       }),
       "utf-8",
@@ -135,7 +135,7 @@ describe("discoverRazroomPlugins", () => {
     fs.writeFileSync(
       path.join(packDir, "package.json"),
       JSON.stringify({
-        name: "@razroom/demo-plugin-dir",
+        name: "@razroo/demo-plugin-dir",
         razroom: { extensions: ["./index.js"] },
       }),
       "utf-8",

@@ -2,7 +2,7 @@ import {
   resolveChannelMediaMaxBytes,
   type RazroomConfig,
   type PluginRuntime,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import type { MSTeamsAccessTokenProvider } from "./attachments/types.js";
 import type {
   MSTeamsConversationStore,

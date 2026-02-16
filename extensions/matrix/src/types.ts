@@ -1,4 +1,4 @@
-import type { DmPolicy, GroupPolicy } from "razroom/plugin-sdk";
+import type { DmPolicy, GroupPolicy } from "@razroo/razroom/plugin-sdk";
 export type { DmPolicy, GroupPolicy };
 
 export type ReplyToMode = "off" | "first" | "all";

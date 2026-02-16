@@ -43,7 +43,7 @@ Windows (PowerShell) 帮助：
 - 检测操作系统（macOS / Linux / WSL）。
 - 确保 Node.js **22+**（macOS 通过 Homebrew；Linux 通过 NodeSource）。
 - 选择安装方式：
-  - `npm`（默认）：`npm install -g razroom@latest`
+  - `npm`（默认）：`npm install -g @razroo/razroom@latest`
   - `git`：克隆/构建源码检出并安装包装脚本
 - 在 Linux 上：必要时将 npm 前缀切换到 `~/.npm-global`，以避免全局 npm 权限错误。
 - 如果是升级现有安装：运行 `razroom doctor --non-interactive`（尽力执行）。
@@ -95,7 +95,7 @@ curl -fsSL https://razroom.ai/install-cli.sh | bash -s -- --help
 
 - 确保 Node.js **22+**（winget/Chocolatey/Scoop 或手动安装）。
 - 选择安装方式：
-  - `npm`（默认）：`npm install -g razroom@latest`
+  - `npm`（默认）：`npm install -g @razroo/razroom@latest`
   - `git`：克隆/构建源码检出并安装包装脚本
 - 在升级和 git 安装时运行 `razroom doctor --non-interactive`（尽力执行）。
 

@@ -4,7 +4,7 @@
  * Detects and reports configuration issues for Twitch accounts.
  */
 
-import type { ChannelStatusIssue } from "razroom/plugin-sdk";
+import type { ChannelStatusIssue } from "@razroo/razroom/plugin-sdk";
 import type { ChannelAccountSnapshot } from "./types.js";
 import { getAccountConfig } from "./config.js";
 import { resolveTwitchToken } from "./token.js";

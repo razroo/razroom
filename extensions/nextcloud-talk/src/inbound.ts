@@ -4,7 +4,7 @@ import {
   resolveControlCommandGate,
   type RazroomConfig,
   type RuntimeEnv,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import type { ResolvedNextcloudTalkAccount } from "./accounts.js";
 import type { CoreConfig, GroupPolicy, NextcloudTalkInboundMessage } from "./types.js";
 import {

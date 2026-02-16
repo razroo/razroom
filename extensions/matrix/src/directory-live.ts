@@ -1,4 +1,4 @@
-import type { ChannelDirectoryEntry } from "razroom/plugin-sdk";
+import type { ChannelDirectoryEntry } from "@razroo/razroom/plugin-sdk";
 import { resolveMatrixAuth } from "./matrix/client.js";
 
 type MatrixUserResult = {

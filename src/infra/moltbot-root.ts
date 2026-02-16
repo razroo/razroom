@@ -3,7 +3,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-const CORE_PACKAGE_NAMES = new Set(["razroom"]);
+const CORE_PACKAGE_NAMES = new Set(["@razroo/razroom", "razroom"]);
 
 async function readPackageName(dir: string): Promise<string | null> {
   try {

@@ -2,14 +2,14 @@
  * Twitch onboarding adapter for CLI setup wizard.
  */
 
-import type { RazroomConfig } from "razroom/plugin-sdk";
+import type { RazroomConfig } from "@razroo/razroom/plugin-sdk";
 import {
   formatDocsLink,
   promptChannelAccessConfig,
   type ChannelOnboardingAdapter,
   type ChannelOnboardingDmPolicy,
   type WizardPrompter,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import type { TwitchAccountConfig, TwitchRole } from "./types.js";
 import { DEFAULT_ACCOUNT_ID, getAccountConfig } from "./config.js";
 import { isAccountConfigured } from "./utils/twitch.js";

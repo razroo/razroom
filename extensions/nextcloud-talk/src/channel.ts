@@ -9,7 +9,7 @@ import {
   type ChannelPlugin,
   type RazroomConfig,
   type ChannelSetupInput,
-} from "razroom/plugin-sdk";
+} from "@razroo/razroom/plugin-sdk";
 import type { CoreConfig } from "./types.js";
 import {
   listNextcloudTalkAccountIds,

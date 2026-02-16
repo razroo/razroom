@@ -1,4 +1,4 @@
-import type { BaseProbeResult } from "razroom/plugin-sdk";
+import type { BaseProbeResult } from "@razroo/razroom/plugin-sdk";
 import { normalizeMattermostBaseUrl, type MattermostUser } from "./client.js";
 
 export type MattermostProbe = BaseProbeResult & {

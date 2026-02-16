@@ -1,5 +1,5 @@
 {
-  "name": "@razroom/feishu",
+  "name": "@razroo/feishu",
   "version": "2026.2.15",
   "description": "Razroom Feishu/Lark channel plugin (community maintained by @m1heng)",
   "type": "module",
@@ -9,7 +9,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "razroom": "workspace:*"
+    "@razroo/razroom": "workspace:*"
   },
   "razroom": {
     "extensions": [
@@ -29,7 +29,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@razroom/feishu",
+      "npmSpec": "@razroo/feishu",
       "localPath": "extensions/feishu",
       "defaultChoice": "npm"
     }

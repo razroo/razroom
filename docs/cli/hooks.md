@@ -217,7 +217,7 @@ razroom hooks install ./my-hook-pack
 razroom hooks install ./my-hook-pack.zip
 
 # NPM package
-razroom hooks install @razroom/my-hook-pack
+razroom hooks install @razroo/my-hook-pack
 
 # Link a local directory without copying
 razroom hooks install -l ./my-hook-pack

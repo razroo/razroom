@@ -17,7 +17,7 @@ title: 飞书
 安装 Feishu 插件：
 
 ```bash
-razroom plugins install @razroom/feishu
+razroom plugins install @razroo/feishu
 ```
 
 本地 checkout（在 git 仓库内运行）：

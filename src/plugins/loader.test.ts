@@ -177,7 +177,7 @@ describe("loadRazroomPlugins", () => {
     fs.writeFileSync(
       path.join(pluginDir, "package.json"),
       JSON.stringify({
-        name: "@razroom/memory-core",
+        name: "@razroo/memory-core",
         version: "1.2.3",
         description: "Memory plugin package",
         razroom: { extensions: ["./index.js"] },
