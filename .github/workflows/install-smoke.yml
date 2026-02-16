@@ -33,21 +33,13 @@ jobs:
       - name: Checkout CLI
         uses: actions/checkout@v4
 
-      - name: Setup pnpm (npm retry)
-        run: |
-          set -euo pipefail
-          for attempt in 1 2 3; do
-            if npm install --global pnpm@10.23.0; then
-              pnpm --config.package-manager-strict=false -v
-              exit 0
-            fi
-            echo "pnpm install failed (attempt $attempt/3). Retrying..."
-            sleep $((attempt * 10))
-          done
-          exit 1
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
 
-      - name: Install pnpm deps (minimal)
-        run: pnpm install --ignore-scripts --frozen-lockfile --config.package-manager-strict=false
+      - name: Install Bun deps (minimal)
+        run: bun install --ignore-scripts --frozen-lockfile
 
       - name: Run installer docker tests
         env:
@@ -57,4 +49,4 @@ jobs:
           RAZROOM_INSTALL_SMOKE_SKIP_CLI: "1"
           RAZROOM_INSTALL_SMOKE_SKIP_NONROOT: ${{ github.event_name == 'pull_request' && '1' || '0' }}
           RAZROOM_INSTALL_SMOKE_SKIP_PREVIOUS: "1"
-        run: pnpm --config.package-manager-strict=false test:install:smoke
+        run: bun run test:install:smoke
