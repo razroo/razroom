@@ -2,6 +2,7 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitest/config";
+import { bunTestCompatPlugin } from "./test/vitest-bun-compat-plugin.ts";
 
 const repoRoot = path.dirname(fileURLToPath(import.meta.url));
 const isCI = process.env.CI === "true" || process.env.GITHUB_ACTIONS === "true";
@@ -10,6 +11,7 @@ const localWorkers = Math.max(4, Math.min(16, os.cpus().length));
 const ciWorkers = isWindows ? 2 : 3;
 
 export default defineConfig({
+  plugins: [bunTestCompatPlugin()],
   resolve: {
     alias: [
       // Map bun:test imports to our vitest compatibility shim.

@@ -126,11 +126,11 @@ jobs:
 
       - name: Setup Node environment
         uses: ./.github/actions/setup-node-env
-        with:
-          install-bun: "false"
 
       - name: Build dist
         run: pnpm build
+        env:
+          RAZROOM_A2UI_SKIP_MISSING: "1"
 
       - name: Upload dist artifact
         uses: actions/upload-artifact@v4
