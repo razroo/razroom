@@ -7,20 +7,20 @@ import {
 
 describe("diagnostic session state pruning", () => {
   beforeEach(() => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     resetDiagnosticSessionStateForTest();
   });
 
   afterEach(() => {
     resetDiagnosticSessionStateForTest();
-    // TODO: Restore real timers;
+    vi.useRealTimers();
   });
 
   it("evicts stale idle session states", () => {
     getDiagnosticSessionState({ sessionId: "stale-1" });
     expect(getDiagnosticSessionStateCountForTest()).toBe(1);
 
-    // TODO: Advance timers(31 * 60 * 1000);
+    vi.advanceTimersByTime(31 * 60 * 1000);
     getDiagnosticSessionState({ sessionId: "fresh-1" });
 
     expect(getDiagnosticSessionStateCountForTest()).toBe(1);

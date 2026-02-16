@@ -1,4 +1,4 @@
-import { afterEach, beforeAll, describe, expect, it, mock, spyOn } from "bun:test";
+import { afterEach, beforeAll, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 const { getBotInfoMock, MessagingApiClientMock } = vi.hoisted(() => {
   const getBotInfoMock = mock();
   const MessagingApiClientMock = mock(function () {
@@ -13,8 +13,12 @@ mock("@line/bot-sdk", () => ({
 
 let probeLineBot: typeof import("./probe.js").probeLineBot;
 
+beforeEach(() => {
+  vi.useFakeTimers();
+});
+
 afterEach(() => {
-  // TODO: Restore real timers;
+  vi.useRealTimers();
   getBotInfoMock.mockReset();
 });
 
@@ -24,7 +28,6 @@ describe("probeLineBot", () => {
   });
 
   it("returns timeout when bot info stalls", async () => {
-    // TODO: Implement fake timers for Bun;
     getBotInfoMock.mockImplementation(() => new Promise(() => {}));
 
     const probePromise = probeLineBot("token", 10);

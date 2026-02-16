@@ -121,6 +121,7 @@ function appendNodeModulesBinCandidates(
   const nodeModulesDir = parts.slice(0, binIndex).join(path.sep);
   const packageRoot = path.join(nodeModulesDir, binName);
   appendDistCandidates(candidates, seen, packageRoot);
+  appendDistCandidates(candidates, seen, path.join(nodeModulesDir, "@razroo", binName));
 }
 
 function resolveRepoRootForDev(): string {

@@ -337,7 +337,7 @@ describe("retry rate limits", () => {
   });
 
   it("uses retry_after delays when rate limited", async () => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     const setTimeoutSpy = spyOn(global, "setTimeout");
     const { rest, postMock } = makeDiscordRest();
     const rateLimitError = createMockRateLimitError(0.5);
@@ -359,7 +359,7 @@ describe("retry rate limits", () => {
     });
     expect(setTimeoutSpy.mock.calls[0]?.[1]).toBe(500);
     setTimeoutSpy.mockRestore();
-    // TODO: Restore real timers;
+    vi.useRealTimers();
   });
 
   it("stops after max retry attempts", async () => {

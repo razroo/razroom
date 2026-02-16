@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, mock, spyOn } from "bun:test";
+import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import { EventEmitter } from "node:events";
 
 mock("../globals.js", () => ({
@@ -13,6 +13,10 @@ const makeRuntime = () => ({
 });
 
 describe("attachDiscordGatewayLogging", () => {
+  beforeEach(() => {
+    vi.mocked(logVerbose).mockReset();
+  });
+
   afterEach(() => {
     // mock.restore() // TODO: Review mock cleanup;
   });
