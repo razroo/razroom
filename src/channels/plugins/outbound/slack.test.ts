@@ -14,7 +14,9 @@ import { slackOutbound } from "./slack.js";
 
 describe("slack outbound hook wiring", () => {
   beforeEach(() => {
-    // mock.restore() // TODO: Review mock cleanup;
+    vi.mocked(sendMessageSlack).mockClear();
+    vi.mocked(getGlobalHookRunner).mockReset();
+    vi.mocked(getGlobalHookRunner).mockReturnValue(null);
   });
 
   afterEach(() => {

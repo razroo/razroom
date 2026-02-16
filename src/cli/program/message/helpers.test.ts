@@ -58,6 +58,8 @@ describe("runMessageAction", () => {
     hasHooksMock.mockReset().mockReturnValue(false);
     runGatewayStopMock.mockReset().mockResolvedValue(undefined);
     runGlobalGatewayStopSafelyMock.mockClear();
+    runtimeMock.log.mockReset();
+    errorMock.mockReset();
     exitMock.mockReset().mockImplementation((): never => {
       throw new Error("exit");
     });
