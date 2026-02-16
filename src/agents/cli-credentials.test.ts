@@ -8,11 +8,11 @@ const execFileSyncMock = mock();
 
 describe("cli credentials", () => {
   beforeEach(() => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
   });
 
   afterEach(async () => {
-    // TODO: Restore real timers;
+    vi.useRealTimers();
     execSyncMock.mockReset();
     execFileSyncMock.mockReset();
     delete process.env.CODEX_HOME;
@@ -257,7 +257,7 @@ describe("cli credentials", () => {
       execSync: execSyncMock,
     });
 
-    // TODO: Advance timers(15 * 60 * 1000 + 1);
+    vi.advanceTimersByTime(15 * 60 * 1000 + 1);
 
     const second = readClaudeCliCredentialsCached({
       allowKeychainPrompt: true,

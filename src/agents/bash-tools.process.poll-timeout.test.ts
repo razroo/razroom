@@ -36,7 +36,7 @@ function createBackgroundSession(id: string): ProcessSession {
 }
 
 test("process poll waits for completion when timeout is provided", async () => {
-  // TODO: Implement fake timers for Bun;
+  vi.useFakeTimers();
   try {
     const processTool = createProcessTool();
     const sessionId = "sess";
@@ -68,12 +68,12 @@ test("process poll waits for completion when timeout is provided", async () => {
     expect(details.status).toBe("completed");
     expect(details.aggregated ?? "").toContain("done");
   } finally {
-    // TODO: Restore real timers;
+    vi.useRealTimers();
   }
 });
 
 test("process poll accepts string timeout values", async () => {
-  // TODO: Implement fake timers for Bun;
+  vi.useFakeTimers();
   try {
     const processTool = createProcessTool();
     const sessionId = "sess-2";
@@ -95,6 +95,6 @@ test("process poll accepts string timeout values", async () => {
     expect(details.status).toBe("completed");
     expect(details.aggregated ?? "").toContain("done");
   } finally {
-    // TODO: Restore real timers;
+    vi.useRealTimers();
   }
 });

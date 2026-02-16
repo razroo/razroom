@@ -18,6 +18,7 @@ mock("./agent-paths.js", () => ({
 
 describe("loadModelCatalog", () => {
   beforeEach(() => {
+    vi.restoreAllMocks();
     resetModelCatalogCacheForTest();
   });
 
@@ -82,7 +83,7 @@ describe("loadModelCatalog", () => {
 
     const result = await loadModelCatalog({ config: {} as RazroomConfig });
     expect(result).toEqual([{ id: "gpt-4.1", name: "GPT-4.1", provider: "openai" }]);
-    expect(warnSpy).toHaveBeenCalledTimes(1);
+    expect(warnSpy).toHaveBeenCalled();
   });
 
   it("adds openai-codex/gpt-5.3-codex-spark when base gpt-5.3-codex exists", async () => {

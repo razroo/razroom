@@ -79,7 +79,7 @@ describe("gateway --force helpers", () => {
   });
 
   it("retries until the port is free", async () => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     let call = 0;
     (execFileSync as unknown as vi.Mock).mockImplementation(() => {
       call += 1;
@@ -111,11 +111,11 @@ describe("gateway --force helpers", () => {
     expect(res.escalatedToSigkill).toBe(false);
     expect(res.waitedMs).toBeGreaterThan(0);
 
-    // TODO: Restore real timers;
+    vi.useRealTimers();
   });
 
   it("escalates to SIGKILL if SIGTERM doesn't free the port", async () => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     let call = 0;
     (execFileSync as unknown as vi.Mock).mockImplementation(() => {
       call += 1;
@@ -143,6 +143,6 @@ describe("gateway --force helpers", () => {
     expect(killMock).toHaveBeenCalledWith(42, "SIGKILL");
     expect(res.escalatedToSigkill).toBe(true);
 
-    // TODO: Restore real timers;
+    vi.useRealTimers();
   });
 });

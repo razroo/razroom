@@ -51,11 +51,15 @@ function buildSnapshot(params: {
 
 describe("config cli", () => {
   beforeEach(() => {
-    // mock.restore() // TODO: Review mock cleanup;
+    mockReadConfigFileSnapshot.mockReset();
+    mockWriteConfigFile.mockReset();
+    mockLog.mockReset();
+    mockError.mockReset();
+    mockExit.mockReset();
   });
 
   afterEach(() => {
-    // TODO: Review mock restoration;
+    // no-op
   });
 
   describe("config set - issue #6070", () => {

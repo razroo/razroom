@@ -1,16 +1,19 @@
-import { afterEach, describe, expect, it, mock, spyOn } from "bun:test";
+import { afterEach, beforeEach, describe, expect, it } from "bun:test";
 import {
   compactWithSafetyTimeout,
   EMBEDDED_COMPACTION_TIMEOUT_MS,
 } from "./pi-embedded-runner/compaction-safety-timeout.js";
 
 describe("compactWithSafetyTimeout", () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+
   afterEach(() => {
-    // TODO: Restore real timers;
+    vi.useRealTimers();
   });
 
   it("rejects with timeout when compaction never settles", async () => {
-    // TODO: Implement fake timers for Bun;
     const compactPromise = compactWithSafetyTimeout(() => new Promise<never>(() => {}));
     const timeoutAssertion = expect(compactPromise).rejects.toThrow("Compaction timed out");
 
@@ -20,7 +23,6 @@ describe("compactWithSafetyTimeout", () => {
   });
 
   it("returns result and clears timer when compaction settles first", async () => {
-    // TODO: Implement fake timers for Bun;
     const compactPromise = compactWithSafetyTimeout(
       () => new Promise<string>((resolve) => setTimeout(() => resolve("ok"), 10)),
       30,
@@ -32,7 +34,6 @@ describe("compactWithSafetyTimeout", () => {
   });
 
   it("preserves compaction errors and clears timer", async () => {
-    // TODO: Implement fake timers for Bun;
     const error = new Error("provider exploded");
 
     await expect(
