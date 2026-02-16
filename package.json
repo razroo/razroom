@@ -34,6 +34,9 @@
     },
     "./cli-entry": "./razroom.mjs"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "bun run canvas:a2ui:bundle && bun scripts/build.ts && bun run build:plugin-sdk:dts && bun scripts/write-plugin-sdk-entry-dts.ts && bun scripts/canvas-a2ui-copy.ts && bun scripts/copy-hook-metadata.ts && bun scripts/write-build-info.ts && bun scripts/write-cli-compat.ts",
     "build:plugin-sdk:dts": "tsc -p tsconfig.plugin-sdk.dts.json",
