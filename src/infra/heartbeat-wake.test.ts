@@ -9,17 +9,17 @@ import {
 
 describe("heartbeat-wake", () => {
   beforeEach(() => {
+    vi.useFakeTimers();
     resetHeartbeatWakeStateForTests();
   });
 
   afterEach(() => {
     resetHeartbeatWakeStateForTests();
-    // TODO: Restore real timers;
+    vi.useRealTimers();
     // TODO: Review mock restoration;
   });
 
   it("coalesces multiple wake requests into one run", async () => {
-    // TODO: Implement fake timers for Bun;
     const handler = mock().mockResolvedValue({ status: "skipped", reason: "disabled" });
     setHeartbeatWakeHandler(handler);
 
@@ -39,7 +39,6 @@ describe("heartbeat-wake", () => {
   });
 
   it("retries requests-in-flight after the default retry delay", async () => {
-    // TODO: Implement fake timers for Bun;
     const handler = vi
       .fn()
       .mockResolvedValueOnce({ status: "skipped", reason: "requests-in-flight" })
@@ -60,7 +59,6 @@ describe("heartbeat-wake", () => {
   });
 
   it("keeps retry cooldown even when a sooner request arrives", async () => {
-    // TODO: Implement fake timers for Bun;
     const handler = vi
       .fn()
       .mockResolvedValueOnce({ status: "skipped", reason: "requests-in-flight" })
@@ -82,7 +80,6 @@ describe("heartbeat-wake", () => {
   });
 
   it("retries thrown handler errors after the default retry delay", async () => {
-    // TODO: Implement fake timers for Bun;
     const handler = vi
       .fn()
       .mockRejectedValueOnce(new Error("boom"))
@@ -103,7 +100,6 @@ describe("heartbeat-wake", () => {
   });
 
   it("stale disposer does not clear a newer handler", async () => {
-    // TODO: Implement fake timers for Bun;
     const handlerA = mock().mockResolvedValue({ status: "ran", durationMs: 1 });
     const handlerB = mock().mockResolvedValue({ status: "ran", durationMs: 1 });
 
@@ -129,7 +125,6 @@ describe("heartbeat-wake", () => {
   });
 
   it("preempts existing timer when a sooner schedule is requested", async () => {
-    // TODO: Implement fake timers for Bun;
     const handler = mock().mockResolvedValue({ status: "ran", durationMs: 1 });
     setHeartbeatWakeHandler(handler);
 
@@ -146,7 +141,6 @@ describe("heartbeat-wake", () => {
   });
 
   it("keeps existing timer when later schedule is requested", async () => {
-    // TODO: Implement fake timers for Bun;
     const handler = mock().mockResolvedValue({ status: "ran", durationMs: 1 });
     setHeartbeatWakeHandler(handler);
 
@@ -161,7 +155,6 @@ describe("heartbeat-wake", () => {
   });
 
   it("does not downgrade a higher-priority pending reason", async () => {
-    // TODO: Implement fake timers for Bun;
     const handler = mock().mockResolvedValue({ status: "ran", durationMs: 1 });
     setHeartbeatWakeHandler(handler);
 
@@ -174,8 +167,6 @@ describe("heartbeat-wake", () => {
   });
 
   it("resets running/scheduled flags when new handler is registered", async () => {
-    // TODO: Implement fake timers for Bun;
-
     // Simulate a handler that's mid-execution when SIGUSR1 fires.
     // We do this by having the handler hang forever (never resolve).
     let resolveHang: () => void;
@@ -208,7 +199,6 @@ describe("heartbeat-wake", () => {
   });
 
   it("clears stale retry cooldown when a new handler is registered", async () => {
-    // TODO: Implement fake timers for Bun;
     const handlerA = mock().mockResolvedValue({ status: "skipped", reason: "requests-in-flight" });
     setHeartbeatWakeHandler(handlerA);
 
@@ -227,8 +217,6 @@ describe("heartbeat-wake", () => {
   });
 
   it("drains pending wake once a handler is registered", async () => {
-    // TODO: Implement fake timers for Bun;
-
     requestHeartbeatNow({ reason: "manual", coalesceMs: 0 });
     await vi.advanceTimersByTimeAsync(1);
     expect(hasPendingHeartbeatWake()).toBe(true);

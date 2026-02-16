@@ -35,7 +35,7 @@ describe("memory manager sync failures", () => {
   let manager: MemoryIndexManager | null = null;
 
   beforeEach(async () => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-mem-"));
     indexPath = path.join(workspaceDir, "index.sqlite");
     await fs.mkdir(path.join(workspaceDir, "memory"));
@@ -43,7 +43,7 @@ describe("memory manager sync failures", () => {
   });
 
   afterEach(async () => {
-    // TODO: Restore real timers;
+    vi.useRealTimers();
     if (manager) {
       await manager.close();
       manager = null;
@@ -86,7 +86,6 @@ describe("memory manager sync failures", () => {
 
     await vi.runOnlyPendingTimersAsync();
     const syncPromise = syncSpy.mock.results[0]?.value as Promise<void> | undefined;
-    // TODO: Restore real timers;
     if (syncPromise) {
       await syncPromise.catch(() => undefined);
     }

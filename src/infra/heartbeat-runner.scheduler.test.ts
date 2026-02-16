@@ -1,15 +1,18 @@
-import { afterEach, describe, expect, it, mock, spyOn } from "bun:test";
+import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import type { RazroomConfig } from "../config/config.js";
 import { startHeartbeatRunner } from "./heartbeat-runner.js";
 
 describe("startHeartbeatRunner", () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+
   afterEach(() => {
-    // TODO: Restore real timers;
+    vi.useRealTimers();
     // TODO: Review mock restoration;
   });
 
   it("updates scheduling when config changes without restart", async () => {
-    // TODO: Implement fake timers for Bun;
     vi.setSystemTime(new Date(0));
 
     const runSpy = mock().mockResolvedValue({ status: "ran", durationMs: 1 });
@@ -56,7 +59,6 @@ describe("startHeartbeatRunner", () => {
   });
 
   it("continues scheduling after runOnce throws an unhandled error", async () => {
-    // TODO: Implement fake timers for Bun;
     vi.setSystemTime(new Date(0));
 
     let callCount = 0;
@@ -88,7 +90,6 @@ describe("startHeartbeatRunner", () => {
   });
 
   it("cleanup is idempotent and does not clear a newer runner's handler", async () => {
-    // TODO: Implement fake timers for Bun;
     vi.setSystemTime(new Date(0));
 
     const runSpy1 = mock().mockResolvedValue({ status: "ran", durationMs: 1 });
@@ -119,7 +120,6 @@ describe("startHeartbeatRunner", () => {
   });
 
   it("run() returns skipped when runner is stopped", async () => {
-    // TODO: Implement fake timers for Bun;
     vi.setSystemTime(new Date(0));
 
     const runSpy = mock().mockResolvedValue({ status: "ran", durationMs: 1 });
@@ -139,7 +139,6 @@ describe("startHeartbeatRunner", () => {
   });
 
   it("reschedules timer when runOnce returns requests-in-flight", async () => {
-    // TODO: Implement fake timers for Bun;
     vi.setSystemTime(new Date(0));
 
     let callCount = 0;
