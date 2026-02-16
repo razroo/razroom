@@ -78,7 +78,7 @@ mock("../logging/subsystem.js", () => ({
   },
 }));
 
-mock(import("node:child_process"), async (importOriginal) => {
+mock("node:child_process", async (importOriginal) => {
   const actual = await importOriginal<typeof import("node:child_process")>();
   return {
     ...actual,
@@ -301,43 +301,47 @@ describe("QmdMemoryManager", () => {
   });
 
   it("times out qmd update during sync when configured", async () => {
-    // TODO: Implement fake timers for Bun;
-    cfg = {
-      ...cfg,
-      memory: {
-        backend: "qmd",
-        qmd: {
-          includeDefaultMemory: false,
-          update: {
-            interval: "0s",
-            debounceMs: 0,
-            onBoot: false,
-            updateTimeoutMs: 20,
+    vi.useFakeTimers();
+    try {
+      cfg = {
+        ...cfg,
+        memory: {
+          backend: "qmd",
+          qmd: {
+            includeDefaultMemory: false,
+            update: {
+              interval: "0s",
+              debounceMs: 0,
+              onBoot: false,
+              updateTimeoutMs: 20,
+            },
+            paths: [{ path: workspaceDir, pattern: "**/*.md", name: "workspace" }],
           },
-          paths: [{ path: workspaceDir, pattern: "**/*.md", name: "workspace" }],
         },
-      },
-    } as RazroomConfig;
-    spawnMock.mockImplementation((_cmd: string, args: string[]) => {
-      if (args[0] === "update") {
-        return createMockChild({ autoClose: false });
-      }
-      return createMockChild();
-    });
+      } as RazroomConfig;
+      spawnMock.mockImplementation((_cmd: string, args: string[]) => {
+        if (args[0] === "update") {
+          return createMockChild({ autoClose: false });
+        }
+        return createMockChild();
+      });
 
-    const resolved = resolveMemoryBackendConfig({ cfg, agentId });
-    const createPromise = QmdMemoryManager.create({ cfg, agentId, resolved, mode: "status" });
-    await vi.advanceTimersByTimeAsync(0);
-    const manager = await createPromise;
-    expect(manager).toBeTruthy();
-    if (!manager) {
-      throw new Error("manager missing");
+      const resolved = resolveMemoryBackendConfig({ cfg, agentId });
+      const createPromise = QmdMemoryManager.create({ cfg, agentId, resolved, mode: "status" });
+      await vi.advanceTimersByTimeAsync(0);
+      const manager = await createPromise;
+      expect(manager).toBeTruthy();
+      if (!manager) {
+        throw new Error("manager missing");
+      }
+      const syncPromise = manager.sync({ reason: "manual" });
+      const rejected = expect(syncPromise).rejects.toThrow("qmd update timed out after 20ms");
+      await vi.advanceTimersByTimeAsync(20);
+      await rejected;
+      await manager.close();
+    } finally {
+      vi.useRealTimers();
     }
-    const syncPromise = manager.sync({ reason: "manual" });
-    const rejected = expect(syncPromise).rejects.toThrow("qmd update timed out after 20ms");
-    await vi.advanceTimersByTimeAsync(20);
-    await rejected;
-    await manager.close();
   });
 
   it("rebuilds managed collections once when qmd update fails with null-byte ENOTDIR", async () => {
@@ -820,43 +824,47 @@ describe("QmdMemoryManager", () => {
   });
 
   it("logs and continues when qmd embed times out", async () => {
-    // TODO: Implement fake timers for Bun;
-    cfg = {
-      ...cfg,
-      memory: {
-        backend: "qmd",
-        qmd: {
-          includeDefaultMemory: false,
-          update: {
-            interval: "0s",
-            debounceMs: 0,
-            onBoot: false,
-            embedTimeoutMs: 20,
+    vi.useFakeTimers();
+    try {
+      cfg = {
+        ...cfg,
+        memory: {
+          backend: "qmd",
+          qmd: {
+            includeDefaultMemory: false,
+            update: {
+              interval: "0s",
+              debounceMs: 0,
+              onBoot: false,
+              embedTimeoutMs: 20,
+            },
+            paths: [{ path: workspaceDir, pattern: "**/*.md", name: "workspace" }],
           },
-          paths: [{ path: workspaceDir, pattern: "**/*.md", name: "workspace" }],
         },
-      },
-    } as RazroomConfig;
-    spawnMock.mockImplementation((_cmd: string, args: string[]) => {
-      if (args[0] === "embed") {
-        return createMockChild({ autoClose: false });
-      }
-      return createMockChild();
-    });
+      } as RazroomConfig;
+      spawnMock.mockImplementation((_cmd: string, args: string[]) => {
+        if (args[0] === "embed") {
+          return createMockChild({ autoClose: false });
+        }
+        return createMockChild();
+      });
 
-    const resolved = resolveMemoryBackendConfig({ cfg, agentId });
-    const createPromise = QmdMemoryManager.create({ cfg, agentId, resolved, mode: "status" });
-    await vi.advanceTimersByTimeAsync(0);
-    const manager = await createPromise;
-    expect(manager).toBeTruthy();
-    if (!manager) {
-      throw new Error("manager missing");
+      const resolved = resolveMemoryBackendConfig({ cfg, agentId });
+      const createPromise = QmdMemoryManager.create({ cfg, agentId, resolved, mode: "status" });
+      await vi.advanceTimersByTimeAsync(0);
+      const manager = await createPromise;
+      expect(manager).toBeTruthy();
+      if (!manager) {
+        throw new Error("manager missing");
+      }
+      const syncPromise = manager.sync({ reason: "manual" });
+      const resolvedSync = expect(syncPromise).resolves.toBeUndefined();
+      await vi.advanceTimersByTimeAsync(20);
+      await resolvedSync;
+      await manager.close();
+    } finally {
+      vi.useRealTimers();
     }
-    const syncPromise = manager.sync({ reason: "manual" });
-    const resolvedSync = expect(syncPromise).resolves.toBeUndefined();
-    await vi.advanceTimersByTimeAsync(20);
-    await resolvedSync;
-    await manager.close();
   });
 
   it("scopes by channel for agent-prefixed session keys", async () => {
