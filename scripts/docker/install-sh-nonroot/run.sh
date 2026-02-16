@@ -2,8 +2,9 @@
 set -euo pipefail
 
 INSTALL_URL="${RAZROOM_INSTALL_URL:-https://razroom.bot/install.sh}"
-DEFAULT_PACKAGE="razroom"
+DEFAULT_PACKAGE="@razroo/razroom"
 PACKAGE_NAME="${RAZROOM_INSTALL_PACKAGE:-$DEFAULT_PACKAGE}"
+CLI_BIN_NAME="${RAZROOM_INSTALL_CLI_BIN:-razroom}"
 
 echo "==> Pre-flight: ensure git absent"
 if command -v git >/dev/null; then
@@ -26,11 +27,10 @@ if [[ -n "$EXPECTED_VERSION" ]]; then
 else
   LATEST_VERSION="$(npm view "$PACKAGE_NAME" version)"
 fi
-CLI_NAME="$PACKAGE_NAME"
+CLI_NAME="$CLI_BIN_NAME"
 CMD_PATH="$(command -v "$CLI_NAME" || true)"
-if [[ -z "$CMD_PATH" && -x "$HOME/.npm-global/bin/$PACKAGE_NAME" ]]; then
-  CLI_NAME="$PACKAGE_NAME"
-  CMD_PATH="$HOME/.npm-global/bin/$PACKAGE_NAME"
+if [[ -z "$CMD_PATH" && -x "$HOME/.npm-global/bin/$CLI_BIN_NAME" ]]; then
+  CMD_PATH="$HOME/.npm-global/bin/$CLI_BIN_NAME"
 fi
 if [[ -z "$CMD_PATH" ]]; then
   echo "$PACKAGE_NAME is not on PATH" >&2

@@ -4,8 +4,9 @@ set -euo pipefail
 INSTALL_URL="${RAZROOM_INSTALL_URL:-https://razroom.bot/install.sh}"
 SMOKE_PREVIOUS_VERSION="${RAZROOM_INSTALL_SMOKE_PREVIOUS:-}"
 SKIP_PREVIOUS="${RAZROOM_INSTALL_SMOKE_SKIP_PREVIOUS:-0}"
-DEFAULT_PACKAGE="razroom"
+DEFAULT_PACKAGE="@razroo/razroom"
 PACKAGE_NAME="${RAZROOM_INSTALL_PACKAGE:-$DEFAULT_PACKAGE}"
+CLI_BIN_NAME="${RAZROOM_INSTALL_CLI_BIN:-razroom}"
 
 echo "==> Resolve npm versions"
 LATEST_VERSION="$(npm view "$PACKAGE_NAME" version)"
@@ -51,7 +52,7 @@ echo "==> Run official installer one-liner"
 curl -fsSL "$INSTALL_URL" | bash
 
 echo "==> Verify installed version"
-CLI_NAME="$PACKAGE_NAME"
+CLI_NAME="$CLI_BIN_NAME"
 if ! command -v "$CLI_NAME" >/dev/null 2>&1; then
   echo "ERROR: $PACKAGE_NAME is not on PATH" >&2
   exit 1
