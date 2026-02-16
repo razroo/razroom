@@ -39,9 +39,4 @@ moltbot models status --check
 - `scripts/auth-monitor.sh`：cron/systemd 定时器目标；发送告警（ntfy 或手机）。
 - `scripts/systemd/moltbot-auth-monitor.{service,timer}`：systemd 用户定时器。
 - `scripts/claude-auth-status.sh`：Claude Code + MoltBot 认证检查器（完整/json/简洁模式）。
-- `scripts/mobile-reauth.sh`：通过 SSH 引导的重新认证流程。
-- `scripts/termux-quick-auth.sh`：一键小部件状态查看 + 打开认证 URL。
-- `scripts/termux-auth-widget.sh`：完整的引导式小部件流程。
-- `scripts/termux-sync-widget.sh`：同步 Claude Code 凭证 → MoltBot。
-
-如果你不需要手机自动化或 systemd 定时器，可以跳过这些脚本。
+如果你不需要 systemd 定时器，可以跳过这些脚本。

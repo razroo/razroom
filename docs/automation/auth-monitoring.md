@@ -25,10 +25,10 @@ Exit codes:
 
 This works in cron/systemd and requires no extra scripts.
 
-## Optional scripts (ops / phone workflows)
+## Optional scripts (ops workflows)
 
 These live under `scripts/` and are **optional**. They assume SSH access to the
-gateway host and are tuned for systemd + Termux.
+gateway host and are tuned for systemd.
 
 - `scripts/claude-auth-status.sh` now uses `moltbot models status --json` as the
   source of truth (falling back to direct file reads if the CLI is unavailable),
@@ -36,9 +36,5 @@ gateway host and are tuned for systemd + Termux.
 - `scripts/auth-monitor.sh`: cron/systemd timer target; sends alerts (ntfy or phone).
 - `scripts/systemd/moltbot-auth-monitor.{service,timer}`: systemd user timer.
 - `scripts/claude-auth-status.sh`: Claude Code + MoltBot auth checker (full/json/simple).
-- `scripts/mobile-reauth.sh`: guided re‑auth flow over SSH.
-- `scripts/termux-quick-auth.sh`: one‑tap widget status + open auth URL.
-- `scripts/termux-auth-widget.sh`: full guided widget flow.
-- `scripts/termux-sync-widget.sh`: sync Claude Code creds → MoltBot.
 
-If you don’t need phone automation or systemd timers, skip these scripts.
+If you don't need systemd timers, skip these scripts.
