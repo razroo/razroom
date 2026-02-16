@@ -12,6 +12,7 @@ export {
   beforeEach,
   describe,
   expect,
+  expectTypeOf,
   it,
   it as test,
 } from "vitest";

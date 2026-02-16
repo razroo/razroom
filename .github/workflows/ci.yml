@@ -152,8 +152,6 @@ jobs:
 
       - name: Setup Node environment
         uses: ./.github/actions/setup-node-env
-        with:
-          install-bun: "false"
 
       - name: Download dist artifact
         uses: actions/download-artifact@v4
