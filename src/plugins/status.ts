@@ -3,7 +3,7 @@ import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../agents/agent
 import { resolveDefaultAgentWorkspaceDir } from "../agents/workspace.js";
 import { loadConfig } from "../config/config.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
-import { loadMoltBotPlugins } from "./loader.js";
+import { loadRazroomPlugins } from "./loader.js";
 
 export type PluginStatusReport = PluginRegistry & {
   workspaceDir?: string;
@@ -21,7 +21,7 @@ export function buildPluginStatusReport(params?: {
     : (resolveAgentWorkspaceDir(config, resolveDefaultAgentId(config)) ??
       resolveDefaultAgentWorkspaceDir());
 
-  const registry = loadMoltBotPlugins({
+  const registry = loadRazroomPlugins({
     config,
     workspaceDir,
     logger: {

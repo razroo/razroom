@@ -3,7 +3,7 @@ import type {
   DmConfig,
   DmPolicy,
   GroupPolicy,
-} from "moltbot/plugin-sdk";
+} from "razroom/plugin-sdk";
 
 export type { DmPolicy, GroupPolicy };
 

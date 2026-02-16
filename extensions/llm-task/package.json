@@ -1,13 +1,13 @@
 {
-  "name": "@moltbot/llm-task",
+  "name": "@razroom/llm-task",
   "version": "2026.2.15",
   "private": true,
-  "description": "MoltBot JSON-only LLM task plugin",
+  "description": "Razroom JSON-only LLM task plugin",
   "type": "module",
   "devDependencies": {
-    "moltbot": "workspace:*"
+    "razroom": "workspace:*"
   },
-  "moltbot": {
+  "razroom": {
     "extensions": [
       "./index.ts"
     ]

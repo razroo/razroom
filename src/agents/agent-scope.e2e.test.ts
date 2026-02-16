@@ -1,6 +1,6 @@
 import path from "node:path";
 import { afterEach, describe, expect, it, mock, spyOn } from "bun:test";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import {
   resolveAgentConfig,
   resolveAgentDir,
@@ -16,15 +16,15 @@ afterEach(() => {
 
 describe("resolveAgentConfig", () => {
   it("should return undefined when no agents config exists", () => {
-    const cfg: MoltBotConfig = {};
+    const cfg: RazroomConfig = {};
     const result = resolveAgentConfig(cfg, "main");
     expect(result).toBeUndefined();
   });
 
   it("should return undefined when agent id does not exist", () => {
-    const cfg: MoltBotConfig = {
+    const cfg: RazroomConfig = {
       agents: {
-        list: [{ id: "main", workspace: "~/moltbot" }],
+        list: [{ id: "main", workspace: "~/razroom" }],
       },
     };
     const result = resolveAgentConfig(cfg, "nonexistent");
@@ -32,14 +32,14 @@ describe("resolveAgentConfig", () => {
   });
 
   it("should return basic agent config", () => {
-    const cfg: MoltBotConfig = {
+    const cfg: RazroomConfig = {
       agents: {
         list: [
           {
             id: "main",
             name: "Main Agent",
-            workspace: "~/moltbot",
-            agentDir: "~/.moltbot/agents/main",
+            workspace: "~/razroom",
+            agentDir: "~/.razroom/agents/main",
             model: "anthropic/claude-opus-4",
           },
         ],
@@ -48,8 +48,8 @@ describe("resolveAgentConfig", () => {
     const result = resolveAgentConfig(cfg, "main");
     expect(result).toEqual({
       name: "Main Agent",
-      workspace: "~/moltbot",
-      agentDir: "~/.moltbot/agents/main",
+      workspace: "~/razroom",
+      agentDir: "~/.razroom/agents/main",
       model: "anthropic/claude-opus-4",
       identity: undefined,
       groupChat: undefined,
@@ -60,7 +60,7 @@ describe("resolveAgentConfig", () => {
   });
 
   it("supports per-agent model primary+fallbacks", () => {
-    const cfg: MoltBotConfig = {
+    const cfg: RazroomConfig = {
       agents: {
         defaults: {
           model: {
@@ -84,7 +84,7 @@ describe("resolveAgentConfig", () => {
     expect(resolveAgentModelFallbacksOverride(cfg, "linus")).toEqual(["openai/gpt-5.2"]);
 
     // If fallbacks isn't present, we don't override the global fallbacks.
-    const cfgNoOverride: MoltBotConfig = {
+    const cfgNoOverride: RazroomConfig = {
       agents: {
         list: [
           {
@@ -99,7 +99,7 @@ describe("resolveAgentConfig", () => {
     expect(resolveAgentModelFallbacksOverride(cfgNoOverride, "linus")).toBe(undefined);
 
     // Explicit empty list disables global fallbacks for that agent.
-    const cfgDisable: MoltBotConfig = {
+    const cfgDisable: RazroomConfig = {
       agents: {
         list: [
           {
@@ -136,7 +136,7 @@ describe("resolveAgentConfig", () => {
       }),
     ).toEqual([]);
 
-    const cfgInheritDefaults: MoltBotConfig = {
+    const cfgInheritDefaults: RazroomConfig = {
       agents: {
         defaults: {
           model: {
@@ -170,12 +170,12 @@ describe("resolveAgentConfig", () => {
   });
 
   it("should return agent-specific sandbox config", () => {
-    const cfg: MoltBotConfig = {
+    const cfg: RazroomConfig = {
       agents: {
         list: [
           {
             id: "work",
-            workspace: "~/moltbot-work",
+            workspace: "~/razroom-work",
             sandbox: {
               mode: "all",
               scope: "agent",
@@ -198,12 +198,12 @@ describe("resolveAgentConfig", () => {
   });
 
   it("should return agent-specific tools config", () => {
-    const cfg: MoltBotConfig = {
+    const cfg: RazroomConfig = {
       agents: {
         list: [
           {
             id: "restricted",
-            workspace: "~/moltbot-restricted",
+            workspace: "~/razroom-restricted",
             tools: {
               allow: ["read"],
               deny: ["exec", "write", "edit"],
@@ -228,12 +228,12 @@ describe("resolveAgentConfig", () => {
   });
 
   it("should return both sandbox and tools config", () => {
-    const cfg: MoltBotConfig = {
+    const cfg: RazroomConfig = {
       agents: {
         list: [
           {
             id: "family",
-            workspace: "~/moltbot-family",
+            workspace: "~/razroom-family",
             sandbox: {
               mode: "all",
               scope: "agent",
@@ -252,32 +252,32 @@ describe("resolveAgentConfig", () => {
   });
 
   it("should normalize agent id", () => {
-    const cfg: MoltBotConfig = {
+    const cfg: RazroomConfig = {
       agents: {
-        list: [{ id: "main", workspace: "~/moltbot" }],
+        list: [{ id: "main", workspace: "~/razroom" }],
       },
     };
     // Should normalize to "main" (default)
     const result = resolveAgentConfig(cfg, "");
     expect(result).toBeDefined();
-    expect(result?.workspace).toBe("~/moltbot");
+    expect(result?.workspace).toBe("~/razroom");
   });
 
-  it("uses MOLTBOT_HOME for default agent workspace", () => {
-    const home = path.join(path.sep, "srv", "moltbot-home");
-    vi.stubEnv("MOLTBOT_HOME", home);
+  it("uses RAZROOM_HOME for default agent workspace", () => {
+    const home = path.join(path.sep, "srv", "razroom-home");
+    vi.stubEnv("RAZROOM_HOME", home);
 
-    const workspace = resolveAgentWorkspaceDir({} as MoltBotConfig, "main");
-    expect(workspace).toBe(path.join(path.resolve(home), ".moltbot", "workspace"));
+    const workspace = resolveAgentWorkspaceDir({} as RazroomConfig, "main");
+    expect(workspace).toBe(path.join(path.resolve(home), ".razroom", "workspace"));
   });
 
-  it("uses MOLTBOT_HOME for default agentDir", () => {
-    const home = path.join(path.sep, "srv", "moltbot-home");
-    vi.stubEnv("MOLTBOT_HOME", home);
-    // Clear state dir so it falls back to MOLTBOT_HOME
-    vi.stubEnv("MOLTBOT_STATE_DIR", "");
+  it("uses RAZROOM_HOME for default agentDir", () => {
+    const home = path.join(path.sep, "srv", "razroom-home");
+    vi.stubEnv("RAZROOM_HOME", home);
+    // Clear state dir so it falls back to RAZROOM_HOME
+    vi.stubEnv("RAZROOM_STATE_DIR", "");
 
-    const agentDir = resolveAgentDir({} as MoltBotConfig, "main");
-    expect(agentDir).toBe(path.join(path.resolve(home), ".moltbot", "agents", "main", "agent"));
+    const agentDir = resolveAgentDir({} as RazroomConfig, "main");
+    expect(agentDir).toBe(path.join(path.resolve(home), ".razroom", "agents", "main", "agent"));
   });
 });

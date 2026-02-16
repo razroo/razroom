@@ -17,17 +17,17 @@ UI surfaces.
 
 Canvas state is stored under Application Support:
 
-- `~/Library/Application Support/MoltBot/canvas/<session>/...`
+- `~/Library/Application Support/Razroom/canvas/<session>/...`
 
 The Canvas panel serves those files via a **custom URL scheme**:
 
-- `moltbot-canvas://<session>/<path>`
+- `razroom-canvas://<session>/<path>`
 
 Examples:
 
-- `moltbot-canvas://main/` → `<canvasRoot>/main/index.html`
-- `moltbot-canvas://main/assets/app.css` → `<canvasRoot>/main/assets/app.css`
-- `moltbot-canvas://main/widgets/todo/` → `<canvasRoot>/main/widgets/todo/index.html`
+- `razroom-canvas://main/` → `<canvasRoot>/main/index.html`
+- `razroom-canvas://main/assets/app.css` → `<canvasRoot>/main/assets/app.css`
+- `razroom-canvas://main/widgets/todo/` → `<canvasRoot>/main/widgets/todo/index.html`
 
 If no `index.html` exists at the root, the app shows a **built‑in scaffold page**.
 
@@ -53,10 +53,10 @@ Canvas is exposed via the **Gateway WebSocket**, so the agent can:
 CLI examples:
 
 ```bash
-moltbot nodes canvas present --node <id>
-moltbot nodes canvas navigate --node <id> --url "/"
-moltbot nodes canvas eval --node <id> --js "document.title"
-moltbot nodes canvas snapshot --node <id>
+razroom nodes canvas present --node <id>
+razroom nodes canvas navigate --node <id> --url "/"
+razroom nodes canvas eval --node <id> --js "document.title"
+razroom nodes canvas snapshot --node <id>
 ```
 
 Notes:
@@ -73,7 +73,7 @@ A2UI host page on first open.
 Default A2UI host URL:
 
 ```
-http://<gateway-host>:18789/__moltbot__/a2ui/
+http://<gateway-host>:18789/__razroom__/a2ui/
 ```
 
 ### A2UI commands (v0.8)
@@ -95,25 +95,25 @@ cat > /tmp/a2ui-v0.8.jsonl <<'EOFA2'
 {"beginRendering":{"surfaceId":"main","root":"root"}}
 EOFA2
 
-moltbot nodes canvas a2ui push --jsonl /tmp/a2ui-v0.8.jsonl --node <id>
+razroom nodes canvas a2ui push --jsonl /tmp/a2ui-v0.8.jsonl --node <id>
 ```
 
 Quick smoke:
 
 ```bash
-moltbot nodes canvas a2ui push --node <id> --text "Hello from A2UI"
+razroom nodes canvas a2ui push --node <id> --text "Hello from A2UI"
 ```
 
 ## Triggering agent runs from Canvas
 
 Canvas can trigger new agent runs via deep links:
 
-- `moltbot://agent?...`
+- `razroom://agent?...`
 
 Example (in JS):
 
 ```js
-window.location.href = "moltbot://agent?message=Review%20this%20design";
+window.location.href = "razroom://agent?message=Review%20this%20design";
 ```
 
 The app prompts for confirmation unless a valid key is provided.

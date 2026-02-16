@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { RuntimeEnv } from "../runtime.js";
 import type { DoctorPrompter } from "./doctor-prompter.js";
 import {
@@ -89,17 +89,17 @@ async function dockerImageExists(image: string): Promise<boolean> {
   }
 }
 
-function resolveSandboxDockerImage(cfg: MoltBotConfig): string {
+function resolveSandboxDockerImage(cfg: RazroomConfig): string {
   const image = cfg.agents?.defaults?.sandbox?.docker?.image?.trim();
   return image ? image : DEFAULT_SANDBOX_IMAGE;
 }
 
-function resolveSandboxBrowserImage(cfg: MoltBotConfig): string {
+function resolveSandboxBrowserImage(cfg: RazroomConfig): string {
   const image = cfg.agents?.defaults?.sandbox?.browser?.image?.trim();
   return image ? image : DEFAULT_SANDBOX_BROWSER_IMAGE;
 }
 
-function updateSandboxDockerImage(cfg: MoltBotConfig, image: string): MoltBotConfig {
+function updateSandboxDockerImage(cfg: RazroomConfig, image: string): RazroomConfig {
   return {
     ...cfg,
     agents: {
@@ -118,7 +118,7 @@ function updateSandboxDockerImage(cfg: MoltBotConfig, image: string): MoltBotCon
   };
 }
 
-function updateSandboxBrowserImage(cfg: MoltBotConfig, image: string): MoltBotConfig {
+function updateSandboxBrowserImage(cfg: RazroomConfig, image: string): RazroomConfig {
   return {
     ...cfg,
     agents: {
@@ -176,10 +176,10 @@ async function handleMissingSandboxImage(
 }
 
 export async function maybeRepairSandboxImages(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   runtime: RuntimeEnv,
   prompter: DoctorPrompter,
-): Promise<MoltBotConfig> {
+): Promise<RazroomConfig> {
   const sandbox = cfg.agents?.defaults?.sandbox;
   const mode = sandbox?.mode ?? "off";
   if (!sandbox || mode === "off") {
@@ -238,7 +238,7 @@ export async function maybeRepairSandboxImages(
   return next;
 }
 
-export function noteSandboxScopeWarnings(cfg: MoltBotConfig) {
+export function noteSandboxScopeWarnings(cfg: RazroomConfig) {
   const globalSandbox = cfg.agents?.defaults?.sandbox;
   const agents = Array.isArray(cfg.agents?.list) ? cfg.agents.list : [];
   const warnings: string[] = [];

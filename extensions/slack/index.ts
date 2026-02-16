@@ -1,5 +1,5 @@
-import type { MoltBotPluginApi } from "moltbot/plugin-sdk";
-import { emptyPluginConfigSchema } from "moltbot/plugin-sdk";
+import type { RazroomPluginApi } from "razroom/plugin-sdk";
+import { emptyPluginConfigSchema } from "razroom/plugin-sdk";
 import { slackPlugin } from "./src/channel.js";
 import { setSlackRuntime } from "./src/runtime.js";
 
@@ -8,7 +8,7 @@ const plugin = {
   name: "Slack",
   description: "Slack channel plugin",
   configSchema: emptyPluginConfigSchema(),
-  register(api: MoltBotPluginApi) {
+  register(api: RazroomPluginApi) {
     setSlackRuntime(api.runtime);
     api.registerChannel({ plugin: slackPlugin });
   },

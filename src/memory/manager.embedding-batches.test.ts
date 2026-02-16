@@ -4,7 +4,7 @@ import { describe, expect, it, mock, spyOn } from "bun:test";
 import { installEmbeddingManagerFixture } from "./embedding-manager.test-harness.js";
 
 const fx = installEmbeddingManagerFixture({
-  fixturePrefix: "moltbot-mem-",
+  fixturePrefix: "razroom-mem-",
   largeTokens: 1250,
   smallTokens: 200,
   createCfg: ({ workspaceDir, indexPath, tokens }) => ({

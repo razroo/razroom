@@ -1,5 +1,5 @@
 import type { ChannelCapabilities, ChannelPlugin } from "../../channels/plugins/types.js";
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 import { resolveChannelDefaultAccountId } from "../../channels/plugins/helpers.js";
 import { getChannelPlugin, listChannelPlugins } from "../../channels/plugins/index.js";
 import { fetchChannelPermissionsDiscord } from "../../discord/send.js";
@@ -337,7 +337,7 @@ async function buildDiscordPermissions(params: {
 
 async function resolveChannelReports(params: {
   plugin: ChannelPlugin;
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   timeoutMs: number;
   accountOverride?: string;
   target?: string;

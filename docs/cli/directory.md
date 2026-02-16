@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `moltbot directory` (self, peers, groups)"
+summary: "CLI reference for `razroom directory` (self, peers, groups)"
 read_when:
   - You want to look up contacts/groups/self ids for a channel
   - You are developing a channel directory adapter
 title: "directory"
 ---
 
-# `moltbot directory`
+# `razroom directory`
 
 Directory lookups for channels that support it (contacts/peers, groups, and “me”).
 
@@ -18,15 +18,15 @@ Directory lookups for channels that support it (contacts/peers, groups, and “m
 
 ## Notes
 
-- `directory` is meant to help you find IDs you can paste into other commands (especially `moltbot message send --target ...`).
+- `directory` is meant to help you find IDs you can paste into other commands (especially `razroom message send --target ...`).
 - For many channels, results are config-backed (allowlists / configured groups) rather than a live provider directory.
 - Default output is `id` (and sometimes `name`) separated by a tab; use `--json` for scripting.
 
 ## Using results with `message send`
 
 ```bash
-moltbot directory peers list --channel slack --query "U0"
-moltbot message send --channel slack --target user:U012ABCDEF --message "hello"
+razroom directory peers list --channel slack --query "U0"
+razroom message send --channel slack --target user:U012ABCDEF --message "hello"
 ```
 
 ## ID formats (by channel)
@@ -43,21 +43,21 @@ moltbot message send --channel slack --target user:U012ABCDEF --message "hello"
 ## Self (“me”)
 
 ```bash
-moltbot directory self --channel zalouser
+razroom directory self --channel zalouser
 ```
 
 ## Peers (contacts/users)
 
 ```bash
-moltbot directory peers list --channel zalouser
-moltbot directory peers list --channel zalouser --query "name"
-moltbot directory peers list --channel zalouser --limit 50
+razroom directory peers list --channel zalouser
+razroom directory peers list --channel zalouser --query "name"
+razroom directory peers list --channel zalouser --limit 50
 ```
 
 ## Groups
 
 ```bash
-moltbot directory groups list --channel zalouser
-moltbot directory groups list --channel zalouser --query "work"
-moltbot directory groups members --channel zalouser --group-id <id>
+razroom directory groups list --channel zalouser
+razroom directory groups list --channel zalouser --query "work"
+razroom directory groups members --channel zalouser --group-id <id>
 ```

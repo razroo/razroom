@@ -4,17 +4,17 @@ import path from "node:path";
 import sharp from "sharp";
 import { describe, expect, it } from "bun:test";
 import "./test-helpers/fast-coding-tools.js";
-import { createMoltBotCodingTools } from "./pi-tools.js";
+import { createRazroomCodingTools } from "./pi-tools.js";
 import { createHostSandboxFsBridge } from "./test-helpers/host-sandbox-fs-bridge.js";
 
-const defaultTools = createMoltBotCodingTools();
+const defaultTools = createRazroomCodingTools();
 
-describe("createMoltBotCodingTools", () => {
+describe("createRazroomCodingTools", () => {
   it("keeps read tool image metadata intact", async () => {
     const readTool = defaultTools.find((tool) => tool.name === "read");
     expect(readTool).toBeDefined();
 
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-read-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-read-"));
     try {
       const imagePath = path.join(tmpDir, "sample.png");
       const png = await sharp({
@@ -47,14 +47,14 @@ describe("createMoltBotCodingTools", () => {
     }
   });
   it("returns text content without image blocks for text files", async () => {
-    const tools = createMoltBotCodingTools();
+    const tools = createRazroomCodingTools();
     const readTool = tools.find((tool) => tool.name === "read");
     expect(readTool).toBeDefined();
 
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-read-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-read-"));
     try {
       const textPath = path.join(tmpDir, "sample.txt");
-      const contents = "Hello from moltbot read tool.";
+      const contents = "Hello from razroom read tool.";
       await fs.writeFile(textPath, contents, "utf8");
 
       const result = await readTool?.execute("tool-2", {
@@ -73,19 +73,19 @@ describe("createMoltBotCodingTools", () => {
     }
   });
   it("filters tools by sandbox policy", () => {
-    const sandboxDir = path.join(os.tmpdir(), "moltbot-sandbox");
+    const sandboxDir = path.join(os.tmpdir(), "razroom-sandbox");
     const sandbox = {
       enabled: true,
       sessionKey: "sandbox:test",
       workspaceDir: sandboxDir,
-      agentWorkspaceDir: path.join(os.tmpdir(), "moltbot-workspace"),
+      agentWorkspaceDir: path.join(os.tmpdir(), "razroom-workspace"),
       workspaceAccess: "none",
-      containerName: "moltbot-sbx-test",
+      containerName: "razroom-sbx-test",
       containerWorkdir: "/workspace",
       fsBridge: createHostSandboxFsBridge(sandboxDir),
       docker: {
-        image: "moltbot-sandbox:bookworm-slim",
-        containerPrefix: "moltbot-sbx-",
+        image: "razroom-sandbox:bookworm-slim",
+        containerPrefix: "razroom-sbx-",
         workdir: "/workspace",
         readOnlyRoot: true,
         tmpfs: [],
@@ -100,25 +100,25 @@ describe("createMoltBotCodingTools", () => {
       },
       browserAllowHostControl: false,
     };
-    const tools = createMoltBotCodingTools({ sandbox });
+    const tools = createRazroomCodingTools({ sandbox });
     expect(tools.some((tool) => tool.name === "exec")).toBe(true);
     expect(tools.some((tool) => tool.name === "read")).toBe(false);
     expect(tools.some((tool) => tool.name === "browser")).toBe(false);
   });
   it("hard-disables write/edit when sandbox workspaceAccess is ro", () => {
-    const sandboxDir = path.join(os.tmpdir(), "moltbot-sandbox");
+    const sandboxDir = path.join(os.tmpdir(), "razroom-sandbox");
     const sandbox = {
       enabled: true,
       sessionKey: "sandbox:test",
       workspaceDir: sandboxDir,
-      agentWorkspaceDir: path.join(os.tmpdir(), "moltbot-workspace"),
+      agentWorkspaceDir: path.join(os.tmpdir(), "razroom-workspace"),
       workspaceAccess: "ro",
-      containerName: "moltbot-sbx-test",
+      containerName: "razroom-sbx-test",
       containerWorkdir: "/workspace",
       fsBridge: createHostSandboxFsBridge(sandboxDir),
       docker: {
-        image: "moltbot-sandbox:bookworm-slim",
-        containerPrefix: "moltbot-sbx-",
+        image: "razroom-sandbox:bookworm-slim",
+        containerPrefix: "razroom-sbx-",
         workdir: "/workspace",
         readOnlyRoot: true,
         tmpfs: [],
@@ -133,13 +133,13 @@ describe("createMoltBotCodingTools", () => {
       },
       browserAllowHostControl: false,
     };
-    const tools = createMoltBotCodingTools({ sandbox });
+    const tools = createRazroomCodingTools({ sandbox });
     expect(tools.some((tool) => tool.name === "read")).toBe(true);
     expect(tools.some((tool) => tool.name === "write")).toBe(false);
     expect(tools.some((tool) => tool.name === "edit")).toBe(false);
   });
   it("filters tools by agent tool policy even without sandbox", () => {
-    const tools = createMoltBotCodingTools({
+    const tools = createRazroomCodingTools({
       config: { tools: { deny: ["browser"] } },
     });
     expect(tools.some((tool) => tool.name === "exec")).toBe(true);

@@ -34,7 +34,7 @@ describe("applyPluginAutoEnable", () => {
       config: {},
       env: {
         IRC_HOST: "irc.libera.chat",
-        IRC_NICK: "moltbot-bot",
+        IRC_NICK: "razroom-bot",
       },
     });
 

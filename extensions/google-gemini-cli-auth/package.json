@@ -1,13 +1,13 @@
 {
-  "name": "@moltbot/google-gemini-cli-auth",
+  "name": "@razroom/google-gemini-cli-auth",
   "version": "2026.2.15",
   "private": true,
-  "description": "MoltBot Gemini CLI OAuth provider plugin",
+  "description": "Razroom Gemini CLI OAuth provider plugin",
   "type": "module",
   "devDependencies": {
-    "moltbot": "workspace:*"
+    "razroom": "workspace:*"
   },
-  "moltbot": {
+  "razroom": {
     "extensions": [
       "./index.ts"
     ]

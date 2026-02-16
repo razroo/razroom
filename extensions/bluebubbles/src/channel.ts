@@ -1,4 +1,4 @@
-import type { ChannelAccountSnapshot, ChannelPlugin, MoltBotConfig } from "moltbot/plugin-sdk";
+import type { ChannelAccountSnapshot, ChannelPlugin, RazroomConfig } from "razroom/plugin-sdk";
 import {
   applyAccountNameToChannelSection,
   buildChannelConfigSchema,
@@ -12,7 +12,7 @@ import {
   resolveBlueBubblesGroupRequireMention,
   resolveBlueBubblesGroupToolPolicy,
   setAccountEnabledInConfigSection,
-} from "moltbot/plugin-sdk";
+} from "razroom/plugin-sdk";
 import {
   listBlueBubblesAccountIds,
   type ResolvedBlueBubblesAccount,
@@ -262,7 +262,7 @@ export const bluebubblesPlugin: ChannelPlugin<ResolvedBlueBubblesAccount> = {
               ...(input.webhookPath ? { webhookPath: input.webhookPath } : {}),
             },
           },
-        } as MoltBotConfig;
+        } as RazroomConfig;
       }
       return {
         ...next,
@@ -283,7 +283,7 @@ export const bluebubblesPlugin: ChannelPlugin<ResolvedBlueBubblesAccount> = {
             },
           },
         },
-      } as MoltBotConfig;
+      } as RazroomConfig;
     },
   },
   pairing: {

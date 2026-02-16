@@ -8,7 +8,7 @@
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import type { MoltBotConfig } from "../../../config/config.js";
+import type { RazroomConfig } from "../../../config/config.js";
 import type { HookHandler } from "../../hooks.js";
 import { resolveAgentWorkspaceDir } from "../../../agents/agent-scope.js";
 import { resolveStateDir } from "../../../config/paths.js";
@@ -80,7 +80,7 @@ const saveSessionToMemory: HookHandler = async (event) => {
     log.debug("Hook triggered for /new command");
 
     const context = event.context || {};
-    const cfg = context.cfg as MoltBotConfig | undefined;
+    const cfg = context.cfg as RazroomConfig | undefined;
     const agentId = resolveAgentIdFromSessionKey(event.sessionKey);
     const workspaceDir = cfg
       ? resolveAgentWorkspaceDir(cfg, agentId)
@@ -128,7 +128,7 @@ const saveSessionToMemory: HookHandler = async (event) => {
 
       // Avoid calling the model provider in unit tests; keep hooks fast and deterministic.
       const isTestEnv =
-        process.env.MOLTBOT_TEST_FAST === "1" ||
+        process.env.RAZROOM_TEST_FAST === "1" ||
         process.env.VITEST === "true" ||
         process.env.VITEST === "1" ||
         process.env.NODE_ENV === "test";

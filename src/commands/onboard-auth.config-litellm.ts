@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import {
   applyAgentDefaultModelPrimary,
   applyProviderConfigWithDefaultModel,
@@ -36,7 +36,7 @@ function buildLitellmModelDefinition(): {
   };
 }
 
-export function applyLitellmProviderConfig(cfg: MoltBotConfig): MoltBotConfig {
+export function applyLitellmProviderConfig(cfg: RazroomConfig): RazroomConfig {
   const models = { ...cfg.agents?.defaults?.models };
   models[LITELLM_DEFAULT_MODEL_REF] = {
     ...models[LITELLM_DEFAULT_MODEL_REF],
@@ -59,7 +59,7 @@ export function applyLitellmProviderConfig(cfg: MoltBotConfig): MoltBotConfig {
   });
 }
 
-export function applyLitellmConfig(cfg: MoltBotConfig): MoltBotConfig {
+export function applyLitellmConfig(cfg: RazroomConfig): RazroomConfig {
   const next = applyLitellmProviderConfig(cfg);
   return applyAgentDefaultModelPrimary(next, LITELLM_DEFAULT_MODEL_REF);
 }

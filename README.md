@@ -1,56 +1,56 @@
-# 🦞 MoltBot — Personal AI Assistant
+# 🎯 Razroom — The AI That Actually Does Things
 
 <p align="center">
     <picture>
-        <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/moltbot/moltbot/main/docs/assets/moltbot-logo-text-dark.png">
-        <img src="https://raw.githubusercontent.com/moltbot/moltbot/main/docs/assets/moltbot-logo-text.png" alt="MoltBot" width="500">
+        <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/razroom/razroom/main/docs/assets/razroom-logo-text-dark.png">
+        <img src="https://raw.githubusercontent.com/razroom/razroom/main/docs/assets/razroom-logo-text.png" alt="Razroom" width="500">
     </picture>
 </p>
 
 <p align="center">
-  <strong>EXFOLIATE! EXFOLIATE!</strong>
+  <strong>Your Command Center. Any Chat App.</strong>
 </p>
 
 <p align="center">
-  <a href="https://github.com/moltbot/moltbot/actions/workflows/ci.yml?branch=main"><img src="https://img.shields.io/github/actions/workflow/status/moltbot/moltbot/ci.yml?branch=main&style=for-the-badge" alt="CI status"></a>
-  <a href="https://github.com/moltbot/moltbot/releases"><img src="https://img.shields.io/github/v/release/moltbot/moltbot?include_prereleases&style=for-the-badge" alt="GitHub release"></a>
+  <a href="https://github.com/razroom/razroom/actions/workflows/ci.yml?branch=main"><img src="https://img.shields.io/github/actions/workflow/status/razroom/razroom/ci.yml?branch=main&style=for-the-badge" alt="CI status"></a>
+  <a href="https://github.com/razroom/razroom/releases"><img src="https://img.shields.io/github/v/release/razroom/razroom?include_prereleases&style=for-the-badge" alt="GitHub release"></a>
   <a href="https://discord.gg/clawd"><img src="https://img.shields.io/discord/1456350064065904867?label=Discord&logo=discord&logoColor=white&color=5865F2&style=for-the-badge" alt="Discord"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge" alt="MIT License"></a>
 </p>
 
-**MoltBot** is a _personal AI assistant_ you run on your own devices.
-It answers you on the channels you already use (WhatsApp, Telegram, Slack, Discord, Google Chat, Signal, iMessage, Microsoft Teams, WebChat), plus extension channels like BlueBubbles, Matrix, Zalo, and Zalo Personal. It can speak and listen on macOS, and can render a live Canvas you control. The Gateway is just the control plane — the product is the assistant.
+**Razroom** clears your inbox, sends emails, manages your calendar, and checks you in for flights—all from WhatsApp, Telegram, Slack, Discord, or any chat app you already use.
 
-If you want a personal, single-user assistant that feels local, fast, and always-on, this is it.
+Not just chat. Real actions. Real automation.
+Self-hosted on your VPS. Open source. Your data, your control.
 
-[Website](https://moltbot.ai) · [Docs](https://docs.moltbot.ai) · [DeepWiki](https://deepwiki.com/moltbot/moltbot) · [Getting Started](https://docs.moltbot.ai/start/getting-started) · [Updating](https://docs.moltbot.ai/install/updating) · [Showcase](https://docs.moltbot.ai/start/showcase) · [FAQ](https://docs.moltbot.ai/start/faq) · [Wizard](https://docs.moltbot.ai/start/wizard) · [Nix](https://github.com/moltbot/nix-moltbot) · [Docker](https://docs.moltbot.ai/install/docker) · [Discord](https://discord.gg/clawd)
+[Website](https://razroom.ai) · [Docs](https://docs.razroom.ai) · [DeepWiki](https://deepwiki.com/razroom/razroom) · [Getting Started](https://docs.razroom.ai/start/getting-started) · [Updating](https://docs.razroom.ai/install/updating) · [Showcase](https://docs.razroom.ai/start/showcase) · [FAQ](https://docs.razroom.ai/start/faq) · [Wizard](https://docs.razroom.ai/start/wizard) · [Nix](https://github.com/razroom/nix-razroom) · [Docker](https://docs.razroom.ai/install/docker) · [Discord](https://discord.gg/clawd)
 
-Preferred setup: run the onboarding wizard (`moltbot onboard`) in your terminal.
+Preferred setup: run the onboarding wizard (`razroom onboard`) in your terminal.
 The wizard guides you step by step through setting up the gateway, workspace, channels, and skills. The CLI wizard is the recommended path and works on **macOS, Linux, and Windows (via WSL2; strongly recommended)**.
 Works with npm, pnpm, or bun.
-New install? Start here: [Getting started](https://docs.moltbot.ai/start/getting-started)
+New install? Start here: [Getting started](https://docs.razroom.ai/start/getting-started)
 
 **Subscriptions (OAuth):**
 
 - **[Anthropic](https://www.anthropic.com/)** (Claude Pro/Max)
 - **[OpenAI](https://openai.com/)** (ChatGPT/Codex)
 
-Model note: while any model is supported, I strongly recommend **Anthropic Pro/Max (100/200) + Opus 4.6** for long‑context strength and better prompt‑injection resistance. See [Onboarding](https://docs.moltbot.ai/start/onboarding).
+Model note: while any model is supported, I strongly recommend **Anthropic Pro/Max (100/200) + Opus 4.6** for long‑context strength and better prompt‑injection resistance. See [Onboarding](https://docs.razroom.ai/start/onboarding).
 
 ## Models (selection + auth)
 
-- Models config + CLI: [Models](https://docs.moltbot.ai/concepts/models)
-- Auth profile rotation (OAuth vs API keys) + fallbacks: [Model failover](https://docs.moltbot.ai/concepts/model-failover)
+- Models config + CLI: [Models](https://docs.razroom.ai/concepts/models)
+- Auth profile rotation (OAuth vs API keys) + fallbacks: [Model failover](https://docs.razroom.ai/concepts/model-failover)
 
 ## Install (recommended)
 
 Runtime: **Node ≥22**.
 
 ```bash
-npm install -g moltbot@latest
-# or: pnpm add -g moltbot@latest
+npm install -g razroom@latest
+# or: pnpm add -g razroom@latest
 
-moltbot onboard --install-daemon
+razroom onboard --install-daemon
 ```
 
 The wizard installs the Gateway daemon (launchd/systemd user service) so it stays running.
@@ -59,21 +59,21 @@ The wizard installs the Gateway daemon (launchd/systemd user service) so it stay
 
 Runtime: **Node ≥22**.
 
-Full beginner guide (auth, pairing, channels): [Getting started](https://docs.moltbot.ai/start/getting-started)
+Full beginner guide (auth, pairing, channels): [Getting started](https://docs.razroom.ai/start/getting-started)
 
 ```bash
-moltbot onboard --install-daemon
+razroom onboard --install-daemon
 
-moltbot gateway --port 18789 --verbose
+razroom gateway --port 18789 --verbose
 
 # Send a message
-moltbot message send --to +1234567890 --message "Hello from MoltBot"
+razroom message send --to +1234567890 --message "Hello from Razroom"
 
 # Talk to the assistant (optionally deliver back to any connected channel: WhatsApp/Telegram/Slack/Discord/Google Chat/Signal/iMessage/BlueBubbles/Microsoft Teams/Matrix/Zalo/Zalo Personal/WebChat)
-moltbot agent --message "Ship checklist" --thinking high
+razroom agent --message "Ship checklist" --thinking high
 ```
 
-Upgrading? [Updating guide](https://docs.moltbot.ai/install/updating) (and run `moltbot doctor`).
+Upgrading? [Updating guide](https://docs.razroom.ai/install/updating) (and run `razroom doctor`).
 
 ## Development channels
 
@@ -81,99 +81,99 @@ Upgrading? [Updating guide](https://docs.moltbot.ai/install/updating) (and run `
 - **beta**: prerelease tags (`vYYYY.M.D-beta.N`), npm dist-tag `beta` (macOS app may be missing).
 - **dev**: moving head of `main`, npm dist-tag `dev` (when published).
 
-Switch channels (git + npm): `moltbot update --channel stable|beta|dev`.
-Details: [Development channels](https://docs.moltbot.ai/install/development-channels).
+Switch channels (git + npm): `razroom update --channel stable|beta|dev`.
+Details: [Development channels](https://docs.razroom.ai/install/development-channels).
 
 ## From source (development)
 
 Prefer `pnpm` for builds from source. Bun is optional for running TypeScript directly.
 
 ```bash
-git clone https://github.com/moltbot/moltbot.git
-cd moltbot
+git clone https://github.com/razroom/razroom.git
+cd razroom
 
 pnpm install
 pnpm ui:build # auto-installs UI deps on first run
 pnpm build
 
-pnpm moltbot onboard --install-daemon
+pnpm razroom onboard --install-daemon
 
 # Dev loop (auto-reload on TS changes)
 pnpm gateway:watch
 ```
 
-Note: `pnpm moltbot ...` runs TypeScript directly (via `tsx`). `pnpm build` produces `dist/` for running via Node / the packaged `moltbot` binary.
+Note: `pnpm razroom ...` runs TypeScript directly (via `tsx`). `pnpm build` produces `dist/` for running via Node / the packaged `razroom` binary.
 
 ## Security defaults (DM access)
 
-MoltBot connects to real messaging surfaces. Treat inbound DMs as **untrusted input**.
+Razroom connects to real messaging surfaces. Treat inbound DMs as **untrusted input**.
 
-Full security guide: [Security](https://docs.moltbot.ai/gateway/security)
+Full security guide: [Security](https://docs.razroom.ai/gateway/security)
 
 Default behavior on Telegram/WhatsApp/Signal/iMessage/Microsoft Teams/Discord/Google Chat/Slack:
 
 - **DM pairing** (`dmPolicy="pairing"` / `channels.discord.dmPolicy="pairing"` / `channels.slack.dmPolicy="pairing"`; legacy: `channels.discord.dm.policy`, `channels.slack.dm.policy`): unknown senders receive a short pairing code and the bot does not process their message.
-- Approve with: `moltbot pairing approve <channel> <code>` (then the sender is added to a local allowlist store).
+- Approve with: `razroom pairing approve <channel> <code>` (then the sender is added to a local allowlist store).
 - Public inbound DMs require an explicit opt-in: set `dmPolicy="open"` and include `"*"` in the channel allowlist (`allowFrom` / `channels.discord.allowFrom` / `channels.slack.allowFrom`; legacy: `channels.discord.dm.allowFrom`, `channels.slack.dm.allowFrom`).
 
-Run `moltbot doctor` to surface risky/misconfigured DM policies.
+Run `razroom doctor` to surface risky/misconfigured DM policies.
 
 ## Highlights
 
-- **[Local-first Gateway](https://docs.moltbot.ai/gateway)** — single control plane for sessions, channels, tools, and events.
-- **[Multi-channel inbox](https://docs.moltbot.ai/channels)** — WhatsApp, Telegram, Slack, Discord, Google Chat, Signal, BlueBubbles (iMessage), iMessage (legacy), Microsoft Teams, Matrix, Zalo, Zalo Personal, WebChat, macOS.
-- **[Multi-agent routing](https://docs.moltbot.ai/gateway/configuration)** — route inbound channels/accounts/peers to isolated agents (workspaces + per-agent sessions).
-- **[Voice Wake](https://docs.moltbot.ai/nodes/voicewake) + [Talk Mode](https://docs.moltbot.ai/nodes/talk)** — always-on speech for macOS with ElevenLabs.
-- **[Live Canvas](https://docs.moltbot.ai/platforms/mac/canvas)** — agent-driven visual workspace with [A2UI](https://docs.moltbot.ai/platforms/mac/canvas#canvas-a2ui).
-- **[First-class tools](https://docs.moltbot.ai/tools)** — browser, canvas, nodes, cron, sessions, and Discord/Slack actions.
-- **[Companion apps](https://docs.moltbot.ai/platforms/macos)** — macOS menu bar app.
-- **[Onboarding](https://docs.moltbot.ai/start/wizard) + [skills](https://docs.moltbot.ai/tools/skills)** — wizard-driven setup with bundled/managed/workspace skills.
+- **[Local-first Gateway](https://docs.razroom.ai/gateway)** — single control plane for sessions, channels, tools, and events.
+- **[Multi-channel inbox](https://docs.razroom.ai/channels)** — WhatsApp, Telegram, Slack, Discord, Google Chat, Signal, BlueBubbles (iMessage), iMessage (legacy), Microsoft Teams, Matrix, Zalo, Zalo Personal, WebChat, macOS.
+- **[Multi-agent routing](https://docs.razroom.ai/gateway/configuration)** — route inbound channels/accounts/peers to isolated agents (workspaces + per-agent sessions).
+- **[Voice Wake](https://docs.razroom.ai/nodes/voicewake) + [Talk Mode](https://docs.razroom.ai/nodes/talk)** — always-on speech for macOS with ElevenLabs.
+- **[Live Canvas](https://docs.razroom.ai/platforms/mac/canvas)** — agent-driven visual workspace with [A2UI](https://docs.razroom.ai/platforms/mac/canvas#canvas-a2ui).
+- **[First-class tools](https://docs.razroom.ai/tools)** — browser, canvas, nodes, cron, sessions, and Discord/Slack actions.
+- **[Companion apps](https://docs.razroom.ai/platforms/macos)** — macOS menu bar app.
+- **[Onboarding](https://docs.razroom.ai/start/wizard) + [skills](https://docs.razroom.ai/tools/skills)** — wizard-driven setup with bundled/managed/workspace skills.
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=moltbot/moltbot&type=date&legend=top-left)](https://www.star-history.com/#moltbot/moltbot&type=date&legend=top-left)
+[![Star History Chart](https://api.star-history.com/svg?repos=razroom/razroom&type=date&legend=top-left)](https://www.star-history.com/#razroom/razroom&type=date&legend=top-left)
 
 ## Everything we built so far
 
 ### Core platform
 
-- [Gateway WS control plane](https://docs.moltbot.ai/gateway) with sessions, presence, config, cron, webhooks, [Control UI](https://docs.moltbot.ai/web), and [Canvas host](https://docs.moltbot.ai/platforms/mac/canvas#canvas-a2ui).
-- [CLI surface](https://docs.moltbot.ai/tools/agent-send): gateway, agent, send, [wizard](https://docs.moltbot.ai/start/wizard), and [doctor](https://docs.moltbot.ai/gateway/doctor).
-- [Pi agent runtime](https://docs.moltbot.ai/concepts/agent) in RPC mode with tool streaming and block streaming.
-- [Session model](https://docs.moltbot.ai/concepts/session): `main` for direct chats, group isolation, activation modes, queue modes, reply-back. Group rules: [Groups](https://docs.moltbot.ai/concepts/groups).
-- [Media pipeline](https://docs.moltbot.ai/nodes/images): images/audio/video, transcription hooks, size caps, temp file lifecycle. Audio details: [Audio](https://docs.moltbot.ai/nodes/audio).
+- [Gateway WS control plane](https://docs.razroom.ai/gateway) with sessions, presence, config, cron, webhooks, [Control UI](https://docs.razroom.ai/web), and [Canvas host](https://docs.razroom.ai/platforms/mac/canvas#canvas-a2ui).
+- [CLI surface](https://docs.razroom.ai/tools/agent-send): gateway, agent, send, [wizard](https://docs.razroom.ai/start/wizard), and [doctor](https://docs.razroom.ai/gateway/doctor).
+- [Pi agent runtime](https://docs.razroom.ai/concepts/agent) in RPC mode with tool streaming and block streaming.
+- [Session model](https://docs.razroom.ai/concepts/session): `main` for direct chats, group isolation, activation modes, queue modes, reply-back. Group rules: [Groups](https://docs.razroom.ai/concepts/groups).
+- [Media pipeline](https://docs.razroom.ai/nodes/images): images/audio/video, transcription hooks, size caps, temp file lifecycle. Audio details: [Audio](https://docs.razroom.ai/nodes/audio).
 
 ### Channels
 
-- [Channels](https://docs.moltbot.ai/channels): [WhatsApp](https://docs.moltbot.ai/channels/whatsapp) (Baileys), [Telegram](https://docs.moltbot.ai/channels/telegram) (grammY), [Slack](https://docs.moltbot.ai/channels/slack) (Bolt), [Discord](https://docs.moltbot.ai/channels/discord) (discord.js), [Google Chat](https://docs.moltbot.ai/channels/googlechat) (Chat API), [Signal](https://docs.moltbot.ai/channels/signal) (signal-cli), [BlueBubbles](https://docs.moltbot.ai/channels/bluebubbles) (iMessage, recommended), [iMessage](https://docs.moltbot.ai/channels/imessage) (legacy imsg), [Microsoft Teams](https://docs.moltbot.ai/channels/msteams) (extension), [Matrix](https://docs.moltbot.ai/channels/matrix) (extension), [Zalo](https://docs.moltbot.ai/channels/zalo) (extension), [Zalo Personal](https://docs.moltbot.ai/channels/zalouser) (extension), [WebChat](https://docs.moltbot.ai/web/webchat).
-- [Group routing](https://docs.moltbot.ai/concepts/group-messages): mention gating, reply tags, per-channel chunking and routing. Channel rules: [Channels](https://docs.moltbot.ai/channels).
+- [Channels](https://docs.razroom.ai/channels): [WhatsApp](https://docs.razroom.ai/channels/whatsapp) (Baileys), [Telegram](https://docs.razroom.ai/channels/telegram) (grammY), [Slack](https://docs.razroom.ai/channels/slack) (Bolt), [Discord](https://docs.razroom.ai/channels/discord) (discord.js), [Google Chat](https://docs.razroom.ai/channels/googlechat) (Chat API), [Signal](https://docs.razroom.ai/channels/signal) (signal-cli), [BlueBubbles](https://docs.razroom.ai/channels/bluebubbles) (iMessage, recommended), [iMessage](https://docs.razroom.ai/channels/imessage) (legacy imsg), [Microsoft Teams](https://docs.razroom.ai/channels/msteams) (extension), [Matrix](https://docs.razroom.ai/channels/matrix) (extension), [Zalo](https://docs.razroom.ai/channels/zalo) (extension), [Zalo Personal](https://docs.razroom.ai/channels/zalouser) (extension), [WebChat](https://docs.razroom.ai/web/webchat).
+- [Group routing](https://docs.razroom.ai/concepts/group-messages): mention gating, reply tags, per-channel chunking and routing. Channel rules: [Channels](https://docs.razroom.ai/channels).
 
 ### Apps + nodes
 
-- [macOS app](https://docs.moltbot.ai/platforms/macos): menu bar control plane, [Voice Wake](https://docs.moltbot.ai/nodes/voicewake)/PTT, [Talk Mode](https://docs.moltbot.ai/nodes/talk) overlay, [WebChat](https://docs.moltbot.ai/web/webchat), debug tools, [remote gateway](https://docs.moltbot.ai/gateway/remote) control.
-- [macOS node mode](https://docs.moltbot.ai/nodes): system.run/notify + canvas/camera exposure.
+- [macOS app](https://docs.razroom.ai/platforms/macos): menu bar control plane, [Voice Wake](https://docs.razroom.ai/nodes/voicewake)/PTT, [Talk Mode](https://docs.razroom.ai/nodes/talk) overlay, [WebChat](https://docs.razroom.ai/web/webchat), debug tools, [remote gateway](https://docs.razroom.ai/gateway/remote) control.
+- [macOS node mode](https://docs.razroom.ai/nodes): system.run/notify + canvas/camera exposure.
 
 ### Tools + automation
 
-- [Browser control](https://docs.moltbot.ai/tools/browser): dedicated moltbot Chrome/Chromium, snapshots, actions, uploads, profiles.
-- [Canvas](https://docs.moltbot.ai/platforms/mac/canvas): [A2UI](https://docs.moltbot.ai/platforms/mac/canvas#canvas-a2ui) push/reset, eval, snapshot.
-- [Nodes](https://docs.moltbot.ai/nodes): camera snap/clip, screen record, [location.get](https://docs.moltbot.ai/nodes/location-command), notifications.
-- [Cron + wakeups](https://docs.moltbot.ai/automation/cron-jobs); [webhooks](https://docs.moltbot.ai/automation/webhook); [Gmail Pub/Sub](https://docs.moltbot.ai/automation/gmail-pubsub).
-- [Skills platform](https://docs.moltbot.ai/tools/skills): bundled, managed, and workspace skills with install gating + UI.
+- [Browser control](https://docs.razroom.ai/tools/browser): dedicated razroom Chrome/Chromium, snapshots, actions, uploads, profiles.
+- [Canvas](https://docs.razroom.ai/platforms/mac/canvas): [A2UI](https://docs.razroom.ai/platforms/mac/canvas#canvas-a2ui) push/reset, eval, snapshot.
+- [Nodes](https://docs.razroom.ai/nodes): camera snap/clip, screen record, [location.get](https://docs.razroom.ai/nodes/location-command), notifications.
+- [Cron + wakeups](https://docs.razroom.ai/automation/cron-jobs); [webhooks](https://docs.razroom.ai/automation/webhook); [Gmail Pub/Sub](https://docs.razroom.ai/automation/gmail-pubsub).
+- [Skills platform](https://docs.razroom.ai/tools/skills): bundled, managed, and workspace skills with install gating + UI.
 
 ### Runtime + safety
 
-- [Channel routing](https://docs.moltbot.ai/concepts/channel-routing), [retry policy](https://docs.moltbot.ai/concepts/retry), and [streaming/chunking](https://docs.moltbot.ai/concepts/streaming).
-- [Presence](https://docs.moltbot.ai/concepts/presence), [typing indicators](https://docs.moltbot.ai/concepts/typing-indicators), and [usage tracking](https://docs.moltbot.ai/concepts/usage-tracking).
-- [Models](https://docs.moltbot.ai/concepts/models), [model failover](https://docs.moltbot.ai/concepts/model-failover), and [session pruning](https://docs.moltbot.ai/concepts/session-pruning).
-- [Security](https://docs.moltbot.ai/gateway/security) and [troubleshooting](https://docs.moltbot.ai/channels/troubleshooting).
+- [Channel routing](https://docs.razroom.ai/concepts/channel-routing), [retry policy](https://docs.razroom.ai/concepts/retry), and [streaming/chunking](https://docs.razroom.ai/concepts/streaming).
+- [Presence](https://docs.razroom.ai/concepts/presence), [typing indicators](https://docs.razroom.ai/concepts/typing-indicators), and [usage tracking](https://docs.razroom.ai/concepts/usage-tracking).
+- [Models](https://docs.razroom.ai/concepts/models), [model failover](https://docs.razroom.ai/concepts/model-failover), and [session pruning](https://docs.razroom.ai/concepts/session-pruning).
+- [Security](https://docs.razroom.ai/gateway/security) and [troubleshooting](https://docs.razroom.ai/channels/troubleshooting).
 
 ### Ops + packaging
 
-- [Control UI](https://docs.moltbot.ai/web) + [WebChat](https://docs.moltbot.ai/web/webchat) served directly from the Gateway.
-- [Tailscale Serve/Funnel](https://docs.moltbot.ai/gateway/tailscale) or [SSH tunnels](https://docs.moltbot.ai/gateway/remote) with token/password auth.
-- [Nix mode](https://docs.moltbot.ai/install/nix) for declarative config; [Docker](https://docs.moltbot.ai/install/docker)-based installs.
-- [Doctor](https://docs.moltbot.ai/gateway/doctor) migrations, [logging](https://docs.moltbot.ai/logging).
+- [Control UI](https://docs.razroom.ai/web) + [WebChat](https://docs.razroom.ai/web/webchat) served directly from the Gateway.
+- [Tailscale Serve/Funnel](https://docs.razroom.ai/gateway/tailscale) or [SSH tunnels](https://docs.razroom.ai/gateway/remote) with token/password auth.
+- [Nix mode](https://docs.razroom.ai/install/nix) for declarative config; [Docker](https://docs.razroom.ai/install/docker)-based installs.
+- [Doctor](https://docs.razroom.ai/gateway/doctor) migrations, [logging](https://docs.razroom.ai/logging).
 
 ## How it works (short)
 
@@ -188,23 +188,23 @@ WhatsApp / Telegram / Slack / Discord / Google Chat / Signal / iMessage / BlueBu
 └──────────────┬────────────────┘
                │
                ├─ Pi agent (RPC)
-               ├─ CLI (moltbot …)
+               ├─ CLI (razroom …)
                ├─ WebChat UI
                └─ macOS app
 ```
 
 ## Key subsystems
 
-- **[Gateway WebSocket network](https://docs.moltbot.ai/concepts/architecture)** — single WS control plane for clients, tools, and events (plus ops: [Gateway runbook](https://docs.moltbot.ai/gateway)).
-- **[Tailscale exposure](https://docs.moltbot.ai/gateway/tailscale)** — Serve/Funnel for the Gateway dashboard + WS (remote access: [Remote](https://docs.moltbot.ai/gateway/remote)).
-- **[Browser control](https://docs.moltbot.ai/tools/browser)** — moltbot‑managed Chrome/Chromium with CDP control.
-- **[Canvas + A2UI](https://docs.moltbot.ai/platforms/mac/canvas)** — agent‑driven visual workspace (A2UI host: [Canvas/A2UI](https://docs.moltbot.ai/platforms/mac/canvas#canvas-a2ui)).
-- **[Voice Wake](https://docs.moltbot.ai/nodes/voicewake) + [Talk Mode](https://docs.moltbot.ai/nodes/talk)** — always‑on speech and continuous conversation.
-- **[Nodes](https://docs.moltbot.ai/nodes)** — Canvas, camera snap/clip, screen record, `location.get`, notifications, plus macOS‑only `system.run`/`system.notify`.
+- **[Gateway WebSocket network](https://docs.razroom.ai/concepts/architecture)** — single WS control plane for clients, tools, and events (plus ops: [Gateway runbook](https://docs.razroom.ai/gateway)).
+- **[Tailscale exposure](https://docs.razroom.ai/gateway/tailscale)** — Serve/Funnel for the Gateway dashboard + WS (remote access: [Remote](https://docs.razroom.ai/gateway/remote)).
+- **[Browser control](https://docs.razroom.ai/tools/browser)** — razroom‑managed Chrome/Chromium with CDP control.
+- **[Canvas + A2UI](https://docs.razroom.ai/platforms/mac/canvas)** — agent‑driven visual workspace (A2UI host: [Canvas/A2UI](https://docs.razroom.ai/platforms/mac/canvas#canvas-a2ui)).
+- **[Voice Wake](https://docs.razroom.ai/nodes/voicewake) + [Talk Mode](https://docs.razroom.ai/nodes/talk)** — always‑on speech and continuous conversation.
+- **[Nodes](https://docs.razroom.ai/nodes)** — Canvas, camera snap/clip, screen record, `location.get`, notifications, plus macOS‑only `system.run`/`system.notify`.
 
 ## Tailscale access (Gateway dashboard)
 
-MoltBot can auto-configure Tailscale **Serve** (tailnet-only) or **Funnel** (public) while the Gateway stays bound to loopback. Configure `gateway.tailscale.mode`:
+Razroom can auto-configure Tailscale **Serve** (tailnet-only) or **Funnel** (public) while the Gateway stays bound to loopback. Configure `gateway.tailscale.mode`:
 
 - `off`: no Tailscale automation (default).
 - `serve`: tailnet-only HTTPS via `tailscale serve` (uses Tailscale identity headers by default).
@@ -212,12 +212,12 @@ MoltBot can auto-configure Tailscale **Serve** (tailnet-only) or **Funnel** (pub
 
 Notes:
 
-- `gateway.bind` must stay `loopback` when Serve/Funnel is enabled (MoltBot enforces this).
+- `gateway.bind` must stay `loopback` when Serve/Funnel is enabled (Razroom enforces this).
 - Serve can be forced to require a password by setting `gateway.auth.mode: "password"` or `gateway.auth.allowTailscale: false`.
 - Funnel refuses to start unless `gateway.auth.mode: "password"` is set.
 - Optional: `gateway.tailscale.resetOnExit` to undo Serve/Funnel on shutdown.
 
-Details: [Tailscale guide](https://docs.moltbot.ai/gateway/tailscale) · [Web surfaces](https://docs.moltbot.ai/web)
+Details: [Tailscale guide](https://docs.razroom.ai/gateway/tailscale) · [Web surfaces](https://docs.razroom.ai/web)
 
 ## Remote Gateway (Linux is great)
 
@@ -227,7 +227,7 @@ It's perfectly fine to run the Gateway on a small Linux instance. Clients (macOS
 - **Device nodes** run device‑local actions (`system.run`, camera, screen recording, notifications) via `node.invoke`.
   In short: exec runs where the Gateway lives; device actions run where the device lives.
 
-Details: [Remote access](https://docs.moltbot.ai/gateway/remote) · [Nodes](https://docs.moltbot.ai/nodes) · [Security](https://docs.moltbot.ai/gateway/security)
+Details: [Remote access](https://docs.razroom.ai/gateway/remote) · [Nodes](https://docs.razroom.ai/nodes) · [Security](https://docs.razroom.ai/gateway/security)
 
 ## macOS permissions via the Gateway protocol
 
@@ -242,7 +242,7 @@ Elevated bash (host permissions) is separate from macOS TCC:
 - Use `/elevated on|off` to toggle per‑session elevated access when enabled + allowlisted.
 - Gateway persists the per‑session toggle via `sessions.patch` (WS method) alongside `thinkingLevel`, `verboseLevel`, `model`, `sendPolicy`, and `groupActivation`.
 
-Details: [Nodes](https://docs.moltbot.ai/nodes) · [macOS app](https://docs.moltbot.ai/platforms/macos) · [Gateway protocol](https://docs.moltbot.ai/concepts/architecture)
+Details: [Nodes](https://docs.razroom.ai/nodes) · [macOS app](https://docs.razroom.ai/platforms/macos) · [Gateway protocol](https://docs.razroom.ai/concepts/architecture)
 
 ## Agent to Agent (sessions\_\* tools)
 
@@ -251,7 +251,7 @@ Details: [Nodes](https://docs.moltbot.ai/nodes) · [macOS app](https://docs.molt
 - `sessions_history` — fetch transcript logs for a session.
 - `sessions_send` — message another session; optional reply‑back ping‑pong + announce step (`REPLY_SKIP`, `ANNOUNCE_SKIP`).
 
-Details: [Session tools](https://docs.moltbot.ai/concepts/session-tool)
+Details: [Session tools](https://docs.razroom.ai/concepts/session-tool)
 
 ## Skills registry (ClawHub)
 
@@ -278,7 +278,7 @@ The Gateway alone delivers a great experience. All apps are optional and add ext
 
 If you plan to build/run companion apps, follow the platform runbooks below.
 
-### macOS (MoltBot.app) (optional)
+### macOS (Razroom.app) (optional)
 
 - Menu bar control for the Gateway and health.
 - Voice Wake + push-to-talk overlay.
@@ -290,13 +290,13 @@ Note: signed builds required for macOS permissions to stick across rebuilds (see
 
 ## Agent workspace + skills
 
-- Workspace root: `~/.moltbot/workspace` (configurable via `agents.defaults.workspace`).
+- Workspace root: `~/.razroom/workspace` (configurable via `agents.defaults.workspace`).
 - Injected prompt files: `AGENTS.md`, `SOUL.md`, `TOOLS.md`.
-- Skills: `~/.moltbot/workspace/skills/<skill>/SKILL.md`.
+- Skills: `~/.razroom/workspace/skills/<skill>/SKILL.md`.
 
 ## Configuration
 
-Minimal `~/.moltbot/moltbot.json` (model + defaults):
+Minimal `~/.razroom/razroom.json` (model + defaults):
 
 ```json5
 {
@@ -306,7 +306,7 @@ Minimal `~/.moltbot/moltbot.json` (model + defaults):
 }
 ```
 
-[Full configuration reference (all keys + examples).](https://docs.moltbot.ai/gateway/configuration)
+[Full configuration reference (all keys + examples).](https://docs.razroom.ai/gateway/configuration)
 
 ## Security model (important)
 
@@ -314,15 +314,15 @@ Minimal `~/.moltbot/moltbot.json` (model + defaults):
 - **Group/channel safety:** set `agents.defaults.sandbox.mode: "non-main"` to run **non‑main sessions** (groups/channels) inside per‑session Docker sandboxes; bash then runs in Docker for those sessions.
 - **Sandbox defaults:** allowlist `bash`, `process`, `read`, `write`, `edit`, `sessions_list`, `sessions_history`, `sessions_send`, `sessions_spawn`; denylist `browser`, `canvas`, `nodes`, `cron`, `discord`, `gateway`.
 
-Details: [Security guide](https://docs.moltbot.ai/gateway/security) · [Docker + sandboxing](https://docs.moltbot.ai/install/docker) · [Sandbox config](https://docs.moltbot.ai/gateway/configuration)
+Details: [Security guide](https://docs.razroom.ai/gateway/security) · [Docker + sandboxing](https://docs.razroom.ai/install/docker) · [Sandbox config](https://docs.razroom.ai/gateway/configuration)
 
-### [WhatsApp](https://docs.moltbot.ai/channels/whatsapp)
+### [WhatsApp](https://docs.razroom.ai/channels/whatsapp)
 
-- Link the device: `pnpm moltbot channels login` (stores creds in `~/.moltbot/credentials`).
+- Link the device: `pnpm razroom channels login` (stores creds in `~/.razroom/credentials`).
 - Allowlist who can talk to the assistant via `channels.whatsapp.allowFrom`.
 - If `channels.whatsapp.groups` is set, it becomes a group allowlist; include `"*"` to allow all.
 
-### [Telegram](https://docs.moltbot.ai/channels/telegram)
+### [Telegram](https://docs.razroom.ai/channels/telegram)
 
 - Set `TELEGRAM_BOT_TOKEN` or `channels.telegram.botToken` (env wins).
 - Optional: set `channels.telegram.groups` (with `channels.telegram.groups."*".requireMention`); when set, it is a group allowlist (include `"*"` to allow all). Also `channels.telegram.allowFrom` or `channels.telegram.webhookUrl` + `channels.telegram.webhookSecret` as needed.
@@ -337,11 +337,11 @@ Details: [Security guide](https://docs.moltbot.ai/gateway/security) · [Docker +
 }
 ```
 
-### [Slack](https://docs.moltbot.ai/channels/slack)
+### [Slack](https://docs.razroom.ai/channels/slack)
 
 - Set `SLACK_BOT_TOKEN` + `SLACK_APP_TOKEN` (or `channels.slack.botToken` + `channels.slack.appToken`).
 
-### [Discord](https://docs.moltbot.ai/channels/discord)
+### [Discord](https://docs.razroom.ai/channels/discord)
 
 - Set `DISCORD_BOT_TOKEN` or `channels.discord.token` (env wins).
 - Optional: set `commands.native`, `commands.text`, or `commands.useAccessGroups`, plus `channels.discord.allowFrom`, `channels.discord.guilds`, or `channels.discord.mediaMaxMb` as needed.
@@ -356,27 +356,27 @@ Details: [Security guide](https://docs.moltbot.ai/gateway/security) · [Docker +
 }
 ```
 
-### [Signal](https://docs.moltbot.ai/channels/signal)
+### [Signal](https://docs.razroom.ai/channels/signal)
 
 - Requires `signal-cli` and a `channels.signal` config section.
 
-### [BlueBubbles (iMessage)](https://docs.moltbot.ai/channels/bluebubbles)
+### [BlueBubbles (iMessage)](https://docs.razroom.ai/channels/bluebubbles)
 
 - **Recommended** iMessage integration.
 - Configure `channels.bluebubbles.serverUrl` + `channels.bluebubbles.password` and a webhook (`channels.bluebubbles.webhookPath`).
 - The BlueBubbles server runs on macOS; the Gateway can run on macOS or elsewhere.
 
-### [iMessage (legacy)](https://docs.moltbot.ai/channels/imessage)
+### [iMessage (legacy)](https://docs.razroom.ai/channels/imessage)
 
 - Legacy macOS-only integration via `imsg` (Messages must be signed in).
 - If `channels.imessage.groups` is set, it becomes a group allowlist; include `"*"` to allow all.
 
-### [Microsoft Teams](https://docs.moltbot.ai/channels/msteams)
+### [Microsoft Teams](https://docs.razroom.ai/channels/msteams)
 
 - Configure a Teams app + Bot Framework, then add a `msteams` config section.
 - Allowlist who can talk via `msteams.allowFrom`; group access via `msteams.groupAllowFrom` or `msteams.groupPolicy: "open"`.
 
-### [WebChat](https://docs.moltbot.ai/web/webchat)
+### [WebChat](https://docs.razroom.ai/web/webchat)
 
 - Uses the Gateway WebSocket; no separate WebChat port/config.
 
@@ -395,77 +395,77 @@ Browser control (optional):
 
 Use these when you’re past the onboarding flow and want the deeper reference.
 
-- [Start with the docs index for navigation and “what’s where.”](https://docs.moltbot.ai)
-- [Read the architecture overview for the gateway + protocol model.](https://docs.moltbot.ai/concepts/architecture)
-- [Use the full configuration reference when you need every key and example.](https://docs.moltbot.ai/gateway/configuration)
-- [Run the Gateway by the book with the operational runbook.](https://docs.moltbot.ai/gateway)
-- [Learn how the Control UI/Web surfaces work and how to expose them safely.](https://docs.moltbot.ai/web)
-- [Understand remote access over SSH tunnels or tailnets.](https://docs.moltbot.ai/gateway/remote)
-- [Follow the onboarding wizard flow for a guided setup.](https://docs.moltbot.ai/start/wizard)
-- [Wire external triggers via the webhook surface.](https://docs.moltbot.ai/automation/webhook)
-- [Set up Gmail Pub/Sub triggers.](https://docs.moltbot.ai/automation/gmail-pubsub)
-- [Learn the macOS menu bar companion details.](https://docs.moltbot.ai/platforms/mac/menu-bar)
-- [Platform guides: Windows (WSL2)](https://docs.moltbot.ai/platforms/windows), [Linux](https://docs.moltbot.ai/platforms/linux), [macOS](https://docs.moltbot.ai/platforms/macos)
-- [Debug common failures with the troubleshooting guide.](https://docs.moltbot.ai/channels/troubleshooting)
-- [Review security guidance before exposing anything.](https://docs.moltbot.ai/gateway/security)
+- [Start with the docs index for navigation and “what’s where.”](https://docs.razroom.ai)
+- [Read the architecture overview for the gateway + protocol model.](https://docs.razroom.ai/concepts/architecture)
+- [Use the full configuration reference when you need every key and example.](https://docs.razroom.ai/gateway/configuration)
+- [Run the Gateway by the book with the operational runbook.](https://docs.razroom.ai/gateway)
+- [Learn how the Control UI/Web surfaces work and how to expose them safely.](https://docs.razroom.ai/web)
+- [Understand remote access over SSH tunnels or tailnets.](https://docs.razroom.ai/gateway/remote)
+- [Follow the onboarding wizard flow for a guided setup.](https://docs.razroom.ai/start/wizard)
+- [Wire external triggers via the webhook surface.](https://docs.razroom.ai/automation/webhook)
+- [Set up Gmail Pub/Sub triggers.](https://docs.razroom.ai/automation/gmail-pubsub)
+- [Learn the macOS menu bar companion details.](https://docs.razroom.ai/platforms/mac/menu-bar)
+- [Platform guides: Windows (WSL2)](https://docs.razroom.ai/platforms/windows), [Linux](https://docs.razroom.ai/platforms/linux), [macOS](https://docs.razroom.ai/platforms/macos)
+- [Debug common failures with the troubleshooting guide.](https://docs.razroom.ai/channels/troubleshooting)
+- [Review security guidance before exposing anything.](https://docs.razroom.ai/gateway/security)
 
 ## Advanced docs (discovery + control)
 
-- [Discovery + transports](https://docs.moltbot.ai/gateway/discovery)
-- [Bonjour/mDNS](https://docs.moltbot.ai/gateway/bonjour)
-- [Gateway pairing](https://docs.moltbot.ai/gateway/pairing)
-- [Remote gateway README](https://docs.moltbot.ai/gateway/remote-gateway-readme)
-- [Control UI](https://docs.moltbot.ai/web/control-ui)
-- [Dashboard](https://docs.moltbot.ai/web/dashboard)
+- [Discovery + transports](https://docs.razroom.ai/gateway/discovery)
+- [Bonjour/mDNS](https://docs.razroom.ai/gateway/bonjour)
+- [Gateway pairing](https://docs.razroom.ai/gateway/pairing)
+- [Remote gateway README](https://docs.razroom.ai/gateway/remote-gateway-readme)
+- [Control UI](https://docs.razroom.ai/web/control-ui)
+- [Dashboard](https://docs.razroom.ai/web/dashboard)
 
 ## Operations & troubleshooting
 
-- [Health checks](https://docs.moltbot.ai/gateway/health)
-- [Gateway lock](https://docs.moltbot.ai/gateway/gateway-lock)
-- [Background process](https://docs.moltbot.ai/gateway/background-process)
-- [Browser troubleshooting (Linux)](https://docs.moltbot.ai/tools/browser-linux-troubleshooting)
-- [Logging](https://docs.moltbot.ai/logging)
+- [Health checks](https://docs.razroom.ai/gateway/health)
+- [Gateway lock](https://docs.razroom.ai/gateway/gateway-lock)
+- [Background process](https://docs.razroom.ai/gateway/background-process)
+- [Browser troubleshooting (Linux)](https://docs.razroom.ai/tools/browser-linux-troubleshooting)
+- [Logging](https://docs.razroom.ai/logging)
 
 ## Deep dives
 
-- [Agent loop](https://docs.moltbot.ai/concepts/agent-loop)
-- [Presence](https://docs.moltbot.ai/concepts/presence)
-- [TypeBox schemas](https://docs.moltbot.ai/concepts/typebox)
-- [RPC adapters](https://docs.moltbot.ai/reference/rpc)
-- [Queue](https://docs.moltbot.ai/concepts/queue)
+- [Agent loop](https://docs.razroom.ai/concepts/agent-loop)
+- [Presence](https://docs.razroom.ai/concepts/presence)
+- [TypeBox schemas](https://docs.razroom.ai/concepts/typebox)
+- [RPC adapters](https://docs.razroom.ai/reference/rpc)
+- [Queue](https://docs.razroom.ai/concepts/queue)
 
 ## Workspace & skills
 
-- [Skills config](https://docs.moltbot.ai/tools/skills-config)
-- [Default AGENTS](https://docs.moltbot.ai/reference/AGENTS.default)
-- [Templates: AGENTS](https://docs.moltbot.ai/reference/templates/AGENTS)
-- [Templates: BOOTSTRAP](https://docs.moltbot.ai/reference/templates/BOOTSTRAP)
-- [Templates: IDENTITY](https://docs.moltbot.ai/reference/templates/IDENTITY)
-- [Templates: SOUL](https://docs.moltbot.ai/reference/templates/SOUL)
-- [Templates: TOOLS](https://docs.moltbot.ai/reference/templates/TOOLS)
-- [Templates: USER](https://docs.moltbot.ai/reference/templates/USER)
+- [Skills config](https://docs.razroom.ai/tools/skills-config)
+- [Default AGENTS](https://docs.razroom.ai/reference/AGENTS.default)
+- [Templates: AGENTS](https://docs.razroom.ai/reference/templates/AGENTS)
+- [Templates: BOOTSTRAP](https://docs.razroom.ai/reference/templates/BOOTSTRAP)
+- [Templates: IDENTITY](https://docs.razroom.ai/reference/templates/IDENTITY)
+- [Templates: SOUL](https://docs.razroom.ai/reference/templates/SOUL)
+- [Templates: TOOLS](https://docs.razroom.ai/reference/templates/TOOLS)
+- [Templates: USER](https://docs.razroom.ai/reference/templates/USER)
 
 ## Platform internals
 
-- [macOS dev setup](https://docs.moltbot.ai/platforms/mac/dev-setup)
-- [macOS menu bar](https://docs.moltbot.ai/platforms/mac/menu-bar)
-- [macOS voice wake](https://docs.moltbot.ai/platforms/mac/voicewake)
-- [Windows (WSL2)](https://docs.moltbot.ai/platforms/windows)
-- [Linux app](https://docs.moltbot.ai/platforms/linux)
+- [macOS dev setup](https://docs.razroom.ai/platforms/mac/dev-setup)
+- [macOS menu bar](https://docs.razroom.ai/platforms/mac/menu-bar)
+- [macOS voice wake](https://docs.razroom.ai/platforms/mac/voicewake)
+- [Windows (WSL2)](https://docs.razroom.ai/platforms/windows)
+- [Linux app](https://docs.razroom.ai/platforms/linux)
 
 ## Email hooks (Gmail)
 
-- [docs.moltbot.ai/gmail-pubsub](https://docs.moltbot.ai/automation/gmail-pubsub)
+- [docs.razroom.ai/gmail-pubsub](https://docs.razroom.ai/automation/gmail-pubsub)
 
 ## Molty
 
-MoltBot was built for **Molty**, a space lobster AI assistant. 🦞
+Razroom was built for **Molty**, a space lobster AI assistant. 🦞
 by Peter Steinberger and the community.
 
-- [moltbot.ai](https://moltbot.ai)
+- [razroom.ai](https://razroom.ai)
 - [soul.md](https://soul.md)
 - [steipete.me](https://steipete.me)
-- [@moltbot](https://x.com/moltbot)
+- [@razroom](https://x.com/razroom)
 
 ## Community
 
@@ -521,7 +521,7 @@ Thanks to all clawtributors:
   <a href="https://github.com/martinpucik"><img src="https://avatars.githubusercontent.com/u/5503097?v=4&s=48" width="48" height="48" alt="martinpucik" title="martinpucik"/></a> <a href="https://github.com/search?q=Matt%20mini"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Matt mini" title="Matt mini"/></a> <a href="https://github.com/mertcicekci0"><img src="https://avatars.githubusercontent.com/u/179321902?v=4&s=48" width="48" height="48" alt="mertcicekci0" title="mertcicekci0"/></a> <a href="https://github.com/search?q=Miles"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Miles" title="Miles"/></a> <a href="https://github.com/search?q=minghinmatthewlam"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="minghinmatthewlam" title="minghinmatthewlam"/></a> <a href="https://github.com/mrdbstn"><img src="https://avatars.githubusercontent.com/u/58957632?v=4&s=48" width="48" height="48" alt="mrdbstn" title="mrdbstn"/></a> <a href="https://github.com/MSch"><img src="https://avatars.githubusercontent.com/u/7475?v=4&s=48" width="48" height="48" alt="MSch" title="MSch"/></a> <a href="https://github.com/search?q=mudrii"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="mudrii" title="mudrii"/></a> <a href="https://github.com/search?q=Mustafa%20Tag%20Eldeen"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Mustafa Tag Eldeen" title="Mustafa Tag Eldeen"/></a> <a href="https://github.com/search?q=myfunc"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="myfunc" title="myfunc"/></a>
   <a href="https://github.com/mylukin"><img src="https://avatars.githubusercontent.com/u/1021019?v=4&s=48" width="48" height="48" alt="mylukin" title="mylukin"/></a> <a href="https://github.com/nathanbosse"><img src="https://avatars.githubusercontent.com/u/4040669?v=4&s=48" width="48" height="48" alt="nathanbosse" title="nathanbosse"/></a> <a href="https://github.com/ndraiman"><img src="https://avatars.githubusercontent.com/u/12609607?v=4&s=48" width="48" height="48" alt="ndraiman" title="ndraiman"/></a> <a href="https://github.com/nexty5870"><img src="https://avatars.githubusercontent.com/u/3869659?v=4&s=48" width="48" height="48" alt="nexty5870" title="nexty5870"/></a> <a href="https://github.com/Noctivoro"><img src="https://avatars.githubusercontent.com/u/183974570?v=4&s=48" width="48" height="48" alt="Noctivoro" title="Noctivoro"/></a> <a href="https://github.com/Omar-Khaleel"><img src="https://avatars.githubusercontent.com/u/240748662?v=4&s=48" width="48" height="48" alt="Omar-Khaleel" title="Omar-Khaleel"/></a> <a href="https://github.com/ozgur-polat"><img src="https://avatars.githubusercontent.com/u/26483942?v=4&s=48" width="48" height="48" alt="ozgur-polat" title="ozgur-polat"/></a> <a href="https://github.com/search?q=pasogott"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="pasogott" title="pasogott"/></a> <a href="https://github.com/search?q=plum-dawg"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="plum-dawg" title="plum-dawg"/></a> <a href="https://github.com/search?q=pookNast"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="pookNast" title="pookNast"/></a>
   <a href="https://github.com/ppamment"><img src="https://avatars.githubusercontent.com/u/2122919?v=4&s=48" width="48" height="48" alt="ppamment" title="ppamment"/></a> <a href="https://github.com/prathamdby"><img src="https://avatars.githubusercontent.com/u/134331217?v=4&s=48" width="48" height="48" alt="prathamdby" title="prathamdby"/></a> <a href="https://github.com/ptn1411"><img src="https://avatars.githubusercontent.com/u/57529765?v=4&s=48" width="48" height="48" alt="ptn1411" title="ptn1411"/></a> <a href="https://github.com/search?q=rafaelreis-r"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="rafaelreis-r" title="rafaelreis-r"/></a> <a href="https://github.com/rafelbev"><img src="https://avatars.githubusercontent.com/u/467120?v=4&s=48" width="48" height="48" alt="rafelbev" title="rafelbev"/></a> <a href="https://github.com/reeltimeapps"><img src="https://avatars.githubusercontent.com/u/637338?v=4&s=48" width="48" height="48" alt="reeltimeapps" title="reeltimeapps"/></a> <a href="https://github.com/RLTCmpe"><img src="https://avatars.githubusercontent.com/u/10762242?v=4&s=48" width="48" height="48" alt="RLTCmpe" title="RLTCmpe"/></a> <a href="https://github.com/search?q=robhparker"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="robhparker" title="robhparker"/></a> <a href="https://github.com/rohansachinpatil"><img src="https://avatars.githubusercontent.com/u/172933149?v=4&s=48" width="48" height="48" alt="rohansachinpatil" title="rohansachinpatil"/></a> <a href="https://github.com/search?q=Rony%20Kelner"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Rony Kelner" title="Rony Kelner"/></a>
-  <a href="https://github.com/ryancnelson"><img src="https://avatars.githubusercontent.com/u/347171?v=4&s=48" width="48" height="48" alt="ryancnelson" title="ryancnelson"/></a> <a href="https://github.com/search?q=Samrat%20Jha"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Samrat Jha" title="Samrat Jha"/></a> <a href="https://github.com/search?q=seans-moltbotbot"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="seans-moltbotbot" title="seans-moltbotbot"/></a> <a href="https://github.com/senoldogann"><img src="https://avatars.githubusercontent.com/u/45736551?v=4&s=48" width="48" height="48" alt="senoldogann" title="senoldogann"/></a> <a href="https://github.com/Seredeep"><img src="https://avatars.githubusercontent.com/u/22802816?v=4&s=48" width="48" height="48" alt="Seredeep" title="Seredeep"/></a> <a href="https://github.com/sergical"><img src="https://avatars.githubusercontent.com/u/3760543?v=4&s=48" width="48" height="48" alt="sergical" title="sergical"/></a> <a href="https://github.com/search?q=shatner"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="shatner" title="shatner"/></a> <a href="https://github.com/shiv19"><img src="https://avatars.githubusercontent.com/u/9407019?v=4&s=48" width="48" height="48" alt="shiv19" title="shiv19"/></a> <a href="https://github.com/shiyuanhai"><img src="https://avatars.githubusercontent.com/u/1187370?v=4&s=48" width="48" height="48" alt="shiyuanhai" title="shiyuanhai"/></a> <a href="https://github.com/Shrinija17"><img src="https://avatars.githubusercontent.com/u/199155426?v=4&s=48" width="48" height="48" alt="Shrinija17" title="Shrinija17"/></a>
+  <a href="https://github.com/ryancnelson"><img src="https://avatars.githubusercontent.com/u/347171?v=4&s=48" width="48" height="48" alt="ryancnelson" title="ryancnelson"/></a> <a href="https://github.com/search?q=Samrat%20Jha"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Samrat Jha" title="Samrat Jha"/></a> <a href="https://github.com/search?q=seans-razroombot"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="seans-razroombot" title="seans-razroombot"/></a> <a href="https://github.com/senoldogann"><img src="https://avatars.githubusercontent.com/u/45736551?v=4&s=48" width="48" height="48" alt="senoldogann" title="senoldogann"/></a> <a href="https://github.com/Seredeep"><img src="https://avatars.githubusercontent.com/u/22802816?v=4&s=48" width="48" height="48" alt="Seredeep" title="Seredeep"/></a> <a href="https://github.com/sergical"><img src="https://avatars.githubusercontent.com/u/3760543?v=4&s=48" width="48" height="48" alt="sergical" title="sergical"/></a> <a href="https://github.com/search?q=shatner"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="shatner" title="shatner"/></a> <a href="https://github.com/shiv19"><img src="https://avatars.githubusercontent.com/u/9407019?v=4&s=48" width="48" height="48" alt="shiv19" title="shiv19"/></a> <a href="https://github.com/shiyuanhai"><img src="https://avatars.githubusercontent.com/u/1187370?v=4&s=48" width="48" height="48" alt="shiyuanhai" title="shiyuanhai"/></a> <a href="https://github.com/Shrinija17"><img src="https://avatars.githubusercontent.com/u/199155426?v=4&s=48" width="48" height="48" alt="Shrinija17" title="Shrinija17"/></a>
   <a href="https://github.com/siraht"><img src="https://avatars.githubusercontent.com/u/73152895?v=4&s=48" width="48" height="48" alt="siraht" title="siraht"/></a> <a href="https://github.com/snopoke"><img src="https://avatars.githubusercontent.com/u/249606?v=4&s=48" width="48" height="48" alt="snopoke" title="snopoke"/></a> <a href="https://github.com/search?q=spiceoogway"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="spiceoogway" title="spiceoogway"/></a> <a href="https://github.com/stephenchen2025"><img src="https://avatars.githubusercontent.com/u/218387130?v=4&s=48" width="48" height="48" alt="stephenchen2025" title="stephenchen2025"/></a> <a href="https://github.com/search?q=succ985"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="succ985" title="succ985"/></a> <a href="https://github.com/Suvink"><img src="https://avatars.githubusercontent.com/u/10671497?v=4&s=48" width="48" height="48" alt="Suvink" title="Suvink"/></a> <a href="https://github.com/search?q=techboss"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="techboss" title="techboss"/></a> <a href="https://github.com/testingabc321"><img src="https://avatars.githubusercontent.com/u/8577388?v=4&s=48" width="48" height="48" alt="testingabc321" title="testingabc321"/></a> <a href="https://github.com/search?q=tewatia"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="tewatia" title="tewatia"/></a> <a href="https://github.com/search?q=The%20Admiral"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="The Admiral" title="The Admiral"/></a>
   <a href="https://github.com/search?q=therealZpoint-bot"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="therealZpoint-bot" title="therealZpoint-bot"/></a> <a href="https://github.com/thesash"><img src="https://avatars.githubusercontent.com/u/1166151?v=4&s=48" width="48" height="48" alt="thesash" title="thesash"/></a> <a href="https://github.com/search?q=uos-status"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="uos-status" title="uos-status"/></a> <a href="https://github.com/vcastellm"><img src="https://avatars.githubusercontent.com/u/47026?v=4&s=48" width="48" height="48" alt="vcastellm" title="vcastellm"/></a> <a href="https://github.com/search?q=Vibe%20Kanban"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Vibe Kanban" title="Vibe Kanban"/></a> <a href="https://github.com/vincentkoc"><img src="https://avatars.githubusercontent.com/u/25068?v=4&s=48" width="48" height="48" alt="vincentkoc" title="vincentkoc"/></a> <a href="https://github.com/search?q=void"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="void" title="void"/></a> <a href="https://github.com/search?q=Vultr-Clawd%20Admin"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Vultr-Clawd Admin" title="Vultr-Clawd Admin"/></a> <a href="https://github.com/search?q=Wimmie"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Wimmie" title="Wimmie"/></a> <a href="https://github.com/search?q=wolfred"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="wolfred" title="wolfred"/></a>
   <a href="https://github.com/wstock"><img src="https://avatars.githubusercontent.com/u/1394687?v=4&s=48" width="48" height="48" alt="wstock" title="wstock"/></a> <a href="https://github.com/wytheme"><img src="https://avatars.githubusercontent.com/u/5009358?v=4&s=48" width="48" height="48" alt="wytheme" title="wytheme"/></a> <a href="https://github.com/YangHuang2280"><img src="https://avatars.githubusercontent.com/u/201681634?v=4&s=48" width="48" height="48" alt="YangHuang2280" title="YangHuang2280"/></a> <a href="https://github.com/yazinsai"><img src="https://avatars.githubusercontent.com/u/1846034?v=4&s=48" width="48" height="48" alt="yazinsai" title="yazinsai"/></a> <a href="https://github.com/yevhen"><img src="https://avatars.githubusercontent.com/u/107726?v=4&s=48" width="48" height="48" alt="yevhen" title="yevhen"/></a> <a href="https://github.com/YiWang24"><img src="https://avatars.githubusercontent.com/u/176262341?v=4&s=48" width="48" height="48" alt="YiWang24" title="YiWang24"/></a> <a href="https://github.com/search?q=ymat19"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="ymat19" title="ymat19"/></a> <a href="https://github.com/search?q=Zach%20Knickerbocker"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Zach Knickerbocker" title="Zach Knickerbocker"/></a> <a href="https://github.com/zackerthescar"><img src="https://avatars.githubusercontent.com/u/38077284?v=4&s=48" width="48" height="48" alt="zackerthescar" title="zackerthescar"/></a> <a href="https://github.com/search?q=zhixian"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="zhixian" title="zhixian"/></a>

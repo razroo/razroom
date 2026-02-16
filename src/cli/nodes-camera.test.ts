@@ -52,11 +52,11 @@ describe("nodes camera helpers", () => {
       tmpDir: "/tmp",
       id: "id1",
     });
-    expect(p).toBe(path.join("/tmp", "moltbot-camera-snap-front-id1.jpg"));
+    expect(p).toBe(path.join("/tmp", "razroom-camera-snap-front-id1.jpg"));
   });
 
   it("writes base64 to file", async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-test-"));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-test-"));
     const out = path.join(dir, "x.bin");
     await writeBase64ToFile(out, "aGk=");
     await expect(fs.readFile(out, "utf8")).resolves.toBe("hi");
@@ -72,7 +72,7 @@ describe("nodes camera helpers", () => {
       "fetch",
       mock(async () => new Response("url-content", { status: 200 })),
     );
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-test-"));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-test-"));
     const out = path.join(dir, "x.bin");
     try {
       await writeUrlToFile(out, "https://example.com/clip.mp4");

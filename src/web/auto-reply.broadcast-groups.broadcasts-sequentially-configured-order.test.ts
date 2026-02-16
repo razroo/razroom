@@ -1,6 +1,6 @@
 import "./test-helpers.js";
 import { describe, expect, it, mock, spyOn } from "bun:test";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import { monitorWebChannelWithCapture } from "./auto-reply.broadcast-groups.test-harness.js";
 import {
   installWebAutoReplyTestHomeHooks,
@@ -27,7 +27,7 @@ describe("broadcast groups", () => {
         strategy: "sequential",
         "+1000": ["alfred", "baerbel"],
       },
-    } satisfies MoltBotConfig);
+    } satisfies RazroomConfig);
 
     const seen: string[] = [];
     const resolver = mock(async (ctx: { SessionKey?: unknown }) => {
@@ -62,7 +62,7 @@ describe("broadcast groups", () => {
         strategy: "sequential",
         "123@g.us": ["alfred", "baerbel"],
       },
-    } satisfies MoltBotConfig);
+    } satisfies RazroomConfig);
 
     const resolver = mock().mockResolvedValue({ text: "ok" });
 
@@ -142,7 +142,7 @@ describe("broadcast groups", () => {
         strategy: "parallel",
         "+1000": ["alfred", "baerbel"],
       },
-    } satisfies MoltBotConfig);
+    } satisfies RazroomConfig);
 
     const sendMedia = mock();
     const reply = mock().mockResolvedValue(undefined);

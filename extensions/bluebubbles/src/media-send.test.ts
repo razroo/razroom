@@ -1,4 +1,4 @@
-import type { MoltBotConfig, PluginRuntime } from "moltbot/plugin-sdk";
+import type { RazroomConfig, PluginRuntime } from "razroom/plugin-sdk";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -54,18 +54,18 @@ function createMockRuntime(): { runtime: PluginRuntime; mocks: RuntimeMocks } {
   };
 }
 
-function createConfig(overrides?: Record<string, unknown>): MoltBotConfig {
+function createConfig(overrides?: Record<string, unknown>): RazroomConfig {
   return {
     channels: {
       bluebubbles: {
         ...overrides,
       },
     },
-  } as unknown as MoltBotConfig;
+  } as unknown as RazroomConfig;
 }
 
 async function makeTempDir(): Promise<string> {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-bb-media-"));
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-bb-media-"));
   tempDirs.push(dir);
   return dir;
 }

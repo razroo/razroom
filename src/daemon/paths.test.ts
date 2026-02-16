@@ -5,31 +5,31 @@ import { resolveGatewayStateDir } from "./paths.js";
 describe("resolveGatewayStateDir", () => {
   it("uses the default state dir when no overrides are set", () => {
     const env = { HOME: "/Users/test" };
-    expect(resolveGatewayStateDir(env)).toBe(path.join("/Users/test", ".moltbot"));
+    expect(resolveGatewayStateDir(env)).toBe(path.join("/Users/test", ".razroom"));
   });
 
   it("appends the profile suffix when set", () => {
-    const env = { HOME: "/Users/test", MOLTBOT_PROFILE: "rescue" };
-    expect(resolveGatewayStateDir(env)).toBe(path.join("/Users/test", ".moltbot-rescue"));
+    const env = { HOME: "/Users/test", RAZROOM_PROFILE: "rescue" };
+    expect(resolveGatewayStateDir(env)).toBe(path.join("/Users/test", ".razroom-rescue"));
   });
 
   it("treats default profiles as the base state dir", () => {
-    const env = { HOME: "/Users/test", MOLTBOT_PROFILE: "Default" };
-    expect(resolveGatewayStateDir(env)).toBe(path.join("/Users/test", ".moltbot"));
+    const env = { HOME: "/Users/test", RAZROOM_PROFILE: "Default" };
+    expect(resolveGatewayStateDir(env)).toBe(path.join("/Users/test", ".razroom"));
   });
 
-  it("uses MOLTBOT_STATE_DIR when provided", () => {
-    const env = { HOME: "/Users/test", MOLTBOT_STATE_DIR: "/var/lib/moltbot" };
-    expect(resolveGatewayStateDir(env)).toBe(path.resolve("/var/lib/moltbot"));
+  it("uses RAZROOM_STATE_DIR when provided", () => {
+    const env = { HOME: "/Users/test", RAZROOM_STATE_DIR: "/var/lib/razroom" };
+    expect(resolveGatewayStateDir(env)).toBe(path.resolve("/var/lib/razroom"));
   });
 
-  it("expands ~ in MOLTBOT_STATE_DIR", () => {
-    const env = { HOME: "/Users/test", MOLTBOT_STATE_DIR: "~/moltbot-state" };
-    expect(resolveGatewayStateDir(env)).toBe(path.resolve("/Users/test/moltbot-state"));
+  it("expands ~ in RAZROOM_STATE_DIR", () => {
+    const env = { HOME: "/Users/test", RAZROOM_STATE_DIR: "~/razroom-state" };
+    expect(resolveGatewayStateDir(env)).toBe(path.resolve("/Users/test/razroom-state"));
   });
 
   it("preserves Windows absolute paths without HOME", () => {
-    const env = { MOLTBOT_STATE_DIR: "C:\\State\\moltbot" };
-    expect(resolveGatewayStateDir(env)).toBe("C:\\State\\moltbot");
+    const env = { RAZROOM_STATE_DIR: "C:\\State\\razroom" };
+    expect(resolveGatewayStateDir(env)).toBe("C:\\State\\razroom");
   });
 });

@@ -37,8 +37,8 @@ async function pathExists(filePath: string): Promise<boolean> {
 
 describe("buildWorkspaceSkillsPrompt", () => {
   it("syncs merged skills into a target workspace", async () => {
-    const sourceWorkspace = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-"));
-    const targetWorkspace = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-"));
+    const sourceWorkspace = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-"));
+    const targetWorkspace = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-"));
     const extraDir = path.join(sourceWorkspace, ".extra");
     const bundledDir = path.join(sourceWorkspace, ".bundled");
     const managedDir = path.join(sourceWorkspace, ".managed");
@@ -84,8 +84,8 @@ describe("buildWorkspaceSkillsPrompt", () => {
     expect(prompt).toContain(path.join(targetWorkspace, "skills", "demo-skill", "SKILL.md"));
   });
   it("keeps synced skills confined under target workspace when frontmatter name uses traversal", async () => {
-    const sourceWorkspace = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-"));
-    const targetWorkspace = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-"));
+    const sourceWorkspace = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-"));
+    const targetWorkspace = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-"));
     const escapeId = `${Date.now()}-${process.pid}-${Math.random().toString(16).slice(2)}`;
     const traversalName = `../../../skill-sync-escape-${escapeId}`;
     const escapedDest = path.resolve(targetWorkspace, "skills", traversalName);
@@ -114,8 +114,8 @@ describe("buildWorkspaceSkillsPrompt", () => {
     expect(await pathExists(escapedDest)).toBe(false);
   });
   it("keeps synced skills confined under target workspace when frontmatter name is absolute", async () => {
-    const sourceWorkspace = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-"));
-    const targetWorkspace = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-"));
+    const sourceWorkspace = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-"));
+    const targetWorkspace = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-"));
     const escapeId = `${Date.now()}-${process.pid}-${Math.random().toString(16).slice(2)}`;
     const absoluteDest = path.join(os.tmpdir(), `skill-sync-abs-escape-${escapeId}`);
 
@@ -141,7 +141,7 @@ describe("buildWorkspaceSkillsPrompt", () => {
     expect(await pathExists(absoluteDest)).toBe(false);
   });
   it("filters skills based on env/config gates", async () => {
-    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-"));
+    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-"));
     const skillDir = path.join(workspaceDir, "skills", "nano-banana-pro");
     const originalEnv = process.env.GEMINI_API_KEY;
     delete process.env.GEMINI_API_KEY;
@@ -152,7 +152,7 @@ describe("buildWorkspaceSkillsPrompt", () => {
         name: "nano-banana-pro",
         description: "Generates images",
         metadata:
-          '{"moltbot":{"requires":{"env":["GEMINI_API_KEY"]},"primaryEnv":"GEMINI_API_KEY"}}',
+          '{"razroom":{"requires":{"env":["GEMINI_API_KEY"]},"primaryEnv":"GEMINI_API_KEY"}}',
         body: "# Nano Banana\n",
       });
 
@@ -178,7 +178,7 @@ describe("buildWorkspaceSkillsPrompt", () => {
     }
   });
   it("applies skill filters, including empty lists", async () => {
-    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-"));
+    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-"));
     await writeSkill({
       dir: path.join(workspaceDir, "skills", "alpha"),
       name: "alpha",

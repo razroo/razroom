@@ -19,9 +19,9 @@
     "useDefineForClassFields": false,
     "paths": {
       "*": ["./*"],
-      "moltbot/plugin-sdk": ["./src/plugin-sdk/index.ts"],
-      "moltbot/plugin-sdk/*": ["./src/plugin-sdk/*.ts"],
-      "moltbot/plugin-sdk/account-id": ["./src/plugin-sdk/account-id.ts"]
+      "razroom/plugin-sdk": ["./src/plugin-sdk/index.ts"],
+      "razroom/plugin-sdk/*": ["./src/plugin-sdk/*.ts"],
+      "razroom/plugin-sdk/account-id": ["./src/plugin-sdk/account-id.ts"]
     }
   },
   "include": ["src/**/*", "ui/**/*", "extensions/**/*"],

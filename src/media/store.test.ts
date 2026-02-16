@@ -12,7 +12,7 @@ describe("media store", () => {
   const envSnapshot: Record<string, string | undefined> = {};
 
   const snapshotEnv = () => {
-    for (const key of ["HOME", "USERPROFILE", "HOMEDRIVE", "HOMEPATH", "MOLTBOT_STATE_DIR"]) {
+    for (const key of ["HOME", "USERPROFILE", "HOMEDRIVE", "HOMEPATH", "RAZROOM_STATE_DIR"]) {
       envSnapshot[key] = process.env[key];
     }
   };
@@ -29,10 +29,10 @@ describe("media store", () => {
 
   beforeAll(async () => {
     snapshotEnv();
-    home = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-test-home-"));
+    home = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-test-home-"));
     process.env.HOME = home;
     process.env.USERPROFILE = home;
-    process.env.MOLTBOT_STATE_DIR = path.join(home, ".moltbot");
+    process.env.RAZROOM_STATE_DIR = path.join(home, ".razroom");
     if (process.platform === "win32") {
       const match = home.match(/^([A-Za-z]:)(.*)$/);
       if (match) {
@@ -40,7 +40,7 @@ describe("media store", () => {
         process.env.HOMEPATH = match[2] || "\\";
       }
     }
-    await fs.mkdir(path.join(home, ".moltbot"), { recursive: true });
+    await fs.mkdir(path.join(home, ".razroom"), { recursive: true });
     store = await import("./store.js");
   });
 
@@ -63,7 +63,7 @@ describe("media store", () => {
     await withTempStore(async (store, home) => {
       const dir = await store.ensureMediaDir();
       expect(isPathWithinBase(home, dir)).toBe(true);
-      expect(path.normalize(dir)).toContain(`${path.sep}.moltbot${path.sep}media`);
+      expect(path.normalize(dir)).toContain(`${path.sep}.razroom${path.sep}media`);
       const stat = await fs.stat(dir);
       expect(stat.isDirectory()).toBe(true);
     });

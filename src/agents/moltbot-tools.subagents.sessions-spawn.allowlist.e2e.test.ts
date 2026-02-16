@@ -1,16 +1,16 @@
 import { beforeEach, describe, expect, it } from "bun:test";
-import { createMoltBotTools } from "./moltbot-tools.js";
+import { createRazroomTools } from "./razroom-tools.js";
 import "./test-helpers/fast-core-tools.js";
 import {
   getCallGatewayMock,
   resetSessionsSpawnConfigOverride,
   setSessionsSpawnConfigOverride,
-} from "./moltbot-tools.subagents.sessions-spawn.test-harness.js";
+} from "./razroom-tools.subagents.sessions-spawn.test-harness.js";
 import { resetSubagentRegistryForTests } from "./subagent-registry.js";
 
 const callGatewayMock = getCallGatewayMock();
 
-describe("moltbot-tools: subagents (sessions_spawn allowlist)", () => {
+describe("razroom-tools: subagents (sessions_spawn allowlist)", () => {
   beforeEach(() => {
     resetSessionsSpawnConfigOverride();
   });
@@ -19,7 +19,7 @@ describe("moltbot-tools: subagents (sessions_spawn allowlist)", () => {
     resetSubagentRegistryForTests();
     callGatewayMock.mockReset();
 
-    const tool = createMoltBotTools({
+    const tool = createRazroomTools({
       agentSessionKey: "main",
       agentChannel: "whatsapp",
     }).find((candidate) => candidate.name === "sessions_spawn");
@@ -57,7 +57,7 @@ describe("moltbot-tools: subagents (sessions_spawn allowlist)", () => {
       },
     });
 
-    const tool = createMoltBotTools({
+    const tool = createRazroomTools({
       agentSessionKey: "main",
       agentChannel: "whatsapp",
     }).find((candidate) => candidate.name === "sessions_spawn");
@@ -109,7 +109,7 @@ describe("moltbot-tools: subagents (sessions_spawn allowlist)", () => {
       return {};
     });
 
-    const tool = createMoltBotTools({
+    const tool = createRazroomTools({
       agentSessionKey: "main",
       agentChannel: "whatsapp",
     }).find((candidate) => candidate.name === "sessions_spawn");
@@ -163,7 +163,7 @@ describe("moltbot-tools: subagents (sessions_spawn allowlist)", () => {
       return {};
     });
 
-    const tool = createMoltBotTools({
+    const tool = createRazroomTools({
       agentSessionKey: "main",
       agentChannel: "whatsapp",
     }).find((candidate) => candidate.name === "sessions_spawn");
@@ -217,7 +217,7 @@ describe("moltbot-tools: subagents (sessions_spawn allowlist)", () => {
       return {};
     });
 
-    const tool = createMoltBotTools({
+    const tool = createRazroomTools({
       agentSessionKey: "main",
       agentChannel: "whatsapp",
     }).find((candidate) => candidate.name === "sessions_spawn");

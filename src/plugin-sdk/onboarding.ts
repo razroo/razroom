@@ -1,13 +1,13 @@
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { WizardPrompter } from "../wizard/prompts.js";
 import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "../routing/session-key.js";
 
 export type PromptAccountIdParams = {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   prompter: WizardPrompter;
   label: string;
   currentId?: string;
-  listAccountIds: (cfg: MoltBotConfig) => string[];
+  listAccountIds: (cfg: RazroomConfig) => string[];
   defaultAccountId: string;
 };
 

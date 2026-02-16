@@ -7,10 +7,10 @@ export type SkillGroup = {
 };
 
 const SKILL_SOURCE_GROUPS: Array<{ id: string; label: string; sources: string[] }> = [
-  { id: "workspace", label: "Workspace Skills", sources: ["moltbot-workspace"] },
-  { id: "built-in", label: "Built-in Skills", sources: ["moltbot-bundled"] },
-  { id: "installed", label: "Installed Skills", sources: ["moltbot-managed"] },
-  { id: "extra", label: "Extra Skills", sources: ["moltbot-extra"] },
+  { id: "workspace", label: "Workspace Skills", sources: ["razroom-workspace"] },
+  { id: "built-in", label: "Built-in Skills", sources: ["razroom-bundled"] },
+  { id: "installed", label: "Installed Skills", sources: ["razroom-managed"] },
+  { id: "extra", label: "Extra Skills", sources: ["razroom-extra"] },
 ];
 
 export function groupSkills(skills: SkillStatusEntry[]): SkillGroup[] {

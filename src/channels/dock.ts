@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type {
   ChannelCapabilities,
   ChannelCommandAdapter,
@@ -54,11 +54,11 @@ export type ChannelDock = {
   elevated?: ChannelElevatedAdapter;
   config?: {
     resolveAllowFrom?: (params: {
-      cfg: MoltBotConfig;
+      cfg: RazroomConfig;
       accountId?: string | null;
     }) => Array<string | number> | undefined;
     formatAllowFrom?: (params: {
-      cfg: MoltBotConfig;
+      cfg: RazroomConfig;
       accountId?: string | null;
       allowFrom: Array<string | number>;
     }) => string[];

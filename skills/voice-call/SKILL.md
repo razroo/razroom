@@ -1,9 +1,9 @@
 ---
 name: voice-call
-description: Start voice calls via the MoltBot voice-call plugin.
+description: Start voice calls via the Razroom voice-call plugin.
 metadata:
   {
-    "moltbot":
+    "razroom":
       {
         "emoji": "📞",
         "skillKey": "voice-call",
@@ -19,8 +19,8 @@ Use the voice-call plugin to start or inspect calls (Twilio, Telnyx, Plivo, or m
 ## CLI
 
 ```bash
-moltbot voicecall call --to "+15555550123" --message "Hello from MoltBot"
-moltbot voicecall status --call-id <id>
+razroom voicecall call --to "+15555550123" --message "Hello from Razroom"
+razroom voicecall status --call-id <id>
 ```
 
 ## Tool

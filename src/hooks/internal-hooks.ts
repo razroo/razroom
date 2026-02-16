@@ -1,19 +1,19 @@
 /**
- * Hook system for MoltBot agent events
+ * Hook system for Razroom agent events
  *
  * Provides an extensible event-driven hook system for agent events
  * like command processing, session lifecycle, etc.
  */
 
 import type { WorkspaceBootstrapFile } from "../agents/workspace.js";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 
 export type InternalHookEventType = "command" | "session" | "agent" | "gateway";
 
 export type AgentBootstrapHookContext = {
   workspaceDir: string;
   bootstrapFiles: WorkspaceBootstrapFile[];
-  cfg?: MoltBotConfig;
+  cfg?: RazroomConfig;
   sessionKey?: string;
   sessionId?: string;
   agentId?: string;

@@ -27,39 +27,39 @@ describe("gateway e2e", () => {
     async () => {
       const prev = {
         home: process.env.HOME,
-        configPath: process.env.MOLTBOT_CONFIG_PATH,
-        token: process.env.MOLTBOT_GATEWAY_TOKEN,
-        skipChannels: process.env.MOLTBOT_SKIP_CHANNELS,
-        skipGmail: process.env.MOLTBOT_SKIP_GMAIL_WATCHER,
-        skipCron: process.env.MOLTBOT_SKIP_CRON,
-        skipCanvas: process.env.MOLTBOT_SKIP_CANVAS_HOST,
-        skipBrowser: process.env.MOLTBOT_SKIP_BROWSER_CONTROL_SERVER,
+        configPath: process.env.RAZROOM_CONFIG_PATH,
+        token: process.env.RAZROOM_GATEWAY_TOKEN,
+        skipChannels: process.env.RAZROOM_SKIP_CHANNELS,
+        skipGmail: process.env.RAZROOM_SKIP_GMAIL_WATCHER,
+        skipCron: process.env.RAZROOM_SKIP_CRON,
+        skipCanvas: process.env.RAZROOM_SKIP_CANVAS_HOST,
+        skipBrowser: process.env.RAZROOM_SKIP_BROWSER_CONTROL_SERVER,
       };
 
       const { baseUrl: openaiBaseUrl, restore } = installOpenAiResponsesMock();
 
-      const tempHome = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-gw-mock-home-"));
+      const tempHome = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-gw-mock-home-"));
       process.env.HOME = tempHome;
-      process.env.MOLTBOT_SKIP_CHANNELS = "1";
-      process.env.MOLTBOT_SKIP_GMAIL_WATCHER = "1";
-      process.env.MOLTBOT_SKIP_CRON = "1";
-      process.env.MOLTBOT_SKIP_CANVAS_HOST = "1";
-      process.env.MOLTBOT_SKIP_BROWSER_CONTROL_SERVER = "1";
+      process.env.RAZROOM_SKIP_CHANNELS = "1";
+      process.env.RAZROOM_SKIP_GMAIL_WATCHER = "1";
+      process.env.RAZROOM_SKIP_CRON = "1";
+      process.env.RAZROOM_SKIP_CANVAS_HOST = "1";
+      process.env.RAZROOM_SKIP_BROWSER_CONTROL_SERVER = "1";
 
       const token = `test-${randomUUID()}`;
-      process.env.MOLTBOT_GATEWAY_TOKEN = token;
+      process.env.RAZROOM_GATEWAY_TOKEN = token;
 
-      const workspaceDir = path.join(tempHome, "moltbot");
+      const workspaceDir = path.join(tempHome, "razroom");
       await fs.mkdir(workspaceDir, { recursive: true });
 
       const nonceA = randomUUID();
       const nonceB = randomUUID();
-      const toolProbePath = path.join(workspaceDir, `.moltbot-tool-probe.${nonceA}.txt`);
+      const toolProbePath = path.join(workspaceDir, `.razroom-tool-probe.${nonceA}.txt`);
       await fs.writeFile(toolProbePath, `nonceA=${nonceA}\nnonceB=${nonceB}\n`);
 
-      const configDir = path.join(tempHome, ".moltbot");
+      const configDir = path.join(tempHome, ".razroom");
       await fs.mkdir(configDir, { recursive: true });
-      const configPath = path.join(configDir, "moltbot.json");
+      const configPath = path.join(configDir, "razroom.json");
 
       const cfg = {
         agents: { defaults: { workspace: workspaceDir } },
@@ -89,7 +89,7 @@ describe("gateway e2e", () => {
       };
 
       await fs.writeFile(configPath, `${JSON.stringify(cfg, null, 2)}\n`);
-      process.env.MOLTBOT_CONFIG_PATH = configPath;
+      process.env.RAZROOM_CONFIG_PATH = configPath;
 
       const port = await getFreeGatewayPort();
       const server = await startGatewayServer(port, {
@@ -139,13 +139,13 @@ describe("gateway e2e", () => {
         await fs.rm(tempHome, { recursive: true, force: true });
         restore();
         process.env.HOME = prev.home;
-        process.env.MOLTBOT_CONFIG_PATH = prev.configPath;
-        process.env.MOLTBOT_GATEWAY_TOKEN = prev.token;
-        process.env.MOLTBOT_SKIP_CHANNELS = prev.skipChannels;
-        process.env.MOLTBOT_SKIP_GMAIL_WATCHER = prev.skipGmail;
-        process.env.MOLTBOT_SKIP_CRON = prev.skipCron;
-        process.env.MOLTBOT_SKIP_CANVAS_HOST = prev.skipCanvas;
-        process.env.MOLTBOT_SKIP_BROWSER_CONTROL_SERVER = prev.skipBrowser;
+        process.env.RAZROOM_CONFIG_PATH = prev.configPath;
+        process.env.RAZROOM_GATEWAY_TOKEN = prev.token;
+        process.env.RAZROOM_SKIP_CHANNELS = prev.skipChannels;
+        process.env.RAZROOM_SKIP_GMAIL_WATCHER = prev.skipGmail;
+        process.env.RAZROOM_SKIP_CRON = prev.skipCron;
+        process.env.RAZROOM_SKIP_CANVAS_HOST = prev.skipCanvas;
+        process.env.RAZROOM_SKIP_BROWSER_CONTROL_SERVER = prev.skipBrowser;
       }
     },
   );
@@ -153,27 +153,27 @@ describe("gateway e2e", () => {
   it("runs wizard over ws and writes auth token config", { timeout: 90_000 }, async () => {
     const prev = {
       home: process.env.HOME,
-      stateDir: process.env.MOLTBOT_STATE_DIR,
-      configPath: process.env.MOLTBOT_CONFIG_PATH,
-      token: process.env.MOLTBOT_GATEWAY_TOKEN,
-      skipChannels: process.env.MOLTBOT_SKIP_CHANNELS,
-      skipGmail: process.env.MOLTBOT_SKIP_GMAIL_WATCHER,
-      skipCron: process.env.MOLTBOT_SKIP_CRON,
-      skipCanvas: process.env.MOLTBOT_SKIP_CANVAS_HOST,
-      skipBrowser: process.env.MOLTBOT_SKIP_BROWSER_CONTROL_SERVER,
+      stateDir: process.env.RAZROOM_STATE_DIR,
+      configPath: process.env.RAZROOM_CONFIG_PATH,
+      token: process.env.RAZROOM_GATEWAY_TOKEN,
+      skipChannels: process.env.RAZROOM_SKIP_CHANNELS,
+      skipGmail: process.env.RAZROOM_SKIP_GMAIL_WATCHER,
+      skipCron: process.env.RAZROOM_SKIP_CRON,
+      skipCanvas: process.env.RAZROOM_SKIP_CANVAS_HOST,
+      skipBrowser: process.env.RAZROOM_SKIP_BROWSER_CONTROL_SERVER,
     };
 
-    process.env.MOLTBOT_SKIP_CHANNELS = "1";
-    process.env.MOLTBOT_SKIP_GMAIL_WATCHER = "1";
-    process.env.MOLTBOT_SKIP_CRON = "1";
-    process.env.MOLTBOT_SKIP_CANVAS_HOST = "1";
-    process.env.MOLTBOT_SKIP_BROWSER_CONTROL_SERVER = "1";
-    delete process.env.MOLTBOT_GATEWAY_TOKEN;
+    process.env.RAZROOM_SKIP_CHANNELS = "1";
+    process.env.RAZROOM_SKIP_GMAIL_WATCHER = "1";
+    process.env.RAZROOM_SKIP_CRON = "1";
+    process.env.RAZROOM_SKIP_CANVAS_HOST = "1";
+    process.env.RAZROOM_SKIP_BROWSER_CONTROL_SERVER = "1";
+    delete process.env.RAZROOM_GATEWAY_TOKEN;
 
-    const tempHome = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-wizard-home-"));
+    const tempHome = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-wizard-home-"));
     process.env.HOME = tempHome;
-    delete process.env.MOLTBOT_STATE_DIR;
-    delete process.env.MOLTBOT_CONFIG_PATH;
+    delete process.env.RAZROOM_STATE_DIR;
+    delete process.env.RAZROOM_CONFIG_PATH;
 
     const wizardToken = `wiz-${randomUUID()}`;
     const port = await getFreeGatewayPort();
@@ -265,14 +265,14 @@ describe("gateway e2e", () => {
       await server2.close({ reason: "wizard auth verify" });
       await fs.rm(tempHome, { recursive: true, force: true });
       process.env.HOME = prev.home;
-      process.env.MOLTBOT_STATE_DIR = prev.stateDir;
-      process.env.MOLTBOT_CONFIG_PATH = prev.configPath;
-      process.env.MOLTBOT_GATEWAY_TOKEN = prev.token;
-      process.env.MOLTBOT_SKIP_CHANNELS = prev.skipChannels;
-      process.env.MOLTBOT_SKIP_GMAIL_WATCHER = prev.skipGmail;
-      process.env.MOLTBOT_SKIP_CRON = prev.skipCron;
-      process.env.MOLTBOT_SKIP_CANVAS_HOST = prev.skipCanvas;
-      process.env.MOLTBOT_SKIP_BROWSER_CONTROL_SERVER = prev.skipBrowser;
+      process.env.RAZROOM_STATE_DIR = prev.stateDir;
+      process.env.RAZROOM_CONFIG_PATH = prev.configPath;
+      process.env.RAZROOM_GATEWAY_TOKEN = prev.token;
+      process.env.RAZROOM_SKIP_CHANNELS = prev.skipChannels;
+      process.env.RAZROOM_SKIP_GMAIL_WATCHER = prev.skipGmail;
+      process.env.RAZROOM_SKIP_CRON = prev.skipCron;
+      process.env.RAZROOM_SKIP_CANVAS_HOST = prev.skipCanvas;
+      process.env.RAZROOM_SKIP_BROWSER_CONTROL_SERVER = prev.skipBrowser;
     }
   });
 });

@@ -2,9 +2,9 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-export const POSIX_MOLTBOT_TMP_DIR = "/tmp/moltbot";
+export const POSIX_RAZROOM_TMP_DIR = "/tmp/razroom";
 
-type ResolvePreferredMoltBotTmpDirOptions = {
+type ResolvePreferredRazroomTmpDirOptions = {
   accessSync?: (path: string, mode?: number) => void;
   lstatSync?: (path: string) => {
     isDirectory(): boolean;
@@ -28,8 +28,8 @@ function isNodeErrorWithCode(err: unknown, code: string): err is MaybeNodeError 
   );
 }
 
-export function resolvePreferredMoltBotTmpDir(
-  options: ResolvePreferredMoltBotTmpDirOptions = {},
+export function resolvePreferredRazroomTmpDir(
+  options: ResolvePreferredRazroomTmpDirOptions = {},
 ): string {
   const accessSync = options.accessSync ?? fs.accessSync;
   const lstatSync = options.lstatSync ?? fs.lstatSync;
@@ -62,20 +62,20 @@ export function resolvePreferredMoltBotTmpDir(
 
   const fallback = (): string => {
     const base = tmpdir();
-    const suffix = uid === undefined ? "moltbot" : `moltbot-${uid}`;
+    const suffix = uid === undefined ? "razroom" : `razroom-${uid}`;
     return path.join(base, suffix);
   };
 
   try {
-    const preferred = lstatSync(POSIX_MOLTBOT_TMP_DIR);
+    const preferred = lstatSync(POSIX_RAZROOM_TMP_DIR);
     if (!preferred.isDirectory() || preferred.isSymbolicLink()) {
       return fallback();
     }
-    accessSync(POSIX_MOLTBOT_TMP_DIR, fs.constants.W_OK | fs.constants.X_OK);
+    accessSync(POSIX_RAZROOM_TMP_DIR, fs.constants.W_OK | fs.constants.X_OK);
     if (!isSecureDirForUser(preferred)) {
       return fallback();
     }
-    return POSIX_MOLTBOT_TMP_DIR;
+    return POSIX_RAZROOM_TMP_DIR;
   } catch (err) {
     if (!isNodeErrorWithCode(err, "ENOENT")) {
       return fallback();
@@ -85,9 +85,9 @@ export function resolvePreferredMoltBotTmpDir(
   try {
     accessSync("/tmp", fs.constants.W_OK | fs.constants.X_OK);
     // Create with a safe default; subsequent callers expect it exists.
-    mkdirSync(POSIX_MOLTBOT_TMP_DIR, { recursive: true, mode: 0o700 });
+    mkdirSync(POSIX_RAZROOM_TMP_DIR, { recursive: true, mode: 0o700 });
     try {
-      const preferred = lstatSync(POSIX_MOLTBOT_TMP_DIR);
+      const preferred = lstatSync(POSIX_RAZROOM_TMP_DIR);
       if (!preferred.isDirectory() || preferred.isSymbolicLink()) {
         return fallback();
       }
@@ -97,7 +97,7 @@ export function resolvePreferredMoltBotTmpDir(
     } catch {
       return fallback();
     }
-    return POSIX_MOLTBOT_TMP_DIR;
+    return POSIX_RAZROOM_TMP_DIR;
   } catch {
     return fallback();
   }

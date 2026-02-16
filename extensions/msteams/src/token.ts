@@ -1,4 +1,4 @@
-import type { MSTeamsConfig } from "moltbot/plugin-sdk";
+import type { MSTeamsConfig } from "razroom/plugin-sdk";
 
 export type MSTeamsCredentials = {
   appId: string;

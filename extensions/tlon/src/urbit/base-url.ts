@@ -1,4 +1,4 @@
-import { isBlockedHostname, isPrivateIpAddress } from "moltbot/plugin-sdk";
+import { isBlockedHostname, isPrivateIpAddress } from "razroom/plugin-sdk";
 
 export type UrbitBaseUrlValidation =
   | { ok: true; baseUrl: string; hostname: string }

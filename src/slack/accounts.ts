@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { SlackAccountConfig } from "../config/types.js";
 import { normalizeChatType } from "../channels/chat-type.js";
 import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "../routing/session-key.js";
@@ -28,7 +28,7 @@ export type ResolvedSlackAccount = {
   channels?: SlackAccountConfig["channels"];
 };
 
-function listConfiguredAccountIds(cfg: MoltBotConfig): string[] {
+function listConfiguredAccountIds(cfg: RazroomConfig): string[] {
   const accounts = cfg.channels?.slack?.accounts;
   if (!accounts || typeof accounts !== "object") {
     return [];
@@ -36,7 +36,7 @@ function listConfiguredAccountIds(cfg: MoltBotConfig): string[] {
   return Object.keys(accounts).filter(Boolean);
 }
 
-export function listSlackAccountIds(cfg: MoltBotConfig): string[] {
+export function listSlackAccountIds(cfg: RazroomConfig): string[] {
   const ids = listConfiguredAccountIds(cfg);
   if (ids.length === 0) {
     return [DEFAULT_ACCOUNT_ID];
@@ -44,7 +44,7 @@ export function listSlackAccountIds(cfg: MoltBotConfig): string[] {
   return ids.toSorted((a, b) => a.localeCompare(b));
 }
 
-export function resolveDefaultSlackAccountId(cfg: MoltBotConfig): string {
+export function resolveDefaultSlackAccountId(cfg: RazroomConfig): string {
   const ids = listSlackAccountIds(cfg);
   if (ids.includes(DEFAULT_ACCOUNT_ID)) {
     return DEFAULT_ACCOUNT_ID;
@@ -53,7 +53,7 @@ export function resolveDefaultSlackAccountId(cfg: MoltBotConfig): string {
 }
 
 function resolveAccountConfig(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   accountId: string,
 ): SlackAccountConfig | undefined {
   const accounts = cfg.channels?.slack?.accounts;
@@ -63,7 +63,7 @@ function resolveAccountConfig(
   return accounts[accountId] as SlackAccountConfig | undefined;
 }
 
-function mergeSlackAccountConfig(cfg: MoltBotConfig, accountId: string): SlackAccountConfig {
+function mergeSlackAccountConfig(cfg: RazroomConfig, accountId: string): SlackAccountConfig {
   const { accounts: _ignored, ...base } = (cfg.channels?.slack ?? {}) as SlackAccountConfig & {
     accounts?: unknown;
   };
@@ -72,7 +72,7 @@ function mergeSlackAccountConfig(cfg: MoltBotConfig, accountId: string): SlackAc
 }
 
 export function resolveSlackAccount(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   accountId?: string | null;
 }): ResolvedSlackAccount {
   const accountId = normalizeAccountId(params.accountId);
@@ -113,7 +113,7 @@ export function resolveSlackAccount(params: {
   };
 }
 
-export function listEnabledSlackAccounts(cfg: MoltBotConfig): ResolvedSlackAccount[] {
+export function listEnabledSlackAccounts(cfg: RazroomConfig): ResolvedSlackAccount[] {
   return listSlackAccountIds(cfg)
     .map((accountId) => resolveSlackAccount({ cfg, accountId }))
     .filter((account) => account.enabled);

@@ -131,14 +131,14 @@ describe("DiscordMessageListener", () => {
 
 describe("discord allowlist helpers", () => {
   it("normalizes slugs", () => {
-    expect(normalizeDiscordSlug("Friends of MoltBot")).toBe("friends-of-moltbot");
+    expect(normalizeDiscordSlug("Friends of Razroom")).toBe("friends-of-razroom");
     expect(normalizeDiscordSlug("#General")).toBe("general");
     expect(normalizeDiscordSlug("Dev__Chat")).toBe("dev-chat");
   });
 
   it("matches ids or names", () => {
     const allow = normalizeDiscordAllowList(
-      ["123", "steipete", "Friends of MoltBot"],
+      ["123", "steipete", "Friends of Razroom"],
       ["discord:", "user:", "guild:", "channel:"],
     );
     expect(allow).not.toBeNull();
@@ -147,7 +147,7 @@ describe("discord allowlist helpers", () => {
     }
     expect(allowListMatches(allow, { id: "123" })).toBe(true);
     expect(allowListMatches(allow, { name: "steipete" })).toBe(true);
-    expect(allowListMatches(allow, { name: "friends-of-moltbot" })).toBe(true);
+    expect(allowListMatches(allow, { name: "friends-of-razroom" })).toBe(true);
     expect(allowListMatches(allow, { name: "other" })).toBe(false);
   });
 
@@ -165,26 +165,26 @@ describe("discord allowlist helpers", () => {
 describe("discord guild/channel resolution", () => {
   it("resolves guild entry by id", () => {
     const guildEntries = makeEntries({
-      "123": { slug: "friends-of-moltbot" },
+      "123": { slug: "friends-of-razroom" },
     });
     const resolved = resolveDiscordGuildEntry({
-      guild: fakeGuild("123", "Friends of MoltBot"),
+      guild: fakeGuild("123", "Friends of Razroom"),
       guildEntries,
     });
     expect(resolved?.id).toBe("123");
-    expect(resolved?.slug).toBe("friends-of-moltbot");
+    expect(resolved?.slug).toBe("friends-of-razroom");
   });
 
   it("resolves guild entry by slug key", () => {
     const guildEntries = makeEntries({
-      "friends-of-moltbot": { slug: "friends-of-moltbot" },
+      "friends-of-razroom": { slug: "friends-of-razroom" },
     });
     const resolved = resolveDiscordGuildEntry({
-      guild: fakeGuild("123", "Friends of MoltBot"),
+      guild: fakeGuild("123", "Friends of Razroom"),
       guildEntries,
     });
     expect(resolved?.id).toBe("123");
-    expect(resolved?.slug).toBe("friends-of-moltbot");
+    expect(resolved?.slug).toBe("friends-of-razroom");
   });
 
   it("falls back to wildcard guild entry", () => {
@@ -192,7 +192,7 @@ describe("discord guild/channel resolution", () => {
       "*": { requireMention: false },
     });
     const resolved = resolveDiscordGuildEntry({
-      guild: fakeGuild("123", "Friends of MoltBot"),
+      guild: fakeGuild("123", "Friends of Razroom"),
       guildEntries,
     });
     expect(resolved?.id).toBe("123");
@@ -588,15 +588,15 @@ describe("discord group DM gating", () => {
   it("matches group DM allowlist", () => {
     expect(
       resolveGroupDmAllow({
-        channels: ["moltbot-dm"],
+        channels: ["razroom-dm"],
         channelId: "1",
-        channelName: "MoltBot DM",
-        channelSlug: "moltbot-dm",
+        channelName: "Razroom DM",
+        channelSlug: "razroom-dm",
       }),
     ).toBe(true);
     expect(
       resolveGroupDmAllow({
-        channels: ["moltbot-dm"],
+        channels: ["razroom-dm"],
         channelId: "1",
         channelName: "Other",
         channelSlug: "other",

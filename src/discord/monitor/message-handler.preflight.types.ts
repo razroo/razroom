@@ -17,7 +17,7 @@ export type DiscordMessageEvent = import("./listeners.js").DiscordMessageEvent;
 export type DiscordMessagePreflightContext = {
   cfg: LoadedConfig;
   discordConfig: NonNullable<
-    import("../../config/config.js").MoltBotConfig["channels"]
+    import("../../config/config.js").RazroomConfig["channels"]
   >["discord"];
   accountId: string;
   token: string;

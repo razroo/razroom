@@ -3,7 +3,7 @@ import os from "node:os";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import type { ChannelPlugin } from "../../channels/plugins/types.js";
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 import { slackPlugin } from "../../../extensions/slack/src/channel.js";
 import { telegramPlugin } from "../../../extensions/telegram/src/channel.js";
 import { whatsappPlugin } from "../../../extensions/whatsapp/src/channel.js";
@@ -29,7 +29,7 @@ const slackConfig = {
       appToken: "xapp-test",
     },
   },
-} as MoltBotConfig;
+} as RazroomConfig;
 
 const whatsappConfig = {
   channels: {
@@ -37,7 +37,7 @@ const whatsappConfig = {
       allowFrom: ["*"],
     },
   },
-} as MoltBotConfig;
+} as RazroomConfig;
 
 describe("runMessageAction context isolation", () => {
   beforeEach(async () => {
@@ -266,7 +266,7 @@ describe("runMessageAction context isolation", () => {
           token: "tg-test",
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
 
     const result = await runMessageAction({
       cfg: multiConfig,
@@ -308,7 +308,7 @@ describe("runMessageAction context isolation", () => {
           },
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
 
     await expect(
       runMessageAction({
@@ -426,7 +426,7 @@ describe("runMessageAction sendAttachment hydration", () => {
           password: "test-password",
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
 
     const result = await runMessageAction({
       cfg,
@@ -460,7 +460,7 @@ describe("runMessageAction sendAttachment hydration", () => {
           password: "test-password",
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
     const sandboxDir = await fs.mkdtemp(path.join(os.tmpdir(), "msg-sandbox-"));
     try {
       await runMessageAction({
@@ -647,7 +647,7 @@ describe("runMessageAction media caption behavior", () => {
           enabled: true,
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
 
     const result = await runMessageAction({
       cfg,
@@ -727,7 +727,7 @@ describe("runMessageAction card-only send behavior", () => {
           enabled: true,
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
 
     const card = {
       type: "AdaptiveCard",
@@ -798,7 +798,7 @@ describe("runMessageAction accountId defaults", () => {
 
   it("propagates defaultAccountId into params", async () => {
     await runMessageAction({
-      cfg: {} as MoltBotConfig,
+      cfg: {} as RazroomConfig,
       action: "send",
       params: {
         channel: "discord",

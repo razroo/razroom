@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 import type { ReplyToMode } from "../../config/types.js";
 import type { OriginatingChannelType } from "../templating.js";
 import type { ReplyPayload } from "../types.js";
@@ -6,7 +6,7 @@ import { getChannelDock } from "../../channels/dock.js";
 import { normalizeChannelId } from "../../channels/plugins/index.js";
 
 export function resolveReplyToMode(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   channel?: OriginatingChannelType,
   accountId?: string | null,
   chatType?: string | null,

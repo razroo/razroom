@@ -5,8 +5,8 @@ const resolveGatewayPort = mock();
 const pickPrimaryTailnetIPv4 = mock();
 const pickPrimaryLanIPv4 = mock();
 
-const originalEnvToken = process.env.MOLTBOT_GATEWAY_TOKEN;
-const originalEnvPassword = process.env.MOLTBOT_GATEWAY_PASSWORD;
+const originalEnvToken = process.env.RAZROOM_GATEWAY_TOKEN;
+const originalEnvPassword = process.env.RAZROOM_GATEWAY_PASSWORD;
 
 mock("../config/config.js", async (importOriginal) => {
   const actual = await importOriginal<typeof import("../config/config.js")>();
@@ -36,21 +36,21 @@ describe("resolveGatewayConnection", () => {
     resolveGatewayPort.mockReturnValue(18789);
     pickPrimaryTailnetIPv4.mockReturnValue(undefined);
     pickPrimaryLanIPv4.mockReturnValue(undefined);
-    delete process.env.MOLTBOT_GATEWAY_TOKEN;
-    delete process.env.MOLTBOT_GATEWAY_PASSWORD;
+    delete process.env.RAZROOM_GATEWAY_TOKEN;
+    delete process.env.RAZROOM_GATEWAY_PASSWORD;
   });
 
   afterEach(() => {
     if (originalEnvToken === undefined) {
-      delete process.env.MOLTBOT_GATEWAY_TOKEN;
+      delete process.env.RAZROOM_GATEWAY_TOKEN;
     } else {
-      process.env.MOLTBOT_GATEWAY_TOKEN = originalEnvToken;
+      process.env.RAZROOM_GATEWAY_TOKEN = originalEnvToken;
     }
 
     if (originalEnvPassword === undefined) {
-      delete process.env.MOLTBOT_GATEWAY_PASSWORD;
+      delete process.env.RAZROOM_GATEWAY_PASSWORD;
     } else {
-      process.env.MOLTBOT_GATEWAY_PASSWORD = originalEnvPassword;
+      process.env.RAZROOM_GATEWAY_PASSWORD = originalEnvPassword;
     }
   });
 

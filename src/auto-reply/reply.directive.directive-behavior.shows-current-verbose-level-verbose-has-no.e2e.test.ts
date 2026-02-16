@@ -21,7 +21,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: "anthropic/claude-opus-4-5",
-              workspace: path.join(home, "moltbot"),
+              workspace: path.join(home, "razroom"),
               verboseDefault: "on",
             },
           },
@@ -44,7 +44,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: "anthropic/claude-opus-4-5",
-              workspace: path.join(home, "moltbot"),
+              workspace: path.join(home, "razroom"),
             },
           },
           session: { store: path.join(home, "sessions.json") },
@@ -73,7 +73,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: "anthropic/claude-opus-4-5",
-              workspace: path.join(home, "moltbot"),
+              workspace: path.join(home, "razroom"),
               elevatedDefault: "on",
             },
           },
@@ -107,7 +107,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: "anthropic/claude-opus-4-5",
-              workspace: path.join(home, "moltbot"),
+              workspace: path.join(home, "razroom"),
             },
           },
           tools: {
@@ -150,7 +150,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: "anthropic/claude-opus-4-5",
-              workspace: path.join(home, "moltbot"),
+              workspace: path.join(home, "razroom"),
               elevatedDefault: "on",
             },
           },
@@ -199,7 +199,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: "anthropic/claude-opus-4-5",
-              workspace: path.join(home, "moltbot"),
+              workspace: path.join(home, "razroom"),
               elevatedDefault: "on",
             },
           },

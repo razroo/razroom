@@ -6,14 +6,14 @@ import { PassThrough } from "node:stream";
 import { afterAll, beforeAll, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import { saveMediaSource, setMediaStoreNetworkDepsForTest } from "./store.js";
 
-const HOME = path.join(os.tmpdir(), "moltbot-home-redirect");
-const previousStateDir = process.env.MOLTBOT_STATE_DIR;
+const HOME = path.join(os.tmpdir(), "razroom-home-redirect");
+const previousStateDir = process.env.RAZROOM_STATE_DIR;
 const mockRequest = mock();
 
 describe("media store redirects", () => {
   beforeAll(async () => {
     await fs.rm(HOME, { recursive: true, force: true });
-    process.env.MOLTBOT_STATE_DIR = HOME;
+    process.env.RAZROOM_STATE_DIR = HOME;
   });
 
   beforeEach(() => {
@@ -30,9 +30,9 @@ describe("media store redirects", () => {
   afterAll(async () => {
     await fs.rm(HOME, { recursive: true, force: true });
     if (previousStateDir === undefined) {
-      delete process.env.MOLTBOT_STATE_DIR;
+      delete process.env.RAZROOM_STATE_DIR;
     } else {
-      process.env.MOLTBOT_STATE_DIR = previousStateDir;
+      process.env.RAZROOM_STATE_DIR = previousStateDir;
     }
     setMediaStoreNetworkDepsForTest();
     // mock.restore() // TODO: Review mock cleanup;

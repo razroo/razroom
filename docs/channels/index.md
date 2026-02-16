@@ -1,14 +1,14 @@
 ---
-summary: "Messaging platforms MoltBot can connect to"
+summary: "Messaging platforms Razroom can connect to"
 read_when:
-  - You want to choose a chat channel for MoltBot
+  - You want to choose a chat channel for Razroom
   - You need a quick overview of supported messaging platforms
 title: "Chat Channels"
 ---
 
 # Chat Channels
 
-MoltBot can talk to you on any chat app you already use. Each channel connects via the Gateway.
+Razroom can talk to you on any chat app you already use. Each channel connects via the Gateway.
 Text is supported everywhere; media and reactions vary by channel.
 
 ## Supported channels
@@ -37,7 +37,7 @@ Text is supported everywhere; media and reactions vary by channel.
 
 ## Notes
 
-- Channels can run simultaneously; configure multiple and MoltBot will route per chat.
+- Channels can run simultaneously; configure multiple and Razroom will route per chat.
 - Fastest setup is usually **Telegram** (simple bot token). WhatsApp requires QR pairing and
   stores more state on disk.
 - Group behavior varies by channel; see [Groups](/channels/groups).

@@ -1,19 +1,19 @@
 ---
-summary: "MoltBot on Oracle Cloud (Always Free ARM)"
+summary: "Razroom on Oracle Cloud (Always Free ARM)"
 read_when:
-  - Setting up MoltBot on Oracle Cloud
-  - Looking for low-cost VPS hosting for MoltBot
-  - Want 24/7 MoltBot on a small server
+  - Setting up Razroom on Oracle Cloud
+  - Looking for low-cost VPS hosting for Razroom
+  - Want 24/7 Razroom on a small server
 title: "Oracle Cloud"
 ---
 
-# MoltBot on Oracle Cloud (OCI)
+# Razroom on Oracle Cloud (OCI)
 
 ## Goal
 
-Run a persistent MoltBot Gateway on Oracle Cloud's **Always Free** ARM tier.
+Run a persistent Razroom Gateway on Oracle Cloud's **Always Free** ARM tier.
 
-Oracle’s free tier can be a great fit for MoltBot (especially if you already have an OCI account), but it comes with tradeoffs:
+Oracle’s free tier can be a great fit for Razroom (especially if you already have an OCI account), but it comes with tradeoffs:
 
 - ARM architecture (most things work, but some binaries may be x86-only)
 - Capacity and signup can be finicky
@@ -41,7 +41,7 @@ Oracle’s free tier can be a great fit for MoltBot (especially if you already h
 1. Log into [Oracle Cloud Console](https://cloud.oracle.com/)
 2. Navigate to **Compute → Instances → Create Instance**
 3. Configure:
-   - **Name:** `moltbot`
+   - **Name:** `razroom`
    - **Image:** Ubuntu 24.04 (aarch64)
    - **Shape:** `VM.Standard.A1.Flex` (Ampere ARM)
    - **OCPUs:** 2 (or up to 4)
@@ -70,7 +70,7 @@ sudo apt install -y build-essential
 
 ```bash
 # Set hostname
-sudo hostnamectl set-hostname moltbot
+sudo hostnamectl set-hostname razroom
 
 # Set password for ubuntu user
 sudo passwd ubuntu
@@ -83,10 +83,10 @@ sudo loginctl enable-linger ubuntu
 
 ```bash
 curl -fsSL https://tailscale.com/install.sh | sh
-sudo tailscale up --ssh --hostname=moltbot
+sudo tailscale up --ssh --hostname=razroom
 ```
 
-This enables Tailscale SSH, so you can connect via `ssh moltbot` from any device on your tailnet — no public IP needed.
+This enables Tailscale SSH, so you can connect via `ssh razroom` from any device on your tailnet — no public IP needed.
 
 Verify:
 
@@ -94,12 +94,12 @@ Verify:
 tailscale status
 ```
 
-**From now on, connect via Tailscale:** `ssh ubuntu@moltbot` (or use the Tailscale IP).
+**From now on, connect via Tailscale:** `ssh ubuntu@razroom` (or use the Tailscale IP).
 
-## 5) Install MoltBot
+## 5) Install Razroom
 
 ```bash
-curl -fsSL https://moltbot.ai/install.sh | bash
+curl -fsSL https://razroom.ai/install.sh | bash
 source ~/.bashrc
 ```
 
@@ -113,27 +113,27 @@ Use token auth as the default. It’s predictable and avoids needing any “inse
 
 ```bash
 # Keep the Gateway private on the VM
-moltbot config set gateway.bind loopback
+razroom config set gateway.bind loopback
 
 # Require auth for the Gateway + Control UI
-moltbot config set gateway.auth.mode token
-moltbot doctor --generate-gateway-token
+razroom config set gateway.auth.mode token
+razroom doctor --generate-gateway-token
 
 # Expose over Tailscale Serve (HTTPS + tailnet access)
-moltbot config set gateway.tailscale.mode serve
-moltbot config set gateway.trustedProxies '["127.0.0.1"]'
+razroom config set gateway.tailscale.mode serve
+razroom config set gateway.trustedProxies '["127.0.0.1"]'
 
-systemctl --user restart moltbot-gateway
+systemctl --user restart razroom-gateway
 ```
 
 ## 7) Verify
 
 ```bash
 # Check version
-moltbot --version
+razroom --version
 
 # Check daemon status
-systemctl --user status moltbot-gateway
+systemctl --user status razroom-gateway
 
 # Check Tailscale Serve
 tailscale serve status
@@ -161,7 +161,7 @@ This blocks SSH on port 22, HTTP, HTTPS, and everything else at the network edge
 From any device on your Tailscale network:
 
 ```
-https://moltbot.<tailnet-name>.ts.net/
+https://razroom.<tailnet-name>.ts.net/
 ```
 
 Replace `<tailnet-name>` with your tailnet name (visible in `tailscale status`).
@@ -178,7 +178,7 @@ No SSH tunnel needed. Tailscale provides:
 
 With the VCN locked down (only UDP 41641 open) and the Gateway bound to loopback, you get strong defense-in-depth: public traffic is blocked at the network edge, and admin access happens over your tailnet.
 
-This setup often removes the _need_ for extra host-based firewall rules purely to stop Internet-wide SSH brute force — but you should still keep the OS updated, run `moltbot security audit`, and verify you aren’t accidentally listening on public interfaces.
+This setup often removes the _need_ for extra host-based firewall rules purely to stop Internet-wide SSH brute force — but you should still keep the OS updated, run `razroom security audit`, and verify you aren’t accidentally listening on public interfaces.
 
 ### What's Already Protected
 
@@ -193,8 +193,8 @@ This setup often removes the _need_ for extra host-based firewall rules purely t
 
 ### Still Recommended
 
-- **Credential permissions:** `chmod 700 ~/.moltbot`
-- **Security audit:** `moltbot security audit`
+- **Credential permissions:** `chmod 700 ~/.razroom`
+- **Security audit:** `razroom security audit`
 - **System updates:** `sudo apt update && sudo apt upgrade` regularly
 - **Monitor Tailscale:** Review devices in [Tailscale admin console](https://login.tailscale.com/admin)
 
@@ -219,7 +219,7 @@ If Tailscale Serve isn't working, use an SSH tunnel:
 
 ```bash
 # From your local machine (via Tailscale)
-ssh -L 18789:127.0.0.1:18789 ubuntu@moltbot
+ssh -L 18789:127.0.0.1:18789 ubuntu@razroom
 ```
 
 Then open `http://localhost:18789`.
@@ -243,15 +243,15 @@ Free tier ARM instances are popular. Try:
 sudo tailscale status
 
 # Re-authenticate
-sudo tailscale up --ssh --hostname=moltbot --reset
+sudo tailscale up --ssh --hostname=razroom --reset
 ```
 
 ### Gateway won't start
 
 ```bash
-moltbot gateway status
-moltbot doctor --non-interactive
-journalctl --user -u moltbot-gateway -n 50
+razroom gateway status
+razroom doctor --non-interactive
+journalctl --user -u razroom-gateway -n 50
 ```
 
 ### Can't reach Control UI
@@ -264,7 +264,7 @@ tailscale serve status
 curl http://localhost:18789
 
 # Restart if needed
-systemctl --user restart moltbot-gateway
+systemctl --user restart razroom-gateway
 ```
 
 ### ARM binary issues
@@ -283,13 +283,13 @@ Most npm packages work fine. For binaries, look for `linux-arm64` or `aarch64` r
 
 All state lives in:
 
-- `~/.moltbot/` — config, credentials, session data
-- `~/.moltbot/workspace/` — workspace (SOUL.md, memory, artifacts)
+- `~/.razroom/` — config, credentials, session data
+- `~/.razroom/workspace/` — workspace (SOUL.md, memory, artifacts)
 
 Back up periodically:
 
 ```bash
-tar -czvf moltbot-backup.tar.gz ~/.moltbot ~/.moltbot/workspace
+tar -czvf razroom-backup.tar.gz ~/.razroom ~/.razroom/workspace
 ```
 
 ---

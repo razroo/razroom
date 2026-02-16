@@ -1,5 +1,5 @@
 ---
-summary: "Get MoltBot installed and run your first chat in minutes."
+summary: "Get Razroom installed and run your first chat in minutes."
 read_when:
   - First time setup from zero
   - You want the fastest path to a working chat
@@ -11,9 +11,9 @@ title: "Getting Started"
 Goal: go from zero to a first working chat with minimal setup.
 
 <Info>
-Fastest chat: open the Control UI (no channel setup needed). Run `moltbot dashboard`
+Fastest chat: open the Control UI (no channel setup needed). Run `razroom dashboard`
 and chat in the browser, or open `http://127.0.0.1:18789/` on the
-<Tooltip headline="Gateway host" tip="The machine running the MoltBot gateway service.">gateway host</Tooltip>.
+<Tooltip headline="Gateway host" tip="The machine running the Razroom gateway service.">gateway host</Tooltip>.
 Docs: [Dashboard](/web/dashboard) and [Control UI](/web/control-ui).
 </Info>
 
@@ -28,11 +28,11 @@ Check your Node version with `node --version` if you are unsure.
 ## Quick setup (CLI)
 
 <Steps>
-  <Step title="Install MoltBot (recommended)">
+  <Step title="Install Razroom (recommended)">
     <Tabs>
       <Tab title="macOS/Linux">
         ```bash
-        curl -fsSL https://moltbot.ai/install.sh | bash
+        curl -fsSL https://razroom.ai/install.sh | bash
         ```
         <img
   src="/assets/install-script.svg"
@@ -42,7 +42,7 @@ Check your Node version with `node --version` if you are unsure.
       </Tab>
       <Tab title="Windows (PowerShell)">
         ```powershell
-        iwr -useb https://moltbot.ai/install.ps1 | iex
+        iwr -useb https://razroom.ai/install.ps1 | iex
         ```
       </Tab>
     </Tabs>
@@ -54,7 +54,7 @@ Check your Node version with `node --version` if you are unsure.
   </Step>
   <Step title="Run the onboarding wizard">
     ```bash
-    moltbot onboard --install-daemon
+    razroom onboard --install-daemon
     ```
 
     The wizard configures auth, gateway settings, and optional channels.
@@ -65,13 +65,13 @@ Check your Node version with `node --version` if you are unsure.
     If you installed the service, it should already be running:
 
     ```bash
-    moltbot gateway status
+    razroom gateway status
     ```
 
   </Step>
   <Step title="Open the Control UI">
     ```bash
-    moltbot dashboard
+    razroom dashboard
     ```
   </Step>
 </Steps>
@@ -87,7 +87,7 @@ If the Control UI loads, your Gateway is ready for use.
     Useful for quick tests or troubleshooting.
 
     ```bash
-    moltbot gateway --port 18789
+    razroom gateway --port 18789
     ```
 
   </Accordion>
@@ -95,7 +95,7 @@ If the Control UI loads, your Gateway is ready for use.
     Requires a configured channel.
 
     ```bash
-    moltbot message send --target +15555550123 --message "Hello from MoltBot"
+    razroom message send --target +15555550123 --message "Hello from Razroom"
     ```
 
   </Accordion>
@@ -103,11 +103,11 @@ If the Control UI loads, your Gateway is ready for use.
 
 ## Useful environment variables
 
-If you run MoltBot as a service account or want custom config/state locations:
+If you run Razroom as a service account or want custom config/state locations:
 
-- `MOLTBOT_HOME` sets the home directory used for internal path resolution.
-- `MOLTBOT_STATE_DIR` overrides the state directory.
-- `MOLTBOT_CONFIG_PATH` overrides the config file path.
+- `RAZROOM_HOME` sets the home directory used for internal path resolution.
+- `RAZROOM_STATE_DIR` overrides the state directory.
+- `RAZROOM_CONFIG_PATH` overrides the config file path.
 
 Full environment variable reference: [Environment vars](/help/environment).
 

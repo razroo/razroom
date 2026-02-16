@@ -17,7 +17,7 @@ function makeSnapshot() {
     valid: true,
     issues: [],
     legacyIssues: [],
-    path: "/tmp/moltbot.json",
+    path: "/tmp/razroom.json",
   };
 }
 

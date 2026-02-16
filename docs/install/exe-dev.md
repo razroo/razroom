@@ -1,5 +1,5 @@
 ---
-summary: "Run MoltBot Gateway on exe.dev (VM + HTTPS proxy) for remote access"
+summary: "Run Razroom Gateway on exe.dev (VM + HTTPS proxy) for remote access"
 read_when:
   - You want a cheap always-on Linux host for the Gateway
   - You want remote Control UI access without running your own VPS
@@ -8,13 +8,13 @@ title: "exe.dev"
 
 # exe.dev
 
-Goal: MoltBot Gateway running on an exe.dev VM, reachable from your laptop via: `https://<vm-name>.exe.xyz`
+Goal: Razroom Gateway running on an exe.dev VM, reachable from your laptop via: `https://<vm-name>.exe.xyz`
 
 This page assumes exe.dev's default **exeuntu** image. If you picked a different distro, map packages accordingly.
 
 ## Beginner quick path
 
-1. [https://exe.new/moltbot](https://exe.new/moltbot)
+1. [https://exe.new/razroom](https://exe.new/razroom)
 2. Fill in your auth key/token as needed
 3. Click on "Agent" next to your VM, and wait...
 4. ???
@@ -27,11 +27,11 @@ This page assumes exe.dev's default **exeuntu** image. If you picked a different
 
 ## Automated Install with Shelley
 
-Shelley, [exe.dev](https://exe.dev)'s agent, can install MoltBot instantly with our
+Shelley, [exe.dev](https://exe.dev)'s agent, can install Razroom instantly with our
 prompt. The prompt used is as below:
 
 ```
-Set up MoltBot (https://docs.moltbot.ai/install) on this VM. Use the non-interactive and accept-risk flags for moltbot onboarding. Add the supplied auth or token as needed. Configure nginx to forward from the default port 18789 to the root location on the default enabled site config, making sure to enable Websocket support. Pairing is done by "moltbot devices list" and "moltbot device approve <request id>". Make sure the dashboard shows that MoltBot's health is OK. exe.dev handles forwarding from port 8000 to port 80/443 and HTTPS for us, so the final "reachable" should be <vm-name>.exe.xyz, without port specification.
+Set up Razroom (https://docs.razroom.ai/install) on this VM. Use the non-interactive and accept-risk flags for razroom onboarding. Add the supplied auth or token as needed. Configure nginx to forward from the default port 18789 to the root location on the default enabled site config, making sure to enable Websocket support. Pairing is done by "razroom devices list" and "razroom device approve <request id>". Make sure the dashboard shows that Razroom's health is OK. exe.dev handles forwarding from port 8000 to port 80/443 and HTTPS for us, so the final "reachable" should be <vm-name>.exe.xyz, without port specification.
 ```
 
 ## Manual installation
@@ -50,7 +50,7 @@ Then connect:
 ssh <vm-name>.exe.xyz
 ```
 
-Tip: keep this VM **stateful**. MoltBot stores state under `~/.moltbot/` and `~/.moltbot/workspace/`.
+Tip: keep this VM **stateful**. Razroom stores state under `~/.razroom/` and `~/.razroom/workspace/`.
 
 ## 2) Install prerequisites (on the VM)
 
@@ -59,15 +59,15 @@ sudo apt-get update
 sudo apt-get install -y git curl jq ca-certificates openssl
 ```
 
-## 3) Install MoltBot
+## 3) Install Razroom
 
-Run the MoltBot install script:
+Run the Razroom install script:
 
 ```bash
-curl -fsSL https://moltbot.ai/install.sh | bash
+curl -fsSL https://razroom.ai/install.sh | bash
 ```
 
-## 4) Setup nginx to proxy MoltBot to port 8000
+## 4) Setup nginx to proxy Razroom to port 8000
 
 Edit `/etc/nginx/sites-enabled/default` with
 
@@ -101,12 +101,12 @@ server {
 }
 ```
 
-## 5) Access MoltBot and grant privileges
+## 5) Access Razroom and grant privileges
 
 Access `https://<vm-name>.exe.xyz/` (see the Control UI output from onboarding). If it prompts for auth, paste the
-token from `gateway.auth.token` on the VM (retrieve with `moltbot config get gateway.auth.token`, or generate one
-with `moltbot doctor --generate-gateway-token`). Approve devices with `moltbot devices list` and
-`moltbot devices approve <requestId>`. When in doubt, use Shelley from your browser!
+token from `gateway.auth.token` on the VM (retrieve with `razroom config get gateway.auth.token`, or generate one
+with `razroom doctor --generate-gateway-token`). Approve devices with `razroom devices list` and
+`razroom devices approve <requestId>`. When in doubt, use Shelley from your browser!
 
 ## Remote Access
 
@@ -117,10 +117,10 @@ with email auth.
 ## Updating
 
 ```bash
-npm i -g moltbot@latest
-moltbot doctor
-moltbot gateway restart
-moltbot health
+npm i -g razroom@latest
+razroom doctor
+razroom gateway restart
+razroom health
 ```
 
 Guide: [Updating](/install/updating)

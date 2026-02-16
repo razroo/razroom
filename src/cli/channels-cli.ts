@@ -76,7 +76,7 @@ export function registerChannelsCli(program: Command) {
       () =>
         `\n${theme.muted("Docs:")} ${formatDocsLink(
           "/cli/channels",
-          "docs.moltbot.ai/cli/channels",
+          "docs.razroom.ai/cli/channels",
         )}\n`,
     );
 

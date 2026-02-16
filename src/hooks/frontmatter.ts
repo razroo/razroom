@@ -1,5 +1,5 @@
 import type {
-  MoltBotHookMetadata,
+  RazroomHookMetadata,
   HookEntry,
   HookInstallSpec,
   HookInvocationPolicy,
@@ -10,7 +10,7 @@ import {
   getFrontmatterString,
   normalizeStringList,
   parseFrontmatterBool,
-  resolveMoltBotManifestBlock,
+  resolveRazroomManifestBlock,
 } from "../shared/frontmatter.js";
 
 export function parseFrontmatter(content: string): ParsedHookFrontmatter {
@@ -53,10 +53,10 @@ function parseInstallSpec(input: unknown): HookInstallSpec | undefined {
   return spec;
 }
 
-export function resolveMoltBotMetadata(
+export function resolveRazroomMetadata(
   frontmatter: ParsedHookFrontmatter,
-): MoltBotHookMetadata | undefined {
-  const metadataObj = resolveMoltBotManifestBlock({ frontmatter });
+): RazroomHookMetadata | undefined {
+  const metadataObj = resolveRazroomManifestBlock({ frontmatter });
   if (!metadataObj) {
     return undefined;
   }

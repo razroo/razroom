@@ -4,7 +4,7 @@ import type { PluginConfigUiHint, PluginKind } from "./types.js";
 import { MANIFEST_KEY } from "../compat/legacy-names.js";
 import { isRecord } from "../utils.js";
 
-export const PLUGIN_MANIFEST_FILENAME = "moltbot.plugin.json";
+export const PLUGIN_MANIFEST_FILENAME = "razroom.plugin.json";
 export const PLUGIN_MANIFEST_FILENAMES = [PLUGIN_MANIFEST_FILENAME] as const;
 
 export type PluginManifest = {
@@ -99,7 +99,7 @@ export function loadPluginManifest(rootDir: string): PluginManifestLoadResult {
   };
 }
 
-// package.json "moltbot" metadata (used for onboarding/catalog)
+// package.json "razroom" metadata (used for onboarding/catalog)
 export type PluginPackageChannel = {
   id?: string;
   label?: string;
@@ -127,7 +127,7 @@ export type PluginPackageInstall = {
   defaultChoice?: "npm" | "local";
 };
 
-export type MoltBotPackageManifest = {
+export type RazroomPackageManifest = {
   extensions?: string[];
   channel?: PluginPackageChannel;
   install?: PluginPackageInstall;
@@ -139,11 +139,11 @@ export type PackageManifest = {
   name?: string;
   version?: string;
   description?: string;
-} & Partial<Record<ManifestKey, MoltBotPackageManifest>>;
+} & Partial<Record<ManifestKey, RazroomPackageManifest>>;
 
 export function getPackageManifestMetadata(
   manifest: PackageManifest | undefined,
-): MoltBotPackageManifest | undefined {
+): RazroomPackageManifest | undefined {
   if (!manifest) {
     return undefined;
   }

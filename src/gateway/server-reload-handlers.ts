@@ -90,7 +90,7 @@ export function createGatewayReloadHandlers(params: {
 
     if (plan.restartGmailWatcher) {
       await stopGmailWatcher().catch(() => {});
-      if (!isTruthyEnvValue(process.env.MOLTBOT_SKIP_GMAIL_WATCHER)) {
+      if (!isTruthyEnvValue(process.env.RAZROOM_SKIP_GMAIL_WATCHER)) {
         try {
           const gmailResult = await startGmailWatcher(nextConfig);
           if (gmailResult.started) {
@@ -106,17 +106,17 @@ export function createGatewayReloadHandlers(params: {
           params.logHooks.error(`gmail watcher failed to start: ${String(err)}`);
         }
       } else {
-        params.logHooks.info("skipping gmail watcher restart (MOLTBOT_SKIP_GMAIL_WATCHER=1)");
+        params.logHooks.info("skipping gmail watcher restart (RAZROOM_SKIP_GMAIL_WATCHER=1)");
       }
     }
 
     if (plan.restartChannels.size > 0) {
       if (
-        isTruthyEnvValue(process.env.MOLTBOT_SKIP_CHANNELS) ||
-        isTruthyEnvValue(process.env.MOLTBOT_SKIP_PROVIDERS)
+        isTruthyEnvValue(process.env.RAZROOM_SKIP_CHANNELS) ||
+        isTruthyEnvValue(process.env.RAZROOM_SKIP_PROVIDERS)
       ) {
         params.logChannels.info(
-          "skipping channel reload (MOLTBOT_SKIP_CHANNELS=1 or MOLTBOT_SKIP_PROVIDERS=1)",
+          "skipping channel reload (RAZROOM_SKIP_CHANNELS=1 or RAZROOM_SKIP_PROVIDERS=1)",
         );
       } else {
         const restartChannel = async (name: ChannelKind) => {

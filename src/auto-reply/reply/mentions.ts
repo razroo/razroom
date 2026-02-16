@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 import type { MsgContext } from "../templating.js";
 import { resolveAgentConfig } from "../../agents/agent-scope.js";
 import { getChannelDock } from "../../channels/dock.js";
@@ -35,7 +35,7 @@ function normalizeMentionPatterns(patterns: string[]): string[] {
   return patterns.map(normalizeMentionPattern);
 }
 
-function resolveMentionPatterns(cfg: MoltBotConfig | undefined, agentId?: string): string[] {
+function resolveMentionPatterns(cfg: RazroomConfig | undefined, agentId?: string): string[] {
   if (!cfg) {
     return [];
   }
@@ -52,7 +52,7 @@ function resolveMentionPatterns(cfg: MoltBotConfig | undefined, agentId?: string
   return derived.length > 0 ? derived : [];
 }
 
-export function buildMentionRegexes(cfg: MoltBotConfig | undefined, agentId?: string): RegExp[] {
+export function buildMentionRegexes(cfg: RazroomConfig | undefined, agentId?: string): RegExp[] {
   const patterns = normalizeMentionPatterns(resolveMentionPatterns(cfg, agentId));
   return patterns
     .map((pattern) => {
@@ -128,7 +128,7 @@ export function stripStructuralPrefixes(text: string): string {
 export function stripMentions(
   text: string,
   ctx: MsgContext,
-  cfg: MoltBotConfig | undefined,
+  cfg: RazroomConfig | undefined,
   agentId?: string,
 ): string {
   let result = text;

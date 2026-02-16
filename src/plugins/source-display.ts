@@ -31,7 +31,7 @@ export function resolvePluginSourceRoots(params: { workspaceDir?: string }): Plu
   const stock = resolveBundledPluginsDir();
   const global = path.join(resolveConfigDir(), "extensions");
   const workspace = params.workspaceDir
-    ? path.join(params.workspaceDir, ".moltbot", "extensions")
+    ? path.join(params.workspaceDir, ".razroom", "extensions")
     : undefined;
   return { stock, global, workspace };
 }

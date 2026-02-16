@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "moltbot/plugin-sdk";
+import type { PluginRuntime } from "razroom/plugin-sdk";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -10,12 +10,12 @@ import { setMSTeamsRuntime } from "./runtime.js";
 const runtimeStub = {
   state: {
     resolveStateDir: (env: NodeJS.ProcessEnv = process.env, homedir?: () => string) => {
-      const override = env.MOLTBOT_STATE_DIR?.trim() || env.MOLTBOT_STATE_DIR?.trim();
+      const override = env.RAZROOM_STATE_DIR?.trim() || env.RAZROOM_STATE_DIR?.trim();
       if (override) {
         return override;
       }
       const resolvedHome = homedir ? homedir() : os.homedir();
-      return path.join(resolvedHome, ".moltbot");
+      return path.join(resolvedHome, ".razroom");
     },
   },
 } as unknown as PluginRuntime;
@@ -26,11 +26,11 @@ describe("msteams conversation store (fs)", () => {
   });
 
   it("filters and prunes expired entries (but keeps legacy ones)", async () => {
-    const stateDir = await fs.promises.mkdtemp(path.join(os.tmpdir(), "moltbot-msteams-store-"));
+    const stateDir = await fs.promises.mkdtemp(path.join(os.tmpdir(), "razroom-msteams-store-"));
 
     const env: NodeJS.ProcessEnv = {
       ...process.env,
-      MOLTBOT_STATE_DIR: stateDir,
+      RAZROOM_STATE_DIR: stateDir,
     };
 
     const store = createMSTeamsConversationStoreFs({ env, ttlMs: 1_000 });

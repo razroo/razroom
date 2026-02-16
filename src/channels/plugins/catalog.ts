@@ -1,10 +1,10 @@
 import fs from "node:fs";
 import path from "node:path";
-import type { MoltBotPackageManifest } from "../../plugins/manifest.js";
+import type { RazroomPackageManifest } from "../../plugins/manifest.js";
 import type { PluginOrigin } from "../../plugins/types.js";
 import type { ChannelMeta } from "./types.js";
 import { MANIFEST_KEY } from "../../compat/legacy-names.js";
-import { discoverMoltBotPlugins } from "../../plugins/discovery.js";
+import { discoverRazroomPlugins } from "../../plugins/discovery.js";
 import { CONFIG_DIR, isRecord, resolveUserPath } from "../../utils.js";
 
 export type ChannelUiMetaEntry = {
@@ -49,7 +49,7 @@ type ExternalCatalogEntry = {
   name?: string;
   version?: string;
   description?: string;
-} & Partial<Record<ManifestKey, MoltBotPackageManifest>>;
+} & Partial<Record<ManifestKey, RazroomPackageManifest>>;
 
 const DEFAULT_CATALOG_PATHS = [
   path.join(CONFIG_DIR, "mpm", "plugins.json"),
@@ -57,7 +57,7 @@ const DEFAULT_CATALOG_PATHS = [
   path.join(CONFIG_DIR, "plugins", "catalog.json"),
 ];
 
-const ENV_CATALOG_PATHS = ["MOLTBOT_PLUGIN_CATALOG_PATHS", "MOLTBOT_MPM_CATALOG_PATHS"];
+const ENV_CATALOG_PATHS = ["RAZROOM_PLUGIN_CATALOG_PATHS", "RAZROOM_MPM_CATALOG_PATHS"];
 
 type ManifestKey = typeof MANIFEST_KEY;
 
@@ -119,7 +119,7 @@ function loadExternalCatalogEntries(options: CatalogOptions): ExternalCatalogEnt
 }
 
 function toChannelMeta(params: {
-  channel: NonNullable<MoltBotPackageManifest["channel"]>;
+  channel: NonNullable<RazroomPackageManifest["channel"]>;
   id: string;
 }): ChannelMeta | null {
   const label = params.channel.label?.trim();
@@ -169,7 +169,7 @@ function toChannelMeta(params: {
 }
 
 function resolveInstallInfo(params: {
-  manifest: MoltBotPackageManifest;
+  manifest: RazroomPackageManifest;
   packageName?: string;
   packageDir?: string;
   workspaceDir?: string;
@@ -194,7 +194,7 @@ function buildCatalogEntry(candidate: {
   packageName?: string;
   packageDir?: string;
   workspaceDir?: string;
-  packageManifest?: MoltBotPackageManifest;
+  packageManifest?: RazroomPackageManifest;
 }): ChannelPluginCatalogEntry | null {
   const manifest = candidate.packageManifest;
   if (!manifest?.channel) {
@@ -259,7 +259,7 @@ export function buildChannelUiCatalog(
 export function listChannelPluginCatalogEntries(
   options: CatalogOptions = {},
 ): ChannelPluginCatalogEntry[] {
-  const discovery = discoverMoltBotPlugins({ workspaceDir: options.workspaceDir });
+  const discovery = discoverRazroomPlugins({ workspaceDir: options.workspaceDir });
   const resolved = new Map<string, { entry: ChannelPluginCatalogEntry; priority: number }>();
 
   for (const candidate of discovery.candidates) {

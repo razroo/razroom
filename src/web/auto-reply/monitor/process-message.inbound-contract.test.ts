@@ -36,7 +36,7 @@ describe("web processMessage inbound contract", () => {
     capturedCtx = undefined;
     capturedDispatchParams = undefined;
     backgroundTasks = new Set();
-    sessionDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-process-message-"));
+    sessionDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-process-message-"));
     sessionStorePath = path.join(sessionDir, "sessions.json");
   });
 

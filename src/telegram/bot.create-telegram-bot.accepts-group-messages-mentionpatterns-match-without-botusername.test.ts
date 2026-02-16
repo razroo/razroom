@@ -35,7 +35,7 @@ describe("createTelegramBot", () => {
     const handler = getMessageHandler();
     await handler({
       message: params.message,
-      me: params.me ?? { username: "moltbot_bot" },
+      me: params.me ?? { username: "razroom_bot" },
       getFile: async () => ({ download: async () => new Uint8Array() }),
     });
   }

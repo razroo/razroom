@@ -1,5 +1,5 @@
-import type { ChannelPlugin, MoltBotPluginApi } from "moltbot/plugin-sdk";
-import { emptyPluginConfigSchema } from "moltbot/plugin-sdk";
+import type { ChannelPlugin, RazroomPluginApi } from "razroom/plugin-sdk";
+import { emptyPluginConfigSchema } from "razroom/plugin-sdk";
 import { telegramPlugin } from "./src/channel.js";
 import { setTelegramRuntime } from "./src/runtime.js";
 
@@ -8,7 +8,7 @@ const plugin = {
   name: "Telegram",
   description: "Telegram channel plugin",
   configSchema: emptyPluginConfigSchema(),
-  register(api: MoltBotPluginApi) {
+  register(api: RazroomPluginApi) {
     setTelegramRuntime(api.runtime);
     api.registerChannel({ plugin: telegramPlugin as ChannelPlugin });
   },

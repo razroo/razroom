@@ -219,11 +219,11 @@ describe("edge cases", () => {
   });
 
   it("keeps .co domains as links", () => {
-    const result = markdownToTelegramHtml("Visit t.co and moltbot.co");
+    const result = markdownToTelegramHtml("Visit t.co and razroom.co");
     expect(result).toContain('<a href="http://t.co">');
-    expect(result).toContain('<a href="http://moltbot.co">');
+    expect(result).toContain('<a href="http://razroom.co">');
     expect(result).not.toContain("<code>t.co</code>");
-    expect(result).not.toContain("<code>moltbot.co</code>");
+    expect(result).not.toContain("<code>razroom.co</code>");
   });
 
   it("does not wrap non-TLD extensions", () => {

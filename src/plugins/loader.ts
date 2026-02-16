@@ -2,11 +2,11 @@ import { createJiti } from "jiti";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { GatewayRequestHandler } from "../gateway/server-methods/types.js";
 import type {
-  MoltBotPluginDefinition,
-  MoltBotPluginModule,
+  RazroomPluginDefinition,
+  RazroomPluginModule,
   PluginDiagnostic,
   PluginLogger,
 } from "./types.js";
@@ -20,7 +20,7 @@ import {
   resolveMemorySlotDecision,
   type NormalizedPluginsConfig,
 } from "./config-state.js";
-import { discoverMoltBotPlugins } from "./discovery.js";
+import { discoverRazroomPlugins } from "./discovery.js";
 import { initializeGlobalHookRunner } from "./hook-runner-global.js";
 import { loadPluginManifestRegistry } from "./manifest-registry.js";
 import { createPluginRegistry, type PluginRecord, type PluginRegistry } from "./registry.js";
@@ -31,7 +31,7 @@ import { validateJsonSchemaValue } from "./schema-validator.js";
 export type PluginLoadResult = PluginRegistry;
 
 export type PluginLoadOptions = {
-  config?: MoltBotConfig;
+  config?: RazroomConfig;
   workspaceDir?: string;
   logger?: PluginLogger;
   coreGatewayHandlers?: Record<string, GatewayRequestHandler>;
@@ -114,8 +114,8 @@ function validatePluginConfig(params: {
 }
 
 function resolvePluginModuleExport(moduleExport: unknown): {
-  definition?: MoltBotPluginDefinition;
-  register?: MoltBotPluginDefinition["register"];
+  definition?: RazroomPluginDefinition;
+  register?: RazroomPluginDefinition["register"];
 } {
   const resolved =
     moduleExport &&
@@ -125,11 +125,11 @@ function resolvePluginModuleExport(moduleExport: unknown): {
       : moduleExport;
   if (typeof resolved === "function") {
     return {
-      register: resolved as MoltBotPluginDefinition["register"],
+      register: resolved as RazroomPluginDefinition["register"],
     };
   }
   if (resolved && typeof resolved === "object") {
-    const def = resolved as MoltBotPluginDefinition;
+    const def = resolved as RazroomPluginDefinition;
     const register = def.register ?? def.activate;
     return { definition: def, register };
   }
@@ -177,7 +177,7 @@ function pushDiagnostics(diagnostics: PluginDiagnostic[], append: PluginDiagnost
   diagnostics.push(...append);
 }
 
-export function loadMoltBotPlugins(options: PluginLoadOptions = {}): PluginRegistry {
+export function loadRazroomPlugins(options: PluginLoadOptions = {}): PluginRegistry {
   // Test env: default-disable plugins unless explicitly configured.
   // This keeps unit/gateway suites fast and avoids loading heavyweight plugin deps by accident.
   const cfg = applyTestPluginDefaults(options.config ?? {}, process.env);
@@ -207,7 +207,7 @@ export function loadMoltBotPlugins(options: PluginLoadOptions = {}): PluginRegis
     coreGatewayHandlers: options.coreGatewayHandlers as Record<string, GatewayRequestHandler>,
   });
 
-  const discovery = discoverMoltBotPlugins({
+  const discovery = discoverRazroomPlugins({
     workspaceDir: options.workspaceDir,
     extraPaths: normalized.loadPaths,
   });
@@ -234,9 +234,9 @@ export function loadMoltBotPlugins(options: PluginLoadOptions = {}): PluginRegis
       ...(pluginSdkAlias || pluginSdkAccountIdAlias
         ? {
             alias: {
-              ...(pluginSdkAlias ? { "moltbot/plugin-sdk": pluginSdkAlias } : {}),
+              ...(pluginSdkAlias ? { "razroom/plugin-sdk": pluginSdkAlias } : {}),
               ...(pluginSdkAccountIdAlias
-                ? { "moltbot/plugin-sdk/account-id": pluginSdkAccountIdAlias }
+                ? { "razroom/plugin-sdk/account-id": pluginSdkAccountIdAlias }
                 : {}),
             },
           }
@@ -318,9 +318,9 @@ export function loadMoltBotPlugins(options: PluginLoadOptions = {}): PluginRegis
       continue;
     }
 
-    let mod: MoltBotPluginModule | null = null;
+    let mod: RazroomPluginModule | null = null;
     try {
-      mod = getJiti()(candidate.source) as MoltBotPluginModule;
+      mod = getJiti()(candidate.source) as RazroomPluginModule;
     } catch (err) {
       logger.error(`[plugins] ${record.id} failed to load from ${record.source}: ${String(err)}`);
       record.status = "error";

@@ -3,10 +3,10 @@ import type { PluginRegistry } from "../plugins/registry.js";
 import type { PluginDiagnostic } from "../plugins/types.js";
 import { loadGatewayPlugins } from "./server-plugins.js";
 
-const loadMoltBotPlugins = vi.hoisted(() => mock());
+const loadRazroomPlugins = vi.hoisted(() => mock());
 
 mock("../plugins/loader.js", () => ({
-  loadMoltBotPlugins,
+  loadRazroomPlugins,
 }));
 
 const createRegistry = (diagnostics: PluginDiagnostic[]): PluginRegistry => ({
@@ -34,7 +34,7 @@ describe("loadGatewayPlugins", () => {
         message: "failed to load plugin: boom",
       },
     ];
-    loadMoltBotPlugins.mockReturnValue(createRegistry(diagnostics));
+    loadRazroomPlugins.mockReturnValue(createRegistry(diagnostics));
 
     const log = {
       info: mock(),

@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "moltbot/plugin-sdk";
+import type { PluginRuntime } from "razroom/plugin-sdk";
 
 let runtime: PluginRuntime | null = null;
 

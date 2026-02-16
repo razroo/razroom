@@ -1,5 +1,5 @@
 import type { ReplyPayload } from "../../auto-reply/types.js";
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 import type { GroupToolPolicyConfig } from "../../config/types.tools.js";
 import type { OutboundDeliveryResult, OutboundSendDeps } from "../../infra/outbound/deliver.js";
 import type { OutboundIdentity } from "../../infra/outbound/identity.js";
@@ -21,45 +21,45 @@ import type {
 } from "./types.core.js";
 
 export type ChannelSetupAdapter = {
-  resolveAccountId?: (params: { cfg: MoltBotConfig; accountId?: string }) => string;
+  resolveAccountId?: (params: { cfg: RazroomConfig; accountId?: string }) => string;
   applyAccountName?: (params: {
-    cfg: MoltBotConfig;
+    cfg: RazroomConfig;
     accountId: string;
     name?: string;
-  }) => MoltBotConfig;
+  }) => RazroomConfig;
   applyAccountConfig: (params: {
-    cfg: MoltBotConfig;
+    cfg: RazroomConfig;
     accountId: string;
     input: ChannelSetupInput;
-  }) => MoltBotConfig;
+  }) => RazroomConfig;
   validateInput?: (params: {
-    cfg: MoltBotConfig;
+    cfg: RazroomConfig;
     accountId: string;
     input: ChannelSetupInput;
   }) => string | null;
 };
 
 export type ChannelConfigAdapter<ResolvedAccount> = {
-  listAccountIds: (cfg: MoltBotConfig) => string[];
-  resolveAccount: (cfg: MoltBotConfig, accountId?: string | null) => ResolvedAccount;
-  defaultAccountId?: (cfg: MoltBotConfig) => string;
+  listAccountIds: (cfg: RazroomConfig) => string[];
+  resolveAccount: (cfg: RazroomConfig, accountId?: string | null) => ResolvedAccount;
+  defaultAccountId?: (cfg: RazroomConfig) => string;
   setAccountEnabled?: (params: {
-    cfg: MoltBotConfig;
+    cfg: RazroomConfig;
     accountId: string;
     enabled: boolean;
-  }) => MoltBotConfig;
-  deleteAccount?: (params: { cfg: MoltBotConfig; accountId: string }) => MoltBotConfig;
-  isEnabled?: (account: ResolvedAccount, cfg: MoltBotConfig) => boolean;
-  disabledReason?: (account: ResolvedAccount, cfg: MoltBotConfig) => string;
-  isConfigured?: (account: ResolvedAccount, cfg: MoltBotConfig) => boolean | Promise<boolean>;
-  unconfiguredReason?: (account: ResolvedAccount, cfg: MoltBotConfig) => string;
-  describeAccount?: (account: ResolvedAccount, cfg: MoltBotConfig) => ChannelAccountSnapshot;
+  }) => RazroomConfig;
+  deleteAccount?: (params: { cfg: RazroomConfig; accountId: string }) => RazroomConfig;
+  isEnabled?: (account: ResolvedAccount, cfg: RazroomConfig) => boolean;
+  disabledReason?: (account: ResolvedAccount, cfg: RazroomConfig) => string;
+  isConfigured?: (account: ResolvedAccount, cfg: RazroomConfig) => boolean | Promise<boolean>;
+  unconfiguredReason?: (account: ResolvedAccount, cfg: RazroomConfig) => string;
+  describeAccount?: (account: ResolvedAccount, cfg: RazroomConfig) => ChannelAccountSnapshot;
   resolveAllowFrom?: (params: {
-    cfg: MoltBotConfig;
+    cfg: RazroomConfig;
     accountId?: string | null;
   }) => string[] | undefined;
   formatAllowFrom?: (params: {
-    cfg: MoltBotConfig;
+    cfg: RazroomConfig;
     accountId?: string | null;
     allowFrom: Array<string | number>;
   }) => string[];
@@ -72,7 +72,7 @@ export type ChannelGroupAdapter = {
 };
 
 export type ChannelOutboundContext = {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   to: string;
   text: string;
   mediaUrl?: string;
@@ -97,7 +97,7 @@ export type ChannelOutboundAdapter = {
   textChunkLimit?: number;
   pollMaxOptions?: number;
   resolveTarget?: (params: {
-    cfg?: MoltBotConfig;
+    cfg?: RazroomConfig;
     to?: string;
     allowFrom?: string[];
     accountId?: string | null;
@@ -113,37 +113,37 @@ export type ChannelStatusAdapter<ResolvedAccount, Probe = unknown, Audit = unkno
   defaultRuntime?: ChannelAccountSnapshot;
   buildChannelSummary?: (params: {
     account: ResolvedAccount;
-    cfg: MoltBotConfig;
+    cfg: RazroomConfig;
     defaultAccountId: string;
     snapshot: ChannelAccountSnapshot;
   }) => Record<string, unknown> | Promise<Record<string, unknown>>;
   probeAccount?: (params: {
     account: ResolvedAccount;
     timeoutMs: number;
-    cfg: MoltBotConfig;
+    cfg: RazroomConfig;
   }) => Promise<Probe>;
   auditAccount?: (params: {
     account: ResolvedAccount;
     timeoutMs: number;
-    cfg: MoltBotConfig;
+    cfg: RazroomConfig;
     probe?: Probe;
   }) => Promise<Audit>;
   buildAccountSnapshot?: (params: {
     account: ResolvedAccount;
-    cfg: MoltBotConfig;
+    cfg: RazroomConfig;
     runtime?: ChannelAccountSnapshot;
     probe?: Probe;
     audit?: Audit;
   }) => ChannelAccountSnapshot | Promise<ChannelAccountSnapshot>;
   logSelfId?: (params: {
     account: ResolvedAccount;
-    cfg: MoltBotConfig;
+    cfg: RazroomConfig;
     runtime: RuntimeEnv;
     includeChannelPrefix?: boolean;
   }) => void;
   resolveAccountState?: (params: {
     account: ResolvedAccount;
-    cfg: MoltBotConfig;
+    cfg: RazroomConfig;
     configured: boolean;
     enabled: boolean;
   }) => ChannelAccountState;
@@ -151,7 +151,7 @@ export type ChannelStatusAdapter<ResolvedAccount, Probe = unknown, Audit = unkno
 };
 
 export type ChannelGatewayContext<ResolvedAccount = unknown> = {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   accountId: string;
   account: ResolvedAccount;
   runtime: RuntimeEnv;
@@ -178,7 +178,7 @@ export type ChannelLoginWithQrWaitResult = {
 };
 
 export type ChannelLogoutContext<ResolvedAccount = unknown> = {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   accountId: string;
   account: ResolvedAccount;
   runtime: RuntimeEnv;
@@ -189,7 +189,7 @@ export type ChannelPairingAdapter = {
   idLabel: string;
   normalizeAllowEntry?: (entry: string) => string;
   notifyApproval?: (params: {
-    cfg: MoltBotConfig;
+    cfg: RazroomConfig;
     id: string;
     runtime?: RuntimeEnv;
   }) => Promise<void>;
@@ -213,7 +213,7 @@ export type ChannelGatewayAdapter<ResolvedAccount = unknown> = {
 
 export type ChannelAuthAdapter = {
   login?: (params: {
-    cfg: MoltBotConfig;
+    cfg: RazroomConfig;
     accountId?: string | null;
     runtime: RuntimeEnv;
     verbose?: boolean;
@@ -223,11 +223,11 @@ export type ChannelAuthAdapter = {
 
 export type ChannelHeartbeatAdapter = {
   checkReady?: (params: {
-    cfg: MoltBotConfig;
+    cfg: RazroomConfig;
     accountId?: string | null;
     deps?: ChannelHeartbeatDeps;
   }) => Promise<{ ok: boolean; reason: string }>;
-  resolveRecipients?: (params: { cfg: MoltBotConfig; opts?: { to?: string; all?: boolean } }) => {
+  resolveRecipients?: (params: { cfg: RazroomConfig; opts?: { to?: string; all?: boolean } }) => {
     recipients: string[];
     source: string;
   };
@@ -235,40 +235,40 @@ export type ChannelHeartbeatAdapter = {
 
 export type ChannelDirectoryAdapter = {
   self?: (params: {
-    cfg: MoltBotConfig;
+    cfg: RazroomConfig;
     accountId?: string | null;
     runtime: RuntimeEnv;
   }) => Promise<ChannelDirectoryEntry | null>;
   listPeers?: (params: {
-    cfg: MoltBotConfig;
+    cfg: RazroomConfig;
     accountId?: string | null;
     query?: string | null;
     limit?: number | null;
     runtime: RuntimeEnv;
   }) => Promise<ChannelDirectoryEntry[]>;
   listPeersLive?: (params: {
-    cfg: MoltBotConfig;
+    cfg: RazroomConfig;
     accountId?: string | null;
     query?: string | null;
     limit?: number | null;
     runtime: RuntimeEnv;
   }) => Promise<ChannelDirectoryEntry[]>;
   listGroups?: (params: {
-    cfg: MoltBotConfig;
+    cfg: RazroomConfig;
     accountId?: string | null;
     query?: string | null;
     limit?: number | null;
     runtime: RuntimeEnv;
   }) => Promise<ChannelDirectoryEntry[]>;
   listGroupsLive?: (params: {
-    cfg: MoltBotConfig;
+    cfg: RazroomConfig;
     accountId?: string | null;
     query?: string | null;
     limit?: number | null;
     runtime: RuntimeEnv;
   }) => Promise<ChannelDirectoryEntry[]>;
   listGroupMembers?: (params: {
-    cfg: MoltBotConfig;
+    cfg: RazroomConfig;
     accountId?: string | null;
     groupId: string;
     limit?: number | null;
@@ -288,7 +288,7 @@ export type ChannelResolveResult = {
 
 export type ChannelResolverAdapter = {
   resolveTargets: (params: {
-    cfg: MoltBotConfig;
+    cfg: RazroomConfig;
     accountId?: string | null;
     inputs: string[];
     kind: ChannelResolveKind;
@@ -298,7 +298,7 @@ export type ChannelResolverAdapter = {
 
 export type ChannelElevatedAdapter = {
   allowFromFallback?: (params: {
-    cfg: MoltBotConfig;
+    cfg: RazroomConfig;
     accountId?: string | null;
   }) => Array<string | number> | undefined;
 };

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import { isDiagnosticFlagEnabled, resolveDiagnosticFlags } from "./diagnostic-flags.js";
 import { isMainModule } from "./is-main.js";
 import { buildNodeShellCommand } from "./node-shell.js";
@@ -10,9 +10,9 @@ describe("infra parsing", () => {
     it("merges config + env flags", () => {
       const cfg = {
         diagnostics: { flags: ["telegram.http", "cache.*"] },
-      } as MoltBotConfig;
+      } as RazroomConfig;
       const env = {
-        MOLTBOT_DIAGNOSTICS: "foo,bar",
+        RAZROOM_DIAGNOSTICS: "foo,bar",
       } as NodeJS.ProcessEnv;
 
       const flags = resolveDiagnosticFlags(cfg, env);
@@ -23,12 +23,12 @@ describe("infra parsing", () => {
     });
 
     it("treats env true as wildcard", () => {
-      const env = { MOLTBOT_DIAGNOSTICS: "1" } as NodeJS.ProcessEnv;
+      const env = { RAZROOM_DIAGNOSTICS: "1" } as NodeJS.ProcessEnv;
       expect(isDiagnosticFlagEnabled("anything.here", undefined, env)).toBe(true);
     });
 
     it("treats env false as disabled", () => {
-      const env = { MOLTBOT_DIAGNOSTICS: "0" } as NodeJS.ProcessEnv;
+      const env = { RAZROOM_DIAGNOSTICS: "0" } as NodeJS.ProcessEnv;
       expect(isDiagnosticFlagEnabled("telegram.http", undefined, env)).toBe(false);
     });
   });
@@ -59,7 +59,7 @@ describe("infra parsing", () => {
     it("returns false when running under PM2 but this module is imported", () => {
       expect(
         isMainModule({
-          currentFile: "/repo/node_modules/moltbot/dist/index.js",
+          currentFile: "/repo/node_modules/razroom/dist/index.js",
           argv: ["node", "/repo/app.js"],
           cwd: "/repo",
           env: { pm_exec_path: "/repo/app.js", pm_id: "0" },

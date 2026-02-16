@@ -1,16 +1,16 @@
 {
-  "name": "@moltbot/tlon",
+  "name": "@razroom/tlon",
   "version": "2026.2.15",
   "private": true,
-  "description": "MoltBot Tlon/Urbit channel plugin",
+  "description": "Razroom Tlon/Urbit channel plugin",
   "type": "module",
   "dependencies": {
     "@urbit/aura": "^3.0.0"
   },
   "devDependencies": {
-    "moltbot": "workspace:*"
+    "razroom": "workspace:*"
   },
-  "moltbot": {
+  "razroom": {
     "extensions": [
       "./index.ts"
     ],
@@ -25,7 +25,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@moltbot/tlon",
+      "npmSpec": "@razroom/tlon",
       "localPath": "extensions/tlon",
       "defaultChoice": "npm"
     }

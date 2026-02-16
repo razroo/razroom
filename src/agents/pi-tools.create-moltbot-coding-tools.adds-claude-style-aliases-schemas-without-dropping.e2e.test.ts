@@ -4,13 +4,13 @@ import os from "node:os";
 import path from "node:path";
 import { describe, expect, it, mock, spyOn } from "bun:test";
 import "./test-helpers/fast-coding-tools.js";
-import { createMoltBotTools } from "./moltbot-tools.js";
-import { __testing, createMoltBotCodingTools } from "./pi-tools.js";
+import { createRazroomTools } from "./razroom-tools.js";
+import { __testing, createRazroomCodingTools } from "./pi-tools.js";
 import { createSandboxedReadTool } from "./pi-tools.read.js";
 import { createHostSandboxFsBridge } from "./test-helpers/host-sandbox-fs-bridge.js";
 import { createBrowserTool } from "./tools/browser-tool.js";
 
-const defaultTools = createMoltBotCodingTools();
+const defaultTools = createRazroomCodingTools();
 
 function findUnionKeywordOffenders(
   tools: Array<{ name: string; parameters: unknown }>,
@@ -57,7 +57,7 @@ function findUnionKeywordOffenders(
   return offenders;
 }
 
-describe("createMoltBotCodingTools", () => {
+describe("createRazroomCodingTools", () => {
   describe("Claude/Gemini alias support", () => {
     it("adds Claude-style aliases to schemas without dropping metadata", () => {
       const base: AgentTool = {
@@ -261,7 +261,7 @@ describe("createMoltBotCodingTools", () => {
     expect(findUnionKeywordOffenders(defaultTools)).toEqual([]);
   });
   it("keeps raw core tool schemas union-free", () => {
-    const tools = createMoltBotTools();
+    const tools = createRazroomTools();
     const coreTools = new Set([
       "browser",
       "canvas",
@@ -281,7 +281,7 @@ describe("createMoltBotCodingTools", () => {
     expect(findUnionKeywordOffenders(tools, { onlyNames: coreTools })).toEqual([]);
   });
   it("does not expose provider-specific message tools", () => {
-    const tools = createMoltBotCodingTools({ messageProvider: "discord" });
+    const tools = createRazroomCodingTools({ messageProvider: "discord" });
     const names = new Set(tools.map((tool) => tool.name));
     expect(names.has("discord")).toBe(false);
     expect(names.has("slack")).toBe(false);
@@ -289,7 +289,7 @@ describe("createMoltBotCodingTools", () => {
     expect(names.has("whatsapp")).toBe(false);
   });
   it("filters session tools for sub-agent sessions by default", () => {
-    const tools = createMoltBotCodingTools({
+    const tools = createRazroomCodingTools({
       sessionKey: "agent:main:subagent:test",
     });
     const names = new Set(tools.map((tool) => tool.name));
@@ -307,7 +307,7 @@ describe("createMoltBotCodingTools", () => {
   });
 
   it("uses stored spawnDepth to apply leaf tool policy for flat depth-2 session keys", async () => {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-depth-policy-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-depth-policy-"));
     const storeTemplate = path.join(tmpDir, "sessions-{agentId}.json");
     const storePath = storeTemplate.replaceAll("{agentId}", "main");
     await fs.writeFile(
@@ -326,7 +326,7 @@ describe("createMoltBotCodingTools", () => {
       "utf-8",
     );
 
-    const tools = createMoltBotCodingTools({
+    const tools = createRazroomCodingTools({
       sessionKey: "agent:main:subagent:flat",
       config: {
         session: {
@@ -348,7 +348,7 @@ describe("createMoltBotCodingTools", () => {
     expect(names.has("subagents")).toBe(true);
   });
   it("supports allow-only sub-agent tool policy", () => {
-    const tools = createMoltBotCodingTools({
+    const tools = createRazroomCodingTools({
       sessionKey: "agent:main:subagent:test",
       // Intentionally partial config; only fields used by pi-tools are provided.
       config: {
@@ -366,7 +366,7 @@ describe("createMoltBotCodingTools", () => {
   });
 
   it("applies tool profiles before allow/deny policies", () => {
-    const tools = createMoltBotCodingTools({
+    const tools = createRazroomCodingTools({
       config: { tools: { profile: "messaging" } },
     });
     const names = new Set(tools.map((tool) => tool.name));
@@ -377,7 +377,7 @@ describe("createMoltBotCodingTools", () => {
     expect(names.has("browser")).toBe(false);
   });
   it("expands group shorthands in global tool policy", () => {
-    const tools = createMoltBotCodingTools({
+    const tools = createRazroomCodingTools({
       config: { tools: { allow: ["group:fs"] } },
     });
     const names = new Set(tools.map((tool) => tool.name));
@@ -388,7 +388,7 @@ describe("createMoltBotCodingTools", () => {
     expect(names.has("browser")).toBe(false);
   });
   it("expands group shorthands in global tool deny policy", () => {
-    const tools = createMoltBotCodingTools({
+    const tools = createRazroomCodingTools({
       config: { tools: { deny: ["group:fs"] } },
     });
     const names = new Set(tools.map((tool) => tool.name));
@@ -398,7 +398,7 @@ describe("createMoltBotCodingTools", () => {
     expect(names.has("exec")).toBe(true);
   });
   it("lets agent profiles override global profiles", () => {
-    const tools = createMoltBotCodingTools({
+    const tools = createRazroomCodingTools({
       sessionKey: "agent:work:main",
       config: {
         tools: { profile: "coding" },
@@ -482,8 +482,8 @@ describe("createMoltBotCodingTools", () => {
     }
   });
   it("applies sandbox path guards to file_path alias", async () => {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-sbx-"));
-    const outsidePath = path.join(os.tmpdir(), "moltbot-outside.txt");
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-sbx-"));
+    const outsidePath = path.join(os.tmpdir(), "razroom-outside.txt");
     await fs.writeFile(outsidePath, "outside", "utf8");
     try {
       const readTool = createSandboxedReadTool({

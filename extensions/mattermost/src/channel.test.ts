@@ -1,5 +1,5 @@
-import type { MoltBotConfig } from "moltbot/plugin-sdk";
-import { createReplyPrefixOptions } from "moltbot/plugin-sdk";
+import type { RazroomConfig } from "razroom/plugin-sdk";
+import { createReplyPrefixOptions } from "razroom/plugin-sdk";
 import { describe, expect, it } from "bun:test";
 import { mattermostPlugin } from "./channel.js";
 
@@ -48,7 +48,7 @@ describe("mattermostPlugin", () => {
     });
 
     it("uses account responsePrefix overrides", () => {
-      const cfg: MoltBotConfig = {
+      const cfg: RazroomConfig = {
         channels: {
           mattermost: {
             responsePrefix: "[Channel]",

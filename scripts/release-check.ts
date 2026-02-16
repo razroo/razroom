@@ -14,7 +14,7 @@ const requiredPathGroups = [
   "dist/plugin-sdk/index.d.ts",
   "dist/build-info.json",
 ];
-const forbiddenPrefixes = ["dist/MoltBot.app/"];
+const forbiddenPrefixes = ["dist/Razroom.app/"];
 
 type PackageJson = {
   name?: string;

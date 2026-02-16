@@ -1,7 +1,7 @@
 ---
-summary: "Use Z.AI (GLM models) with MoltBot"
+summary: "Use Z.AI (GLM models) with Razroom"
 read_when:
-  - You want Z.AI / GLM models in MoltBot
+  - You want Z.AI / GLM models in Razroom
   - You need a simple ZAI_API_KEY setup
 title: "Z.AI"
 ---
@@ -9,15 +9,15 @@ title: "Z.AI"
 # Z.AI
 
 Z.AI is the API platform for **GLM** models. It provides REST APIs for GLM and uses API keys
-for authentication. Create your API key in the Z.AI console. MoltBot uses the `zai` provider
+for authentication. Create your API key in the Z.AI console. Razroom uses the `zai` provider
 with a Z.AI API key.
 
 ## CLI setup
 
 ```bash
-moltbot onboard --auth-choice zai-api-key
+razroom onboard --auth-choice zai-api-key
 # or non-interactive
-moltbot onboard --zai-api-key "$ZAI_API_KEY"
+razroom onboard --zai-api-key "$ZAI_API_KEY"
 ```
 
 ## Config snippet

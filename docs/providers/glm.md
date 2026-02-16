@@ -1,20 +1,20 @@
 ---
-summary: "GLM model family overview + how to use it in MoltBot"
+summary: "GLM model family overview + how to use it in Razroom"
 read_when:
-  - You want GLM models in MoltBot
+  - You want GLM models in Razroom
   - You need the model naming convention and setup
 title: "GLM Models"
 ---
 
 # GLM models
 
-GLM is a **model family** (not a company) available through the Z.AI platform. In MoltBot, GLM
+GLM is a **model family** (not a company) available through the Z.AI platform. In Razroom, GLM
 models are accessed via the `zai` provider and model IDs like `zai/glm-5`.
 
 ## CLI setup
 
 ```bash
-moltbot onboard --auth-choice zai-api-key
+razroom onboard --auth-choice zai-api-key
 ```
 
 ## Config snippet

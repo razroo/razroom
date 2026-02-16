@@ -16,8 +16,8 @@ function isBun(): boolean {
 
 function prefersSips(): boolean {
   return (
-    process.env.MOLTBOT_IMAGE_BACKEND === "sips" ||
-    (process.env.MOLTBOT_IMAGE_BACKEND !== "sharp" && isBun() && process.platform === "darwin")
+    process.env.RAZROOM_IMAGE_BACKEND === "sips" ||
+    (process.env.RAZROOM_IMAGE_BACKEND !== "sharp" && isBun() && process.platform === "darwin")
   );
 }
 
@@ -125,7 +125,7 @@ function readJpegExifOrientation(buffer: Buffer): number | null {
 }
 
 async function withTempDir<T>(fn: (dir: string) => Promise<T>): Promise<T> {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-img-"));
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-img-"));
   try {
     return await fn(dir);
   } finally {

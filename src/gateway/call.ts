@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import {
   loadConfig,
   resolveConfigPath,
@@ -24,7 +24,7 @@ export type CallGatewayOptions = {
   token?: string;
   password?: string;
   tlsFingerprint?: string;
-  config?: MoltBotConfig;
+  config?: RazroomConfig;
   method: string;
   params?: unknown;
   expectFinal?: boolean;
@@ -90,7 +90,7 @@ export function ensureExplicitGatewayAuth(params: {
 }
 
 export function buildGatewayConnectionDetails(
-  options: { config?: MoltBotConfig; url?: string; configPath?: string } = {},
+  options: { config?: RazroomConfig; url?: string; configPath?: string } = {},
 ): GatewayConnectionDetails {
   const config = options.config ?? loadConfig();
   const configPath =
@@ -212,8 +212,8 @@ export async function callGateway<T = Record<string, unknown>>(
         ? typeof remote?.token === "string" && remote.token.trim().length > 0
           ? remote.token.trim()
           : undefined
-        : process.env.MOLTBOT_GATEWAY_TOKEN?.trim() ||
-          process.env.MOLTBOT_GATEWAY_TOKEN?.trim() ||
+        : process.env.RAZROOM_GATEWAY_TOKEN?.trim() ||
+          process.env.RAZROOM_GATEWAY_TOKEN?.trim() ||
           (typeof authToken === "string" && authToken.trim().length > 0
             ? authToken.trim()
             : undefined)
@@ -221,8 +221,8 @@ export async function callGateway<T = Record<string, unknown>>(
   const password =
     explicitAuth.password ||
     (!urlOverride
-      ? process.env.MOLTBOT_GATEWAY_PASSWORD?.trim() ||
-        process.env.MOLTBOT_GATEWAY_PASSWORD?.trim() ||
+      ? process.env.RAZROOM_GATEWAY_PASSWORD?.trim() ||
+        process.env.RAZROOM_GATEWAY_PASSWORD?.trim() ||
         (isRemoteMode
           ? typeof remote?.password === "string" && remote.password.trim().length > 0
             ? remote.password.trim()

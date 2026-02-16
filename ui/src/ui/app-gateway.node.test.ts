@@ -71,7 +71,7 @@ function createHost() {
     agentsList: null,
     agentsError: null,
     debugHealth: null,
-    assistantName: "MoltBot",
+    assistantName: "Razroom",
     assistantAvatar: null,
     assistantAgentId: null,
     sessionKey: "main",

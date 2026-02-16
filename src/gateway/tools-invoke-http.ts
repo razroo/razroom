@@ -1,6 +1,6 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 import type { AuthRateLimiter } from "./auth-rate-limit.js";
-import { createMoltBotTools } from "../agents/moltbot-tools.js";
+import { createRazroomTools } from "../agents/razroom-tools.js";
 import {
   resolveEffectiveToolPolicy,
   resolveGroupToolPolicy,
@@ -201,9 +201,9 @@ export async function handleToolsInvokeHttpRequest(
 
   // Resolve message channel/account hints (optional headers) for policy inheritance.
   const messageChannel = normalizeMessageChannel(
-    getHeader(req, "x-moltbot-message-channel") ?? "",
+    getHeader(req, "x-razroom-message-channel") ?? "",
   );
-  const accountId = getHeader(req, "x-moltbot-account-id")?.trim() || undefined;
+  const accountId = getHeader(req, "x-razroom-account-id")?.trim() || undefined;
 
   const {
     agentId,
@@ -235,7 +235,7 @@ export async function handleToolsInvokeHttpRequest(
     : undefined;
 
   // Build tool list (core + plugin tools).
-  const allTools = createMoltBotTools({
+  const allTools = createRazroomTools({
     agentSessionKey: sessionKey,
     agentChannel: messageChannel ?? undefined,
     agentAccountId: accountId,

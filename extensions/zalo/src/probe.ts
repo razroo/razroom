@@ -1,4 +1,4 @@
-import type { BaseProbeResult } from "moltbot/plugin-sdk";
+import type { BaseProbeResult } from "razroom/plugin-sdk";
 import { getMe, ZaloApiError, type ZaloBotInfo, type ZaloFetch } from "./api.js";
 
 export type ZaloProbeResult = BaseProbeResult<string> & {

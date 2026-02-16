@@ -1,15 +1,15 @@
 ---
 name: boot-md
 description: "Run BOOT.md on gateway startup"
-homepage: https://docs.moltbot.ai/automation/hooks#boot-md
+homepage: https://docs.razroom.ai/automation/hooks#boot-md
 metadata:
   {
-    "moltbot":
+    "razroom":
       {
         "emoji": "🚀",
         "events": ["gateway:startup"],
         "requires": { "config": ["workspace.dir"] },
-        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with MoltBot" }],
+        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with Razroom" }],
       },
   }
 ---

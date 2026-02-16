@@ -30,11 +30,11 @@ mock("../web/session.js", () => ({
 
 import { getReplyFromConfig } from "./reply.js";
 
-const { withTempHome } = createTempHomeHarness({ prefix: "moltbot-rawbody-" });
+const { withTempHome } = createTempHomeHarness({ prefix: "razroom-rawbody-" });
 
 describe("RawBody directive parsing", () => {
   beforeEach(() => {
-    vi.stubEnv("MOLTBOT_TEST_FAST", "1");
+    vi.stubEnv("RAZROOM_TEST_FAST", "1");
     agentMocks.runEmbeddedPiAgent.mockReset();
     agentMocks.loadModelCatalog.mockReset();
     agentMocks.loadModelCatalog.mockResolvedValue([

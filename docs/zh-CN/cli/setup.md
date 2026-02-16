@@ -2,7 +2,7 @@
 read_when:
   - 你在不使用完整新手引导向导的情况下进行首次设置
   - 你想设置默认工作区路径
-summary: "`moltbot setup` 的 CLI 参考（初始化配置 + 工作区）"
+summary: "`razroom setup` 的 CLI 参考（初始化配置 + 工作区）"
 title: setup
 x-i18n:
   generated_at: "2026-02-01T20:21:26Z"
@@ -13,9 +13,9 @@ x-i18n:
   workflow: 14
 ---
 
-# `moltbot setup`
+# `razroom setup`
 
-初始化 `~/.moltbot/moltbot.json` 和智能体工作区。
+初始化 `~/.razroom/razroom.json` 和智能体工作区。
 
 相关内容：
 
@@ -25,12 +25,12 @@ x-i18n:
 ## 示例
 
 ```bash
-moltbot setup
-moltbot setup --workspace ~/.moltbot/workspace
+razroom setup
+razroom setup --workspace ~/.razroom/workspace
 ```
 
 通过 setup 运行向导：
 
 ```bash
-moltbot setup --wizard
+razroom setup --wizard
 ```

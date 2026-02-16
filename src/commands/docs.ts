@@ -5,7 +5,7 @@ import { runCommandWithTimeout } from "../process/exec.js";
 import { formatDocsLink } from "../terminal/links.js";
 import { isRich, theme } from "../terminal/theme.js";
 
-const SEARCH_TOOL = "https://docs.moltbot.ai/mcp.SearchMoltBot";
+const SEARCH_TOOL = "https://docs.razroom.ai/mcp.SearchRazroom";
 const SEARCH_TIMEOUT_MS = 30_000;
 const DEFAULT_SNIPPET_MAX = 220;
 
@@ -160,13 +160,13 @@ async function renderMarkdown(markdown: string, runtime: RuntimeEnv) {
 export async function docsSearchCommand(queryParts: string[], runtime: RuntimeEnv) {
   const query = queryParts.join(" ").trim();
   if (!query) {
-    const docs = formatDocsLink("/", "docs.moltbot.ai");
+    const docs = formatDocsLink("/", "docs.razroom.ai");
     if (isRich()) {
       runtime.log(`${theme.muted("Docs:")} ${docs}`);
-      runtime.log(`${theme.muted("Search:")} ${formatCliCommand('moltbot docs "your query"')}`);
+      runtime.log(`${theme.muted("Search:")} ${formatCliCommand('razroom docs "your query"')}`);
     } else {
-      runtime.log("Docs: https://docs.moltbot.ai/");
-      runtime.log(`Search: ${formatCliCommand('moltbot docs "your query"')}`);
+      runtime.log("Docs: https://docs.razroom.ai/");
+      runtime.log(`Search: ${formatCliCommand('razroom docs "your query"')}`);
     }
     return;
   }

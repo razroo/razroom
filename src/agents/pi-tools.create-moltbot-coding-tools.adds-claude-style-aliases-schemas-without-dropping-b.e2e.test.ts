@@ -1,11 +1,11 @@
 import { describe, expect, it } from "bun:test";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import "./test-helpers/fast-coding-tools.js";
-import { createMoltBotCodingTools } from "./pi-tools.js";
+import { createRazroomCodingTools } from "./pi-tools.js";
 
-const defaultTools = createMoltBotCodingTools();
+const defaultTools = createRazroomCodingTools();
 
-describe("createMoltBotCodingTools", () => {
+describe("createRazroomCodingTools", () => {
   it("preserves action enums in normalized schemas", () => {
     const toolNames = ["browser", "canvas", "nodes", "cron", "gateway", "message"];
 
@@ -57,21 +57,21 @@ describe("createMoltBotCodingTools", () => {
     expect(defaultTools.some((tool) => tool.name === "apply_patch")).toBe(false);
   });
   it("gates apply_patch behind tools.exec.applyPatch for OpenAI models", () => {
-    const config: MoltBotConfig = {
+    const config: RazroomConfig = {
       tools: {
         exec: {
           applyPatch: { enabled: true },
         },
       },
     };
-    const openAiTools = createMoltBotCodingTools({
+    const openAiTools = createRazroomCodingTools({
       config,
       modelProvider: "openai",
       modelId: "gpt-5.2",
     });
     expect(openAiTools.some((tool) => tool.name === "apply_patch")).toBe(true);
 
-    const anthropicTools = createMoltBotCodingTools({
+    const anthropicTools = createRazroomCodingTools({
       config,
       modelProvider: "anthropic",
       modelId: "claude-opus-4-5",
@@ -79,21 +79,21 @@ describe("createMoltBotCodingTools", () => {
     expect(anthropicTools.some((tool) => tool.name === "apply_patch")).toBe(false);
   });
   it("respects apply_patch allowModels", () => {
-    const config: MoltBotConfig = {
+    const config: RazroomConfig = {
       tools: {
         exec: {
           applyPatch: { enabled: true, allowModels: ["gpt-5.2"] },
         },
       },
     };
-    const allowed = createMoltBotCodingTools({
+    const allowed = createRazroomCodingTools({
       config,
       modelProvider: "openai",
       modelId: "gpt-5.2",
     });
     expect(allowed.some((tool) => tool.name === "apply_patch")).toBe(true);
 
-    const denied = createMoltBotCodingTools({
+    const denied = createRazroomCodingTools({
       config,
       modelProvider: "openai",
       modelId: "gpt-5-mini",
@@ -101,7 +101,7 @@ describe("createMoltBotCodingTools", () => {
     expect(denied.some((tool) => tool.name === "apply_patch")).toBe(false);
   });
   it("keeps canonical tool names for Anthropic OAuth (pi-ai remaps on the wire)", () => {
-    const tools = createMoltBotCodingTools({
+    const tools = createRazroomCodingTools({
       modelProvider: "anthropic",
       modelAuthMode: "oauth",
     });
@@ -113,7 +113,7 @@ describe("createMoltBotCodingTools", () => {
     expect(names.has("apply_patch")).toBe(false);
   });
   it("provides top-level object schemas for all tools", () => {
-    const tools = createMoltBotCodingTools();
+    const tools = createRazroomCodingTools();
     const offenders = tools
       .map((tool) => {
         const schema =

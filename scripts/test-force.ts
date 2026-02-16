@@ -27,13 +27,13 @@ function killGatewayListeners(port: number): PortProcess[] {
 
 function runTests() {
   const isolatedLock =
-    process.env.MOLTBOT_GATEWAY_LOCK ??
-    path.join(os.tmpdir(), `moltbot-gateway.lock.test.${Date.now()}`);
+    process.env.RAZROOM_GATEWAY_LOCK ??
+    path.join(os.tmpdir(), `razroom-gateway.lock.test.${Date.now()}`);
   const result = spawnSync("pnpm", ["vitest", "run"], {
     stdio: "inherit",
     env: {
       ...process.env,
-      MOLTBOT_GATEWAY_LOCK: isolatedLock,
+      RAZROOM_GATEWAY_LOCK: isolatedLock,
     },
   });
   if (result.error) {
@@ -44,7 +44,7 @@ function runTests() {
 }
 
 function main() {
-  const port = Number.parseInt(process.env.MOLTBOT_GATEWAY_PORT ?? `${DEFAULT_PORT}`, 10);
+  const port = Number.parseInt(process.env.RAZROOM_GATEWAY_PORT ?? `${DEFAULT_PORT}`, 10);
 
   console.log(`🧹 test:force - clearing gateway on port ${port}`);
   const killed = killGatewayListeners(port);

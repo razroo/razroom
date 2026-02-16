@@ -20,52 +20,52 @@ describe("systemd runtime parsing", () => {
 });
 
 describe("resolveSystemdUserUnitPath", () => {
-  it("uses default service name when MOLTBOT_PROFILE is default", () => {
-    const env = { HOME: "/home/test", MOLTBOT_PROFILE: "default" };
+  it("uses default service name when RAZROOM_PROFILE is default", () => {
+    const env = { HOME: "/home/test", RAZROOM_PROFILE: "default" };
     expect(resolveSystemdUserUnitPath(env)).toBe(
-      "/home/test/.config/systemd/user/moltbot-gateway.service",
+      "/home/test/.config/systemd/user/razroom-gateway.service",
     );
   });
 
-  it("uses default service name when MOLTBOT_PROFILE is unset", () => {
+  it("uses default service name when RAZROOM_PROFILE is unset", () => {
     const env = { HOME: "/home/test" };
     expect(resolveSystemdUserUnitPath(env)).toBe(
-      "/home/test/.config/systemd/user/moltbot-gateway.service",
+      "/home/test/.config/systemd/user/razroom-gateway.service",
     );
   });
 
-  it("uses profile-specific service name when MOLTBOT_PROFILE is set to a custom value", () => {
-    const env = { HOME: "/home/test", MOLTBOT_PROFILE: "jbphoenix" };
+  it("uses profile-specific service name when RAZROOM_PROFILE is set to a custom value", () => {
+    const env = { HOME: "/home/test", RAZROOM_PROFILE: "jbphoenix" };
     expect(resolveSystemdUserUnitPath(env)).toBe(
-      "/home/test/.config/systemd/user/moltbot-gateway-jbphoenix.service",
+      "/home/test/.config/systemd/user/razroom-gateway-jbphoenix.service",
     );
   });
 
-  it("prefers MOLTBOT_SYSTEMD_UNIT over MOLTBOT_PROFILE", () => {
+  it("prefers RAZROOM_SYSTEMD_UNIT over RAZROOM_PROFILE", () => {
     const env = {
       HOME: "/home/test",
-      MOLTBOT_PROFILE: "jbphoenix",
-      MOLTBOT_SYSTEMD_UNIT: "custom-unit",
+      RAZROOM_PROFILE: "jbphoenix",
+      RAZROOM_SYSTEMD_UNIT: "custom-unit",
     };
     expect(resolveSystemdUserUnitPath(env)).toBe(
       "/home/test/.config/systemd/user/custom-unit.service",
     );
   });
 
-  it("handles MOLTBOT_SYSTEMD_UNIT with .service suffix", () => {
+  it("handles RAZROOM_SYSTEMD_UNIT with .service suffix", () => {
     const env = {
       HOME: "/home/test",
-      MOLTBOT_SYSTEMD_UNIT: "custom-unit.service",
+      RAZROOM_SYSTEMD_UNIT: "custom-unit.service",
     };
     expect(resolveSystemdUserUnitPath(env)).toBe(
       "/home/test/.config/systemd/user/custom-unit.service",
     );
   });
 
-  it("trims whitespace from MOLTBOT_SYSTEMD_UNIT", () => {
+  it("trims whitespace from RAZROOM_SYSTEMD_UNIT", () => {
     const env = {
       HOME: "/home/test",
-      MOLTBOT_SYSTEMD_UNIT: "  custom-unit  ",
+      RAZROOM_SYSTEMD_UNIT: "  custom-unit  ",
     };
     expect(resolveSystemdUserUnitPath(env)).toBe(
       "/home/test/.config/systemd/user/custom-unit.service",
@@ -73,23 +73,23 @@ describe("resolveSystemdUserUnitPath", () => {
   });
 
   it("handles case-insensitive 'Default' profile", () => {
-    const env = { HOME: "/home/test", MOLTBOT_PROFILE: "Default" };
+    const env = { HOME: "/home/test", RAZROOM_PROFILE: "Default" };
     expect(resolveSystemdUserUnitPath(env)).toBe(
-      "/home/test/.config/systemd/user/moltbot-gateway.service",
+      "/home/test/.config/systemd/user/razroom-gateway.service",
     );
   });
 
   it("handles case-insensitive 'DEFAULT' profile", () => {
-    const env = { HOME: "/home/test", MOLTBOT_PROFILE: "DEFAULT" };
+    const env = { HOME: "/home/test", RAZROOM_PROFILE: "DEFAULT" };
     expect(resolveSystemdUserUnitPath(env)).toBe(
-      "/home/test/.config/systemd/user/moltbot-gateway.service",
+      "/home/test/.config/systemd/user/razroom-gateway.service",
     );
   });
 
-  it("trims whitespace from MOLTBOT_PROFILE", () => {
-    const env = { HOME: "/home/test", MOLTBOT_PROFILE: "  myprofile  " };
+  it("trims whitespace from RAZROOM_PROFILE", () => {
+    const env = { HOME: "/home/test", RAZROOM_PROFILE: "  myprofile  " };
     expect(resolveSystemdUserUnitPath(env)).toBe(
-      "/home/test/.config/systemd/user/moltbot-gateway-myprofile.service",
+      "/home/test/.config/systemd/user/razroom-gateway-myprofile.service",
     );
   });
 });

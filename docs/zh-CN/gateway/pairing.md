@@ -39,11 +39,11 @@ x-i18n:
 ## CLI 工作流程（支持无头模式）
 
 ```bash
-moltbot nodes pending
-moltbot nodes approve <requestId>
-moltbot nodes reject <requestId>
-moltbot nodes status
-moltbot nodes rename --node <id|name|ip> --name "Living Room iPad"
+razroom nodes pending
+razroom nodes approve <requestId>
+razroom nodes reject <requestId>
+razroom nodes status
+razroom nodes rename --node <id|name|ip> --name "Living Room iPad"
 ```
 
 `nodes status` 显示已配对/已连接的节点及其功能。
@@ -80,12 +80,12 @@ moltbot nodes rename --node <id|name|ip> --name "Living Room iPad"
 
 ## 存储（本地，私有）
 
-配对状态存储在 Gateway 网关状态目录下（默认 `~/.moltbot`）：
+配对状态存储在 Gateway 网关状态目录下（默认 `~/.razroom`）：
 
-- `~/.moltbot/nodes/paired.json`
-- `~/.moltbot/nodes/pending.json`
+- `~/.razroom/nodes/paired.json`
+- `~/.razroom/nodes/pending.json`
 
-如果你覆盖了 `MOLTBOT_STATE_DIR`，`nodes/` 文件夹会随之移动。
+如果你覆盖了 `RAZROOM_STATE_DIR`，`nodes/` 文件夹会随之移动。
 
 安全注意事项：
 

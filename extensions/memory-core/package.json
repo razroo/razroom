@@ -1,16 +1,16 @@
 {
-  "name": "@moltbot/memory-core",
+  "name": "@razroom/memory-core",
   "version": "2026.2.15",
   "private": true,
-  "description": "MoltBot core memory search plugin",
+  "description": "Razroom core memory search plugin",
   "type": "module",
   "devDependencies": {
-    "moltbot": "workspace:*"
+    "razroom": "workspace:*"
   },
   "peerDependencies": {
-    "moltbot": ">=2026.1.26"
+    "razroom": ">=2026.1.26"
   },
-  "moltbot": {
+  "razroom": {
     "extensions": [
       "./index.ts"
     ]

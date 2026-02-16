@@ -4,7 +4,7 @@
  * These functions analyze config-based security properties without I/O.
  */
 import type { SandboxToolPolicy } from "../agents/sandbox/types.js";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { AgentToolsConfig } from "../config/types.tools.js";
 import { isToolAllowedByPolicies } from "../agents/pi-tools.policy.js";
 import {
@@ -33,7 +33,7 @@ const SMALL_MODEL_PARAM_B_MAX = 300;
 // Helpers
 // --------------------------------------------------------------------------
 
-function summarizeGroupPolicy(cfg: MoltBotConfig): {
+function summarizeGroupPolicy(cfg: RazroomConfig): {
   open: number;
   allowlist: number;
   other: number;
@@ -78,7 +78,7 @@ function looksLikeEnvRef(value: string): boolean {
   return v.startsWith("${") && v.endsWith("}");
 }
 
-function isGatewayRemotelyExposed(cfg: MoltBotConfig): boolean {
+function isGatewayRemotelyExposed(cfg: RazroomConfig): boolean {
   const bind = typeof cfg.gateway?.bind === "string" ? cfg.gateway.bind : "loopback";
   if (bind !== "loopback") {
     return true;
@@ -100,7 +100,7 @@ function addModel(models: ModelRef[], raw: unknown, source: string) {
   models.push({ id, source });
 }
 
-function collectModels(cfg: MoltBotConfig): ModelRef[] {
+function collectModels(cfg: RazroomConfig): ModelRef[] {
   const out: ModelRef[] = [];
   addModel(out, cfg.agents?.defaults?.model?.primary, "agents.defaults.model.primary");
   for (const f of cfg.agents?.defaults?.model?.fallbacks ?? []) {
@@ -181,8 +181,8 @@ function normalizeNodeCommand(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
 }
 
-function listKnownNodeCommands(cfg: MoltBotConfig): Set<string> {
-  const baseCfg: MoltBotConfig = {
+function listKnownNodeCommands(cfg: RazroomConfig): Set<string> {
+  const baseCfg: RazroomConfig = {
     ...cfg,
     gateway: {
       ...cfg.gateway,
@@ -224,7 +224,7 @@ function looksLikeNodeCommandPattern(value: string): boolean {
 }
 
 function resolveToolPolicies(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   agentTools?: AgentToolsConfig;
   sandboxMode?: "off" | "non-main" | "all";
   agentId?: string | null;
@@ -254,7 +254,7 @@ function resolveToolPolicies(params: {
   return policies;
 }
 
-function hasWebSearchKey(cfg: MoltBotConfig, env: NodeJS.ProcessEnv): boolean {
+function hasWebSearchKey(cfg: RazroomConfig, env: NodeJS.ProcessEnv): boolean {
   const search = cfg.tools?.web?.search;
   return Boolean(
     search?.apiKey ||
@@ -265,7 +265,7 @@ function hasWebSearchKey(cfg: MoltBotConfig, env: NodeJS.ProcessEnv): boolean {
   );
 }
 
-function isWebSearchEnabled(cfg: MoltBotConfig, env: NodeJS.ProcessEnv): boolean {
+function isWebSearchEnabled(cfg: RazroomConfig, env: NodeJS.ProcessEnv): boolean {
   const enabled = cfg.tools?.web?.search?.enabled;
   if (enabled === false) {
     return false;
@@ -276,7 +276,7 @@ function isWebSearchEnabled(cfg: MoltBotConfig, env: NodeJS.ProcessEnv): boolean
   return hasWebSearchKey(cfg, env);
 }
 
-function isWebFetchEnabled(cfg: MoltBotConfig): boolean {
+function isWebFetchEnabled(cfg: RazroomConfig): boolean {
   const enabled = cfg.tools?.web?.fetch?.enabled;
   if (enabled === false) {
     return false;
@@ -284,7 +284,7 @@ function isWebFetchEnabled(cfg: MoltBotConfig): boolean {
   return true;
 }
 
-function isBrowserEnabled(cfg: MoltBotConfig): boolean {
+function isBrowserEnabled(cfg: RazroomConfig): boolean {
   try {
     return resolveBrowserConfig(cfg.browser, cfg).enabled;
   } catch {
@@ -292,7 +292,7 @@ function isBrowserEnabled(cfg: MoltBotConfig): boolean {
   }
 }
 
-function listGroupPolicyOpen(cfg: MoltBotConfig): string[] {
+function listGroupPolicyOpen(cfg: RazroomConfig): string[] {
   const out: string[] = [];
   const channels = cfg.channels as Record<string, unknown> | undefined;
   if (!channels || typeof channels !== "object") {
@@ -326,7 +326,7 @@ function listGroupPolicyOpen(cfg: MoltBotConfig): string[] {
 // Exported collectors
 // --------------------------------------------------------------------------
 
-export function collectAttackSurfaceSummaryFindings(cfg: MoltBotConfig): SecurityAuditFinding[] {
+export function collectAttackSurfaceSummaryFindings(cfg: RazroomConfig): SecurityAuditFinding[] {
   const group = summarizeGroupPolicy(cfg);
   const elevated = cfg.tools?.elevated?.enabled !== false;
   const webhooksEnabled = cfg.hooks?.enabled === true;
@@ -365,13 +365,13 @@ export function collectSyncedFolderFindings(params: {
       severity: "warn",
       title: "State/config path looks like a synced folder",
       detail: `stateDir=${params.stateDir}, configPath=${params.configPath}. Synced folders (iCloud/Dropbox/OneDrive/Google Drive) can leak tokens and transcripts onto other devices.`,
-      remediation: `Keep MOLTBOT_STATE_DIR on a local-only volume and re-run "${formatCliCommand("moltbot security audit --fix")}".`,
+      remediation: `Keep RAZROOM_STATE_DIR on a local-only volume and re-run "${formatCliCommand("razroom security audit --fix")}".`,
     });
   }
   return findings;
 }
 
-export function collectSecretsInConfigFindings(cfg: MoltBotConfig): SecurityAuditFinding[] {
+export function collectSecretsInConfigFindings(cfg: RazroomConfig): SecurityAuditFinding[] {
   const findings: SecurityAuditFinding[] = [];
   const password =
     typeof cfg.gateway?.auth?.password === "string" ? cfg.gateway.auth.password.trim() : "";
@@ -383,7 +383,7 @@ export function collectSecretsInConfigFindings(cfg: MoltBotConfig): SecurityAudi
       detail:
         "gateway.auth.password is set in the config file; prefer environment variables for secrets when possible.",
       remediation:
-        "Prefer MOLTBOT_GATEWAY_PASSWORD (env) and remove gateway.auth.password from disk.",
+        "Prefer RAZROOM_GATEWAY_PASSWORD (env) and remove gateway.auth.password from disk.",
     });
   }
 
@@ -402,7 +402,7 @@ export function collectSecretsInConfigFindings(cfg: MoltBotConfig): SecurityAudi
 }
 
 export function collectHooksHardeningFindings(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   env: NodeJS.ProcessEnv = process.env,
 ): SecurityAuditFinding[] {
   const findings: SecurityAuditFinding[] = [];
@@ -425,17 +425,17 @@ export function collectHooksHardeningFindings(
     tailscaleMode: cfg.gateway?.tailscale?.mode ?? "off",
     env,
   });
-  const moltbotGatewayToken =
-    typeof env.MOLTBOT_GATEWAY_TOKEN === "string" && env.MOLTBOT_GATEWAY_TOKEN.trim()
-      ? env.MOLTBOT_GATEWAY_TOKEN.trim()
+  const razroomGatewayToken =
+    typeof env.RAZROOM_GATEWAY_TOKEN === "string" && env.RAZROOM_GATEWAY_TOKEN.trim()
+      ? env.RAZROOM_GATEWAY_TOKEN.trim()
       : null;
   const gatewayToken =
     gatewayAuth.mode === "token" &&
     typeof gatewayAuth.token === "string" &&
     gatewayAuth.token.trim()
       ? gatewayAuth.token.trim()
-      : moltbotGatewayToken
-        ? moltbotGatewayToken
+      : razroomGatewayToken
+        ? razroomGatewayToken
         : null;
   if (token && gatewayToken && token === gatewayToken) {
     findings.push({
@@ -508,7 +508,7 @@ export function collectHooksHardeningFindings(
 }
 
 export function collectGatewayHttpSessionKeyOverrideFindings(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
 ): SecurityAuditFinding[] {
   const findings: SecurityAuditFinding[] = [];
   const chatCompletionsEnabled = cfg.gateway?.http?.endpoints?.chatCompletions?.enabled === true;
@@ -527,14 +527,14 @@ export function collectGatewayHttpSessionKeyOverrideFindings(
     severity: "info",
     title: "HTTP API session-key override is enabled",
     detail:
-      `${enabledEndpoints.join(", ")} accept x-moltbot-session-key for per-request session routing. ` +
+      `${enabledEndpoints.join(", ")} accept x-razroom-session-key for per-request session routing. ` +
       "Treat API credential holders as trusted principals.",
   });
 
   return findings;
 }
 
-export function collectSandboxDockerNoopFindings(cfg: MoltBotConfig): SecurityAuditFinding[] {
+export function collectSandboxDockerNoopFindings(cfg: RazroomConfig): SecurityAuditFinding[] {
   const findings: SecurityAuditFinding[] = [];
   const configuredPaths: string[] = [];
   const agents = Array.isArray(cfg.agents?.list) ? cfg.agents.list : [];
@@ -584,7 +584,7 @@ export function collectSandboxDockerNoopFindings(cfg: MoltBotConfig): SecurityAu
   return findings;
 }
 
-export function collectNodeDenyCommandPatternFindings(cfg: MoltBotConfig): SecurityAuditFinding[] {
+export function collectNodeDenyCommandPatternFindings(cfg: RazroomConfig): SecurityAuditFinding[] {
   const findings: SecurityAuditFinding[] = [];
   const denyListRaw = cfg.gateway?.nodes?.denyCommands;
   if (!Array.isArray(denyListRaw) || denyListRaw.length === 0) {
@@ -633,7 +633,7 @@ export function collectNodeDenyCommandPatternFindings(cfg: MoltBotConfig): Secur
   return findings;
 }
 
-export function collectMinimalProfileOverrideFindings(cfg: MoltBotConfig): SecurityAuditFinding[] {
+export function collectMinimalProfileOverrideFindings(cfg: RazroomConfig): SecurityAuditFinding[] {
   const findings: SecurityAuditFinding[] = [];
   if (cfg.tools?.profile !== "minimal") {
     return findings;
@@ -669,7 +669,7 @@ export function collectMinimalProfileOverrideFindings(cfg: MoltBotConfig): Secur
   return findings;
 }
 
-export function collectModelHygieneFindings(cfg: MoltBotConfig): SecurityAuditFinding[] {
+export function collectModelHygieneFindings(cfg: RazroomConfig): SecurityAuditFinding[] {
   const findings: SecurityAuditFinding[] = [];
   const models = collectModels(cfg);
   if (models.length === 0) {
@@ -755,7 +755,7 @@ export function collectModelHygieneFindings(cfg: MoltBotConfig): SecurityAuditFi
 }
 
 export function collectSmallModelRiskFindings(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   env: NodeJS.ProcessEnv;
 }): SecurityAuditFinding[] {
   const findings: SecurityAuditFinding[] = [];
@@ -849,7 +849,7 @@ export function collectSmallModelRiskFindings(params: {
   return findings;
 }
 
-export function collectExposureMatrixFindings(cfg: MoltBotConfig): SecurityAuditFinding[] {
+export function collectExposureMatrixFindings(cfg: RazroomConfig): SecurityAuditFinding[] {
   const findings: SecurityAuditFinding[] = [];
   const openGroups = listGroupPolicyOpen(cfg);
   if (openGroups.length === 0) {

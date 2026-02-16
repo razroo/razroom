@@ -1,6 +1,6 @@
 import { loadConfig } from "../../src/config/config.js";
 import { matchPluginCommand, executePluginCommand } from "../../src/plugins/commands.js";
-import { loadMoltBotPlugins } from "../../src/plugins/loader.js";
+import { loadRazroomPlugins } from "../../src/plugins/loader.js";
 import { sendMessageTelegram } from "../../src/telegram/send.js";
 
 const args = process.argv.slice(2);
@@ -29,7 +29,7 @@ if (!chatId) {
 }
 
 const cfg = loadConfig();
-loadMoltBotPlugins({ config: cfg });
+loadRazroomPlugins({ config: cfg });
 
 const match = matchPluginCommand("/pair");
 if (!match) {

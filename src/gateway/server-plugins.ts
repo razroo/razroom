@@ -1,6 +1,6 @@
 import type { loadConfig } from "../config/config.js";
 import type { GatewayRequestHandler } from "./server-methods/types.js";
-import { loadMoltBotPlugins } from "../plugins/loader.js";
+import { loadRazroomPlugins } from "../plugins/loader.js";
 
 export function loadGatewayPlugins(params: {
   cfg: ReturnType<typeof loadConfig>;
@@ -14,7 +14,7 @@ export function loadGatewayPlugins(params: {
   coreGatewayHandlers: Record<string, GatewayRequestHandler>;
   baseMethods: string[];
 }) {
-  const pluginRegistry = loadMoltBotPlugins({
+  const pluginRegistry = loadRazroomPlugins({
     config: params.cfg,
     workspaceDir: params.workspaceDir,
     logger: {

@@ -1,5 +1,5 @@
-import type { ChannelPlugin, MoltBotPluginApi } from "moltbot/plugin-sdk";
-import { emptyPluginConfigSchema } from "moltbot/plugin-sdk";
+import type { ChannelPlugin, RazroomPluginApi } from "razroom/plugin-sdk";
+import { emptyPluginConfigSchema } from "razroom/plugin-sdk";
 import { ircPlugin } from "./src/channel.js";
 import { setIrcRuntime } from "./src/runtime.js";
 
@@ -8,7 +8,7 @@ const plugin = {
   name: "IRC",
   description: "IRC channel plugin",
   configSchema: emptyPluginConfigSchema(),
-  register(api: MoltBotPluginApi) {
+  register(api: RazroomPluginApi) {
     setIrcRuntime(api.runtime);
     api.registerChannel({ plugin: ircPlugin as ChannelPlugin });
   },

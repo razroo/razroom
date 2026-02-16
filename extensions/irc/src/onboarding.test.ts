@@ -1,4 +1,4 @@
-import type { RuntimeEnv, WizardPrompter } from "moltbot/plugin-sdk";
+import type { RuntimeEnv, WizardPrompter } from "razroom/plugin-sdk";
 import { describe, expect, it, mock, spyOn } from "bun:test";
 import type { CoreConfig } from "./types.js";
 import { ircOnboardingAdapter } from "./onboarding.js";
@@ -19,19 +19,19 @@ describe("irc onboarding", () => {
           return "6697";
         }
         if (message === "IRC nick") {
-          return "moltbot-bot";
+          return "razroom-bot";
         }
         if (message === "IRC username") {
-          return "moltbot";
+          return "razroom";
         }
         if (message === "IRC real name") {
-          return "MoltBot Bot";
+          return "Razroom Bot";
         }
         if (message.startsWith("Auto-join IRC channels")) {
-          return "#moltbot, #ops";
+          return "#razroom, #ops";
         }
         if (message.startsWith("IRC channels allowlist")) {
-          return "#moltbot, #ops";
+          return "#razroom, #ops";
         }
         throw new Error(`Unexpected prompt: ${message}`);
       }) as WizardPrompter["text"],
@@ -66,11 +66,11 @@ describe("irc onboarding", () => {
     expect(result.accountId).toBe("default");
     expect(result.cfg.channels?.irc?.enabled).toBe(true);
     expect(result.cfg.channels?.irc?.host).toBe("irc.libera.chat");
-    expect(result.cfg.channels?.irc?.nick).toBe("moltbot-bot");
+    expect(result.cfg.channels?.irc?.nick).toBe("razroom-bot");
     expect(result.cfg.channels?.irc?.tls).toBe(true);
-    expect(result.cfg.channels?.irc?.channels).toEqual(["#moltbot", "#ops"]);
+    expect(result.cfg.channels?.irc?.channels).toEqual(["#razroom", "#ops"]);
     expect(result.cfg.channels?.irc?.groupPolicy).toBe("allowlist");
-    expect(Object.keys(result.cfg.channels?.irc?.groups ?? {})).toEqual(["#moltbot", "#ops"]);
+    expect(Object.keys(result.cfg.channels?.irc?.groups ?? {})).toEqual(["#razroom", "#ops"]);
   });
 
   it("writes DM allowFrom to top-level config for non-default account prompts", async () => {
@@ -99,7 +99,7 @@ describe("irc onboarding", () => {
           accounts: {
             work: {
               host: "irc.libera.chat",
-              nick: "moltbot-work",
+              nick: "razroom-work",
             },
           },
         },

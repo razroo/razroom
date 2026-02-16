@@ -88,7 +88,7 @@ export function loadShellEnvFallback(opts: ShellEnvFallbackOptions): ShellEnvFal
     stdout = execLoginShellEnvZero({ shell, env: opts.env, exec, timeoutMs });
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
-    logger.warn(`[moltbot] shell env fallback failed: ${msg}`);
+    logger.warn(`[razroom] shell env fallback failed: ${msg}`);
     lastAppliedKeys = [];
     return { ok: false, error: msg, applied: [] };
   }
@@ -113,15 +113,15 @@ export function loadShellEnvFallback(opts: ShellEnvFallbackOptions): ShellEnvFal
 }
 
 export function shouldEnableShellEnvFallback(env: NodeJS.ProcessEnv): boolean {
-  return isTruthyEnvValue(env.MOLTBOT_LOAD_SHELL_ENV);
+  return isTruthyEnvValue(env.RAZROOM_LOAD_SHELL_ENV);
 }
 
 export function shouldDeferShellEnvFallback(env: NodeJS.ProcessEnv): boolean {
-  return isTruthyEnvValue(env.MOLTBOT_DEFER_SHELL_ENV_FALLBACK);
+  return isTruthyEnvValue(env.RAZROOM_DEFER_SHELL_ENV_FALLBACK);
 }
 
 export function resolveShellEnvFallbackTimeoutMs(env: NodeJS.ProcessEnv): number {
-  const raw = env.MOLTBOT_SHELL_ENV_TIMEOUT_MS?.trim();
+  const raw = env.RAZROOM_SHELL_ENV_TIMEOUT_MS?.trim();
   if (!raw) {
     return DEFAULT_TIMEOUT_MS;
   }

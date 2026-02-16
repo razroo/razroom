@@ -1,4 +1,4 @@
-import type { ChannelDirectoryEntry } from "moltbot/plugin-sdk";
+import type { ChannelDirectoryEntry } from "razroom/plugin-sdk";
 import {
   escapeOData,
   fetchGraphJson,

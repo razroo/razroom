@@ -17,7 +17,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { promisify } from "node:util";
 import type { RetryRunner } from "../infra/retry-policy.js";
-import { resolvePreferredMoltBotTmpDir } from "../infra/tmp-moltbot-dir.js";
+import { resolvePreferredRazroomTmpDir } from "../infra/tmp-razroom-dir.js";
 
 const execFileAsync = promisify(execFile);
 
@@ -73,7 +73,7 @@ export async function generateWaveform(filePath: string): Promise<string> {
  * Generate waveform by extracting raw PCM data and sampling amplitudes
  */
 async function generateWaveformFromPcm(filePath: string): Promise<string> {
-  const tempDir = resolvePreferredMoltBotTmpDir();
+  const tempDir = resolvePreferredRazroomTmpDir();
   const tempPcm = path.join(tempDir, `waveform-${crypto.randomUUID()}.raw`);
 
   try {
@@ -182,7 +182,7 @@ export async function ensureOggOpus(filePath: string): Promise<{ path: string; c
   }
 
   // Convert to OGG/Opus
-  const tempDir = resolvePreferredMoltBotTmpDir();
+  const tempDir = resolvePreferredRazroomTmpDir();
   const outputPath = path.join(tempDir, `voice-${crypto.randomUUID()}.ogg`);
 
   await execFileAsync("ffmpeg", [

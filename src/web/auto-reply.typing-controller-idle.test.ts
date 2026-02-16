@@ -1,6 +1,6 @@
 import "./test-helpers.js";
 import { describe, expect, it, mock, spyOn } from "bun:test";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import { monitorWebChannel } from "./auto-reply.js";
 import {
   installWebAutoReplyTestHomeHooks,
@@ -35,7 +35,7 @@ describe("typing controller idle", () => {
       return { text: "final reply" };
     });
 
-    const mockConfig: MoltBotConfig = {
+    const mockConfig: RazroomConfig = {
       channels: { whatsapp: { allowFrom: ["*"] } },
     };
 

@@ -1,5 +1,5 @@
 import type { MsgContext } from "../auto-reply/templating.js";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { MediaUnderstandingProvider } from "./types.js";
 import { logVerbose, shouldLogVerbose } from "../globals.js";
 import { isAudioAttachment } from "./attachments.js";
@@ -18,7 +18,7 @@ import {
  */
 export async function transcribeFirstAudio(params: {
   ctx: MsgContext;
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   agentDir?: string;
   providers?: Record<string, MediaUnderstandingProvider>;
   activeModel?: ActiveMediaModel;

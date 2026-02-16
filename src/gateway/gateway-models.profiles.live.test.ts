@@ -5,8 +5,8 @@ import { createServer } from "node:net";
 import os from "node:os";
 import path from "node:path";
 import { describe, it } from "bun:test";
-import type { MoltBotConfig, ModelProviderConfig } from "../config/types.js";
-import { resolveMoltBotAgentDir } from "../agents/agent-paths.js";
+import type { RazroomConfig, ModelProviderConfig } from "../config/types.js";
+import { resolveRazroomAgentDir } from "../agents/agent-paths.js";
 import { resolveAgentWorkspaceDir } from "../agents/agent-scope.js";
 import {
   type AuthProfileStore,
@@ -20,7 +20,7 @@ import {
 } from "../agents/live-auth-keys.js";
 import { isModernModelRef } from "../agents/live-model-filter.js";
 import { getApiKeyForModel } from "../agents/model-auth.js";
-import { ensureMoltBotModelsJson } from "../agents/models-config.js";
+import { ensureRazroomModelsJson } from "../agents/models-config.js";
 import { discoverAuthStorage, discoverModels } from "../agents/pi-model-discovery.js";
 import { loadConfig } from "../config/config.js";
 import { isTruthyEnvValue } from "../infra/env.js";
@@ -30,10 +30,10 @@ import { GatewayClient } from "./client.js";
 import { renderCatNoncePngBase64 } from "./live-image-probe.js";
 import { startGatewayServer } from "./server.js";
 
-const LIVE = isTruthyEnvValue(process.env.LIVE) || isTruthyEnvValue(process.env.MOLTBOT_LIVE_TEST);
-const GATEWAY_LIVE = isTruthyEnvValue(process.env.MOLTBOT_LIVE_GATEWAY);
-const ZAI_FALLBACK = isTruthyEnvValue(process.env.MOLTBOT_LIVE_GATEWAY_ZAI_FALLBACK);
-const PROVIDERS = parseFilter(process.env.MOLTBOT_LIVE_GATEWAY_PROVIDERS);
+const LIVE = isTruthyEnvValue(process.env.LIVE) || isTruthyEnvValue(process.env.RAZROOM_LIVE_TEST);
+const GATEWAY_LIVE = isTruthyEnvValue(process.env.RAZROOM_LIVE_GATEWAY);
+const ZAI_FALLBACK = isTruthyEnvValue(process.env.RAZROOM_LIVE_GATEWAY_ZAI_FALLBACK);
+const PROVIDERS = parseFilter(process.env.RAZROOM_LIVE_GATEWAY_PROVIDERS);
 const THINKING_LEVEL = "high";
 const THINKING_TAG_RE = /<\s*\/?\s*(?:think(?:ing)?|thought|antthinking)\s*>/i;
 const FINAL_TAG_RE = /<\s*\/?\s*final\s*>/i;
@@ -372,7 +372,7 @@ async function connectClient(params: { url: string; token: string }) {
 
 type GatewayModelSuiteParams = {
   label: string;
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   candidates: Array<Model<Api>>;
   extraToolProbes: boolean;
   extraImageProbes: boolean;
@@ -381,10 +381,10 @@ type GatewayModelSuiteParams = {
 };
 
 function buildLiveGatewayConfig(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   candidates: Array<Model<Api>>;
   providerOverrides?: Record<string, ModelProviderConfig>;
-}): MoltBotConfig {
+}): RazroomConfig {
   const providerOverrides = params.providerOverrides ?? {};
   const lmstudioProvider = params.cfg.models?.providers?.lmstudio;
   const baseProviders = params.cfg.models?.providers ?? {};
@@ -423,9 +423,9 @@ function buildLiveGatewayConfig(params: {
 }
 
 function sanitizeAuthConfig(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   agentDir: string;
-}): MoltBotConfig["auth"] | undefined {
+}): RazroomConfig["auth"] | undefined {
   const auth = params.cfg.auth;
   if (!auth) {
     return auth;
@@ -434,7 +434,7 @@ function sanitizeAuthConfig(params: {
     allowKeychainPrompt: false,
   });
 
-  let profiles: NonNullable<MoltBotConfig["auth"]>["profiles"] | undefined;
+  let profiles: NonNullable<RazroomConfig["auth"]>["profiles"] | undefined;
   if (auth.profiles) {
     profiles = {};
     for (const [profileId, profile] of Object.entries(auth.profiles)) {
@@ -474,7 +474,7 @@ function sanitizeAuthConfig(params: {
 }
 
 function buildMinimaxProviderOverride(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   api: "openai-completions" | "anthropic-messages";
   baseUrl: string;
 }): ModelProviderConfig | null {
@@ -491,29 +491,29 @@ function buildMinimaxProviderOverride(params: {
 
 async function runGatewayModelSuite(params: GatewayModelSuiteParams) {
   const previous = {
-    configPath: process.env.MOLTBOT_CONFIG_PATH,
-    token: process.env.MOLTBOT_GATEWAY_TOKEN,
-    skipChannels: process.env.MOLTBOT_SKIP_CHANNELS,
-    skipGmail: process.env.MOLTBOT_SKIP_GMAIL_WATCHER,
-    skipCron: process.env.MOLTBOT_SKIP_CRON,
-    skipCanvas: process.env.MOLTBOT_SKIP_CANVAS_HOST,
-    agentDir: process.env.MOLTBOT_AGENT_DIR,
+    configPath: process.env.RAZROOM_CONFIG_PATH,
+    token: process.env.RAZROOM_GATEWAY_TOKEN,
+    skipChannels: process.env.RAZROOM_SKIP_CHANNELS,
+    skipGmail: process.env.RAZROOM_SKIP_GMAIL_WATCHER,
+    skipCron: process.env.RAZROOM_SKIP_CRON,
+    skipCanvas: process.env.RAZROOM_SKIP_CANVAS_HOST,
+    agentDir: process.env.RAZROOM_AGENT_DIR,
     piAgentDir: process.env.PI_CODING_AGENT_DIR,
-    stateDir: process.env.MOLTBOT_STATE_DIR,
+    stateDir: process.env.RAZROOM_STATE_DIR,
   };
   let tempAgentDir: string | undefined;
   let tempStateDir: string | undefined;
 
-  process.env.MOLTBOT_SKIP_CHANNELS = "1";
-  process.env.MOLTBOT_SKIP_GMAIL_WATCHER = "1";
-  process.env.MOLTBOT_SKIP_CRON = "1";
-  process.env.MOLTBOT_SKIP_CANVAS_HOST = "1";
+  process.env.RAZROOM_SKIP_CHANNELS = "1";
+  process.env.RAZROOM_SKIP_GMAIL_WATCHER = "1";
+  process.env.RAZROOM_SKIP_CRON = "1";
+  process.env.RAZROOM_SKIP_CANVAS_HOST = "1";
 
   const token = `test-${randomUUID()}`;
-  process.env.MOLTBOT_GATEWAY_TOKEN = token;
+  process.env.RAZROOM_GATEWAY_TOKEN = token;
   const agentId = "dev";
 
-  const hostAgentDir = resolveMoltBotAgentDir();
+  const hostAgentDir = resolveRazroomAgentDir();
   const hostStore = ensureAuthProfileStore(hostAgentDir, {
     allowKeychainPrompt: false,
   });
@@ -526,26 +526,26 @@ async function runGatewayModelSuite(params: GatewayModelSuiteParams) {
     lastGood: hostStore.lastGood ? { ...hostStore.lastGood } : undefined,
     usageStats: hostStore.usageStats ? { ...hostStore.usageStats } : undefined,
   };
-  tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-live-state-"));
-  process.env.MOLTBOT_STATE_DIR = tempStateDir;
+  tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-live-state-"));
+  process.env.RAZROOM_STATE_DIR = tempStateDir;
   tempAgentDir = path.join(tempStateDir, "agents", DEFAULT_AGENT_ID, "agent");
   saveAuthProfileStore(sanitizedStore, tempAgentDir);
   const tempSessionAgentDir = path.join(tempStateDir, "agents", agentId, "agent");
   if (tempSessionAgentDir !== tempAgentDir) {
     saveAuthProfileStore(sanitizedStore, tempSessionAgentDir);
   }
-  process.env.MOLTBOT_AGENT_DIR = tempAgentDir;
+  process.env.RAZROOM_AGENT_DIR = tempAgentDir;
   process.env.PI_CODING_AGENT_DIR = tempAgentDir;
 
   const workspaceDir = resolveAgentWorkspaceDir(params.cfg, agentId);
   await fs.mkdir(workspaceDir, { recursive: true });
   const nonceA = randomUUID();
   const nonceB = randomUUID();
-  const toolProbePath = path.join(workspaceDir, `.moltbot-live-tool-probe.${nonceA}.txt`);
+  const toolProbePath = path.join(workspaceDir, `.razroom-live-tool-probe.${nonceA}.txt`);
   await fs.writeFile(toolProbePath, `nonceA=${nonceA}\nnonceB=${nonceB}\n`);
 
-  const agentDir = resolveMoltBotAgentDir();
-  const sanitizedCfg: MoltBotConfig = {
+  const agentDir = resolveRazroomAgentDir();
+  const sanitizedCfg: RazroomConfig = {
     ...params.cfg,
     auth: sanitizeAuthConfig({ cfg: params.cfg, agentDir }),
   };
@@ -554,12 +554,12 @@ async function runGatewayModelSuite(params: GatewayModelSuiteParams) {
     candidates: params.candidates,
     providerOverrides: params.providerOverrides,
   });
-  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-live-"));
-  const tempConfigPath = path.join(tempDir, "moltbot.json");
+  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-live-"));
+  const tempConfigPath = path.join(tempDir, "razroom.json");
   await fs.writeFile(tempConfigPath, `${JSON.stringify(nextCfg, null, 2)}\n`);
-  process.env.MOLTBOT_CONFIG_PATH = tempConfigPath;
+  process.env.RAZROOM_CONFIG_PATH = tempConfigPath;
 
-  await ensureMoltBotModelsJson(nextCfg);
+  await ensureRazroomModelsJson(nextCfg);
 
   const port = await getFreeGatewayPort();
   const server = await startGatewayServer(port, {
@@ -691,7 +691,7 @@ async function runGatewayModelSuite(params: GatewayModelSuiteParams) {
               sessionKey,
               idempotencyKey: `idem-${runIdTool}-tool`,
               message:
-                "MoltBot live tool probe (local, safe): " +
+                "Razroom live tool probe (local, safe): " +
                 `use the tool named \`read\` (or \`Read\`) with JSON arguments {"path":"${toolProbePath}"}. ` +
                 "Then reply with the two nonce values you read (include both).",
               thinking: params.thinkingLevel,
@@ -731,7 +731,7 @@ async function runGatewayModelSuite(params: GatewayModelSuiteParams) {
                 sessionKey,
                 idempotencyKey: `idem-${runIdTool}-exec-read`,
                 message:
-                  "MoltBot live tool probe (local, safe): " +
+                  "Razroom live tool probe (local, safe): " +
                   "use the tool named `exec` (or `Exec`) to run this command: " +
                   `mkdir -p "${tempDir}" && printf '%s' '${nonceC}' > "${toolWritePath}". ` +
                   `Then use the tool named \`read\` (or \`Read\`) with JSON arguments {"path":"${toolWritePath}"}. ` +
@@ -997,15 +997,15 @@ async function runGatewayModelSuite(params: GatewayModelSuiteParams) {
       await fs.rm(tempStateDir, { recursive: true, force: true });
     }
 
-    process.env.MOLTBOT_CONFIG_PATH = previous.configPath;
-    process.env.MOLTBOT_GATEWAY_TOKEN = previous.token;
-    process.env.MOLTBOT_SKIP_CHANNELS = previous.skipChannels;
-    process.env.MOLTBOT_SKIP_GMAIL_WATCHER = previous.skipGmail;
-    process.env.MOLTBOT_SKIP_CRON = previous.skipCron;
-    process.env.MOLTBOT_SKIP_CANVAS_HOST = previous.skipCanvas;
-    process.env.MOLTBOT_AGENT_DIR = previous.agentDir;
+    process.env.RAZROOM_CONFIG_PATH = previous.configPath;
+    process.env.RAZROOM_GATEWAY_TOKEN = previous.token;
+    process.env.RAZROOM_SKIP_CHANNELS = previous.skipChannels;
+    process.env.RAZROOM_SKIP_GMAIL_WATCHER = previous.skipGmail;
+    process.env.RAZROOM_SKIP_CRON = previous.skipCron;
+    process.env.RAZROOM_SKIP_CANVAS_HOST = previous.skipCanvas;
+    process.env.RAZROOM_AGENT_DIR = previous.agentDir;
     process.env.PI_CODING_AGENT_DIR = previous.piAgentDir;
-    process.env.MOLTBOT_STATE_DIR = previous.stateDir;
+    process.env.RAZROOM_STATE_DIR = previous.stateDir;
   }
 }
 
@@ -1014,9 +1014,9 @@ describeLive("gateway live (dev agent, profile keys)", () => {
     "runs meaningful prompts across models with available keys",
     async () => {
       const cfg = loadConfig();
-      await ensureMoltBotModelsJson(cfg);
+      await ensureRazroomModelsJson(cfg);
 
-      const agentDir = resolveMoltBotAgentDir();
+      const agentDir = resolveRazroomAgentDir();
       const authStore = ensureAuthProfileStore(agentDir, {
         allowKeychainPrompt: false,
       });
@@ -1024,7 +1024,7 @@ describeLive("gateway live (dev agent, profile keys)", () => {
       const modelRegistry = discoverModels(authStorage, agentDir);
       const all = modelRegistry.getAll();
 
-      const rawModels = process.env.MOLTBOT_LIVE_GATEWAY_MODELS?.trim();
+      const rawModels = process.env.RAZROOM_LIVE_GATEWAY_MODELS?.trim();
       const useModern = !rawModels || rawModels === "modern" || rawModels === "all";
       const useExplicit = Boolean(rawModels) && !useModern;
       const filter = useExplicit ? parseFilter(rawModels) : null;
@@ -1105,26 +1105,26 @@ describeLive("gateway live (dev agent, profile keys)", () => {
       return;
     }
     const previous = {
-      configPath: process.env.MOLTBOT_CONFIG_PATH,
-      token: process.env.MOLTBOT_GATEWAY_TOKEN,
-      skipChannels: process.env.MOLTBOT_SKIP_CHANNELS,
-      skipGmail: process.env.MOLTBOT_SKIP_GMAIL_WATCHER,
-      skipCron: process.env.MOLTBOT_SKIP_CRON,
-      skipCanvas: process.env.MOLTBOT_SKIP_CANVAS_HOST,
+      configPath: process.env.RAZROOM_CONFIG_PATH,
+      token: process.env.RAZROOM_GATEWAY_TOKEN,
+      skipChannels: process.env.RAZROOM_SKIP_CHANNELS,
+      skipGmail: process.env.RAZROOM_SKIP_GMAIL_WATCHER,
+      skipCron: process.env.RAZROOM_SKIP_CRON,
+      skipCanvas: process.env.RAZROOM_SKIP_CANVAS_HOST,
     };
 
-    process.env.MOLTBOT_SKIP_CHANNELS = "1";
-    process.env.MOLTBOT_SKIP_GMAIL_WATCHER = "1";
-    process.env.MOLTBOT_SKIP_CRON = "1";
-    process.env.MOLTBOT_SKIP_CANVAS_HOST = "1";
+    process.env.RAZROOM_SKIP_CHANNELS = "1";
+    process.env.RAZROOM_SKIP_GMAIL_WATCHER = "1";
+    process.env.RAZROOM_SKIP_CRON = "1";
+    process.env.RAZROOM_SKIP_CANVAS_HOST = "1";
 
     const token = `test-${randomUUID()}`;
-    process.env.MOLTBOT_GATEWAY_TOKEN = token;
+    process.env.RAZROOM_GATEWAY_TOKEN = token;
 
     const cfg = loadConfig();
-    await ensureMoltBotModelsJson(cfg);
+    await ensureRazroomModelsJson(cfg);
 
-    const agentDir = resolveMoltBotAgentDir();
+    const agentDir = resolveRazroomAgentDir();
     const authStorage = discoverAuthStorage(agentDir);
     const modelRegistry = discoverModels(authStorage, agentDir);
     const anthropic = modelRegistry.find("anthropic", "claude-opus-4-5") as Model<Api> | null;
@@ -1145,7 +1145,7 @@ describeLive("gateway live (dev agent, profile keys)", () => {
     await fs.mkdir(workspaceDir, { recursive: true });
     const nonceA = randomUUID();
     const nonceB = randomUUID();
-    const toolProbePath = path.join(workspaceDir, `.moltbot-live-zai-fallback.${nonceA}.txt`);
+    const toolProbePath = path.join(workspaceDir, `.razroom-live-zai-fallback.${nonceA}.txt`);
     await fs.writeFile(toolProbePath, `nonceA=${nonceA}\nnonceB=${nonceB}\n`);
 
     const port = await getFreeGatewayPort();
@@ -1236,12 +1236,12 @@ describeLive("gateway live (dev agent, profile keys)", () => {
       await server.close({ reason: "live test complete" });
       await fs.rm(toolProbePath, { force: true });
 
-      process.env.MOLTBOT_CONFIG_PATH = previous.configPath;
-      process.env.MOLTBOT_GATEWAY_TOKEN = previous.token;
-      process.env.MOLTBOT_SKIP_CHANNELS = previous.skipChannels;
-      process.env.MOLTBOT_SKIP_GMAIL_WATCHER = previous.skipGmail;
-      process.env.MOLTBOT_SKIP_CRON = previous.skipCron;
-      process.env.MOLTBOT_SKIP_CANVAS_HOST = previous.skipCanvas;
+      process.env.RAZROOM_CONFIG_PATH = previous.configPath;
+      process.env.RAZROOM_GATEWAY_TOKEN = previous.token;
+      process.env.RAZROOM_SKIP_CHANNELS = previous.skipChannels;
+      process.env.RAZROOM_SKIP_GMAIL_WATCHER = previous.skipGmail;
+      process.env.RAZROOM_SKIP_CRON = previous.skipCron;
+      process.env.RAZROOM_SKIP_CANVAS_HOST = previous.skipCanvas;
     }
   }, 180_000);
 });

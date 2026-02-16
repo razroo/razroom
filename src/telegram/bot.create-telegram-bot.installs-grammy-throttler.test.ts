@@ -181,7 +181,7 @@ describe("createTelegramBot", () => {
           message_id: 10,
         },
       },
-      me: { username: "moltbot_bot" },
+      me: { username: "razroom_bot" },
       getFile: async () => ({ download: async () => new Uint8Array() }),
     });
 
@@ -214,7 +214,7 @@ describe("createTelegramBot", () => {
       };
       await handler({
         message,
-        me: { username: "moltbot_bot" },
+        me: { username: "razroom_bot" },
         getFile: async () => ({ download: async () => new Uint8Array() }),
       });
 
@@ -256,7 +256,7 @@ describe("createTelegramBot", () => {
         date: 1736380800,
         from: { id: 999, username: "random" },
       },
-      me: { username: "moltbot_bot" },
+      me: { username: "razroom_bot" },
       getFile: async () => ({ download: async () => new Uint8Array() }),
     });
 
@@ -267,7 +267,7 @@ describe("createTelegramBot", () => {
     expect(pairingText).toContain("Your Telegram user id: 999");
     expect(pairingText).toContain("Pairing code:");
     expect(pairingText).toContain("PAIRME12");
-    expect(pairingText).toContain("moltbot pairing approve telegram PAIRME12");
+    expect(pairingText).toContain("razroom pairing approve telegram PAIRME12");
     expect(pairingText).not.toContain("<code>");
   });
   it("does not resend pairing code when a request is already pending", async () => {
@@ -295,12 +295,12 @@ describe("createTelegramBot", () => {
 
     await handler({
       message,
-      me: { username: "moltbot_bot" },
+      me: { username: "razroom_bot" },
       getFile: async () => ({ download: async () => new Uint8Array() }),
     });
     await handler({
       message: { ...message, text: "hello again" },
-      me: { username: "moltbot_bot" },
+      me: { username: "razroom_bot" },
       getFile: async () => ({ download: async () => new Uint8Array() }),
     });
 
@@ -315,7 +315,7 @@ describe("createTelegramBot", () => {
     const handler = getOnHandler("message") as (ctx: Record<string, unknown>) => Promise<void>;
     await handler({
       message: { chat: { id: 42, type: "private" }, text: "hi" },
-      me: { username: "moltbot_bot" },
+      me: { username: "razroom_bot" },
       getFile: async () => ({ download: async () => new Uint8Array() }),
     });
 

@@ -12,10 +12,10 @@ import {
 } from "./paths.js";
 
 describe("oauth paths", () => {
-  it("prefers MOLTBOT_OAUTH_DIR over MOLTBOT_STATE_DIR", () => {
+  it("prefers RAZROOM_OAUTH_DIR over RAZROOM_STATE_DIR", () => {
     const env = {
-      MOLTBOT_OAUTH_DIR: "/custom/oauth",
-      MOLTBOT_STATE_DIR: "/custom/state",
+      RAZROOM_OAUTH_DIR: "/custom/oauth",
+      RAZROOM_STATE_DIR: "/custom/state",
     } as NodeJS.ProcessEnv;
 
     expect(resolveOAuthDir(env, "/custom/state")).toBe(path.resolve("/custom/oauth"));
@@ -24,9 +24,9 @@ describe("oauth paths", () => {
     );
   });
 
-  it("derives oauth path from MOLTBOT_STATE_DIR when unset", () => {
+  it("derives oauth path from RAZROOM_STATE_DIR when unset", () => {
     const env = {
-      MOLTBOT_STATE_DIR: "/custom/state",
+      RAZROOM_STATE_DIR: "/custom/state",
     } as NodeJS.ProcessEnv;
 
     expect(resolveOAuthDir(env, "/custom/state")).toBe(path.join("/custom/state", "credentials"));
@@ -37,37 +37,37 @@ describe("oauth paths", () => {
 });
 
 describe("state + config path candidates", () => {
-  it("uses MOLTBOT_STATE_DIR when set", () => {
+  it("uses RAZROOM_STATE_DIR when set", () => {
     const env = {
-      MOLTBOT_STATE_DIR: "/new/state",
+      RAZROOM_STATE_DIR: "/new/state",
     } as NodeJS.ProcessEnv;
 
     expect(resolveStateDir(env, () => "/home/test")).toBe(path.resolve("/new/state"));
   });
 
-  it("uses MOLTBOT_HOME for default state/config locations", () => {
+  it("uses RAZROOM_HOME for default state/config locations", () => {
     const env = {
-      MOLTBOT_HOME: "/srv/moltbot-home",
+      RAZROOM_HOME: "/srv/razroom-home",
     } as NodeJS.ProcessEnv;
 
-    const resolvedHome = path.resolve("/srv/moltbot-home");
-    expect(resolveStateDir(env)).toBe(path.join(resolvedHome, ".moltbot"));
+    const resolvedHome = path.resolve("/srv/razroom-home");
+    expect(resolveStateDir(env)).toBe(path.join(resolvedHome, ".razroom"));
 
     const candidates = resolveDefaultConfigCandidates(env);
-    expect(candidates[0]).toBe(path.join(resolvedHome, ".moltbot", "moltbot.json"));
+    expect(candidates[0]).toBe(path.join(resolvedHome, ".razroom", "razroom.json"));
   });
 
-  it("prefers MOLTBOT_HOME over HOME for default state/config locations", () => {
+  it("prefers RAZROOM_HOME over HOME for default state/config locations", () => {
     const env = {
-      MOLTBOT_HOME: "/srv/moltbot-home",
+      RAZROOM_HOME: "/srv/razroom-home",
       HOME: "/home/other",
     } as NodeJS.ProcessEnv;
 
-    const resolvedHome = path.resolve("/srv/moltbot-home");
-    expect(resolveStateDir(env)).toBe(path.join(resolvedHome, ".moltbot"));
+    const resolvedHome = path.resolve("/srv/razroom-home");
+    expect(resolveStateDir(env)).toBe(path.join(resolvedHome, ".razroom"));
 
     const candidates = resolveDefaultConfigCandidates(env);
-    expect(candidates[0]).toBe(path.join(resolvedHome, ".moltbot", "moltbot.json"));
+    expect(candidates[0]).toBe(path.join(resolvedHome, ".razroom", "razroom.json"));
   });
 
   it("orders default config candidates in a stable order", () => {
@@ -75,30 +75,30 @@ describe("state + config path candidates", () => {
     const resolvedHome = path.resolve(home);
     const candidates = resolveDefaultConfigCandidates({} as NodeJS.ProcessEnv, () => home);
     const expected = [
-      path.join(resolvedHome, ".moltbot", "moltbot.json"),
-      path.join(resolvedHome, ".moltbot", "moltbot.json"),
-      path.join(resolvedHome, ".moltbot", "moldbot.json"),
-      path.join(resolvedHome, ".moltbot", "moltbot.json"),
-      path.join(resolvedHome, ".moltbot", "moltbot.json"),
-      path.join(resolvedHome, ".moltbot", "moltbot.json"),
-      path.join(resolvedHome, ".moltbot", "moldbot.json"),
-      path.join(resolvedHome, ".moltbot", "moltbot.json"),
-      path.join(resolvedHome, ".moldbot", "moltbot.json"),
-      path.join(resolvedHome, ".moldbot", "moltbot.json"),
+      path.join(resolvedHome, ".razroom", "razroom.json"),
+      path.join(resolvedHome, ".razroom", "razroom.json"),
+      path.join(resolvedHome, ".razroom", "moldbot.json"),
+      path.join(resolvedHome, ".razroom", "razroom.json"),
+      path.join(resolvedHome, ".razroom", "razroom.json"),
+      path.join(resolvedHome, ".razroom", "razroom.json"),
+      path.join(resolvedHome, ".razroom", "moldbot.json"),
+      path.join(resolvedHome, ".razroom", "razroom.json"),
+      path.join(resolvedHome, ".moldbot", "razroom.json"),
+      path.join(resolvedHome, ".moldbot", "razroom.json"),
       path.join(resolvedHome, ".moldbot", "moldbot.json"),
-      path.join(resolvedHome, ".moldbot", "moltbot.json"),
-      path.join(resolvedHome, ".moltbot", "moltbot.json"),
-      path.join(resolvedHome, ".moltbot", "moltbot.json"),
-      path.join(resolvedHome, ".moltbot", "moldbot.json"),
-      path.join(resolvedHome, ".moltbot", "moltbot.json"),
+      path.join(resolvedHome, ".moldbot", "razroom.json"),
+      path.join(resolvedHome, ".razroom", "razroom.json"),
+      path.join(resolvedHome, ".razroom", "razroom.json"),
+      path.join(resolvedHome, ".razroom", "moldbot.json"),
+      path.join(resolvedHome, ".razroom", "razroom.json"),
     ];
     expect(candidates).toEqual(expected);
   });
 
-  it("prefers ~/.moltbot when it exists and legacy dir is missing", async () => {
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-state-"));
+  it("prefers ~/.razroom when it exists and legacy dir is missing", async () => {
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-state-"));
     try {
-      const newDir = path.join(root, ".moltbot");
+      const newDir = path.join(root, ".razroom");
       await fs.mkdir(newDir, { recursive: true });
       const resolved = resolveStateDir({} as NodeJS.ProcessEnv, () => root);
       expect(resolved).toBe(newDir);
@@ -108,11 +108,11 @@ describe("state + config path candidates", () => {
   });
 
   it("CONFIG_PATH prefers existing config when present", async () => {
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-config-"));
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-config-"));
     try {
-      const legacyDir = path.join(root, ".moltbot");
+      const legacyDir = path.join(root, ".razroom");
       await fs.mkdir(legacyDir, { recursive: true });
-      const legacyPath = path.join(legacyDir, "moltbot.json");
+      const legacyPath = path.join(legacyDir, "razroom.json");
       await fs.writeFile(legacyPath, "{}", "utf-8");
 
       const resolved = resolveConfigPathCandidate({} as NodeJS.ProcessEnv, () => root);
@@ -123,17 +123,17 @@ describe("state + config path candidates", () => {
   });
 
   it("respects state dir overrides when config is missing", async () => {
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-config-override-"));
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-config-override-"));
     try {
-      const legacyDir = path.join(root, ".moltbot");
+      const legacyDir = path.join(root, ".razroom");
       await fs.mkdir(legacyDir, { recursive: true });
-      const legacyConfig = path.join(legacyDir, "moltbot.json");
+      const legacyConfig = path.join(legacyDir, "razroom.json");
       await fs.writeFile(legacyConfig, "{}", "utf-8");
 
       const overrideDir = path.join(root, "override");
-      const env = { MOLTBOT_STATE_DIR: overrideDir } as NodeJS.ProcessEnv;
+      const env = { RAZROOM_STATE_DIR: overrideDir } as NodeJS.ProcessEnv;
       const resolved = resolveConfigPath(env, overrideDir, () => root);
-      expect(resolved).toBe(path.join(overrideDir, "moltbot.json"));
+      expect(resolved).toBe(path.join(overrideDir, "razroom.json"));
     } finally {
       await fs.rm(root, { recursive: true, force: true });
     }

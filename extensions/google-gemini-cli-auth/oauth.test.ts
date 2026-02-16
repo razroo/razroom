@@ -1,7 +1,7 @@
 import { join, parse } from "node:path";
 import { describe, expect, it, mock, spyOn, beforeEach, afterEach } from "bun:test";
 
-mock("moltbot/plugin-sdk", () => ({
+mock("razroom/plugin-sdk", () => ({
   isWSL2Sync: () => false,
 }));
 

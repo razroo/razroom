@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "bun:test";
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 import type { SessionEntry } from "../../config/sessions.js";
 import { resolveSessionAuthProfileOverride } from "./session-override.js";
 
@@ -22,9 +22,9 @@ async function writeAuthStore(agentDir: string) {
 
 describe("resolveSessionAuthProfileOverride", () => {
   it("keeps user override when provider alias differs", async () => {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-auth-"));
-    const prevStateDir = process.env.MOLTBOT_STATE_DIR;
-    process.env.MOLTBOT_STATE_DIR = tmpDir;
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-auth-"));
+    const prevStateDir = process.env.RAZROOM_STATE_DIR;
+    process.env.RAZROOM_STATE_DIR = tmpDir;
     try {
       const agentDir = path.join(tmpDir, "agent");
       await fs.mkdir(agentDir, { recursive: true });
@@ -39,7 +39,7 @@ describe("resolveSessionAuthProfileOverride", () => {
       const sessionStore = { "agent:main:main": sessionEntry };
 
       const resolved = await resolveSessionAuthProfileOverride({
-        cfg: {} as MoltBotConfig,
+        cfg: {} as RazroomConfig,
         provider: "z.ai",
         agentDir,
         sessionEntry,
@@ -53,9 +53,9 @@ describe("resolveSessionAuthProfileOverride", () => {
       expect(sessionEntry.authProfileOverride).toBe("zai:work");
     } finally {
       if (prevStateDir === undefined) {
-        delete process.env.MOLTBOT_STATE_DIR;
+        delete process.env.RAZROOM_STATE_DIR;
       } else {
-        process.env.MOLTBOT_STATE_DIR = prevStateDir;
+        process.env.RAZROOM_STATE_DIR = prevStateDir;
       }
       await fs.rm(tmpDir, { recursive: true, force: true });
     }

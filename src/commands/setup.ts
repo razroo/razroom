@@ -2,7 +2,7 @@ import JSON5 from "json5";
 import fs from "node:fs/promises";
 import type { RuntimeEnv } from "../runtime.js";
 import { DEFAULT_AGENT_WORKSPACE_DIR, ensureAgentWorkspace } from "../agents/workspace.js";
-import { type MoltBotConfig, createConfigIO, writeConfigFile } from "../config/config.js";
+import { type RazroomConfig, createConfigIO, writeConfigFile } from "../config/config.js";
 import { formatConfigPath, logConfigUpdated } from "../config/logging.js";
 import { resolveSessionTranscriptsDir } from "../config/sessions.js";
 import { defaultRuntime } from "../runtime.js";
@@ -10,13 +10,13 @@ import { shortenHomePath } from "../utils.js";
 
 async function readConfigFileRaw(configPath: string): Promise<{
   exists: boolean;
-  parsed: MoltBotConfig;
+  parsed: RazroomConfig;
 }> {
   try {
     const raw = await fs.readFile(configPath, "utf-8");
     const parsed = JSON5.parse(raw);
     if (parsed && typeof parsed === "object") {
-      return { exists: true, parsed: parsed as MoltBotConfig };
+      return { exists: true, parsed: parsed as RazroomConfig };
     }
     return { exists: true, parsed: {} };
   } catch {
@@ -41,7 +41,7 @@ export async function setupCommand(
 
   const workspace = desiredWorkspace ?? defaults.workspace ?? DEFAULT_AGENT_WORKSPACE_DIR;
 
-  const next: MoltBotConfig = {
+  const next: RazroomConfig = {
     ...cfg,
     agents: {
       ...cfg.agents,

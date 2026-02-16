@@ -1,4 +1,4 @@
-import type { LineChannelData, MoltBotPluginApi, ReplyPayload } from "moltbot/plugin-sdk";
+import type { LineChannelData, RazroomPluginApi, ReplyPayload } from "razroom/plugin-sdk";
 import {
   createActionCard,
   createImageCard,
@@ -7,7 +7,7 @@ import {
   createReceiptCard,
   type CardAction,
   type ListItem,
-} from "moltbot/plugin-sdk";
+} from "razroom/plugin-sdk";
 
 const CARD_USAGE = `Usage: /card <type> "title" "body" [options]
 
@@ -154,7 +154,7 @@ function parseCardArgs(argsStr: string): {
   return result;
 }
 
-export function registerLineCardCommand(api: MoltBotPluginApi): void {
+export function registerLineCardCommand(api: RazroomPluginApi): void {
   api.registerCommand({
     name: "card",
     description: "Send a rich card message (LINE).",

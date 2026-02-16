@@ -1,13 +1,13 @@
 {
-  "name": "@moltbot/signal",
+  "name": "@razroom/signal",
   "version": "2026.2.15",
   "private": true,
-  "description": "MoltBot Signal channel plugin",
+  "description": "Razroom Signal channel plugin",
   "type": "module",
   "devDependencies": {
-    "moltbot": "workspace:*"
+    "razroom": "workspace:*"
   },
-  "moltbot": {
+  "razroom": {
     "extensions": [
       "./index.ts"
     ]

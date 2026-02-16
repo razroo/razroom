@@ -10,7 +10,7 @@ let fixtureRoot = "";
 let caseId = 0;
 
 beforeAll(async () => {
-  fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-pairing-"));
+  fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-pairing-"));
 });
 
 afterAll(async () => {
@@ -20,17 +20,17 @@ afterAll(async () => {
 });
 
 async function withTempStateDir<T>(fn: (stateDir: string) => Promise<T>) {
-  const previous = process.env.MOLTBOT_STATE_DIR;
+  const previous = process.env.RAZROOM_STATE_DIR;
   const dir = path.join(fixtureRoot, `case-${caseId++}`);
   await fs.mkdir(dir, { recursive: true });
-  process.env.MOLTBOT_STATE_DIR = dir;
+  process.env.RAZROOM_STATE_DIR = dir;
   try {
     return await fn(dir);
   } finally {
     if (previous === undefined) {
-      delete process.env.MOLTBOT_STATE_DIR;
+      delete process.env.RAZROOM_STATE_DIR;
     } else {
-      process.env.MOLTBOT_STATE_DIR = previous;
+      process.env.RAZROOM_STATE_DIR = previous;
     }
   }
 }

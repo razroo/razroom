@@ -1,15 +1,15 @@
 ---
-summary: "CLI reference for `moltbot browser` (profiles, tabs, actions, extension relay)"
+summary: "CLI reference for `razroom browser` (profiles, tabs, actions, extension relay)"
 read_when:
-  - You use `moltbot browser` and want examples for common tasks
+  - You use `razroom browser` and want examples for common tasks
   - You want to control a browser running on another machine via a node host
   - You want to use the Chrome extension relay (attach/detach via toolbar button)
 title: "browser"
 ---
 
-# `moltbot browser`
+# `razroom browser`
 
-Manage MoltBot’s browser control server and run browser actions (tabs, snapshots, screenshots, navigation, clicks, typing).
+Manage Razroom’s browser control server and run browser actions (tabs, snapshots, screenshots, navigation, clicks, typing).
 
 Related:
 
@@ -27,38 +27,38 @@ Related:
 ## Quick start (local)
 
 ```bash
-moltbot browser --browser-profile chrome tabs
-moltbot browser --browser-profile moltbot start
-moltbot browser --browser-profile moltbot open https://example.com
-moltbot browser --browser-profile moltbot snapshot
+razroom browser --browser-profile chrome tabs
+razroom browser --browser-profile razroom start
+razroom browser --browser-profile razroom open https://example.com
+razroom browser --browser-profile razroom snapshot
 ```
 
 ## Profiles
 
 Profiles are named browser routing configs. In practice:
 
-- `moltbot`: launches/attaches to a dedicated MoltBot-managed Chrome instance (isolated user data dir).
+- `razroom`: launches/attaches to a dedicated Razroom-managed Chrome instance (isolated user data dir).
 - `chrome`: controls your existing Chrome tab(s) via the Chrome extension relay.
 
 ```bash
-moltbot browser profiles
-moltbot browser create-profile --name work --color "#FF5A36"
-moltbot browser delete-profile --name work
+razroom browser profiles
+razroom browser create-profile --name work --color "#FF5A36"
+razroom browser delete-profile --name work
 ```
 
 Use a specific profile:
 
 ```bash
-moltbot browser --browser-profile work tabs
+razroom browser --browser-profile work tabs
 ```
 
 ## Tabs
 
 ```bash
-moltbot browser tabs
-moltbot browser open https://docs.moltbot.ai
-moltbot browser focus <targetId>
-moltbot browser close <targetId>
+razroom browser tabs
+razroom browser open https://docs.razroom.ai
+razroom browser focus <targetId>
+razroom browser close <targetId>
 ```
 
 ## Snapshot / screenshot / actions
@@ -66,21 +66,21 @@ moltbot browser close <targetId>
 Snapshot:
 
 ```bash
-moltbot browser snapshot
+razroom browser snapshot
 ```
 
 Screenshot:
 
 ```bash
-moltbot browser screenshot
+razroom browser screenshot
 ```
 
 Navigate/click/type (ref-based UI automation):
 
 ```bash
-moltbot browser navigate https://example.com
-moltbot browser click <ref>
-moltbot browser type <ref> "hello"
+razroom browser navigate https://example.com
+razroom browser click <ref>
+razroom browser type <ref> "hello"
 ```
 
 ## Chrome extension relay (attach via toolbar button)
@@ -90,8 +90,8 @@ This mode lets the agent control an existing Chrome tab that you attach manually
 Install the unpacked extension to a stable path:
 
 ```bash
-moltbot browser extension install
-moltbot browser extension path
+razroom browser extension install
+razroom browser extension path
 ```
 
 Then Chrome → `chrome://extensions` → enable “Developer mode” → “Load unpacked” → select the printed folder.

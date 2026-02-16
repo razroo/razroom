@@ -1,5 +1,5 @@
 ---
-summary: "Advanced setup and development workflows for MoltBot"
+summary: "Advanced setup and development workflows for Razroom"
 read_when:
   - Setting up a new machine
   - You want “latest + greatest” without breaking your personal setup
@@ -17,7 +17,7 @@ Last updated: 2026-01-01
 
 ## TL;DR
 
-- **Tailoring lives outside the repo:** `~/.moltbot/workspace` (workspace) + `~/.moltbot/moltbot.json` (config).
+- **Tailoring lives outside the repo:** `~/.razroom/workspace` (workspace) + `~/.razroom/razroom.json` (config).
 - **Stable workflow:** install the macOS app; let it run the bundled Gateway.
 - **Bleeding edge workflow:** run the Gateway yourself via `pnpm gateway:watch`, then let the macOS app attach in Local mode.
 
@@ -31,51 +31,51 @@ Last updated: 2026-01-01
 
 If you want “100% tailored to me” _and_ easy updates, keep your customization in:
 
-- **Config:** `~/.moltbot/moltbot.json` (JSON/JSON5-ish)
-- **Workspace:** `~/.moltbot/workspace` (skills, prompts, memories; make it a private git repo)
+- **Config:** `~/.razroom/razroom.json` (JSON/JSON5-ish)
+- **Workspace:** `~/.razroom/workspace` (skills, prompts, memories; make it a private git repo)
 
 Bootstrap once:
 
 ```bash
-moltbot setup
+razroom setup
 ```
 
 From inside this repo, use the local CLI entry:
 
 ```bash
-moltbot setup
+razroom setup
 ```
 
-If you don’t have a global install yet, run it via `pnpm moltbot setup`.
+If you don’t have a global install yet, run it via `pnpm razroom setup`.
 
 ## Run the Gateway from this repo
 
 After `pnpm build`, you can run the packaged CLI directly:
 
 ```bash
-node moltbot.mjs gateway --port 18789 --verbose
+node razroom.mjs gateway --port 18789 --verbose
 ```
 
 ## Stable workflow (macOS app first)
 
-1. Install + launch **MoltBot.app** (menu bar).
+1. Install + launch **Razroom.app** (menu bar).
 2. Complete the onboarding/permissions checklist (TCC prompts).
 3. Ensure Gateway is **Local** and running (the app manages it).
 4. Link surfaces (example: WhatsApp):
 
 ```bash
-moltbot channels login
+razroom channels login
 ```
 
 5. Sanity check:
 
 ```bash
-moltbot health
+razroom health
 ```
 
 If onboarding is not available in your build:
 
-- Run `moltbot setup`, then `moltbot channels login`, then start the Gateway manually (`moltbot gateway`).
+- Run `razroom setup`, then `razroom channels login`, then start the Gateway manually (`razroom gateway`).
 
 ## Bleeding edge workflow (Gateway in a terminal)
 
@@ -100,7 +100,7 @@ pnpm gateway:watch
 
 ### 2) Point the macOS app at your running Gateway
 
-In **MoltBot.app**:
+In **Razroom.app**:
 
 - Connection Mode: **Local**
   The app will attach to the running gateway on the configured port.
@@ -111,33 +111,33 @@ In **MoltBot.app**:
 - Or via CLI:
 
 ```bash
-moltbot health
+razroom health
 ```
 
 ### Common footguns
 
 - **Wrong port:** Gateway WS defaults to `ws://127.0.0.1:18789`; keep app + CLI on the same port.
 - **Where state lives:**
-  - Credentials: `~/.moltbot/credentials/`
-  - Sessions: `~/.moltbot/agents/<agentId>/sessions/`
-  - Logs: `/tmp/moltbot/`
+  - Credentials: `~/.razroom/credentials/`
+  - Sessions: `~/.razroom/agents/<agentId>/sessions/`
+  - Logs: `/tmp/razroom/`
 
 ## Credential storage map
 
 Use this when debugging auth or deciding what to back up:
 
-- **WhatsApp**: `~/.moltbot/credentials/whatsapp/<accountId>/creds.json`
+- **WhatsApp**: `~/.razroom/credentials/whatsapp/<accountId>/creds.json`
 - **Telegram bot token**: config/env or `channels.telegram.tokenFile`
 - **Discord bot token**: config/env (token file not yet supported)
 - **Slack tokens**: config/env (`channels.slack.*`)
-- **Pairing allowlists**: `~/.moltbot/credentials/<channel>-allowFrom.json`
-- **Model auth profiles**: `~/.moltbot/agents/<agentId>/agent/auth-profiles.json`
-- **Legacy OAuth import**: `~/.moltbot/credentials/oauth.json`
+- **Pairing allowlists**: `~/.razroom/credentials/<channel>-allowFrom.json`
+- **Model auth profiles**: `~/.razroom/agents/<agentId>/agent/auth-profiles.json`
+- **Legacy OAuth import**: `~/.razroom/credentials/oauth.json`
   More detail: [Security](/gateway/security#credential-storage-map).
 
 ## Updating (without wrecking your setup)
 
-- Keep `~/.moltbot/workspace` and `~/.moltbot/` as “your stuff”; don’t put personal prompts/config into the `moltbot` repo.
+- Keep `~/.razroom/workspace` and `~/.razroom/` as “your stuff”; don’t put personal prompts/config into the `razroom` repo.
 - Updating source: `git pull` + `pnpm install` (when lockfile changed) + keep using `pnpm gateway:watch`.
 
 ## Linux (systemd user service)
@@ -158,5 +158,5 @@ user service (no lingering needed). See [Gateway runbook](/gateway) for the syst
 - [Gateway runbook](/gateway) (flags, supervision, ports)
 - [Gateway configuration](/gateway/configuration) (config schema + examples)
 - [Discord](/channels/discord) and [Telegram](/channels/telegram) (reply tags + replyToMode settings)
-- [MoltBot assistant setup](/start/moltbot)
+- [Razroom assistant setup](/start/razroom)
 - [macOS app](/platforms/macos) (gateway lifecycle)

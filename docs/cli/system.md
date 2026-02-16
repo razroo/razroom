@@ -1,5 +1,5 @@
 ---
-summary: "CLI reference for `moltbot system` (system events, heartbeat, presence)"
+summary: "CLI reference for `razroom system` (system events, heartbeat, presence)"
 read_when:
   - You want to enqueue a system event without creating a cron job
   - You need to enable or disable heartbeats
@@ -7,7 +7,7 @@ read_when:
 title: "system"
 ---
 
-# `moltbot system`
+# `razroom system`
 
 System-level helpers for the Gateway: enqueue system events, control heartbeats,
 and view presence.
@@ -15,10 +15,10 @@ and view presence.
 ## Common commands
 
 ```bash
-moltbot system event --text "Check for urgent follow-ups" --mode now
-moltbot system heartbeat enable
-moltbot system heartbeat last
-moltbot system presence
+razroom system event --text "Check for urgent follow-ups" --mode now
+razroom system heartbeat enable
+razroom system heartbeat last
+razroom system presence
 ```
 
 ## `system event`

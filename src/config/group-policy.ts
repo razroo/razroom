@@ -1,5 +1,5 @@
 import type { ChannelId } from "../channels/plugins/types.js";
-import type { MoltBotConfig } from "./config.js";
+import type { RazroomConfig } from "./config.js";
 import type { GroupToolPolicyBySenderConfig, GroupToolPolicyConfig } from "./types.tools.js";
 import { normalizeAccountId } from "../routing/session-key.js";
 
@@ -119,7 +119,7 @@ export function resolveToolsBySender(
 }
 
 function resolveChannelGroups(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   channel: GroupPolicyChannel,
   accountId?: string | null,
 ): ChannelGroups | undefined {
@@ -144,7 +144,7 @@ function resolveChannelGroups(
 }
 
 export function resolveChannelGroupPolicy(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   channel: GroupPolicyChannel;
   groupId?: string | null;
   accountId?: string | null;
@@ -169,7 +169,7 @@ export function resolveChannelGroupPolicy(params: {
 }
 
 export function resolveChannelGroupRequireMention(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   channel: GroupPolicyChannel;
   groupId?: string | null;
   accountId?: string | null;
@@ -200,7 +200,7 @@ export function resolveChannelGroupRequireMention(params: {
 
 export function resolveChannelGroupToolsPolicy(
   params: {
-    cfg: MoltBotConfig;
+    cfg: RazroomConfig;
     channel: GroupPolicyChannel;
     groupId?: string | null;
     accountId?: string | null;

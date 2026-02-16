@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { describe, expect, it } from "bun:test";
-import { resolveMoltBotAgentDir } from "./agent-paths.js";
+import { resolveRazroomAgentDir } from "./agent-paths.js";
 import {
   CUSTOM_PROXY_MODELS_CONFIG,
   installModelsConfigTestHooks,
@@ -10,7 +10,7 @@ import {
   withTempEnv,
   withModelsTempHome as withTempHome,
 } from "./models-config.e2e-harness.js";
-import { ensureMoltBotModelsJson } from "./models-config.js";
+import { ensureRazroomModelsJson } from "./models-config.js";
 
 installModelsConfigTestHooks();
 
@@ -22,10 +22,10 @@ describe("models-config", () => {
 
         const agentDir = path.join(home, "agent-empty");
         // ensureAuthProfileStore merges the main auth store into non-main dirs; point main at our temp dir.
-        process.env.MOLTBOT_AGENT_DIR = agentDir;
+        process.env.RAZROOM_AGENT_DIR = agentDir;
         process.env.PI_CODING_AGENT_DIR = agentDir;
 
-        const result = await ensureMoltBotModelsJson(
+        const result = await ensureRazroomModelsJson(
           {
             models: { providers: {} },
           },
@@ -40,9 +40,9 @@ describe("models-config", () => {
 
   it("writes models.json for configured providers", async () => {
     await withTempHome(async () => {
-      await ensureMoltBotModelsJson(CUSTOM_PROXY_MODELS_CONFIG);
+      await ensureRazroomModelsJson(CUSTOM_PROXY_MODELS_CONFIG);
 
-      const modelPath = path.join(resolveMoltBotAgentDir(), "models.json");
+      const modelPath = path.join(resolveRazroomAgentDir(), "models.json");
       const raw = await fs.readFile(modelPath, "utf8");
       const parsed = JSON.parse(raw) as {
         providers: Record<string, { baseUrl?: string }>;
@@ -57,9 +57,9 @@ describe("models-config", () => {
       const prevKey = process.env.MINIMAX_API_KEY;
       process.env.MINIMAX_API_KEY = "sk-minimax-test";
       try {
-        await ensureMoltBotModelsJson({});
+        await ensureRazroomModelsJson({});
 
-        const modelPath = path.join(resolveMoltBotAgentDir(), "models.json");
+        const modelPath = path.join(resolveRazroomAgentDir(), "models.json");
         const raw = await fs.readFile(modelPath, "utf8");
         const parsed = JSON.parse(raw) as {
           providers: Record<
@@ -91,9 +91,9 @@ describe("models-config", () => {
       const prevKey = process.env.SYNTHETIC_API_KEY;
       process.env.SYNTHETIC_API_KEY = "sk-synthetic-test";
       try {
-        await ensureMoltBotModelsJson({});
+        await ensureRazroomModelsJson({});
 
-        const modelPath = path.join(resolveMoltBotAgentDir(), "models.json");
+        const modelPath = path.join(resolveRazroomAgentDir(), "models.json");
         const raw = await fs.readFile(modelPath, "utf8");
         const parsed = JSON.parse(raw) as {
           providers: Record<

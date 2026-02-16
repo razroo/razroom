@@ -41,7 +41,7 @@ describe("session store lock (Promise chain mutex)", () => {
   }
 
   beforeAll(async () => {
-    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-lock-test-"));
+    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-lock-test-"));
   });
 
   afterAll(async () => {

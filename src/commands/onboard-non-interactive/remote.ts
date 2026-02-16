@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 import type { RuntimeEnv } from "../../runtime.js";
 import type { OnboardOptions } from "../onboard-types.js";
 import { formatCliCommand } from "../../cli/command-format.js";
@@ -9,7 +9,7 @@ import { applyWizardMetadata } from "../onboard-helpers.js";
 export async function runNonInteractiveOnboardingRemote(params: {
   opts: OnboardOptions;
   runtime: RuntimeEnv;
-  baseConfig: MoltBotConfig;
+  baseConfig: RazroomConfig;
 }) {
   const { opts, runtime, baseConfig } = params;
   const mode = "remote" as const;
@@ -21,7 +21,7 @@ export async function runNonInteractiveOnboardingRemote(params: {
     return;
   }
 
-  let nextConfig: MoltBotConfig = {
+  let nextConfig: RazroomConfig = {
     ...baseConfig,
     gateway: {
       ...baseConfig.gateway,
@@ -47,7 +47,7 @@ export async function runNonInteractiveOnboardingRemote(params: {
     runtime.log(`Remote gateway: ${remoteUrl}`);
     runtime.log(`Auth: ${payload.auth}`);
     runtime.log(
-      `Tip: run \`${formatCliCommand("moltbot configure --section web")}\` to store your Brave API key for web_search. Docs: https://docs.moltbot.ai/tools/web`,
+      `Tip: run \`${formatCliCommand("razroom configure --section web")}\` to store your Brave API key for web_search. Docs: https://docs.razroom.ai/tools/web`,
     );
   }
 }

@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { RuntimeEnv } from "../runtime.js";
 import { getChannelPlugin, listChannelPlugins } from "../channels/plugins/index.js";
 import { formatCliCommand } from "../cli/command-format.js";
@@ -9,9 +9,9 @@ import { confirm, select } from "./configure.shared.js";
 import { guardCancel } from "./onboard-helpers.js";
 
 export async function removeChannelConfigWizard(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   runtime: RuntimeEnv,
-): Promise<MoltBotConfig> {
+): Promise<RazroomConfig> {
   let next = { ...cfg };
 
   const listConfiguredChannels = () =>
@@ -24,8 +24,8 @@ export async function removeChannelConfigWizard(
     if (configured.length === 0) {
       note(
         [
-          "No channel config found in moltbot.json.",
-          `Tip: \`${formatCliCommand("moltbot channels status")}\` shows what is configured and enabled.`,
+          "No channel config found in razroom.json.",
+          `Tip: \`${formatCliCommand("razroom channels status")}\` shows what is configured and enabled.`,
         ].join("\n"),
         "Remove channel",
       );
@@ -68,7 +68,7 @@ export async function removeChannelConfigWizard(
     next = {
       ...next,
       channels: Object.keys(nextChannels).length
-        ? (nextChannels as MoltBotConfig["channels"])
+        ? (nextChannels as RazroomConfig["channels"])
         : undefined,
     };
 

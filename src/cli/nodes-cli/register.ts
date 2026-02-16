@@ -17,7 +17,7 @@ export function registerNodesCli(program: Command) {
     .addHelpText(
       "after",
       () =>
-        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/nodes", "docs.moltbot.ai/cli/nodes")}\n`,
+        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/nodes", "docs.razroom.ai/cli/nodes")}\n`,
     );
 
   registerNodesStatusCommands(nodes);

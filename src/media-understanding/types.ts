@@ -98,7 +98,7 @@ export type ImageDescriptionRequest = {
   profile?: string;
   preferredProfile?: string;
   agentDir: string;
-  cfg: import("../config/config.js").MoltBotConfig;
+  cfg: import("../config/config.js").RazroomConfig;
 };
 
 export type ImageDescriptionResult = {

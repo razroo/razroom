@@ -9,19 +9,19 @@ import { parseKeyValueOutput } from "./runtime-parse.js";
 import { execSchtasks } from "./schtasks-exec.js";
 
 function resolveTaskName(env: Record<string, string | undefined>): string {
-  const override = env.MOLTBOT_WINDOWS_TASK_NAME?.trim();
+  const override = env.RAZROOM_WINDOWS_TASK_NAME?.trim();
   if (override) {
     return override;
   }
-  return resolveGatewayWindowsTaskName(env.MOLTBOT_PROFILE);
+  return resolveGatewayWindowsTaskName(env.RAZROOM_PROFILE);
 }
 
 export function resolveTaskScriptPath(env: Record<string, string | undefined>): string {
-  const override = env.MOLTBOT_TASK_SCRIPT?.trim();
+  const override = env.RAZROOM_TASK_SCRIPT?.trim();
   if (override) {
     return override;
   }
-  const scriptName = env.MOLTBOT_TASK_SCRIPT_NAME?.trim() || "gateway.cmd";
+  const scriptName = env.RAZROOM_TASK_SCRIPT_NAME?.trim() || "gateway.cmd";
   const stateDir = resolveGatewayStateDir(env);
   return path.join(stateDir, scriptName);
 }
@@ -193,8 +193,8 @@ export async function installScheduledTask({
   const taskDescription =
     description ??
     formatGatewayServiceDescription({
-      profile: env.MOLTBOT_PROFILE,
-      version: environment?.MOLTBOT_SERVICE_VERSION ?? env.MOLTBOT_SERVICE_VERSION,
+      profile: env.RAZROOM_PROFILE,
+      version: environment?.RAZROOM_SERVICE_VERSION ?? env.RAZROOM_SERVICE_VERSION,
     });
   const script = buildTaskScript({
     description: taskDescription,

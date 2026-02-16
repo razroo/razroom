@@ -93,7 +93,7 @@ const MemorySchema = z
   .strict()
   .optional();
 
-export const MoltBotSchema = z
+export const RazroomSchema = z
   .object({
     $schema: z.string().optional(),
     meta: z

@@ -1,16 +1,16 @@
 ---
-summary: "MoltBot on DigitalOcean (simple paid VPS option)"
+summary: "Razroom on DigitalOcean (simple paid VPS option)"
 read_when:
-  - Setting up MoltBot on DigitalOcean
-  - Looking for cheap VPS hosting for MoltBot
+  - Setting up Razroom on DigitalOcean
+  - Looking for cheap VPS hosting for Razroom
 title: "DigitalOcean"
 ---
 
-# MoltBot on DigitalOcean
+# Razroom on DigitalOcean
 
 ## Goal
 
-Run a persistent MoltBot Gateway on DigitalOcean for **$6/month** (or $4/mo with reserved pricing).
+Run a persistent Razroom Gateway on DigitalOcean for **$6/month** (or $4/mo with reserved pricing).
 
 If you want a $0/month option and don’t mind ARM + provider-specific setup, see the [Oracle Cloud guide](/platforms/oracle).
 
@@ -56,7 +56,7 @@ If you want a $0/month option and don’t mind ARM + provider-specific setup, se
 ssh root@YOUR_DROPLET_IP
 ```
 
-## 3) Install MoltBot
+## 3) Install Razroom
 
 ```bash
 # Update system
@@ -66,17 +66,17 @@ apt update && apt upgrade -y
 curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
 apt install -y nodejs
 
-# Install MoltBot
-curl -fsSL https://moltbot.ai/install.sh | bash
+# Install Razroom
+curl -fsSL https://razroom.ai/install.sh | bash
 
 # Verify
-moltbot --version
+razroom --version
 ```
 
 ## 4) Run Onboarding
 
 ```bash
-moltbot onboard --install-daemon
+razroom onboard --install-daemon
 ```
 
 The wizard will walk you through:
@@ -90,13 +90,13 @@ The wizard will walk you through:
 
 ```bash
 # Check status
-moltbot status
+razroom status
 
 # Check service
-systemctl --user status moltbot-gateway.service
+systemctl --user status razroom-gateway.service
 
 # View logs
-journalctl --user -u moltbot-gateway.service -f
+journalctl --user -u razroom-gateway.service -f
 ```
 
 ## 6) Access the Dashboard
@@ -120,8 +120,8 @@ curl -fsSL https://tailscale.com/install.sh | sh
 tailscale up
 
 # Configure Gateway to use Tailscale Serve
-moltbot config set gateway.tailscale.mode serve
-moltbot gateway restart
+razroom config set gateway.tailscale.mode serve
+razroom gateway restart
 ```
 
 Open: `https://<magicdns>/`
@@ -134,8 +134,8 @@ Notes:
 **Option C: Tailnet bind (no Serve)**
 
 ```bash
-moltbot config set gateway.bind tailnet
-moltbot gateway restart
+razroom config set gateway.bind tailnet
+razroom gateway restart
 ```
 
 Open: `http://<tailscale-ip>:18789` (token required).
@@ -145,14 +145,14 @@ Open: `http://<tailscale-ip>:18789` (token required).
 ### Telegram
 
 ```bash
-moltbot pairing list telegram
-moltbot pairing approve telegram <CODE>
+razroom pairing list telegram
+razroom pairing approve telegram <CODE>
 ```
 
 ### WhatsApp
 
 ```bash
-moltbot channels login whatsapp
+razroom channels login whatsapp
 # Scan QR code
 ```
 
@@ -194,13 +194,13 @@ htop
 
 All state lives in:
 
-- `~/.moltbot/` — config, credentials, session data
-- `~/.moltbot/workspace/` — workspace (SOUL.md, memory, etc.)
+- `~/.razroom/` — config, credentials, session data
+- `~/.razroom/workspace/` — workspace (SOUL.md, memory, etc.)
 
 These survive reboots. Back them up periodically:
 
 ```bash
-tar -czvf moltbot-backup.tar.gz ~/.moltbot ~/.moltbot/workspace
+tar -czvf razroom-backup.tar.gz ~/.razroom ~/.razroom/workspace
 ```
 
 ---
@@ -230,9 +230,9 @@ For the full setup guide, see [Oracle Cloud](/platforms/oracle). For signup tips
 ### Gateway won't start
 
 ```bash
-moltbot gateway status
-moltbot doctor --non-interactive
-journalctl -u moltbot --no-pager -n 50
+razroom gateway status
+razroom doctor --non-interactive
+journalctl -u razroom --no-pager -n 50
 ```
 
 ### Port already in use

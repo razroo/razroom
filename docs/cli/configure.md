@@ -1,19 +1,19 @@
 ---
-summary: "CLI reference for `moltbot configure` (interactive configuration prompts)"
+summary: "CLI reference for `razroom configure` (interactive configuration prompts)"
 read_when:
   - You want to tweak credentials, devices, or agent defaults interactively
 title: "configure"
 ---
 
-# `moltbot configure`
+# `razroom configure`
 
 Interactive prompt to set up credentials, devices, and agent defaults.
 
 Note: The **Model** section now includes a multi-select for the
 `agents.defaults.models` allowlist (what shows up in `/model` and the model picker).
 
-Tip: `moltbot config` without a subcommand opens the same wizard. Use
-`moltbot config get|set|unset` for non-interactive edits.
+Tip: `razroom config` without a subcommand opens the same wizard. Use
+`razroom config get|set|unset` for non-interactive edits.
 
 Related:
 
@@ -28,6 +28,6 @@ Notes:
 ## Examples
 
 ```bash
-moltbot configure
-moltbot configure --section models --section channels
+razroom configure
+razroom configure --section models --section channels
 ```

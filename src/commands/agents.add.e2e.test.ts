@@ -33,7 +33,7 @@ const runtime: RuntimeEnv = {
 };
 
 const baseSnapshot = {
-  path: "/tmp/moltbot.json",
+  path: "/tmp/razroom.json",
   exists: true,
   raw: "{}",
   parsed: {},

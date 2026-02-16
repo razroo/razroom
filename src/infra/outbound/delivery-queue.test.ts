@@ -16,7 +16,7 @@ import {
 let tmpDir: string;
 
 beforeEach(() => {
-  tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-dq-test-"));
+  tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "razroom-dq-test-"));
 });
 
 afterEach(() => {

@@ -47,7 +47,7 @@ Supported keys:
 - `seed`, `normalize`, `lang`, `output_format`, `latency_tier`
 - `once`
 
-## Config (`~/.moltbot/moltbot.json`)
+## Config (`~/.razroom/razroom.json`)
 
 ```json5
 {

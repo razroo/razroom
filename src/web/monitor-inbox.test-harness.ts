@@ -123,7 +123,7 @@ export function installWebMonitorInboxUnitTestHooks(opts?: { authDir?: boolean }
     const { resetWebInboundDedupe } = await import("./inbound.js");
     resetWebInboundDedupe();
     if (createAuthDir) {
-      authDir = fsSync.mkdtempSync(path.join(os.tmpdir(), "moltbot-auth-"));
+      authDir = fsSync.mkdtempSync(path.join(os.tmpdir(), "razroom-auth-"));
     } else {
       authDir = undefined;
     }

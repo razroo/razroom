@@ -43,22 +43,22 @@ function clearSupervisorHints() {
 }
 
 describe("restartGatewayProcessWithFreshPid", () => {
-  it("returns disabled when MOLTBOT_NO_RESPAWN is set", () => {
-    process.env.MOLTBOT_NO_RESPAWN = "1";
+  it("returns disabled when RAZROOM_NO_RESPAWN is set", () => {
+    process.env.RAZROOM_NO_RESPAWN = "1";
     const result = restartGatewayProcessWithFreshPid();
     expect(result.mode).toBe("disabled");
     expect(spawnMock).not.toHaveBeenCalled();
   });
 
   it("returns supervised when launchd/systemd hints are present", () => {
-    process.env.LAUNCH_JOB_LABEL = "ai.moltbot.gateway";
+    process.env.LAUNCH_JOB_LABEL = "ai.razroom.gateway";
     const result = restartGatewayProcessWithFreshPid();
     expect(result.mode).toBe("supervised");
     expect(spawnMock).not.toHaveBeenCalled();
   });
 
   it("spawns detached child with current exec argv", () => {
-    delete process.env.MOLTBOT_NO_RESPAWN;
+    delete process.env.RAZROOM_NO_RESPAWN;
     clearSupervisorHints();
     process.execArgv = ["--import", "tsx"];
     process.argv = ["/usr/local/bin/node", "/repo/dist/index.js", "gateway", "run"];
@@ -78,7 +78,7 @@ describe("restartGatewayProcessWithFreshPid", () => {
   });
 
   it("returns failed when spawn throws", () => {
-    delete process.env.MOLTBOT_NO_RESPAWN;
+    delete process.env.RAZROOM_NO_RESPAWN;
     clearSupervisorHints();
 
     spawnMock.mockImplementation(() => {

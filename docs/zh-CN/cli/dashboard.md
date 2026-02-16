@@ -2,7 +2,7 @@
 read_when:
   - 想要使用当前令牌打开控制界面
   - 想要打印 URL 而不启动浏览器
-summary: "`moltbot dashboard` 的 CLI 参考（打开控制界面）"
+summary: "`razroom dashboard` 的 CLI 参考（打开控制界面）"
 title: dashboard
 x-i18n:
   generated_at: "2026-02-01T19:58:50Z"
@@ -13,11 +13,11 @@ x-i18n:
   workflow: 14
 ---
 
-# `moltbot dashboard`
+# `razroom dashboard`
 
 使用当前认证信息打开控制界面。
 
 ```bash
-moltbot dashboard
-moltbot dashboard --no-open
+razroom dashboard
+razroom dashboard --no-open
 ```

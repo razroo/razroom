@@ -12,7 +12,7 @@ x-i18n:
   workflow: 15
 ---
 
-# AGENTS.md - MoltBot 工作区
+# AGENTS.md - Razroom 工作区
 
 此文件夹是助手的工作目录。
 

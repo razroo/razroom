@@ -17,10 +17,10 @@ describe("config discord", () => {
 
   it("loads discord guild map + dm group settings", async () => {
     await withTempHome(async (home) => {
-      const configDir = path.join(home, ".moltbot");
+      const configDir = path.join(home, ".razroom");
       await fs.mkdir(configDir, { recursive: true });
       await fs.writeFile(
-        path.join(configDir, "moltbot.json"),
+        path.join(configDir, "razroom.json"),
         JSON.stringify(
           {
             channels: {
@@ -30,7 +30,7 @@ describe("config discord", () => {
                   enabled: true,
                   allowFrom: ["steipete"],
                   groupEnabled: true,
-                  groupChannels: ["moltbot-dm"],
+                  groupChannels: ["razroom-dm"],
                 },
                 actions: {
                   emojiUploads: true,
@@ -39,7 +39,7 @@ describe("config discord", () => {
                 },
                 guilds: {
                   "123": {
-                    slug: "friends-of-moltbot",
+                    slug: "friends-of-razroom",
                     requireMention: false,
                     users: ["steipete"],
                     channels: {
@@ -60,11 +60,11 @@ describe("config discord", () => {
 
       expect(cfg.channels?.discord?.enabled).toBe(true);
       expect(cfg.channels?.discord?.dm?.groupEnabled).toBe(true);
-      expect(cfg.channels?.discord?.dm?.groupChannels).toEqual(["moltbot-dm"]);
+      expect(cfg.channels?.discord?.dm?.groupChannels).toEqual(["razroom-dm"]);
       expect(cfg.channels?.discord?.actions?.emojiUploads).toBe(true);
       expect(cfg.channels?.discord?.actions?.stickerUploads).toBe(false);
       expect(cfg.channels?.discord?.actions?.channels).toBe(true);
-      expect(cfg.channels?.discord?.guilds?.["123"]?.slug).toBe("friends-of-moltbot");
+      expect(cfg.channels?.discord?.guilds?.["123"]?.slug).toBe("friends-of-razroom");
       expect(cfg.channels?.discord?.guilds?.["123"]?.channels?.general?.allow).toBe(true);
     });
   });

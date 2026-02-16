@@ -1,19 +1,19 @@
 ---
-summary: "Run MoltBot through LiteLLM Proxy for unified model access and cost tracking"
+summary: "Run Razroom through LiteLLM Proxy for unified model access and cost tracking"
 read_when:
-  - You want to route MoltBot through a LiteLLM proxy
+  - You want to route Razroom through a LiteLLM proxy
   - You need cost tracking, logging, or model routing through LiteLLM
 ---
 
 # LiteLLM
 
-[LiteLLM](https://litellm.ai) is an open-source LLM gateway that provides a unified API to 100+ model providers. Route MoltBot through LiteLLM to get centralized cost tracking, logging, and the flexibility to switch backends without changing your MoltBot config.
+[LiteLLM](https://litellm.ai) is an open-source LLM gateway that provides a unified API to 100+ model providers. Route Razroom through LiteLLM to get centralized cost tracking, logging, and the flexibility to switch backends without changing your Razroom config.
 
-## Why use LiteLLM with MoltBot?
+## Why use LiteLLM with Razroom?
 
-- **Cost tracking** — See exactly what MoltBot spends across all models
+- **Cost tracking** — See exactly what Razroom spends across all models
 - **Model routing** — Switch between Claude, GPT-4, Gemini, Bedrock without config changes
-- **Virtual keys** — Create keys with spend limits for MoltBot
+- **Virtual keys** — Create keys with spend limits for Razroom
 - **Logging** — Full request/response logs for debugging
 - **Fallbacks** — Automatic failover if your primary provider is down
 
@@ -22,7 +22,7 @@ read_when:
 ### Via onboarding
 
 ```bash
-moltbot onboard --auth-choice litellm-api-key
+razroom onboard --auth-choice litellm-api-key
 ```
 
 ### Manual setup
@@ -34,15 +34,15 @@ pip install 'litellm[proxy]'
 litellm --model claude-opus-4-6
 ```
 
-2. Point MoltBot to LiteLLM:
+2. Point Razroom to LiteLLM:
 
 ```bash
 export LITELLM_API_KEY="your-litellm-key"
 
-moltbot
+razroom
 ```
 
-That's it. MoltBot now routes through LiteLLM.
+That's it. Razroom now routes through LiteLLM.
 
 ## Configuration
 
@@ -93,14 +93,14 @@ export LITELLM_API_KEY="sk-litellm-key"
 
 ## Virtual keys
 
-Create a dedicated key for MoltBot with spend limits:
+Create a dedicated key for Razroom with spend limits:
 
 ```bash
 curl -X POST "http://localhost:4000/key/generate" \
   -H "Authorization: Bearer $LITELLM_MASTER_KEY" \
   -H "Content-Type: application/json" \
   -d '{
-    "key_alias": "moltbot",
+    "key_alias": "razroom",
     "max_budget": 50.00,
     "budget_duration": "monthly"
   }'
@@ -125,7 +125,7 @@ model_list:
       api_key: os.environ/OPENAI_API_KEY
 ```
 
-MoltBot keeps requesting `claude-opus-4-6` — LiteLLM handles the routing.
+Razroom keeps requesting `claude-opus-4-6` — LiteLLM handles the routing.
 
 ## Viewing usage
 
@@ -144,8 +144,8 @@ curl "http://localhost:4000/spend/logs" \
 ## Notes
 
 - LiteLLM runs on `http://localhost:4000` by default
-- MoltBot connects via the OpenAI-compatible `/v1/chat/completions` endpoint
-- All MoltBot features work through LiteLLM — no limitations
+- Razroom connects via the OpenAI-compatible `/v1/chat/completions` endpoint
+- All Razroom features work through LiteLLM — no limitations
 
 ## See also
 

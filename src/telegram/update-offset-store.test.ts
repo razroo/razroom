@@ -5,16 +5,16 @@ import { describe, expect, it } from "bun:test";
 import { readTelegramUpdateOffset, writeTelegramUpdateOffset } from "./update-offset-store.js";
 
 async function withTempStateDir<T>(fn: (dir: string) => Promise<T>) {
-  const previous = process.env.MOLTBOT_STATE_DIR;
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-telegram-"));
-  process.env.MOLTBOT_STATE_DIR = dir;
+  const previous = process.env.RAZROOM_STATE_DIR;
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-telegram-"));
+  process.env.RAZROOM_STATE_DIR = dir;
   try {
     return await fn(dir);
   } finally {
     if (previous === undefined) {
-      delete process.env.MOLTBOT_STATE_DIR;
+      delete process.env.RAZROOM_STATE_DIR;
     } else {
-      process.env.MOLTBOT_STATE_DIR = previous;
+      process.env.RAZROOM_STATE_DIR = previous;
     }
     await fs.rm(dir, { recursive: true, force: true });
   }

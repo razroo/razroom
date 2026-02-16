@@ -1,4 +1,4 @@
-import type { MoltBotPluginApi } from "moltbot/plugin-sdk";
+import type { RazroomPluginApi } from "razroom/plugin-sdk";
 import { Type } from "@sinclair/typebox";
 import type { FeishuConfig } from "./types.js";
 import { createFeishuClient } from "./client.js";
@@ -309,7 +309,7 @@ const UpdateRecordSchema = Type.Object({
 
 // ============ Tool Registration ============
 
-export function registerFeishuBitableTools(api: MoltBotPluginApi) {
+export function registerFeishuBitableTools(api: RazroomPluginApi) {
   const feishuCfg = api.config?.channels?.feishu as FeishuConfig | undefined;
   if (!feishuCfg?.appId || !feishuCfg?.appSecret) {
     api.logger.debug?.("feishu_bitable: Feishu credentials not configured, skipping bitable tools");

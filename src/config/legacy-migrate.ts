@@ -1,9 +1,9 @@
-import type { MoltBotConfig } from "./types.js";
+import type { RazroomConfig } from "./types.js";
 import { applyLegacyMigrations } from "./legacy.js";
 import { validateConfigObjectWithPlugins } from "./validation.js";
 
 export function migrateLegacyConfig(raw: unknown): {
-  config: MoltBotConfig | null;
+  config: RazroomConfig | null;
   changes: string[];
 } {
   const { next, changes } = applyLegacyMigrations(raw);

@@ -25,7 +25,7 @@ x-i18n:
 ## 简要概述
 
 - 定时任务运行在 **Gateway网关内部**（而非模型内部）。
-- 任务持久化存储在 `~/.moltbot/cron/` 下，因此重启不会丢失计划。
+- 任务持久化存储在 `~/.razroom/cron/` 下，因此重启不会丢失计划。
 - 两种执行方式：
   - **主会话**：入队一个系统事件，然后在下一次心跳时运行。
   - **隔离式**：在 `cron:<jobId>` 中运行专用智能体轮次，可投递摘要（默认 announce）或不投递。
@@ -36,7 +36,7 @@ x-i18n:
 创建一个一次性提醒，验证其存在，然后立即运行：
 
 ```bash
-moltbot cron add \
+razroom cron add \
   --name "Reminder" \
   --at "2026-02-01T16:00:00Z" \
   --session main \
@@ -44,15 +44,15 @@ moltbot cron add \
   --wake now \
   --delete-after-run
 
-moltbot cron list
-moltbot cron run <job-id> --force
-moltbot cron runs --id <job-id>
+razroom cron list
+razroom cron run <job-id> --force
+razroom cron runs --id <job-id>
 ```
 
 调度一个带投递功能的周期性隔离任务：
 
 ```bash
-moltbot cron add \
+razroom cron add \
   --name "Morning brief" \
   --cron "0 7 * * *" \
   --tz "America/Los_Angeles" \
@@ -69,7 +69,7 @@ moltbot cron add \
 
 ## 定时任务的存储位置
 
-定时任务默认持久化存储在 Gateway网关主机的 `~/.moltbot/cron/jobs.json` 中。Gateway网关将文件加载到内存中，并在更改时写回，因此仅在 Gateway网关停止时手动编辑才是安全的。请优先使用 `moltbot cron add/edit` 或定时任务工具调用 API 进行更改。
+定时任务默认持久化存储在 Gateway网关主机的 `~/.razroom/cron/jobs.json` 中。Gateway网关将文件加载到内存中，并在更改时写回，因此仅在 Gateway网关停止时手动编辑才是安全的。请优先使用 `razroom cron add/edit` 或定时任务工具调用 API 进行更改。
 
 ## 新手友好概述
 
@@ -276,8 +276,8 @@ Telegram 通过 `message_thread_id` 支持论坛主题。对于定时任务投�
 
 ## 存储与历史
 
-- 任务存储：`~/.moltbot/cron/jobs.json`（Gateway网关管理的 JSON）。
-- 运行历史：`~/.moltbot/cron/runs/<jobId>.jsonl`（JSONL，自动清理）。
+- 任务存储：`~/.razroom/cron/jobs.json`（Gateway网关管理的 JSON）。
+- 运行历史：`~/.razroom/cron/runs/<jobId>.jsonl`（JSONL，自动清理）。
 - 覆盖存储路径：配置中的 `cron.store`。
 
 ## 配置
@@ -286,7 +286,7 @@ Telegram 通过 `message_thread_id` 支持论坛主题。对于定时任务投�
 {
   cron: {
     enabled: true, // 默认 true
-    store: "~/.moltbot/cron/jobs.json",
+    store: "~/.razroom/cron/jobs.json",
     maxConcurrentRuns: 1, // 默认 1
   },
 }
@@ -295,14 +295,14 @@ Telegram 通过 `message_thread_id` 支持论坛主题。对于定时任务投�
 完全禁用定时任务：
 
 - `cron.enabled: false`（配置）
-- `MOLTBOT_SKIP_CRON=1`（环境变量）
+- `RAZROOM_SKIP_CRON=1`（环境变量）
 
 ## CLI 快速开始
 
 一次性提醒（UTC ISO，成功后自动删除）：
 
 ```bash
-moltbot cron add \
+razroom cron add \
   --name "Send reminder" \
   --at "2026-01-12T18:00:00Z" \
   --session main \
@@ -314,7 +314,7 @@ moltbot cron add \
 一次性提醒（主会话，立即唤醒）：
 
 ```bash
-moltbot cron add \
+razroom cron add \
   --name "Calendar check" \
   --at "20m" \
   --session main \
@@ -325,7 +325,7 @@ moltbot cron add \
 周期性隔离任务（投递到 WhatsApp）：
 
 ```bash
-moltbot cron add \
+razroom cron add \
   --name "Morning status" \
   --cron "0 7 * * *" \
   --tz "America/Los_Angeles" \
@@ -339,7 +339,7 @@ moltbot cron add \
 周期性隔离任务（投递到 Telegram 主题）：
 
 ```bash
-moltbot cron add \
+razroom cron add \
   --name "Nightly summary (topic)" \
   --cron "0 22 * * *" \
   --tz "America/Los_Angeles" \
@@ -353,7 +353,7 @@ moltbot cron add \
 带模型和思维覆盖的隔离任务：
 
 ```bash
-moltbot cron add \
+razroom cron add \
   --name "Deep analysis" \
   --cron "0 6 * * 1" \
   --tz "America/Los_Angeles" \
@@ -370,23 +370,23 @@ moltbot cron add \
 
 ```bash
 # 将任务绑定到智能体 "ops"（如果该智能体不存在则回退到默认智能体）
-moltbot cron add --name "Ops sweep" --cron "0 6 * * *" --session isolated --message "Check ops queue" --agent ops
+razroom cron add --name "Ops sweep" --cron "0 6 * * *" --session isolated --message "Check ops queue" --agent ops
 
 # 切换或清除现有任务的智能体
-moltbot cron edit <jobId> --agent ops
-moltbot cron edit <jobId> --clear-agent
+razroom cron edit <jobId> --agent ops
+razroom cron edit <jobId> --clear-agent
 ```
 
 手动运行（调试）：
 
 ```bash
-moltbot cron run <jobId> --force
+razroom cron run <jobId> --force
 ```
 
 编辑现有任务（补丁字段）：
 
 ```bash
-moltbot cron edit <jobId> \
+razroom cron edit <jobId> \
   --message "Updated prompt" \
   --model "opus" \
   --thinking low
@@ -395,26 +395,26 @@ moltbot cron edit <jobId> \
 运行历史：
 
 ```bash
-moltbot cron runs --id <jobId> --limit 50
+razroom cron runs --id <jobId> --limit 50
 ```
 
 不创建任务直接发送系统事件：
 
 ```bash
-moltbot system event --mode now --text "Next heartbeat: check battery."
+razroom system event --mode now --text "Next heartbeat: check battery."
 ```
 
 ## Gateway网关 API 接口
 
 - `cron.list`、`cron.status`、`cron.add`、`cron.update`、`cron.remove`
 - `cron.run`（强制或到期）、`cron.runs`
-  如需不创建任务直接发送系统事件，请使用 [`moltbot system event`](/cli/system)。
+  如需不创建任务直接发送系统事件，请使用 [`razroom system event`](/cli/system)。
 
 ## 故障排除
 
 ### "没有任何任务运行"
 
-- 检查定时任务是否已启用：`cron.enabled` 和 `MOLTBOT_SKIP_CRON`。
+- 检查定时任务是否已启用：`cron.enabled` 和 `RAZROOM_SKIP_CRON`。
 - 检查 Gateway网关是否持续运行（定时任务运行在 Gateway网关进程内部）。
 - 对于 `cron` 调度：确认时区（`--tz`）与主机时区的关系。
 

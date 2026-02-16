@@ -28,8 +28,8 @@ let port = 0;
 let previousToken: string | undefined;
 
 beforeAll(async () => {
-  previousToken = process.env.MOLTBOT_GATEWAY_TOKEN;
-  delete process.env.MOLTBOT_GATEWAY_TOKEN;
+  previousToken = process.env.RAZROOM_GATEWAY_TOKEN;
+  delete process.env.RAZROOM_GATEWAY_TOKEN;
   port = await getFreePort();
   server = await startGatewayServer(port);
 });
@@ -37,9 +37,9 @@ beforeAll(async () => {
 afterAll(async () => {
   await server.close();
   if (previousToken === undefined) {
-    delete process.env.MOLTBOT_GATEWAY_TOKEN;
+    delete process.env.RAZROOM_GATEWAY_TOKEN;
   } else {
-    process.env.MOLTBOT_GATEWAY_TOKEN = previousToken;
+    process.env.RAZROOM_GATEWAY_TOKEN = previousToken;
   }
 });
 
@@ -219,9 +219,9 @@ describe("gateway server health/presence", () => {
   });
 
   test("presence includes client fingerprint", async () => {
-    const identityPath = path.join(os.tmpdir(), `moltbot-device-${randomUUID()}.json`);
+    const identityPath = path.join(os.tmpdir(), `razroom-device-${randomUUID()}.json`);
     const identity = loadOrCreateDeviceIdentity(identityPath);
-    const token = process.env.MOLTBOT_GATEWAY_TOKEN?.trim() || undefined;
+    const token = process.env.RAZROOM_GATEWAY_TOKEN?.trim() || undefined;
     const role = "operator";
     const scopes: string[] = ["operator.admin"];
     const signedAtMs = Date.now();

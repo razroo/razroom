@@ -8,7 +8,7 @@ title: "Bonjour Discovery"
 
 # Bonjour / mDNS discovery
 
-MoltBot uses Bonjour (mDNS / DNS‑SD) as a **LAN‑only convenience** to discover
+Razroom uses Bonjour (mDNS / DNS‑SD) as a **LAN‑only convenience** to discover
 an active Gateway (WebSocket endpoint). It is best‑effort and does **not** replace SSH or
 Tailnet-based connectivity.
 
@@ -21,12 +21,12 @@ boundary. You can keep the same discovery UX by switching to **unicast DNS‑SD*
 High‑level steps:
 
 1. Run a DNS server on the gateway host (reachable over Tailnet).
-2. Publish DNS‑SD records for `_moltbot-gw._tcp` under a dedicated zone
-   (example: `moltbot.internal.`).
+2. Publish DNS‑SD records for `_razroom-gw._tcp` under a dedicated zone
+   (example: `razroom.internal.`).
 3. Configure Tailscale **split DNS** so your chosen domain resolves via that
    DNS server for clients (including iOS).
 
-MoltBot supports any discovery domain; `moltbot.internal.` is just an example.
+Razroom supports any discovery domain; `razroom.internal.` is just an example.
 iOS/Android nodes browse both `local.` and your configured wide‑area domain.
 
 ### Gateway config (recommended)
@@ -41,19 +41,19 @@ iOS/Android nodes browse both `local.` and your configured wide‑area domain.
 ### One‑time DNS server setup (gateway host)
 
 ```bash
-moltbot dns setup --apply
+razroom dns setup --apply
 ```
 
 This installs CoreDNS and configures it to:
 
 - listen on port 53 only on the gateway’s Tailscale interfaces
-- serve your chosen domain (example: `moltbot.internal.`) from `~/.moltbot/dns/<domain>.db`
+- serve your chosen domain (example: `razroom.internal.`) from `~/.razroom/dns/<domain>.db`
 
 Validate from a tailnet‑connected machine:
 
 ```bash
-dns-sd -B _moltbot-gw._tcp moltbot.internal.
-dig @<TAILNET_IPV4> -p 53 _moltbot-gw._tcp.moltbot.internal PTR +short
+dns-sd -B _razroom-gw._tcp razroom.internal.
+dig @<TAILNET_IPV4> -p 53 _razroom-gw._tcp.razroom.internal PTR +short
 ```
 
 ### Tailscale DNS settings
@@ -64,7 +64,7 @@ In the Tailscale admin console:
 - Add split DNS so your discovery domain uses that nameserver.
 
 Once clients accept tailnet DNS, iOS nodes can browse
-`_moltbot-gw._tcp` in your discovery domain without multicast.
+`_razroom-gw._tcp` in your discovery domain without multicast.
 
 ### Gateway listener security (recommended)
 
@@ -73,16 +73,16 @@ access, bind explicitly and keep auth enabled.
 
 For tailnet‑only setups:
 
-- Set `gateway.bind: "tailnet"` in `~/.moltbot/moltbot.json`.
+- Set `gateway.bind: "tailnet"` in `~/.razroom/razroom.json`.
 - Restart the Gateway (or restart the macOS menubar app).
 
 ## What advertises
 
-Only the Gateway advertises `_moltbot-gw._tcp`.
+Only the Gateway advertises `_razroom-gw._tcp`.
 
 ## Service types
 
-- `_moltbot-gw._tcp` — gateway transport beacon (used by macOS/iOS/Android nodes).
+- `_razroom-gw._tcp` — gateway transport beacon (used by macOS/iOS/Android nodes).
 
 ## TXT keys (non‑secret hints)
 
@@ -97,7 +97,7 @@ The Gateway advertises small non‑secret hints to make UI flows convenient:
 - `canvasPort=<port>` (only when the canvas host is enabled; currently the same as `gatewayPort`)
 - `sshPort=<port>` (defaults to 22 when not overridden)
 - `transport=gateway`
-- `cliPath=<path>` (optional; absolute path to a runnable `moltbot` entrypoint)
+- `cliPath=<path>` (optional; absolute path to a runnable `razroom` entrypoint)
 - `tailnetDns=<magicdns>` (optional hint when Tailnet is available)
 
 Security notes:
@@ -114,13 +114,13 @@ Useful built‑in tools:
 - Browse instances:
 
   ```bash
-  dns-sd -B _moltbot-gw._tcp local.
+  dns-sd -B _razroom-gw._tcp local.
   ```
 
 - Resolve one instance (replace `<instance>`):
 
   ```bash
-  dns-sd -L "<instance>" _moltbot-gw._tcp local.
+  dns-sd -L "<instance>" _razroom-gw._tcp local.
   ```
 
 If browsing works but resolving fails, you’re usually hitting a LAN policy or
@@ -137,7 +137,7 @@ The Gateway writes a rolling log file (printed on startup as
 
 ## Debugging on iOS node
 
-The iOS node uses `NWBrowser` to discover `_moltbot-gw._tcp`.
+The iOS node uses `NWBrowser` to discover `_razroom-gw._tcp`.
 
 To capture logs:
 
@@ -165,11 +165,11 @@ sequences (e.g. spaces become `\032`).
 
 ## Disabling / configuration
 
-- `MOLTBOT_DISABLE_BONJOUR=1` disables advertising (legacy: `MOLTBOT_DISABLE_BONJOUR`).
-- `gateway.bind` in `~/.moltbot/moltbot.json` controls the Gateway bind mode.
-- `MOLTBOT_SSH_PORT` overrides the SSH port advertised in TXT (legacy: `MOLTBOT_SSH_PORT`).
-- `MOLTBOT_TAILNET_DNS` publishes a MagicDNS hint in TXT (legacy: `MOLTBOT_TAILNET_DNS`).
-- `MOLTBOT_CLI_PATH` overrides the advertised CLI path (legacy: `MOLTBOT_CLI_PATH`).
+- `RAZROOM_DISABLE_BONJOUR=1` disables advertising (legacy: `RAZROOM_DISABLE_BONJOUR`).
+- `gateway.bind` in `~/.razroom/razroom.json` controls the Gateway bind mode.
+- `RAZROOM_SSH_PORT` overrides the SSH port advertised in TXT (legacy: `RAZROOM_SSH_PORT`).
+- `RAZROOM_TAILNET_DNS` publishes a MagicDNS hint in TXT (legacy: `RAZROOM_TAILNET_DNS`).
+- `RAZROOM_CLI_PATH` overrides the advertised CLI path (legacy: `RAZROOM_CLI_PATH`).
 
 ## Related docs
 

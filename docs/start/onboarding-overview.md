@@ -1,5 +1,5 @@
 ---
-summary: "Overview of MoltBot onboarding options and flows"
+summary: "Overview of Razroom onboarding options and flows"
 read_when:
   - Choosing an onboarding path
   - Setting up a new environment
@@ -9,7 +9,7 @@ sidebarTitle: "Onboarding Overview"
 
 # Onboarding Overview
 
-MoltBot supports multiple onboarding paths depending on where the Gateway runs
+Razroom supports multiple onboarding paths depending on where the Gateway runs
 and how you prefer to configure providers.
 
 ## Choose your onboarding path
@@ -22,18 +22,18 @@ and how you prefer to configure providers.
 Run the wizard in a terminal:
 
 ```bash
-moltbot onboard
+razroom onboard
 ```
 
 Use the CLI wizard when you want full control of the Gateway, workspace,
 channels, and skills. Docs:
 
 - [Onboarding Wizard (CLI)](/start/wizard)
-- [`moltbot onboard` command](/cli/onboard)
+- [`razroom onboard` command](/cli/onboard)
 
 ## macOS app onboarding
 
-Use the MoltBot app when you want a fully guided setup on macOS. Docs:
+Use the Razroom app when you want a fully guided setup on macOS. Docs:
 
 - [Onboarding (macOS App)](/start/onboarding)
 

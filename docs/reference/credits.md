@@ -7,7 +7,7 @@ title: "Credits"
 
 ## The name
 
-MoltBot = CLAW + TARDIS, because every space lobster needs a time and space machine.
+Razroom = CLAW + TARDIS, because every space lobster needs a time and space machine.
 
 ## Credits
 

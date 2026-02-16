@@ -42,7 +42,7 @@ async function createLargeTestJpeg(): Promise<{ buffer: Buffer; file: string }> 
 }
 
 beforeAll(async () => {
-  fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-media-test-"));
+  fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-media-test-"));
   largeJpegBuffer = await sharp({
     create: {
       width: 800,
@@ -98,22 +98,22 @@ afterEach(() => {
 
 describe("web media loading", () => {
   beforeAll(() => {
-    // Ensure state dir is stable and not influenced by other tests that stub MOLTBOT_STATE_DIR.
+    // Ensure state dir is stable and not influenced by other tests that stub RAZROOM_STATE_DIR.
     // Also keep it outside os.tmpdir() so tmpdir localRoots doesn't accidentally make all state readable.
-    previousStateDir = process.env.MOLTBOT_STATE_DIR;
-    process.env.MOLTBOT_STATE_DIR = path.join(
+    previousStateDir = process.env.RAZROOM_STATE_DIR;
+    process.env.RAZROOM_STATE_DIR = path.join(
       path.parse(os.tmpdir()).root,
       "var",
       "lib",
-      "moltbot-media-state-test",
+      "razroom-media-state-test",
     );
   });
 
   afterAll(() => {
     if (previousStateDir === undefined) {
-      delete process.env.MOLTBOT_STATE_DIR;
+      delete process.env.RAZROOM_STATE_DIR;
     } else {
-      process.env.MOLTBOT_STATE_DIR = previousStateDir;
+      process.env.RAZROOM_STATE_DIR = previousStateDir;
     }
   });
 
@@ -366,7 +366,7 @@ describe("local media root guard", () => {
     ).rejects.toThrow(/refuses filesystem root/i);
   });
 
-  it("allows default MoltBot state workspace and sandbox roots", async () => {
+  it("allows default Razroom state workspace and sandbox roots", async () => {
     const { resolveStateDir } = await import("../config/paths.js");
     const stateDir = resolveStateDir();
     const readFile = mock(async () => Buffer.from("generated-media"));
@@ -394,7 +394,7 @@ describe("local media root guard", () => {
     );
   });
 
-  it("rejects default MoltBot state per-agent workspace-* roots without explicit local roots", async () => {
+  it("rejects default Razroom state per-agent workspace-* roots without explicit local roots", async () => {
     const { resolveStateDir } = await import("../config/paths.js");
     const stateDir = resolveStateDir();
     const readFile = mock(async () => Buffer.from("generated-media"));

@@ -1,11 +1,11 @@
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { ChannelAccountSnapshot } from "./plugins/types.core.js";
 import type { ChannelPlugin } from "./plugins/types.plugin.js";
 
 export function buildChannelAccountSnapshot(params: {
   plugin: ChannelPlugin;
   account: unknown;
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   accountId: string;
   enabled: boolean;
   configured: boolean;
@@ -21,7 +21,7 @@ export function buildChannelAccountSnapshot(params: {
 
 export function formatChannelAllowFrom(params: {
   plugin: ChannelPlugin;
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   accountId?: string | null;
   allowFrom: Array<string | number>;
 }): string[] {

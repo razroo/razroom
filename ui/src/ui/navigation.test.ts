@@ -72,7 +72,7 @@ describe("subtitleForTab", () => {
 
   it("returns descriptive subtitles", () => {
     expect(subtitleForTab("chat")).toContain("chat session");
-    expect(subtitleForTab("config")).toContain("moltbot.json");
+    expect(subtitleForTab("config")).toContain("razroom.json");
   });
 });
 
@@ -94,7 +94,7 @@ describe("normalizeBasePath", () => {
   });
 
   it("handles nested paths", () => {
-    expect(normalizeBasePath("/apps/moltbot")).toBe("/apps/moltbot");
+    expect(normalizeBasePath("/apps/razroom")).toBe("/apps/razroom");
   });
 });
 
@@ -121,7 +121,7 @@ describe("pathForTab", () => {
 
   it("prepends base path", () => {
     expect(pathForTab("chat", "/ui")).toBe("/ui/chat");
-    expect(pathForTab("sessions", "/apps/moltbot")).toBe("/apps/moltbot/sessions");
+    expect(pathForTab("sessions", "/apps/razroom")).toBe("/apps/razroom/sessions");
   });
 });
 
@@ -138,7 +138,7 @@ describe("tabFromPath", () => {
 
   it("handles base paths", () => {
     expect(tabFromPath("/ui/chat", "/ui")).toBe("chat");
-    expect(tabFromPath("/apps/moltbot/sessions", "/apps/moltbot")).toBe("sessions");
+    expect(tabFromPath("/apps/razroom/sessions", "/apps/razroom")).toBe("sessions");
   });
 
   it("returns null for unknown path", () => {
@@ -163,7 +163,7 @@ describe("inferBasePathFromPathname", () => {
 
   it("infers base path from nested paths", () => {
     expect(inferBasePathFromPathname("/ui/chat")).toBe("/ui");
-    expect(inferBasePathFromPathname("/apps/moltbot/sessions")).toBe("/apps/moltbot");
+    expect(inferBasePathFromPathname("/apps/razroom/sessions")).toBe("/apps/razroom");
   });
 
   it("handles index.html suffix", () => {

@@ -30,9 +30,9 @@ const NOW = Date.now();
 
 function createContainer(overrides: Partial<SandboxContainerInfo> = {}): SandboxContainerInfo {
   return {
-    containerName: "moltbot-sandbox-test",
+    containerName: "razroom-sandbox-test",
     sessionKey: "test-session",
-    image: "moltbot/sandbox:latest",
+    image: "razroom/sandbox:latest",
     imageMatch: true,
     running: true,
     createdAtMs: NOW - 3600000,
@@ -43,9 +43,9 @@ function createContainer(overrides: Partial<SandboxContainerInfo> = {}): Sandbox
 
 function createBrowser(overrides: Partial<SandboxBrowserInfo> = {}): SandboxBrowserInfo {
   return {
-    containerName: "moltbot-browser-test",
+    containerName: "razroom-browser-test",
     sessionKey: "test-session",
-    image: "moltbot/browser:latest",
+    image: "razroom/browser:latest",
     imageMatch: true,
     running: true,
     createdAtMs: NOW - 3600000,

@@ -1,4 +1,4 @@
-import type { ClawdbotConfig } from "moltbot/plugin-sdk";
+import type { ClawdbotConfig } from "razroom/plugin-sdk";
 import fs from "fs";
 import os from "os";
 import path from "path";

@@ -76,7 +76,7 @@ Implementation:
 ## Global rule: inter-session input provenance
 
 When an agent sends a prompt into another session via `sessions_send` (including
-agent-to-agent reply/announce steps), MoltBot persists the created user turn with:
+agent-to-agent reply/announce steps), Razroom persists the created user turn with:
 
 - `message.provenance.kind = "inter_session"`
 
@@ -84,7 +84,7 @@ This metadata is written at transcript append time and does not change role
 (`role: "user"` remains for provider compatibility). Transcript readers can use
 this to avoid treating routed internal prompts as end-user-authored instructions.
 
-During context rebuild, MoltBot also prepends a short `[Inter-session message]`
+During context rebuild, Razroom also prepends a short `[Inter-session message]`
 marker to those user turns in-memory so the model can distinguish them from
 external end-user instructions.
 
@@ -131,7 +131,7 @@ external end-user instructions.
 
 ## Historical behavior (pre-2026.1.22)
 
-Before the 2026.1.22 release, MoltBot applied multiple layers of transcript hygiene:
+Before the 2026.1.22 release, Razroom applied multiple layers of transcript hygiene:
 
 - A **transcript-sanitize extension** ran on every context build and could:
   - Repair tool use/result pairing.

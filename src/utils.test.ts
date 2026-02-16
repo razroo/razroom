@@ -42,7 +42,7 @@ describe("withWhatsAppPrefix", () => {
 
 describe("ensureDir", () => {
   it("creates nested directory", async () => {
-    const tmp = await fs.promises.mkdtemp(path.join(os.tmpdir(), "moltbot-test-"));
+    const tmp = await fs.promises.mkdtemp(path.join(os.tmpdir(), "razroom-test-"));
     const target = path.join(tmp, "nested", "dir");
     await ensureDir(target);
     expect(fs.existsSync(target)).toBe(true);
@@ -93,7 +93,7 @@ describe("jidToE164", () => {
   });
 
   it("maps @lid from authDir mapping files", () => {
-    const authDir = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-auth-"));
+    const authDir = fs.mkdtempSync(path.join(os.tmpdir(), "razroom-auth-"));
     const mappingPath = path.join(authDir, "lid-mapping-456_reverse.json");
     fs.writeFileSync(mappingPath, JSON.stringify("5559876"));
     expect(jidToE164("456@lid", { authDir })).toBe("+5559876");
@@ -101,7 +101,7 @@ describe("jidToE164", () => {
   });
 
   it("maps @hosted.lid from authDir mapping files", () => {
-    const authDir = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-auth-"));
+    const authDir = fs.mkdtempSync(path.join(os.tmpdir(), "razroom-auth-"));
     const mappingPath = path.join(authDir, "lid-mapping-789_reverse.json");
     fs.writeFileSync(mappingPath, JSON.stringify(4440001));
     expect(jidToE164("789@hosted.lid", { authDir })).toBe("+4440001");
@@ -113,8 +113,8 @@ describe("jidToE164", () => {
   });
 
   it("falls back through lidMappingDirs in order", () => {
-    const first = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-lid-a-"));
-    const second = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-lid-b-"));
+    const first = fs.mkdtempSync(path.join(os.tmpdir(), "razroom-lid-a-"));
+    const second = fs.mkdtempSync(path.join(os.tmpdir(), "razroom-lid-b-"));
     const mappingPath = path.join(second, "lid-mapping-321_reverse.json");
     fs.writeFileSync(mappingPath, JSON.stringify("123321"));
     expect(jidToE164("321@lid", { lidMappingDirs: [first, second] })).toBe("+123321");
@@ -124,10 +124,10 @@ describe("jidToE164", () => {
 });
 
 describe("resolveConfigDir", () => {
-  it("prefers ~/.moltbot when legacy dir is missing", async () => {
-    const root = await fs.promises.mkdtemp(path.join(os.tmpdir(), "moltbot-config-dir-"));
+  it("prefers ~/.razroom when legacy dir is missing", async () => {
+    const root = await fs.promises.mkdtemp(path.join(os.tmpdir(), "razroom-config-dir-"));
     try {
-      const newDir = path.join(root, ".moltbot");
+      const newDir = path.join(root, ".razroom");
       await fs.promises.mkdir(newDir, { recursive: true });
       const resolved = resolveConfigDir({} as NodeJS.ProcessEnv, () => root);
       expect(resolved).toBe(newDir);
@@ -138,23 +138,23 @@ describe("resolveConfigDir", () => {
 });
 
 describe("resolveHomeDir", () => {
-  it("prefers MOLTBOT_HOME over HOME", () => {
-    vi.stubEnv("MOLTBOT_HOME", "/srv/moltbot-home");
+  it("prefers RAZROOM_HOME over HOME", () => {
+    vi.stubEnv("RAZROOM_HOME", "/srv/razroom-home");
     vi.stubEnv("HOME", "/home/other");
 
-    expect(resolveHomeDir()).toBe(path.resolve("/srv/moltbot-home"));
+    expect(resolveHomeDir()).toBe(path.resolve("/srv/razroom-home"));
 
     vi.unstubAllEnvs();
   });
 });
 
 describe("shortenHomePath", () => {
-  it("uses $MOLTBOT_HOME prefix when MOLTBOT_HOME is set", () => {
-    vi.stubEnv("MOLTBOT_HOME", "/srv/moltbot-home");
+  it("uses $RAZROOM_HOME prefix when RAZROOM_HOME is set", () => {
+    vi.stubEnv("RAZROOM_HOME", "/srv/razroom-home");
     vi.stubEnv("HOME", "/home/other");
 
-    expect(shortenHomePath(`${path.resolve("/srv/moltbot-home")}/.moltbot/moltbot.json`)).toBe(
-      "$MOLTBOT_HOME/.moltbot/moltbot.json",
+    expect(shortenHomePath(`${path.resolve("/srv/razroom-home")}/.razroom/razroom.json`)).toBe(
+      "$RAZROOM_HOME/.razroom/razroom.json",
     );
 
     vi.unstubAllEnvs();
@@ -162,13 +162,13 @@ describe("shortenHomePath", () => {
 });
 
 describe("shortenHomeInString", () => {
-  it("uses $MOLTBOT_HOME replacement when MOLTBOT_HOME is set", () => {
-    vi.stubEnv("MOLTBOT_HOME", "/srv/moltbot-home");
+  it("uses $RAZROOM_HOME replacement when RAZROOM_HOME is set", () => {
+    vi.stubEnv("RAZROOM_HOME", "/srv/razroom-home");
     vi.stubEnv("HOME", "/home/other");
 
     expect(
-      shortenHomeInString(`config: ${path.resolve("/srv/moltbot-home")}/.moltbot/moltbot.json`),
-    ).toBe("config: $MOLTBOT_HOME/.moltbot/moltbot.json");
+      shortenHomeInString(`config: ${path.resolve("/srv/razroom-home")}/.razroom/razroom.json`),
+    ).toBe("config: $RAZROOM_HOME/.razroom/razroom.json");
 
     vi.unstubAllEnvs();
   });
@@ -198,18 +198,18 @@ describe("resolveUserPath", () => {
   });
 
   it("expands ~/ to home dir", () => {
-    expect(resolveUserPath("~/moltbot")).toBe(path.resolve(os.homedir(), "moltbot"));
+    expect(resolveUserPath("~/razroom")).toBe(path.resolve(os.homedir(), "razroom"));
   });
 
   it("resolves relative paths", () => {
     expect(resolveUserPath("tmp/dir")).toBe(path.resolve("tmp/dir"));
   });
 
-  it("prefers MOLTBOT_HOME for tilde expansion", () => {
-    vi.stubEnv("MOLTBOT_HOME", "/srv/moltbot-home");
+  it("prefers RAZROOM_HOME for tilde expansion", () => {
+    vi.stubEnv("RAZROOM_HOME", "/srv/razroom-home");
     vi.stubEnv("HOME", "/home/other");
 
-    expect(resolveUserPath("~/moltbot")).toBe(path.resolve("/srv/moltbot-home", "moltbot"));
+    expect(resolveUserPath("~/razroom")).toBe(path.resolve("/srv/razroom-home", "razroom"));
 
     vi.unstubAllEnvs();
   });

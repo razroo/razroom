@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { SessionChatType, SessionEntry } from "../config/sessions.js";
 import { normalizeChatType } from "../channels/chat-type.js";
 
@@ -59,7 +59,7 @@ function deriveChatTypeFromKey(key?: string): SessionChatType | undefined {
 }
 
 export function resolveSendPolicy(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   entry?: SessionEntry;
   sessionKey?: string;
   channel?: string;

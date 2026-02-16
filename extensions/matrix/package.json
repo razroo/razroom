@@ -1,7 +1,7 @@
 {
-  "name": "@moltbot/matrix",
+  "name": "@razroom/matrix",
   "version": "2026.2.15",
-  "description": "MoltBot Matrix channel plugin",
+  "description": "Razroom Matrix channel plugin",
   "type": "module",
   "dependencies": {
     "@matrix-org/matrix-sdk-crypto-nodejs": "^0.4.0",
@@ -11,9 +11,9 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "moltbot": "workspace:*"
+    "razroom": "workspace:*"
   },
-  "moltbot": {
+  "razroom": {
     "extensions": [
       "./index.ts"
     ],
@@ -28,7 +28,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@moltbot/matrix",
+      "npmSpec": "@razroom/matrix",
       "localPath": "extensions/matrix",
       "defaultChoice": "npm"
     }

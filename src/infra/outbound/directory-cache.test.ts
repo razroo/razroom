@@ -1,9 +1,9 @@
 import { describe, expect, it, mock, spyOn } from "bun:test";
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 import { DirectoryCache } from "./directory-cache.js";
 
 describe("DirectoryCache", () => {
-  const cfg = {} as MoltBotConfig;
+  const cfg = {} as RazroomConfig;
 
   it("expires entries after ttl", () => {
     // TODO: Implement fake timers for Bun;

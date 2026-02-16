@@ -1,4 +1,4 @@
-# MoltBot Codebase Patterns
+# Razroom Codebase Patterns
 
 **Always reuse existing code - no redundancy!**
 
@@ -55,7 +55,7 @@
 ## Stack & Commands
 
 - **Package manager**: pnpm (`pnpm install`)
-- **Dev**: `pnpm moltbot ...` or `pnpm dev`
+- **Dev**: `pnpm razroom ...` or `pnpm dev`
 - **Type-check**: `pnpm tsgo`
 - **Lint/format**: `pnpm check`
 - **Tests**: `pnpm test`

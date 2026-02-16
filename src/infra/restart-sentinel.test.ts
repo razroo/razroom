@@ -16,16 +16,16 @@ describe("restart sentinel", () => {
   let tempDir: string;
 
   beforeEach(async () => {
-    prevStateDir = process.env.MOLTBOT_STATE_DIR;
-    tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-sentinel-"));
-    process.env.MOLTBOT_STATE_DIR = tempDir;
+    prevStateDir = process.env.RAZROOM_STATE_DIR;
+    tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-sentinel-"));
+    process.env.RAZROOM_STATE_DIR = tempDir;
   });
 
   afterEach(async () => {
     if (prevStateDir) {
-      process.env.MOLTBOT_STATE_DIR = prevStateDir;
+      process.env.RAZROOM_STATE_DIR = prevStateDir;
     } else {
-      delete process.env.MOLTBOT_STATE_DIR;
+      delete process.env.RAZROOM_STATE_DIR;
     }
     await fs.rm(tempDir, { recursive: true, force: true });
   });

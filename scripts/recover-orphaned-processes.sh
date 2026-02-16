@@ -144,9 +144,9 @@ if (candidatePids.length > 0) {
 const includePattern = /codex|claude/i;
 
 const excludePatterns = [
-  /moltbot-gateway/i,
+  /razroom-gateway/i,
   /signal-cli/i,
-  /node_modules\/\.bin\/moltbot/i,
+  /node_modules\/\.bin\/razroom/i,
   /recover-orphaned-processes\.sh/i,
 ];
 

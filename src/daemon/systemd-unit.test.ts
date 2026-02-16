@@ -3,9 +3,9 @@ import { parseSystemdExecStart } from "./systemd-unit.js";
 
 describe("parseSystemdExecStart", () => {
   it("splits on whitespace outside quotes", () => {
-    const execStart = "/usr/bin/moltbot gateway start --foo bar";
+    const execStart = "/usr/bin/razroom gateway start --foo bar";
     expect(parseSystemdExecStart(execStart)).toEqual([
-      "/usr/bin/moltbot",
+      "/usr/bin/razroom",
       "gateway",
       "start",
       "--foo",
@@ -14,9 +14,9 @@ describe("parseSystemdExecStart", () => {
   });
 
   it("preserves quoted arguments", () => {
-    const execStart = '/usr/bin/moltbot gateway start --name "My Bot"';
+    const execStart = '/usr/bin/razroom gateway start --name "My Bot"';
     expect(parseSystemdExecStart(execStart)).toEqual([
-      "/usr/bin/moltbot",
+      "/usr/bin/razroom",
       "gateway",
       "start",
       "--name",
@@ -25,13 +25,13 @@ describe("parseSystemdExecStart", () => {
   });
 
   it("parses path arguments", () => {
-    const execStart = "/usr/bin/moltbot gateway start --path /tmp/moltbot";
+    const execStart = "/usr/bin/razroom gateway start --path /tmp/razroom";
     expect(parseSystemdExecStart(execStart)).toEqual([
-      "/usr/bin/moltbot",
+      "/usr/bin/razroom",
       "gateway",
       "start",
       "--path",
-      "/tmp/moltbot",
+      "/tmp/razroom",
     ]);
   });
 });

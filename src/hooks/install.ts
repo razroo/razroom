@@ -69,14 +69,14 @@ export function resolveHookInstallDir(hookId: string, hooksDir?: string): string
   return targetDirResult.path;
 }
 
-async function ensureMoltBotHooks(manifest: HookPackageManifest) {
+async function ensureRazroomHooks(manifest: HookPackageManifest) {
   const hooks = manifest[MANIFEST_KEY]?.hooks;
   if (!Array.isArray(hooks)) {
-    throw new Error("package.json missing moltbot.hooks");
+    throw new Error("package.json missing razroom.hooks");
   }
   const list = hooks.map((e) => (typeof e === "string" ? e.trim() : "")).filter(Boolean);
   if (list.length === 0) {
-    throw new Error("package.json moltbot.hooks is empty");
+    throw new Error("package.json razroom.hooks is empty");
   }
   return list;
 }
@@ -135,7 +135,7 @@ async function installHookPackageFromDir(params: {
 
   let hookEntries: string[];
   try {
-    hookEntries = await ensureMoltBotHooks(manifest);
+    hookEntries = await ensureRazroomHooks(manifest);
   } catch (err) {
     return { ok: false, error: String(err) };
   }
@@ -307,7 +307,7 @@ export async function installHooksFromArchive(params: {
     return { ok: false, error: `unsupported archive: ${archivePath}` };
   }
 
-  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-hook-"));
+  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-hook-"));
   try {
     const extractDir = path.join(tmpDir, "extract");
     await fs.mkdir(extractDir, { recursive: true });
@@ -372,7 +372,7 @@ export async function installHooksFromNpmSpec(params: {
     return { ok: false, error: specError };
   }
 
-  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-hook-pack-"));
+  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-hook-pack-"));
   try {
     logger.info?.(`Downloading ${spec}…`);
     const res = await runCommandWithTimeout(["npm", "pack", spec, "--ignore-scripts"], {

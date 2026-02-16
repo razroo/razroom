@@ -1,4 +1,4 @@
-import type { BaseProbeResult } from "moltbot/plugin-sdk";
+import type { BaseProbeResult } from "razroom/plugin-sdk";
 import { createMatrixClient, isBunRuntime } from "./client.js";
 
 export type MatrixProbe = BaseProbeResult & {

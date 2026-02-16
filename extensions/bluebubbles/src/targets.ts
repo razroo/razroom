@@ -3,7 +3,7 @@ import {
   parseChatTargetPrefixesOrThrow,
   resolveServicePrefixedAllowTarget,
   resolveServicePrefixedTarget,
-} from "moltbot/plugin-sdk";
+} from "razroom/plugin-sdk";
 
 export type BlueBubblesService = "imessage" | "sms" | "auto";
 

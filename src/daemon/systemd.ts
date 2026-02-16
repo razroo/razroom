@@ -30,11 +30,11 @@ function resolveSystemdUnitPathForName(
 }
 
 function resolveSystemdServiceName(env: Record<string, string | undefined>): string {
-  const override = env.MOLTBOT_SYSTEMD_UNIT?.trim();
+  const override = env.RAZROOM_SYSTEMD_UNIT?.trim();
   if (override) {
     return override.endsWith(".service") ? override.slice(0, -".service".length) : override;
   }
-  return resolveGatewaySystemdServiceName(env.MOLTBOT_PROFILE);
+  return resolveGatewaySystemdServiceName(env.RAZROOM_PROFILE);
 }
 
 function resolveSystemdUnitPath(env: Record<string, string | undefined>): string {
@@ -203,8 +203,8 @@ export async function installSystemdService({
   const serviceDescription =
     description ??
     formatGatewayServiceDescription({
-      profile: env.MOLTBOT_PROFILE,
-      version: environment?.MOLTBOT_SERVICE_VERSION ?? env.MOLTBOT_SERVICE_VERSION,
+      profile: env.RAZROOM_PROFILE,
+      version: environment?.RAZROOM_SERVICE_VERSION ?? env.RAZROOM_SERVICE_VERSION,
     });
   const unit = buildSystemdUnit({
     description: serviceDescription,
@@ -214,7 +214,7 @@ export async function installSystemdService({
   });
   await fs.writeFile(unitPath, unit, "utf8");
 
-  const serviceName = resolveGatewaySystemdServiceName(env.MOLTBOT_PROFILE);
+  const serviceName = resolveGatewaySystemdServiceName(env.RAZROOM_PROFILE);
   const unitName = `${serviceName}.service`;
   const reload = await execSystemctl(["--user", "daemon-reload"]);
   if (reload.code !== 0) {
@@ -245,7 +245,7 @@ export async function uninstallSystemdService({
   stdout: NodeJS.WritableStream;
 }): Promise<void> {
   await assertSystemdAvailable();
-  const serviceName = resolveGatewaySystemdServiceName(env.MOLTBOT_PROFILE);
+  const serviceName = resolveGatewaySystemdServiceName(env.RAZROOM_PROFILE);
   const unitName = `${serviceName}.service`;
   await execSystemctl(["--user", "disable", "--now", unitName]);
 

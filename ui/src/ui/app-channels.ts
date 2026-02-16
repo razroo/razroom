@@ -1,4 +1,4 @@
-import type { MoltBotApp } from "./app.ts";
+import type { RazroomApp } from "./app.ts";
 import type { NostrProfile } from "./types.ts";
 import {
   loadChannels,
@@ -9,28 +9,28 @@ import {
 import { loadConfig, saveConfig } from "./controllers/config.ts";
 import { createNostrProfileFormState } from "./views/channels.nostr-profile-form.ts";
 
-export async function handleWhatsAppStart(host: MoltBotApp, force: boolean) {
+export async function handleWhatsAppStart(host: RazroomApp, force: boolean) {
   await startWhatsAppLogin(host, force);
   await loadChannels(host, true);
 }
 
-export async function handleWhatsAppWait(host: MoltBotApp) {
+export async function handleWhatsAppWait(host: RazroomApp) {
   await waitWhatsAppLogin(host);
   await loadChannels(host, true);
 }
 
-export async function handleWhatsAppLogout(host: MoltBotApp) {
+export async function handleWhatsAppLogout(host: RazroomApp) {
   await logoutWhatsApp(host);
   await loadChannels(host, true);
 }
 
-export async function handleChannelConfigSave(host: MoltBotApp) {
+export async function handleChannelConfigSave(host: RazroomApp) {
   await saveConfig(host);
   await loadConfig(host);
   await loadChannels(host, true);
 }
 
-export async function handleChannelConfigReload(host: MoltBotApp) {
+export async function handleChannelConfigReload(host: RazroomApp) {
   await loadConfig(host);
   await loadChannels(host, true);
 }
@@ -57,7 +57,7 @@ function parseValidationErrors(details: unknown): Record<string, string> {
   return errors;
 }
 
-function resolveNostrAccountId(host: MoltBotApp): string {
+function resolveNostrAccountId(host: RazroomApp): string {
   const accounts = host.channelsSnapshot?.channelAccounts?.nostr ?? [];
   return accounts[0]?.accountId ?? host.nostrProfileAccountId ?? "default";
 }
@@ -66,7 +66,7 @@ function buildNostrProfileUrl(accountId: string, suffix = ""): string {
   return `/api/channels/nostr/${encodeURIComponent(accountId)}/profile${suffix}`;
 }
 
-function resolveGatewayHttpAuthHeader(host: MoltBotApp): string | null {
+function resolveGatewayHttpAuthHeader(host: RazroomApp): string | null {
   const deviceToken = host.hello?.auth?.deviceToken?.trim();
   if (deviceToken) {
     return `Bearer ${deviceToken}`;
@@ -82,13 +82,13 @@ function resolveGatewayHttpAuthHeader(host: MoltBotApp): string | null {
   return null;
 }
 
-function buildGatewayHttpHeaders(host: MoltBotApp): Record<string, string> {
+function buildGatewayHttpHeaders(host: RazroomApp): Record<string, string> {
   const authorization = resolveGatewayHttpAuthHeader(host);
   return authorization ? { Authorization: authorization } : {};
 }
 
 export function handleNostrProfileEdit(
-  host: MoltBotApp,
+  host: RazroomApp,
   accountId: string,
   profile: NostrProfile | null,
 ) {
@@ -96,13 +96,13 @@ export function handleNostrProfileEdit(
   host.nostrProfileFormState = createNostrProfileFormState(profile ?? undefined);
 }
 
-export function handleNostrProfileCancel(host: MoltBotApp) {
+export function handleNostrProfileCancel(host: RazroomApp) {
   host.nostrProfileFormState = null;
   host.nostrProfileAccountId = null;
 }
 
 export function handleNostrProfileFieldChange(
-  host: MoltBotApp,
+  host: RazroomApp,
   field: keyof NostrProfile,
   value: string,
 ) {
@@ -123,7 +123,7 @@ export function handleNostrProfileFieldChange(
   };
 }
 
-export function handleNostrProfileToggleAdvanced(host: MoltBotApp) {
+export function handleNostrProfileToggleAdvanced(host: RazroomApp) {
   const state = host.nostrProfileFormState;
   if (!state) {
     return;
@@ -134,7 +134,7 @@ export function handleNostrProfileToggleAdvanced(host: MoltBotApp) {
   };
 }
 
-export async function handleNostrProfileSave(host: MoltBotApp) {
+export async function handleNostrProfileSave(host: RazroomApp) {
   const state = host.nostrProfileFormState;
   if (!state || state.saving) {
     return;
@@ -206,7 +206,7 @@ export async function handleNostrProfileSave(host: MoltBotApp) {
   }
 }
 
-export async function handleNostrProfileImport(host: MoltBotApp) {
+export async function handleNostrProfileImport(host: RazroomApp) {
   const state = host.nostrProfileFormState;
   if (!state || state.importing) {
     return;

@@ -7,7 +7,7 @@ import {
   setAccountEnabledInConfigSection,
   deleteAccountFromConfigSection,
   type ChannelPlugin,
-} from "moltbot/plugin-sdk";
+} from "razroom/plugin-sdk";
 import type { CoreConfig, IrcProbe } from "./types.js";
 import {
   listIrcAccountIds,

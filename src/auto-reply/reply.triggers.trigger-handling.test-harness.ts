@@ -1,6 +1,6 @@
 import { join } from "node:path";
 import { afterEach, expect, vi } from "vitest";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import { withTempHome as withTempHomeBase } from "../../test/helpers/temp-home.js";
 
 // Avoid exporting vitest mock types (TS2742 under pnpm + d.ts emit).
@@ -113,16 +113,16 @@ export async function withTempHome<T>(fn: (home: string) => Promise<T>): Promise
       piEmbeddedMocks.compactEmbeddedPiSession.mockClear();
       return await fn(home);
     },
-    { prefix: "moltbot-triggers-" },
+    { prefix: "razroom-triggers-" },
   );
 }
 
-export function makeCfg(home: string): MoltBotConfig {
+export function makeCfg(home: string): RazroomConfig {
   return {
     agents: {
       defaults: {
         model: { primary: "anthropic/claude-opus-4-5" },
-        workspace: join(home, "moltbot"),
+        workspace: join(home, "razroom"),
       },
     },
     channels: {
@@ -131,7 +131,7 @@ export function makeCfg(home: string): MoltBotConfig {
       },
     },
     session: { store: join(home, "sessions.json") },
-  } as MoltBotConfig;
+  } as RazroomConfig;
 }
 
 export async function runGreetingPromptForBareNewOrReset(params: {

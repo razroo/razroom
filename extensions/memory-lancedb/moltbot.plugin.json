@@ -15,7 +15,7 @@
     },
     "dbPath": {
       "label": "Database Path",
-      "placeholder": "~/.moltbot/memory/lancedb",
+      "placeholder": "~/.razroom/memory/lancedb",
       "advanced": true
     },
     "autoCapture": {

@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, mock, spyOn } from "bun:test";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import { createExecApprovalForwarder } from "./exec-approval-forwarder.js";
 
 const baseRequest = {
@@ -30,7 +30,7 @@ describe("exec approval forwarder", () => {
     const deliver = mock().mockResolvedValue([]);
     const cfg = {
       approvals: { exec: { enabled: true, mode: "session" } },
-    } as MoltBotConfig;
+    } as RazroomConfig;
 
     const forwarder = createExecApprovalForwarder({
       getConfig: () => cfg,
@@ -65,7 +65,7 @@ describe("exec approval forwarder", () => {
           targets: [{ channel: "telegram", to: "123" }],
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
 
     const forwarder = createExecApprovalForwarder({
       getConfig: () => cfg,
@@ -92,7 +92,7 @@ describe("exec approval forwarder", () => {
           targets: [{ channel: "telegram", to: "123" }],
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
 
     const forwarder = createExecApprovalForwarder({
       getConfig: () => cfg,
@@ -117,7 +117,7 @@ describe("exec approval forwarder", () => {
           targets: [{ channel: "telegram", to: "123" }],
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
 
     const forwarder = createExecApprovalForwarder({
       getConfig: () => cfg,
@@ -151,7 +151,7 @@ describe("exec approval forwarder", () => {
           },
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
 
     const forwarder = createExecApprovalForwarder({
       getConfig: () => cfg,
@@ -176,7 +176,7 @@ describe("exec approval forwarder", () => {
           targets: [{ channel: "telegram", to: "123" }],
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
 
     const forwarder = createExecApprovalForwarder({
       getConfig: () => cfg,

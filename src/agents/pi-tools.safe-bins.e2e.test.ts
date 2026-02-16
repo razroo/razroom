@@ -2,23 +2,23 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { afterAll, beforeAll, describe, expect, it, mock, spyOn } from "bun:test";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { ExecApprovalsResolved } from "../infra/exec-approvals.js";
 
-const previousBundledPluginsDir = process.env.MOLTBOT_BUNDLED_PLUGINS_DIR;
+const previousBundledPluginsDir = process.env.RAZROOM_BUNDLED_PLUGINS_DIR;
 
 beforeAll(() => {
-  process.env.MOLTBOT_BUNDLED_PLUGINS_DIR = path.join(
+  process.env.RAZROOM_BUNDLED_PLUGINS_DIR = path.join(
     os.tmpdir(),
-    "moltbot-test-no-bundled-extensions",
+    "razroom-test-no-bundled-extensions",
   );
 });
 
 afterAll(() => {
   if (previousBundledPluginsDir === undefined) {
-    delete process.env.MOLTBOT_BUNDLED_PLUGINS_DIR;
+    delete process.env.RAZROOM_BUNDLED_PLUGINS_DIR;
   } else {
-    process.env.MOLTBOT_BUNDLED_PLUGINS_DIR = previousBundledPluginsDir;
+    process.env.RAZROOM_BUNDLED_PLUGINS_DIR = previousBundledPluginsDir;
   }
 });
 
@@ -80,15 +80,15 @@ mock("../infra/exec-approvals.js", async (importOriginal) => {
   return { ...mod, resolveExecApprovals: () => approvals };
 });
 
-describe("createMoltBotCodingTools safeBins", () => {
+describe("createRazroomCodingTools safeBins", () => {
   it("threads tools.exec.safeBins into exec allowlist checks", async () => {
     if (process.platform === "win32") {
       return;
     }
 
-    const { createMoltBotCodingTools } = await import("./pi-tools.js");
-    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-safe-bins-"));
-    const cfg: MoltBotConfig = {
+    const { createRazroomCodingTools } = await import("./pi-tools.js");
+    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "razroom-safe-bins-"));
+    const cfg: RazroomConfig = {
       tools: {
         exec: {
           host: "gateway",
@@ -99,7 +99,7 @@ describe("createMoltBotCodingTools safeBins", () => {
       },
     };
 
-    const tools = createMoltBotCodingTools({
+    const tools = createRazroomCodingTools({
       config: cfg,
       sessionKey: "agent:main:main",
       workspaceDir: tmpDir,
@@ -109,8 +109,8 @@ describe("createMoltBotCodingTools safeBins", () => {
     expect(execTool).toBeDefined();
 
     const marker = `safe-bins-${Date.now()}`;
-    const prevShellEnvTimeoutMs = process.env.MOLTBOT_SHELL_ENV_TIMEOUT_MS;
-    process.env.MOLTBOT_SHELL_ENV_TIMEOUT_MS = "1000";
+    const prevShellEnvTimeoutMs = process.env.RAZROOM_SHELL_ENV_TIMEOUT_MS;
+    process.env.RAZROOM_SHELL_ENV_TIMEOUT_MS = "1000";
     const result = await (async () => {
       try {
         return await execTool!.execute("call1", {
@@ -119,9 +119,9 @@ describe("createMoltBotCodingTools safeBins", () => {
         });
       } finally {
         if (prevShellEnvTimeoutMs === undefined) {
-          delete process.env.MOLTBOT_SHELL_ENV_TIMEOUT_MS;
+          delete process.env.RAZROOM_SHELL_ENV_TIMEOUT_MS;
         } else {
-          process.env.MOLTBOT_SHELL_ENV_TIMEOUT_MS = prevShellEnvTimeoutMs;
+          process.env.RAZROOM_SHELL_ENV_TIMEOUT_MS = prevShellEnvTimeoutMs;
         }
       }
     })();
@@ -136,13 +136,13 @@ describe("createMoltBotCodingTools safeBins", () => {
       return;
     }
 
-    const { createMoltBotCodingTools } = await import("./pi-tools.js");
-    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-safe-bins-expand-"));
+    const { createRazroomCodingTools } = await import("./pi-tools.js");
+    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "razroom-safe-bins-expand-"));
 
     const secret = `TOP_SECRET_${Date.now()}`;
     fs.writeFileSync(path.join(tmpDir, "secret.txt"), `${secret}\n`, "utf8");
 
-    const cfg: MoltBotConfig = {
+    const cfg: RazroomConfig = {
       tools: {
         exec: {
           host: "gateway",
@@ -153,7 +153,7 @@ describe("createMoltBotCodingTools safeBins", () => {
       },
     };
 
-    const tools = createMoltBotCodingTools({
+    const tools = createRazroomCodingTools({
       config: cfg,
       sessionKey: "agent:main:main",
       workspaceDir: tmpDir,

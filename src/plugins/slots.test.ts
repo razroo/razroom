@@ -1,10 +1,10 @@
 import { describe, expect, it } from "bun:test";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import { applyExclusiveSlotSelection } from "./slots.js";
 
 describe("applyExclusiveSlotSelection", () => {
   it("selects the slot and disables other entries for the same kind", () => {
-    const config: MoltBotConfig = {
+    const config: RazroomConfig = {
       plugins: {
         slots: { memory: "memory-core" },
         entries: {
@@ -36,7 +36,7 @@ describe("applyExclusiveSlotSelection", () => {
   });
 
   it("does nothing when the slot already matches", () => {
-    const config: MoltBotConfig = {
+    const config: RazroomConfig = {
       plugins: {
         slots: { memory: "memory" },
         entries: {
@@ -58,7 +58,7 @@ describe("applyExclusiveSlotSelection", () => {
   });
 
   it("warns when the slot falls back to a default", () => {
-    const config: MoltBotConfig = {
+    const config: RazroomConfig = {
       plugins: {
         entries: {
           memory: { enabled: true },
@@ -80,7 +80,7 @@ describe("applyExclusiveSlotSelection", () => {
   });
 
   it("skips changes when no exclusive slot applies", () => {
-    const config: MoltBotConfig = {};
+    const config: RazroomConfig = {};
     const result = applyExclusiveSlotSelection({
       config,
       selectedId: "custom",

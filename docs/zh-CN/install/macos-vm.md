@@ -1,10 +1,10 @@
 ---
 read_when:
-  - 你想让 MoltBot 与你的主 macOS 环境隔离
+  - 你想让 Razroom 与你的主 macOS 环境隔离
   - 你想在沙箱中集成 iMessage（BlueBubbles）
   - 你想要一个可重置、可克隆的 macOS 环境
   - 你想比较本地与托管 macOS VM 选项
-summary: 在沙箱隔离的 macOS VM（本地或托管）中运行 MoltBot，当你需要隔离或 iMessage 时
+summary: 在沙箱隔离的 macOS VM（本地或托管）中运行 Razroom，当你需要隔离或 iMessage 时
 title: macOS 虚拟机
 x-i18n:
   generated_at: "2026-02-03T07:53:09Z"
@@ -15,7 +15,7 @@ x-i18n:
   workflow: 15
 ---
 
-# 在 macOS 虚拟机上运行 MoltBot（沙箱隔离）
+# 在 macOS 虚拟机上运行 Razroom（沙箱隔离）
 
 ## 推荐默认方案（大多数用户）
 
@@ -29,7 +29,7 @@ x-i18n:
 
 ### 在你的 Apple Silicon Mac 上运行本地 VM（Lume）
 
-使用 [Lume](https://cua.ai/docs/lume) 在你现有的 Apple Silicon Mac 上的沙箱 macOS VM 中运行 MoltBot。
+使用 [Lume](https://cua.ai/docs/lume) 在你现有的 Apple Silicon Mac 上的沙箱 macOS VM 中运行 Razroom。
 
 这为你提供：
 
@@ -52,10 +52,10 @@ x-i18n:
 ## 快速路径（Lume，有经验的用户）
 
 1. 安装 Lume
-2. `lume create moltbot --os macos --ipsw latest`
+2. `lume create razroom --os macos --ipsw latest`
 3. 完成设置助手，启用远程登录（SSH）
-4. `lume run moltbot --no-display`
-5. SSH 进入，安装 MoltBot，配置渠道
+4. `lume run razroom --no-display`
+5. SSH 进入，安装 Razroom，配置渠道
 6. 完成
 
 ---
@@ -94,7 +94,7 @@ lume --version
 ## 2) 创建 macOS VM
 
 ```bash
-lume create moltbot --os macos --ipsw latest
+lume create razroom --os macos --ipsw latest
 ```
 
 这会下载 macOS 并创建 VM。VNC 窗口会自动打开。
@@ -122,7 +122,7 @@ lume create moltbot --os macos --ipsw latest
 ## 4) 获取 VM 的 IP 地址
 
 ```bash
-lume get moltbot
+lume get razroom
 ```
 
 查找 IP 地址（通常是 `192.168.64.x`）。
@@ -139,13 +139,13 @@ ssh youruser@192.168.64.X
 
 ---
 
-## 6) 安装 MoltBot
+## 6) 安装 Razroom
 
 在 VM 内：
 
 ```bash
-npm install -g moltbot@latest
-moltbot onboard --install-daemon
+npm install -g razroom@latest
+razroom onboard --install-daemon
 ```
 
 按照新手引导提示设置你的模型提供商（Anthropic、OpenAI 等）。
@@ -157,7 +157,7 @@ moltbot onboard --install-daemon
 编辑配置文件：
 
 ```bash
-nano ~/.moltbot/moltbot.json
+nano ~/.razroom/razroom.json
 ```
 
 添加你的渠道：
@@ -179,7 +179,7 @@ nano ~/.moltbot/moltbot.json
 然后登录 WhatsApp（扫描二维码）：
 
 ```bash
-moltbot channels login
+razroom channels login
 ```
 
 ---
@@ -189,23 +189,23 @@ moltbot channels login
 停止 VM 并在无显示器模式下重启：
 
 ```bash
-lume stop moltbot
-lume run moltbot --no-display
+lume stop razroom
+lume run razroom --no-display
 ```
 
-VM 在后台运行。MoltBot 的守护进程保持 Gateway 网关运行。
+VM 在后台运行。Razroom 的守护进程保持 Gateway 网关运行。
 
 检查状态：
 
 ```bash
-ssh youruser@192.168.64.X "moltbot status"
+ssh youruser@192.168.64.X "razroom status"
 ```
 
 ---
 
 ## 额外：iMessage 集成
 
-这是在 macOS 上运行的杀手级功能。使用 [BlueBubbles](https://bluebubbles.app) 将 iMessage 添加到 MoltBot。
+这是在 macOS 上运行的杀手级功能。使用 [BlueBubbles](https://bluebubbles.app) 将 iMessage 添加到 Razroom。
 
 在 VM 内：
 
@@ -214,7 +214,7 @@ ssh youruser@192.168.64.X "moltbot status"
 3. 启用 Web API 并设置密码
 4. 将 BlueBubbles webhooks 指向你的 Gateway 网关（示例：`https://your-gateway-host:3000/bluebubbles-webhook?password=<password>`）
 
-添加到你的 MoltBot 配置：
+添加到你的 Razroom 配置：
 
 ```json
 {
@@ -239,16 +239,16 @@ ssh youruser@192.168.64.X "moltbot status"
 在进一步自定义之前，快照你的干净状态：
 
 ```bash
-lume stop moltbot
-lume clone moltbot moltbot-golden
+lume stop razroom
+lume clone razroom razroom-golden
 ```
 
 随时重置：
 
 ```bash
-lume stop moltbot && lume delete moltbot
-lume clone moltbot-golden moltbot
-lume run moltbot --no-display
+lume stop razroom && lume delete razroom
+lume clone razroom-golden razroom
+lume run razroom --no-display
 ```
 
 ---
@@ -270,9 +270,9 @@ lume run moltbot --no-display
 | 问题                    | 解决方案                                                         |
 | ----------------------- | ---------------------------------------------------------------- |
 | 无法 SSH 进入 VM        | 检查 VM 的系统设置中是否启用了"远程登录"                         |
-| VM IP 未显示            | 等待 VM 完全启动，再次运行 `lume get moltbot`                   |
+| VM IP 未显示            | 等待 VM 完全启动，再次运行 `lume get razroom`                   |
 | 找不到 Lume 命令        | 将 `~/.local/bin` 添加到你的 PATH                                |
-| WhatsApp 二维码扫描失败 | 确保运行 `moltbot channels login` 时你是登录到 VM（而不是主机） |
+| WhatsApp 二维码扫描失败 | 确保运行 `razroom channels login` 时你是登录到 VM（而不是主机） |
 
 ---
 

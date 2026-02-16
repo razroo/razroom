@@ -6,14 +6,14 @@ import { listKnownProfileNames } from "./server-context.js";
 describe("browser server-context listKnownProfileNames", () => {
   it("includes configured and runtime-only profile names", () => {
     const resolved = resolveBrowserConfig({
-      defaultProfile: "moltbot",
+      defaultProfile: "razroom",
       profiles: {
-        moltbot: { cdpPort: 18800, color: "#FF4500" },
+        razroom: { cdpPort: 18800, color: "#FF4500" },
       },
     });
-    const moltbot = resolveProfile(resolved, "moltbot");
-    if (!moltbot) {
-      throw new Error("expected moltbot profile");
+    const razroom = resolveProfile(resolved, "razroom");
+    if (!razroom) {
+      throw new Error("expected razroom profile");
     }
 
     const state: BrowserServerState = {
@@ -24,7 +24,7 @@ describe("browser server-context listKnownProfileNames", () => {
         [
           "stale-removed",
           {
-            profile: { ...moltbot, name: "stale-removed" },
+            profile: { ...razroom, name: "stale-removed" },
             running: null,
           },
         ],
@@ -33,7 +33,7 @@ describe("browser server-context listKnownProfileNames", () => {
 
     expect(listKnownProfileNames(state).toSorted()).toEqual([
       "chrome",
-      "moltbot",
+      "razroom",
       "stale-removed",
     ]);
   });

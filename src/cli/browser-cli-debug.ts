@@ -181,7 +181,7 @@ export function registerBrowserDebugCommands(
     .description("Stop trace recording and write a .zip")
     .option(
       "--out <path>",
-      "Output path within moltbot temp dir (e.g. trace.zip or /tmp/moltbot/trace.zip)",
+      "Output path within razroom temp dir (e.g. trace.zip or /tmp/razroom/trace.zip)",
     )
     .option("--target-id <id>", "CDP target id (or unique prefix)")
     .action(async (opts, cmd) => {

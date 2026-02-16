@@ -7,10 +7,10 @@ import * as cdpModule from "./cdp.js";
 import * as pwAiModule from "./pw-ai-module.js";
 import { createBrowserRouteContext } from "./server-context.js";
 
-const chromeUserDataDir = vi.hoisted(() => ({ dir: "/tmp/moltbot" }));
+const chromeUserDataDir = vi.hoisted(() => ({ dir: "/tmp/razroom" }));
 
 beforeAll(async () => {
-  chromeUserDataDir.dir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-chrome-user-data-"));
+  chromeUserDataDir.dir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-chrome-user-data-"));
 });
 
 afterAll(async () => {
@@ -20,11 +20,11 @@ afterAll(async () => {
 mock("./chrome.js", () => ({
   isChromeCdpReady: mock(async () => true),
   isChromeReachable: mock(async () => true),
-  launchMoltBotChrome: mock(async () => {
+  launchRazroomChrome: mock(async () => {
     throw new Error("unexpected launch");
   }),
-  resolveMoltBotUserDataDir: mock(() => chromeUserDataDir.dir),
-  stopMoltBotChrome: mock(async () => {}),
+  resolveRazroomUserDataDir: mock(() => chromeUserDataDir.dir),
+  stopRazroomChrome: mock(async () => {}),
 }));
 
 const originalFetch = globalThis.fetch;
@@ -35,7 +35,7 @@ afterEach(() => {
 });
 
 function makeState(
-  profile: "remote" | "moltbot",
+  profile: "remote" | "razroom",
 ): BrowserServerState & { profiles: Map<string, { lastTargetId?: string | null }> } {
   return {
     // oxlint-disable-next-line typescript/no-explicit-any
@@ -60,7 +60,7 @@ function makeState(
           cdpPort: 443,
           color: "#00AA00",
         },
-        moltbot: { cdpPort: 18800, color: "#FF4500" },
+        razroom: { cdpPort: 18800, color: "#FF4500" },
       },
     },
     profiles: new Map(),
@@ -277,12 +277,12 @@ describe("browser server-context tab selection state", () => {
 
     global.fetch = fetchMock;
 
-    const state = makeState("moltbot");
+    const state = makeState("razroom");
     const ctx = createBrowserRouteContext({ getState: () => state });
-    const moltbot = ctx.forProfile("moltbot");
+    const razroom = ctx.forProfile("razroom");
 
-    const opened = await moltbot.openTab("https://created.example");
+    const opened = await razroom.openTab("https://created.example");
     expect(opened.targetId).toBe("CREATED");
-    expect(state.profiles.get("moltbot")?.lastTargetId).toBe("CREATED");
+    expect(state.profiles.get("razroom")?.lastTargetId).toBe("CREATED");
   });
 });

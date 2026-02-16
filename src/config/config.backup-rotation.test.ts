@@ -1,22 +1,22 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { describe, expect, it } from "bun:test";
-import type { MoltBotConfig } from "./types.js";
+import type { RazroomConfig } from "./types.js";
 import { rotateConfigBackups } from "./backup-rotation.js";
 import { withTempHome } from "./test-helpers.js";
 
 describe("config backup rotation", () => {
   it("keeps a 5-deep backup ring for config writes", async () => {
     await withTempHome(async () => {
-      const stateDir = process.env.MOLTBOT_STATE_DIR?.trim();
+      const stateDir = process.env.RAZROOM_STATE_DIR?.trim();
       if (!stateDir) {
-        throw new Error("Expected MOLTBOT_STATE_DIR to be set by withTempHome");
+        throw new Error("Expected RAZROOM_STATE_DIR to be set by withTempHome");
       }
-      const configPath = path.join(stateDir, "moltbot.json");
-      const buildConfig = (version: number): MoltBotConfig =>
+      const configPath = path.join(stateDir, "razroom.json");
+      const buildConfig = (version: number): RazroomConfig =>
         ({
           agents: { list: [{ id: `v${version}` }] },
-        }) as MoltBotConfig;
+        }) as RazroomConfig;
 
       const writeVersion = async (version: number) => {
         const json = JSON.stringify(buildConfig(version), null, 2).trimEnd().concat("\n");

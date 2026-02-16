@@ -24,8 +24,8 @@ export function getBearerToken(req: IncomingMessage): string | undefined {
 
 export function resolveAgentIdFromHeader(req: IncomingMessage): string | undefined {
   const raw =
-    getHeader(req, "x-moltbot-agent-id")?.trim() ||
-    getHeader(req, "x-moltbot-agent")?.trim() ||
+    getHeader(req, "x-razroom-agent-id")?.trim() ||
+    getHeader(req, "x-razroom-agent")?.trim() ||
     "";
   if (!raw) {
     return undefined;
@@ -40,7 +40,7 @@ export function resolveAgentIdFromModel(model: string | undefined): string | und
   }
 
   const m =
-    raw.match(/^moltbot[:/](?<agentId>[a-z0-9][a-z0-9_-]{0,63})$/i) ??
+    raw.match(/^razroom[:/](?<agentId>[a-z0-9][a-z0-9_-]{0,63})$/i) ??
     raw.match(/^agent:(?<agentId>[a-z0-9][a-z0-9_-]{0,63})$/i);
   const agentId = m?.groups?.agentId;
   if (!agentId) {
@@ -68,7 +68,7 @@ export function resolveSessionKey(params: {
   user?: string | undefined;
   prefix: string;
 }): string {
-  const explicit = getHeader(params.req, "x-moltbot-session-key")?.trim();
+  const explicit = getHeader(params.req, "x-razroom-session-key")?.trim();
   if (explicit) {
     return explicit;
   }

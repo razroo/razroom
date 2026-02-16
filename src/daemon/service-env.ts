@@ -148,26 +148,26 @@ export function buildServiceEnvironment(params: {
   launchdLabel?: string;
 }): Record<string, string | undefined> {
   const { env, port, token, launchdLabel } = params;
-  const profile = env.MOLTBOT_PROFILE;
+  const profile = env.RAZROOM_PROFILE;
   const resolvedLaunchdLabel =
     launchdLabel ||
     (process.platform === "darwin" ? resolveGatewayLaunchAgentLabel(profile) : undefined);
   const systemdUnit = `${resolveGatewaySystemdServiceName(profile)}.service`;
-  const stateDir = env.MOLTBOT_STATE_DIR;
-  const configPath = env.MOLTBOT_CONFIG_PATH;
+  const stateDir = env.RAZROOM_STATE_DIR;
+  const configPath = env.RAZROOM_CONFIG_PATH;
   return {
     HOME: env.HOME,
     PATH: buildMinimalServicePath({ env }),
-    MOLTBOT_PROFILE: profile,
-    MOLTBOT_STATE_DIR: stateDir,
-    MOLTBOT_CONFIG_PATH: configPath,
-    MOLTBOT_GATEWAY_PORT: String(port),
-    MOLTBOT_GATEWAY_TOKEN: token,
-    MOLTBOT_LAUNCHD_LABEL: resolvedLaunchdLabel,
-    MOLTBOT_SYSTEMD_UNIT: systemdUnit,
-    MOLTBOT_SERVICE_MARKER: GATEWAY_SERVICE_MARKER,
-    MOLTBOT_SERVICE_KIND: GATEWAY_SERVICE_KIND,
-    MOLTBOT_SERVICE_VERSION: VERSION,
+    RAZROOM_PROFILE: profile,
+    RAZROOM_STATE_DIR: stateDir,
+    RAZROOM_CONFIG_PATH: configPath,
+    RAZROOM_GATEWAY_PORT: String(port),
+    RAZROOM_GATEWAY_TOKEN: token,
+    RAZROOM_LAUNCHD_LABEL: resolvedLaunchdLabel,
+    RAZROOM_SYSTEMD_UNIT: systemdUnit,
+    RAZROOM_SERVICE_MARKER: GATEWAY_SERVICE_MARKER,
+    RAZROOM_SERVICE_KIND: GATEWAY_SERVICE_KIND,
+    RAZROOM_SERVICE_VERSION: VERSION,
   };
 }
 
@@ -175,20 +175,20 @@ export function buildNodeServiceEnvironment(params: {
   env: Record<string, string | undefined>;
 }): Record<string, string | undefined> {
   const { env } = params;
-  const stateDir = env.MOLTBOT_STATE_DIR;
-  const configPath = env.MOLTBOT_CONFIG_PATH;
+  const stateDir = env.RAZROOM_STATE_DIR;
+  const configPath = env.RAZROOM_CONFIG_PATH;
   return {
     HOME: env.HOME,
     PATH: buildMinimalServicePath({ env }),
-    MOLTBOT_STATE_DIR: stateDir,
-    MOLTBOT_CONFIG_PATH: configPath,
-    MOLTBOT_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
-    MOLTBOT_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
-    MOLTBOT_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
-    MOLTBOT_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
-    MOLTBOT_LOG_PREFIX: "node",
-    MOLTBOT_SERVICE_MARKER: NODE_SERVICE_MARKER,
-    MOLTBOT_SERVICE_KIND: NODE_SERVICE_KIND,
-    MOLTBOT_SERVICE_VERSION: VERSION,
+    RAZROOM_STATE_DIR: stateDir,
+    RAZROOM_CONFIG_PATH: configPath,
+    RAZROOM_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
+    RAZROOM_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
+    RAZROOM_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
+    RAZROOM_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
+    RAZROOM_LOG_PREFIX: "node",
+    RAZROOM_SERVICE_MARKER: NODE_SERVICE_MARKER,
+    RAZROOM_SERVICE_KIND: NODE_SERVICE_KIND,
+    RAZROOM_SERVICE_VERSION: VERSION,
   };
 }

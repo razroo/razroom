@@ -15,7 +15,7 @@ x-i18n:
 
 # 工具调用（HTTP）
 
-MoltBot 的 Gateway 网关暴露了一个简单的 HTTP 端点用于直接调用单个工具。它始终启用，但受 Gateway 网关认证和工具策略限制。
+Razroom 的 Gateway 网关暴露了一个简单的 HTTP 端点用于直接调用单个工具。它始终启用，但受 Gateway 网关认证和工具策略限制。
 
 - `POST /tools/invoke`
 - 与 Gateway 网关相同的端口（WS + HTTP 多路复用）：`http://<gateway-host>:<port>/tools/invoke`
@@ -30,8 +30,8 @@ MoltBot 的 Gateway 网关暴露了一个简单的 HTTP 端点用于直接调用
 
 说明：
 
-- 当 `gateway.auth.mode="token"` 时，使用 `gateway.auth.token`（或 `MOLTBOT_GATEWAY_TOKEN`）。
-- 当 `gateway.auth.mode="password"` 时，使用 `gateway.auth.password`（或 `MOLTBOT_GATEWAY_PASSWORD`）。
+- 当 `gateway.auth.mode="token"` 时，使用 `gateway.auth.token`（或 `RAZROOM_GATEWAY_TOKEN`）。
+- 当 `gateway.auth.mode="password"` 时，使用 `gateway.auth.password`（或 `RAZROOM_GATEWAY_PASSWORD`）。
 
 ## 请求体
 
@@ -67,8 +67,8 @@ MoltBot 的 Gateway 网关暴露了一个简单的 HTTP 端点用于直接调用
 
 为帮助群组策略解析上下文，你可以选择设置：
 
-- `x-moltbot-message-channel: <channel>`（示例：`slack`、`telegram`）
-- `x-moltbot-account-id: <accountId>`（当存在多个账户时）
+- `x-razroom-message-channel: <channel>`（示例：`slack`、`telegram`）
+- `x-razroom-account-id: <accountId>`（当存在多个账户时）
 
 ## 响应
 

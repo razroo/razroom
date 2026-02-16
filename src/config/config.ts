@@ -18,4 +18,4 @@ export {
   validateConfigObjectRawWithPlugins,
   validateConfigObjectWithPlugins,
 } from "./validation.js";
-export { MoltBotSchema } from "./zod-schema.js";
+export { RazroomSchema } from "./zod-schema.js";

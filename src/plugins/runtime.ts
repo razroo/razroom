@@ -1,6 +1,6 @@
 import { createEmptyPluginRegistry, type PluginRegistry } from "./registry.js";
 
-const REGISTRY_STATE = Symbol.for("moltbot.pluginRegistryState");
+const REGISTRY_STATE = Symbol.for("razroom.pluginRegistryState");
 
 type RegistryState = {
   registry: PluginRegistry | null;

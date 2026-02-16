@@ -1,6 +1,6 @@
 import { formatTerminalLink } from "../utils.js";
 
-export const DOCS_ROOT = "https://docs.moltbot.ai";
+export const DOCS_ROOT = "https://docs.razroom.ai";
 
 export function formatDocsLink(
   path: string,

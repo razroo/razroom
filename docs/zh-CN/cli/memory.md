@@ -2,7 +2,7 @@
 read_when:
   - 你想要索引或搜索语义记忆
   - 你正在调试记忆可用性或索引问题
-summary: "`moltbot memory`（status/index/search）的 CLI 参考"
+summary: "`razroom memory`（status/index/search）的 CLI 参考"
 title: memory
 x-i18n:
   generated_at: "2026-02-01T20:21:11Z"
@@ -13,7 +13,7 @@ x-i18n:
   workflow: 14
 ---
 
-# `moltbot memory`
+# `razroom memory`
 
 管理语义记忆的索引和搜索。
 由活跃的记忆插件提供（默认：`memory-core`；设置 `plugins.slots.memory = "none"` 可禁用）。
@@ -26,15 +26,15 @@ x-i18n:
 ## 示例
 
 ```bash
-moltbot memory status
-moltbot memory status --deep
-moltbot memory status --deep --index
-moltbot memory status --deep --index --verbose
-moltbot memory index
-moltbot memory index --verbose
-moltbot memory search "release checklist"
-moltbot memory status --agent main
-moltbot memory index --agent main --verbose
+razroom memory status
+razroom memory status --deep
+razroom memory status --deep --index
+razroom memory status --deep --index --verbose
+razroom memory index
+razroom memory index --verbose
+razroom memory search "release checklist"
+razroom memory status --agent main
+razroom memory index --agent main --verbose
 ```
 
 ## 选项

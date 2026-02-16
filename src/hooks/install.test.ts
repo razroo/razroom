@@ -4,7 +4,7 @@ import os from "node:os";
 import path from "node:path";
 import { afterAll, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 
-const fixtureRoot = path.join(os.tmpdir(), `moltbot-hook-install-${randomUUID()}`);
+const fixtureRoot = path.join(os.tmpdir(), `razroom-hook-install-${randomUUID()}`);
 let tempDirIndex = 0;
 
 const fixturesDir = path.resolve(process.cwd(), "test", "fixtures", "hooks-install");
@@ -157,9 +157,9 @@ describe("installHooksFromPath", () => {
     fs.writeFileSync(
       path.join(pkgDir, "package.json"),
       JSON.stringify({
-        name: "@moltbot/test-hooks",
+        name: "@razroom/test-hooks",
         version: "0.0.1",
-        moltbot: { hooks: ["./hooks/one-hook"] },
+        razroom: { hooks: ["./hooks/one-hook"] },
         dependencies: { "left-pad": "1.3.0" },
       }),
       "utf-8",
@@ -170,7 +170,7 @@ describe("installHooksFromPath", () => {
         "---",
         "name: one-hook",
         "description: One hook",
-        'metadata: {"moltbot":{"events":["command:new"]}}',
+        'metadata: {"razroom":{"events":["command:new"]}}',
         "---",
         "",
         "# One Hook",
@@ -219,7 +219,7 @@ describe("installHooksFromPath", () => {
         "---",
         "name: my-hook",
         "description: My hook",
-        'metadata: {"moltbot":{"events":["command:new"]}}',
+        'metadata: {"razroom":{"events":["command:new"]}}',
         "---",
         "",
         "# My Hook",
@@ -260,7 +260,7 @@ describe("installHooksFromNpmSpec", () => {
 
     const hooksDir = path.join(stateDir, "hooks");
     const result = await installHooksFromNpmSpec({
-      spec: "@moltbot/test-hooks@0.0.1",
+      spec: "@razroom/test-hooks@0.0.1",
       hooksDir,
       logger: { info: () => {}, warn: () => {} },
     });
@@ -280,7 +280,7 @@ describe("installHooksFromNpmSpec", () => {
       throw new Error("expected npm pack call");
     }
     const [argv, options] = packCall;
-    expect(argv).toEqual(["npm", "pack", "@moltbot/test-hooks@0.0.1", "--ignore-scripts"]);
+    expect(argv).toEqual(["npm", "pack", "@razroom/test-hooks@0.0.1", "--ignore-scripts"]);
     expect(options?.env).toMatchObject({ NPM_CONFIG_IGNORE_SCRIPTS: "true" });
 
     expect(packTmpDir).not.toBe("");

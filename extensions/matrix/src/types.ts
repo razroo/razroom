@@ -1,4 +1,4 @@
-import type { DmPolicy, GroupPolicy } from "moltbot/plugin-sdk";
+import type { DmPolicy, GroupPolicy } from "razroom/plugin-sdk";
 export type { DmPolicy, GroupPolicy };
 
 export type ReplyToMode = "off" | "first" | "all";

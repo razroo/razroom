@@ -1,6 +1,6 @@
-import type { MoltBotPluginApi } from "moltbot/plugin-sdk";
+import type { RazroomPluginApi } from "razroom/plugin-sdk";
 import os from "node:os";
-import { approveDevicePairing, listDevicePairing } from "moltbot/plugin-sdk";
+import { approveDevicePairing, listDevicePairing } from "razroom/plugin-sdk";
 
 const DEFAULT_GATEWAY_PORT = 18789;
 
@@ -59,9 +59,9 @@ function normalizeUrl(raw: string, schemeFallback: "ws" | "wss"): string | null 
   return `${schemeFallback}://${withoutPath}`;
 }
 
-function resolveGatewayPort(cfg: MoltBotPluginApi["config"]): number {
+function resolveGatewayPort(cfg: RazroomPluginApi["config"]): number {
   const envRaw =
-    process.env.MOLTBOT_GATEWAY_PORT?.trim() || process.env.MOLTBOT_GATEWAY_PORT?.trim();
+    process.env.RAZROOM_GATEWAY_PORT?.trim() || process.env.RAZROOM_GATEWAY_PORT?.trim();
   if (envRaw) {
     const parsed = Number.parseInt(envRaw, 10);
     if (Number.isFinite(parsed) && parsed > 0) {
@@ -76,7 +76,7 @@ function resolveGatewayPort(cfg: MoltBotPluginApi["config"]): number {
 }
 
 function resolveScheme(
-  cfg: MoltBotPluginApi["config"],
+  cfg: RazroomPluginApi["config"],
   opts?: { forceSecure?: boolean },
 ): "ws" | "wss" {
   if (opts?.forceSecure) {
@@ -170,7 +170,7 @@ function pickTailnetIPv4(): string | null {
   return null;
 }
 
-async function resolveTailnetHost(api: MoltBotPluginApi): Promise<string | null> {
+async function resolveTailnetHost(api: RazroomPluginApi): Promise<string | null> {
   const candidates = ["tailscale", "/Applications/Tailscale.app/Contents/MacOS/Tailscale"];
   for (const candidate of candidates) {
     try {
@@ -220,15 +220,15 @@ function parsePossiblyNoisyJsonObject(raw: string): Record<string, unknown> {
   }
 }
 
-function resolveAuth(cfg: MoltBotPluginApi["config"]): ResolveAuthResult {
+function resolveAuth(cfg: RazroomPluginApi["config"]): ResolveAuthResult {
   const mode = cfg.gateway?.auth?.mode;
   const token =
-    process.env.MOLTBOT_GATEWAY_TOKEN?.trim() ||
-    process.env.MOLTBOT_GATEWAY_TOKEN?.trim() ||
+    process.env.RAZROOM_GATEWAY_TOKEN?.trim() ||
+    process.env.RAZROOM_GATEWAY_TOKEN?.trim() ||
     cfg.gateway?.auth?.token?.trim();
   const password =
-    process.env.MOLTBOT_GATEWAY_PASSWORD?.trim() ||
-    process.env.MOLTBOT_GATEWAY_PASSWORD?.trim() ||
+    process.env.RAZROOM_GATEWAY_PASSWORD?.trim() ||
+    process.env.RAZROOM_GATEWAY_PASSWORD?.trim() ||
     cfg.gateway?.auth?.password?.trim();
 
   if (mode === "password") {
@@ -252,7 +252,7 @@ function resolveAuth(cfg: MoltBotPluginApi["config"]): ResolveAuthResult {
   return { error: "Gateway auth is not configured (no token or password)." };
 }
 
-async function resolveGatewayUrl(api: MoltBotPluginApi): Promise<ResolveUrlResult> {
+async function resolveGatewayUrl(api: RazroomPluginApi): Promise<ResolveUrlResult> {
   const cfg = api.config;
   const pluginCfg = (api.pluginConfig ?? {}) as DevicePairPluginConfig;
   const scheme = resolveScheme(cfg);
@@ -376,7 +376,7 @@ function formatPendingRequests(pending: PendingPairingRequest[]): string {
   return lines.join("\n");
 }
 
-export default function register(api: MoltBotPluginApi) {
+export default function register(api: RazroomPluginApi) {
   api.registerCommand({
     name: "pair",
     description: "Generate setup codes and approve device pairing requests.",

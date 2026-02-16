@@ -1,9 +1,9 @@
 import type { AnyAgentTool } from "../agents/tools/common.js";
-import type { MoltBotPluginToolContext } from "./types.js";
+import type { RazroomPluginToolContext } from "./types.js";
 import { normalizeToolName } from "../agents/tool-policy.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
 import { applyTestPluginDefaults, normalizePluginsConfig } from "./config-state.js";
-import { loadMoltBotPlugins } from "./loader.js";
+import { loadRazroomPlugins } from "./loader.js";
 
 const log = createSubsystemLogger("plugins");
 
@@ -42,7 +42,7 @@ function isOptionalToolAllowed(params: {
 }
 
 export function resolvePluginTools(params: {
-  context: MoltBotPluginToolContext;
+  context: RazroomPluginToolContext;
   existingToolNames?: Set<string>;
   toolAllowlist?: string[];
 }): AnyAgentTool[] {
@@ -54,7 +54,7 @@ export function resolvePluginTools(params: {
     return [];
   }
 
-  const registry = loadMoltBotPlugins({
+  const registry = loadRazroomPlugins({
     config: effectiveConfig,
     workspaceDir: params.context.workspaceDir,
     logger: {

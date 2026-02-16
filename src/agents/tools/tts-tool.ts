@@ -1,5 +1,5 @@
 import { Type } from "@sinclair/typebox";
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 import type { GatewayMessageChannel } from "../../utils/message-channel.js";
 import type { AnyAgentTool } from "./common.js";
 import { loadConfig } from "../../config/config.js";
@@ -14,7 +14,7 @@ const TtsToolSchema = Type.Object({
 });
 
 export function createTtsTool(opts?: {
-  config?: MoltBotConfig;
+  config?: RazroomConfig;
   agentChannel?: GatewayMessageChannel;
 }): AnyAgentTool {
   return {

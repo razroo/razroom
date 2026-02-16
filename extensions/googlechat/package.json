@@ -1,19 +1,19 @@
 {
-  "name": "@moltbot/googlechat",
+  "name": "@razroom/googlechat",
   "version": "2026.2.15",
   "private": true,
-  "description": "MoltBot Google Chat channel plugin",
+  "description": "Razroom Google Chat channel plugin",
   "type": "module",
   "dependencies": {
     "google-auth-library": "^10.5.0"
   },
   "devDependencies": {
-    "moltbot": "workspace:*"
+    "razroom": "workspace:*"
   },
   "peerDependencies": {
-    "moltbot": ">=2026.1.26"
+    "razroom": ">=2026.1.26"
   },
-  "moltbot": {
+  "razroom": {
     "extensions": [
       "./index.ts"
     ],
@@ -32,7 +32,7 @@
       "order": 55
     },
     "install": {
-      "npmSpec": "@moltbot/googlechat",
+      "npmSpec": "@razroom/googlechat",
       "localPath": "extensions/googlechat",
       "defaultChoice": "npm"
     }

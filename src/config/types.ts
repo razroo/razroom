@@ -7,7 +7,7 @@ export * from "./types.auth.js";
 export * from "./types.base.js";
 export * from "./types.browser.js";
 export * from "./types.channels.js";
-export * from "./types.moltbot.js";
+export * from "./types.razroom.js";
 export * from "./types.cron.js";
 export * from "./types.discord.js";
 export * from "./types.googlechat.js";

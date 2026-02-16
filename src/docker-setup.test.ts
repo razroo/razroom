@@ -39,7 +39,7 @@ exit 0
 }
 
 async function createDockerSetupSandbox(): Promise<DockerSetupSandbox> {
-  const rootDir = await mkdtemp(join(tmpdir(), "moltbot-docker-setup-"));
+  const rootDir = await mkdtemp(join(tmpdir(), "razroom-docker-setup-"));
   const scriptPath = join(rootDir, "docker-setup.sh");
   const dockerfilePath = join(rootDir, "Dockerfile");
   const composePath = join(rootDir, "docker-compose.yml");
@@ -51,7 +51,7 @@ async function createDockerSetupSandbox(): Promise<DockerSetupSandbox> {
   await writeFile(dockerfilePath, "FROM scratch\n");
   await writeFile(
     composePath,
-    "services:\n  moltbot-gateway:\n    image: noop\n  moltbot-cli:\n    image: noop\n",
+    "services:\n  razroom-gateway:\n    image: noop\n  razroom-cli:\n    image: noop\n",
   );
   await writeDockerStub(binDir, logPath);
 
@@ -69,9 +69,9 @@ function createEnv(
     LC_ALL: process.env.LC_ALL,
     TMPDIR: process.env.TMPDIR,
     DOCKER_STUB_LOG: sandbox.logPath,
-    MOLTBOT_GATEWAY_TOKEN: "test-token",
-    MOLTBOT_CONFIG_DIR: join(sandbox.rootDir, "config"),
-    MOLTBOT_WORKSPACE_DIR: join(sandbox.rootDir, "moltbot"),
+    RAZROOM_GATEWAY_TOKEN: "test-token",
+    RAZROOM_CONFIG_DIR: join(sandbox.rootDir, "config"),
+    RAZROOM_WORKSPACE_DIR: join(sandbox.rootDir, "razroom"),
   };
 
   for (const [key, value] of Object.entries(overrides)) {
@@ -118,23 +118,23 @@ describe("docker-setup.sh", () => {
     const result = spawnSync("bash", [sandbox.scriptPath], {
       cwd: sandbox.rootDir,
       env: createEnv(sandbox, {
-        MOLTBOT_DOCKER_APT_PACKAGES: "ffmpeg build-essential",
-        MOLTBOT_EXTRA_MOUNTS: undefined,
-        MOLTBOT_HOME_VOLUME: "moltbot-home",
+        RAZROOM_DOCKER_APT_PACKAGES: "ffmpeg build-essential",
+        RAZROOM_EXTRA_MOUNTS: undefined,
+        RAZROOM_HOME_VOLUME: "razroom-home",
       }),
       stdio: ["ignore", "ignore", "pipe"],
     });
     expect(result.status).toBe(0);
     const envFile = await readFile(join(sandbox.rootDir, ".env"), "utf8");
-    expect(envFile).toContain("MOLTBOT_DOCKER_APT_PACKAGES=ffmpeg build-essential");
-    expect(envFile).toContain("MOLTBOT_EXTRA_MOUNTS=");
-    expect(envFile).toContain("MOLTBOT_HOME_VOLUME=moltbot-home");
+    expect(envFile).toContain("RAZROOM_DOCKER_APT_PACKAGES=ffmpeg build-essential");
+    expect(envFile).toContain("RAZROOM_EXTRA_MOUNTS=");
+    expect(envFile).toContain("RAZROOM_HOME_VOLUME=razroom-home");
     const extraCompose = await readFile(join(sandbox.rootDir, "docker-compose.extra.yml"), "utf8");
-    expect(extraCompose).toContain("moltbot-home:/home/node");
+    expect(extraCompose).toContain("razroom-home:/home/node");
     expect(extraCompose).toContain("volumes:");
-    expect(extraCompose).toContain("moltbot-home:");
+    expect(extraCompose).toContain("razroom-home:");
     const log = await readFile(sandbox.logPath, "utf8");
-    expect(log).toContain("--build-arg MOLTBOT_DOCKER_APT_PACKAGES=ffmpeg build-essential");
+    expect(log).toContain("--build-arg RAZROOM_DOCKER_APT_PACKAGES=ffmpeg build-essential");
   });
 
   it("avoids associative arrays so the script remains Bash 3.2-compatible", async () => {

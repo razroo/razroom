@@ -10,7 +10,7 @@ import {
 let tempRoot: string | null = null;
 
 async function makeTempRoot() {
-  const root = await fs.promises.mkdtemp(path.join(os.tmpdir(), "moltbot-state-dir-"));
+  const root = await fs.promises.mkdtemp(path.join(os.tmpdir(), "razroom-state-dir-"));
   tempRoot = root;
   return root;
 }
@@ -25,10 +25,10 @@ afterEach(async () => {
 });
 
 describe("legacy state dir auto-migration", () => {
-  it("follows legacy symlink when it points at another legacy dir (moltbot -> moltbot)", async () => {
+  it("follows legacy symlink when it points at another legacy dir (razroom -> razroom)", async () => {
     const root = await makeTempRoot();
-    const legacySymlink = path.join(root, ".moltbot");
-    const legacyDir = path.join(root, ".moltbot");
+    const legacySymlink = path.join(root, ".razroom");
+    const legacyDir = path.join(root, ".razroom");
 
     fs.mkdirSync(legacyDir, { recursive: true });
     fs.writeFileSync(path.join(legacyDir, "marker.txt"), "ok", "utf-8");
@@ -44,9 +44,9 @@ describe("legacy state dir auto-migration", () => {
     expect(result.migrated).toBe(true);
     expect(result.warnings).toEqual([]);
 
-    const targetMarker = path.join(root, ".moltbot", "marker.txt");
+    const targetMarker = path.join(root, ".razroom", "marker.txt");
     expect(fs.readFileSync(targetMarker, "utf-8")).toBe("ok");
-    expect(fs.readFileSync(path.join(root, ".moltbot", "marker.txt"), "utf-8")).toBe("ok");
-    expect(fs.readFileSync(path.join(root, ".moltbot", "marker.txt"), "utf-8")).toBe("ok");
+    expect(fs.readFileSync(path.join(root, ".razroom", "marker.txt"), "utf-8")).toBe("ok");
+    expect(fs.readFileSync(path.join(root, ".razroom", "marker.txt"), "utf-8")).toBe("ok");
   });
 });

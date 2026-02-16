@@ -1,5 +1,5 @@
 import type { AgentIdentityFile } from "../agents/identity-file.js";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import {
   resolveAgentDir,
   resolveAgentWorkspaceDir,
@@ -28,11 +28,11 @@ export type AgentSummary = {
   isDefault: boolean;
 };
 
-type AgentEntry = NonNullable<NonNullable<MoltBotConfig["agents"]>["list"]>[number];
+type AgentEntry = NonNullable<NonNullable<RazroomConfig["agents"]>["list"]>[number];
 
 export type AgentIdentity = AgentIdentityFile;
 
-export function listAgentEntries(cfg: MoltBotConfig): AgentEntry[] {
+export function listAgentEntries(cfg: RazroomConfig): AgentEntry[] {
   const list = cfg.agents?.list;
   if (!Array.isArray(list)) {
     return [];
@@ -45,14 +45,14 @@ export function findAgentEntryIndex(list: AgentEntry[], agentId: string): number
   return list.findIndex((entry) => normalizeAgentId(entry.id) === id);
 }
 
-function resolveAgentName(cfg: MoltBotConfig, agentId: string) {
+function resolveAgentName(cfg: RazroomConfig, agentId: string) {
   const entry = listAgentEntries(cfg).find(
     (agent) => normalizeAgentId(agent.id) === normalizeAgentId(agentId),
   );
   return entry?.name?.trim() || undefined;
 }
 
-function resolveAgentModel(cfg: MoltBotConfig, agentId: string) {
+function resolveAgentModel(cfg: RazroomConfig, agentId: string) {
   const entry = listAgentEntries(cfg).find(
     (agent) => normalizeAgentId(agent.id) === normalizeAgentId(agentId),
   );
@@ -86,7 +86,7 @@ export function loadAgentIdentity(workspace: string): AgentIdentity | null {
   return identityHasValues(parsed) ? parsed : null;
 }
 
-export function buildAgentSummaries(cfg: MoltBotConfig): AgentSummary[] {
+export function buildAgentSummaries(cfg: RazroomConfig): AgentSummary[] {
   const defaultAgentId = normalizeAgentId(resolveDefaultAgentId(cfg));
   const configuredAgents = listAgentEntries(cfg);
   const orderedIds =
@@ -130,7 +130,7 @@ export function buildAgentSummaries(cfg: MoltBotConfig): AgentSummary[] {
 }
 
 export function applyAgentConfig(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   params: {
     agentId: string;
     name?: string;
@@ -138,7 +138,7 @@ export function applyAgentConfig(
     agentDir?: string;
     model?: string;
   },
-): MoltBotConfig {
+): RazroomConfig {
   const agentId = normalizeAgentId(params.agentId);
   const name = params.name?.trim();
   const list = listAgentEntries(cfg);
@@ -170,10 +170,10 @@ export function applyAgentConfig(
 }
 
 export function pruneAgentConfig(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   agentId: string,
 ): {
-  config: MoltBotConfig;
+  config: RazroomConfig;
   removedBindings: number;
   removedAllow: number;
 } {

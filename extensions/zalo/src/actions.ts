@@ -1,15 +1,15 @@
 import type {
   ChannelMessageActionAdapter,
   ChannelMessageActionName,
-  MoltBotConfig,
-} from "moltbot/plugin-sdk";
-import { jsonResult, readStringParam } from "moltbot/plugin-sdk";
+  RazroomConfig,
+} from "razroom/plugin-sdk";
+import { jsonResult, readStringParam } from "razroom/plugin-sdk";
 import { listEnabledZaloAccounts } from "./accounts.js";
 import { sendMessageZalo } from "./send.js";
 
 const providerId = "zalo";
 
-function listEnabledAccounts(cfg: MoltBotConfig) {
+function listEnabledAccounts(cfg: RazroomConfig) {
   return listEnabledZaloAccounts(cfg).filter(
     (account) => account.enabled && account.tokenSource !== "none",
   );

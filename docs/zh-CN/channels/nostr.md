@@ -1,6 +1,6 @@
 ---
 read_when:
-  - 你希望 MoltBot 通过 Nostr 接收私信
+  - 你希望 Razroom 通过 Nostr 接收私信
   - 你正在设置去中心化消息
 summary: 通过 NIP-04 加密消息的 Nostr 私信渠道
 title: Nostr
@@ -17,13 +17,13 @@ x-i18n:
 
 **状态：** 可选插件（默认禁用）。
 
-Nostr 是一个去中心化的社交网络协议。此渠道使 MoltBot 能够通过 NIP-04 接收和回复加密私信（DMs）。
+Nostr 是一个去中心化的社交网络协议。此渠道使 Razroom 能够通过 NIP-04 接收和回复加密私信（DMs）。
 
 ## 安装（按需）
 
 ### 新手引导（推荐）
 
-- 新手引导向导（`moltbot onboard`）和 `moltbot channels add` 会列出可选的渠道插件。
+- 新手引导向导（`razroom onboard`）和 `razroom channels add` 会列出可选的渠道插件。
 - 选择 Nostr 会提示你按需安装插件。
 
 安装默认值：
@@ -36,13 +36,13 @@ Nostr 是一个去中心化的社交网络协议。此渠道使 MoltBot 能够�
 ### 手动安装
 
 ```bash
-moltbot plugins install @moltbot/nostr
+razroom plugins install @razroom/nostr
 ```
 
 使用本地 checkout（开发工作流）：
 
 ```bash
-moltbot plugins install --link <path-to-moltbot>/extensions/nostr
+razroom plugins install --link <path-to-razroom>/extensions/nostr
 ```
 
 安装或启用插件后重启 Gateway 网关。
@@ -100,14 +100,14 @@ export NOSTR_PRIVATE_KEY="nsec1..."
     "nostr": {
       "privateKey": "${NOSTR_PRIVATE_KEY}",
       "profile": {
-        "name": "moltbot",
-        "displayName": "MoltBot",
+        "name": "razroom",
+        "displayName": "Razroom",
         "about": "Personal assistant DM bot",
         "picture": "https://example.com/avatar.png",
         "banner": "https://example.com/banner.png",
         "website": "https://example.com",
-        "nip05": "moltbot@example.com",
-        "lud16": "moltbot@example.com"
+        "nip05": "razroom@example.com",
+        "lud16": "razroom@example.com"
       }
     }
   }

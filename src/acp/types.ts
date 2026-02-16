@@ -23,7 +23,7 @@ export type AcpServerOptions = {
 };
 
 export const ACP_AGENT_INFO = {
-  name: "moltbot-acp",
-  title: "MoltBot ACP Gateway",
+  name: "razroom-acp",
+  title: "Razroom ACP Gateway",
   version: VERSION,
 };

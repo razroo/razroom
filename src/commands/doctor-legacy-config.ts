@@ -1,10 +1,10 @@
-import type { MoltBotConfig } from "../config/config.js";
-export function normalizeLegacyConfigValues(cfg: MoltBotConfig): {
-  config: MoltBotConfig;
+import type { RazroomConfig } from "../config/config.js";
+export function normalizeLegacyConfigValues(cfg: RazroomConfig): {
+  config: RazroomConfig;
   changes: string[];
 } {
   const changes: string[] = [];
-  let next: MoltBotConfig = cfg;
+  let next: RazroomConfig = cfg;
 
   const isRecord = (value: unknown): value is Record<string, unknown> =>
     Boolean(value) && typeof value === "object" && !Array.isArray(value);

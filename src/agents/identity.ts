@@ -1,17 +1,17 @@
-import type { MoltBotConfig, HumanDelayConfig, IdentityConfig } from "../config/config.js";
+import type { RazroomConfig, HumanDelayConfig, IdentityConfig } from "../config/config.js";
 import { resolveAgentConfig } from "./agent-scope.js";
 
 const DEFAULT_ACK_REACTION = "👀";
 
 export function resolveAgentIdentity(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   agentId: string,
 ): IdentityConfig | undefined {
   return resolveAgentConfig(cfg, agentId)?.identity;
 }
 
 export function resolveAckReaction(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   agentId: string,
   opts?: { channel?: string; accountId?: string },
 ): string {
@@ -46,7 +46,7 @@ export function resolveAckReaction(
 }
 
 export function resolveIdentityNamePrefix(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   agentId: string,
 ): string | undefined {
   const name = resolveAgentIdentity(cfg, agentId)?.name?.trim();
@@ -57,12 +57,12 @@ export function resolveIdentityNamePrefix(
 }
 
 /** Returns just the identity name (without brackets) for template context. */
-export function resolveIdentityName(cfg: MoltBotConfig, agentId: string): string | undefined {
+export function resolveIdentityName(cfg: RazroomConfig, agentId: string): string | undefined {
   return resolveAgentIdentity(cfg, agentId)?.name?.trim() || undefined;
 }
 
 export function resolveMessagePrefix(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   agentId: string,
   opts?: { configured?: string; hasAllowFrom?: boolean; fallback?: string },
 ): string {
@@ -76,12 +76,12 @@ export function resolveMessagePrefix(
     return "";
   }
 
-  return resolveIdentityNamePrefix(cfg, agentId) ?? opts?.fallback ?? "[moltbot]";
+  return resolveIdentityNamePrefix(cfg, agentId) ?? opts?.fallback ?? "[razroom]";
 }
 
 /** Helper to extract a channel config value by dynamic key. */
 function getChannelConfig(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   channel: string,
 ): Record<string, unknown> | undefined {
   const channels = cfg.channels as Record<string, unknown> | undefined;
@@ -92,7 +92,7 @@ function getChannelConfig(
 }
 
 export function resolveResponsePrefix(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   agentId: string,
   opts?: { channel?: string; accountId?: string },
 ): string | undefined {
@@ -133,7 +133,7 @@ export function resolveResponsePrefix(
 }
 
 export function resolveEffectiveMessagesConfig(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   agentId: string,
   opts?: {
     hasAllowFrom?: boolean;
@@ -155,7 +155,7 @@ export function resolveEffectiveMessagesConfig(
 }
 
 export function resolveHumanDelayConfig(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   agentId: string,
 ): HumanDelayConfig | undefined {
   const defaults = cfg.agents?.defaults?.humanDelay;

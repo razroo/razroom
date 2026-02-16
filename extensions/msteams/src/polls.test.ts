@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "moltbot/plugin-sdk";
+import type { PluginRuntime } from "razroom/plugin-sdk";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -9,12 +9,12 @@ import { setMSTeamsRuntime } from "./runtime.js";
 const runtimeStub = {
   state: {
     resolveStateDir: (env: NodeJS.ProcessEnv = process.env, homedir?: () => string) => {
-      const override = env.MOLTBOT_STATE_DIR?.trim() || env.MOLTBOT_STATE_DIR?.trim();
+      const override = env.RAZROOM_STATE_DIR?.trim() || env.RAZROOM_STATE_DIR?.trim();
       if (override) {
         return override;
       }
       const resolvedHome = homedir ? homedir() : os.homedir();
-      return path.join(resolvedHome, ".moltbot");
+      return path.join(resolvedHome, ".razroom");
     },
   },
 } as unknown as PluginRuntime;
@@ -39,7 +39,7 @@ describe("msteams polls", () => {
   it("extracts poll votes from activity values", () => {
     const vote = extractMSTeamsPollVote({
       value: {
-        moltbotPollId: "poll-1",
+        razroomPollId: "poll-1",
         choices: "0,1",
       },
     });
@@ -51,7 +51,7 @@ describe("msteams polls", () => {
   });
 
   it("stores and records poll votes", async () => {
-    const home = await fs.promises.mkdtemp(path.join(os.tmpdir(), "moltbot-msteams-polls-"));
+    const home = await fs.promises.mkdtemp(path.join(os.tmpdir(), "razroom-msteams-polls-"));
     const store = createMSTeamsPollStoreFs({ homedir: () => home });
     await store.createPoll({
       id: "poll-2",

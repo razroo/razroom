@@ -9,7 +9,7 @@ import { isBun } from "./infra/runtime-detect.js";
 import { installProcessWarningFilter } from "./infra/warning-filter.js";
 import { attachChildProcessBridge } from "./process/child-process-bridge.js";
 
-process.title = "moltbot";
+process.title = "razroom";
 installProcessWarningFilter();
 normalizeEnv();
 
@@ -41,10 +41,10 @@ function ensureExperimentalWarningSuppressed(): boolean {
   if (shouldSkipRespawnForArgv(process.argv)) {
     return false;
   }
-  if (isTruthyEnvValue(process.env.MOLTBOT_NO_RESPAWN)) {
+  if (isTruthyEnvValue(process.env.RAZROOM_NO_RESPAWN)) {
     return false;
   }
-  if (isTruthyEnvValue(process.env.MOLTBOT_NODE_OPTIONS_READY)) {
+  if (isTruthyEnvValue(process.env.RAZROOM_NODE_OPTIONS_READY)) {
     return false;
   }
   if (hasExperimentalWarningSuppressed()) {
@@ -52,7 +52,7 @@ function ensureExperimentalWarningSuppressed(): boolean {
   }
 
   // Respawn guard (and keep recursion bounded if something goes wrong).
-  process.env.MOLTBOT_NODE_OPTIONS_READY = "1";
+  process.env.RAZROOM_NODE_OPTIONS_READY = "1";
   // Pass flag as a Node CLI option, not via NODE_OPTIONS (--disable-warning is disallowed in NODE_OPTIONS).
   const child = spawn(
     process.execPath,
@@ -75,7 +75,7 @@ function ensureExperimentalWarningSuppressed(): boolean {
 
   child.once("error", (error) => {
     console.error(
-      "[moltbot] Failed to respawn CLI:",
+      "[razroom] Failed to respawn CLI:",
       error instanceof Error ? (error.stack ?? error.message) : error,
     );
     process.exit(1);
@@ -91,7 +91,7 @@ if (!ensureExperimentalWarningSuppressed()) {
   const parsed = parseCliProfileArgs(process.argv);
   if (!parsed.ok) {
     // Keep it simple; Commander will handle rich help/errors after we strip flags.
-    console.error(`[moltbot] ${parsed.error}`);
+    console.error(`[razroom] ${parsed.error}`);
     process.exit(2);
   }
 
@@ -105,7 +105,7 @@ if (!ensureExperimentalWarningSuppressed()) {
     .then(({ runCli }) => runCli(process.argv))
     .catch((error) => {
       console.error(
-        "[moltbot] Failed to start CLI:",
+        "[razroom] Failed to start CLI:",
         error instanceof Error ? (error.stack ?? error.message) : error,
       );
       process.exitCode = 1;

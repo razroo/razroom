@@ -1,13 +1,13 @@
 {
-  "name": "@moltbot/line",
+  "name": "@razroom/line",
   "version": "2026.2.15",
   "private": true,
-  "description": "MoltBot LINE channel plugin",
+  "description": "Razroom LINE channel plugin",
   "type": "module",
   "devDependencies": {
-    "moltbot": "workspace:*"
+    "razroom": "workspace:*"
   },
-  "moltbot": {
+  "razroom": {
     "extensions": [
       "./index.ts"
     ],
@@ -22,7 +22,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@moltbot/line",
+      "npmSpec": "@razroom/line",
       "localPath": "extensions/line",
       "defaultChoice": "npm"
     }

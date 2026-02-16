@@ -15,21 +15,21 @@ async function writeSkill(dir: string, name: string) {
 }
 
 describe("resolveBundledSkillsDir", () => {
-  const originalOverride = process.env.MOLTBOT_BUNDLED_SKILLS_DIR;
+  const originalOverride = process.env.RAZROOM_BUNDLED_SKILLS_DIR;
 
   afterEach(() => {
     if (originalOverride === undefined) {
-      delete process.env.MOLTBOT_BUNDLED_SKILLS_DIR;
+      delete process.env.RAZROOM_BUNDLED_SKILLS_DIR;
     } else {
-      process.env.MOLTBOT_BUNDLED_SKILLS_DIR = originalOverride;
+      process.env.RAZROOM_BUNDLED_SKILLS_DIR = originalOverride;
     }
   });
 
   it("resolves bundled skills under a flattened dist layout", async () => {
-    delete process.env.MOLTBOT_BUNDLED_SKILLS_DIR;
+    delete process.env.RAZROOM_BUNDLED_SKILLS_DIR;
 
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-bundled-"));
-    await fs.writeFile(path.join(root, "package.json"), JSON.stringify({ name: "moltbot" }));
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-bundled-"));
+    await fs.writeFile(path.join(root, "package.json"), JSON.stringify({ name: "razroom" }));
 
     await writeSkill(path.join(root, "skills", "peekaboo"), "peekaboo");
 

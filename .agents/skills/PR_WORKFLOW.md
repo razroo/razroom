@@ -147,7 +147,7 @@ Gate set:
 - Before starting a review when a GH Issue/PR is pasted: `review-pr`/`scripts/pr-review` should create and use an isolated `.worktrees/pr-<PR>` checkout from `origin/main` automatically. Do not require a clean main checkout, and do not run `git pull` in a dirty main checkout.
 - PR review calls: prefer a single `gh pr view --json ...` to batch metadata/comments; run `gh pr diff` only when needed.
 - PRs should summarize scope, note testing performed, and mention any user-facing changes or new flags.
-- Read `docs/help/submitting-a-pr.md` ([Submitting a PR](https://docs.moltbot.ai/help/submitting-a-pr)) for what we expect from contributors.
+- Read `docs/help/submitting-a-pr.md` ([Submitting a PR](https://docs.razroom.ai/help/submitting-a-pr)) for what we expect from contributors.
 
 ## Unified workflow
 

@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { RuntimeEnv } from "../runtime.js";
 import { formatCliCommand } from "../cli/command-format.js";
 import { readConfigFileSnapshot } from "../config/config.js";
@@ -7,7 +7,7 @@ export function createQuietRuntime(runtime: RuntimeEnv): RuntimeEnv {
   return { ...runtime, log: () => {} };
 }
 
-export async function requireValidConfig(runtime: RuntimeEnv): Promise<MoltBotConfig | null> {
+export async function requireValidConfig(runtime: RuntimeEnv): Promise<RazroomConfig | null> {
   const snapshot = await readConfigFileSnapshot();
   if (snapshot.exists && !snapshot.valid) {
     const issues =
@@ -15,7 +15,7 @@ export async function requireValidConfig(runtime: RuntimeEnv): Promise<MoltBotCo
         ? snapshot.issues.map((issue) => `- ${issue.path}: ${issue.message}`).join("\n")
         : "Unknown validation issue.";
     runtime.error(`Config invalid:\n${issues}`);
-    runtime.error(`Fix the config or run ${formatCliCommand("moltbot doctor")}.`);
+    runtime.error(`Fix the config or run ${formatCliCommand("razroom doctor")}.`);
     runtime.exit(1);
     return null;
   }

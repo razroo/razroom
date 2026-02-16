@@ -113,7 +113,7 @@ async function submitVoyageBatch(params: {
         input_type: "document",
       },
       metadata: {
-        source: "moltbot-memory",
+        source: "razroom-memory",
         agent: params.agentId,
       },
     },

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-INSTALL_URL="${MOLTBOT_INSTALL_URL:-https://moltbot.bot/install.sh}"
-DEFAULT_PACKAGE="moltbot"
-PACKAGE_NAME="${MOLTBOT_INSTALL_PACKAGE:-$DEFAULT_PACKAGE}"
+INSTALL_URL="${RAZROOM_INSTALL_URL:-https://razroom.bot/install.sh}"
+DEFAULT_PACKAGE="razroom"
+PACKAGE_NAME="${RAZROOM_INSTALL_PACKAGE:-$DEFAULT_PACKAGE}"
 
 echo "==> Pre-flight: ensure git absent"
 if command -v git >/dev/null; then
@@ -20,7 +20,7 @@ export PATH="$HOME/.npm-global/bin:$PATH"
 echo "==> Verify git installed"
 command -v git >/dev/null
 
-EXPECTED_VERSION="${MOLTBOT_INSTALL_EXPECT_VERSION:-}"
+EXPECTED_VERSION="${RAZROOM_INSTALL_EXPECT_VERSION:-}"
 if [[ -n "$EXPECTED_VERSION" ]]; then
   LATEST_VERSION="$EXPECTED_VERSION"
 else

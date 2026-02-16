@@ -4,7 +4,7 @@ import path from "node:path";
 import { resolveBrewPathDirs } from "./brew.js";
 import { isTruthyEnvValue } from "./env.js";
 
-type EnsureMoltBotPathOpts = {
+type EnsureRazroomPathOpts = {
   execPath?: string;
   cwd?: string;
   homeDir?: string;
@@ -49,7 +49,7 @@ function mergePath(params: { existing: string; prepend?: string[]; append?: stri
   return merged.join(path.delimiter);
 }
 
-function candidateBinDirs(opts: EnsureMoltBotPathOpts): { prepend: string[]; append: string[] } {
+function candidateBinDirs(opts: EnsureRazroomPathOpts): { prepend: string[]; append: string[] } {
   const execPath = opts.execPath ?? process.execPath;
   const cwd = opts.cwd ?? process.cwd();
   const homeDir = opts.homeDir ?? os.homedir();
@@ -58,10 +58,10 @@ function candidateBinDirs(opts: EnsureMoltBotPathOpts): { prepend: string[]; app
   const prepend: string[] = [];
   const append: string[] = [];
 
-  // Bundled macOS app: `moltbot` lives next to the executable (process.execPath).
+  // Bundled macOS app: `razroom` lives next to the executable (process.execPath).
   try {
     const execDir = path.dirname(execPath);
-    const siblingCli = path.join(execDir, "moltbot");
+    const siblingCli = path.join(execDir, "razroom");
     if (isExecutable(siblingCli)) {
       prepend.push(execDir);
     }
@@ -73,10 +73,10 @@ function candidateBinDirs(opts: EnsureMoltBotPathOpts): { prepend: string[]; app
   // disabled by default; if an operator explicitly enables it, only append (never prepend).
   const allowProjectLocalBin =
     opts.allowProjectLocalBin === true ||
-    isTruthyEnvValue(process.env.MOLTBOT_ALLOW_PROJECT_LOCAL_BIN);
+    isTruthyEnvValue(process.env.RAZROOM_ALLOW_PROJECT_LOCAL_BIN);
   if (allowProjectLocalBin) {
     const localBinDir = path.join(cwd, "node_modules", ".bin");
-    if (isExecutable(path.join(localBinDir, "moltbot"))) {
+    if (isExecutable(path.join(localBinDir, "razroom"))) {
       append.push(localBinDir);
     }
   }
@@ -106,14 +106,14 @@ function candidateBinDirs(opts: EnsureMoltBotPathOpts): { prepend: string[]; app
 }
 
 /**
- * Best-effort PATH bootstrap so skills that require the `moltbot` CLI can run
+ * Best-effort PATH bootstrap so skills that require the `razroom` CLI can run
  * under launchd/minimal environments (and inside the macOS app bundle).
  */
-export function ensureMoltBotCliOnPath(opts: EnsureMoltBotPathOpts = {}) {
-  if (isTruthyEnvValue(process.env.MOLTBOT_PATH_BOOTSTRAPPED)) {
+export function ensureRazroomCliOnPath(opts: EnsureRazroomPathOpts = {}) {
+  if (isTruthyEnvValue(process.env.RAZROOM_PATH_BOOTSTRAPPED)) {
     return;
   }
-  process.env.MOLTBOT_PATH_BOOTSTRAPPED = "1";
+  process.env.RAZROOM_PATH_BOOTSTRAPPED = "1";
 
   const existing = opts.pathEnv ?? process.env.PATH ?? "";
   const { prepend, append } = candidateBinDirs(opts);

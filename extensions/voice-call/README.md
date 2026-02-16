@@ -1,6 +1,6 @@
-# @moltbot/voice-call
+# @razroom/voice-call
 
-Official Voice Call plugin for **MoltBot**.
+Official Voice Call plugin for **Razroom**.
 
 Providers:
 
@@ -9,15 +9,15 @@ Providers:
 - **Plivo** (Voice API + XML transfer + GetInput speech)
 - **Mock** (dev/no network)
 
-Docs: `https://docs.moltbot.ai/plugins/voice-call`
-Plugin system: `https://docs.moltbot.ai/plugin`
+Docs: `https://docs.razroom.ai/plugins/voice-call`
+Plugin system: `https://docs.razroom.ai/plugin`
 
 ## Install (local dev)
 
-### Option A: install via MoltBot (recommended)
+### Option A: install via Razroom (recommended)
 
 ```bash
-moltbot plugins install @moltbot/voice-call
+razroom plugins install @razroom/voice-call
 ```
 
 Restart the Gateway afterwards.
@@ -25,9 +25,9 @@ Restart the Gateway afterwards.
 ### Option B: copy into your global extensions folder (dev)
 
 ```bash
-mkdir -p ~/.moltbot/extensions
-cp -R extensions/voice-call ~/.moltbot/extensions/voice-call
-cd ~/.moltbot/extensions/voice-call && pnpm install
+mkdir -p ~/.razroom/extensions
+cp -R extensions/voice-call ~/.razroom/extensions/voice-call
+cd ~/.razroom/extensions/voice-call && pnpm install
 ```
 
 ## Config
@@ -112,13 +112,13 @@ Notes:
 ## CLI
 
 ```bash
-moltbot voicecall call --to "+15555550123" --message "Hello from MoltBot"
-moltbot voicecall continue --call-id <id> --message "Any questions?"
-moltbot voicecall speak --call-id <id> --message "One moment"
-moltbot voicecall end --call-id <id>
-moltbot voicecall status --call-id <id>
-moltbot voicecall tail
-moltbot voicecall expose --mode funnel
+razroom voicecall call --to "+15555550123" --message "Hello from Razroom"
+razroom voicecall continue --call-id <id> --message "Any questions?"
+razroom voicecall speak --call-id <id> --message "One moment"
+razroom voicecall end --call-id <id>
+razroom voicecall status --call-id <id>
+razroom voicecall tail
+razroom voicecall expose --mode funnel
 ```
 
 ## Tool

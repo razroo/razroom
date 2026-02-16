@@ -173,29 +173,29 @@ describe("gateway hot reload", () => {
   let prevSkipProviders: string | undefined;
 
   beforeEach(() => {
-    prevSkipChannels = process.env.MOLTBOT_SKIP_CHANNELS;
-    prevSkipGmail = process.env.MOLTBOT_SKIP_GMAIL_WATCHER;
-    prevSkipProviders = process.env.MOLTBOT_SKIP_PROVIDERS;
-    process.env.MOLTBOT_SKIP_CHANNELS = "0";
-    delete process.env.MOLTBOT_SKIP_GMAIL_WATCHER;
-    delete process.env.MOLTBOT_SKIP_PROVIDERS;
+    prevSkipChannels = process.env.RAZROOM_SKIP_CHANNELS;
+    prevSkipGmail = process.env.RAZROOM_SKIP_GMAIL_WATCHER;
+    prevSkipProviders = process.env.RAZROOM_SKIP_PROVIDERS;
+    process.env.RAZROOM_SKIP_CHANNELS = "0";
+    delete process.env.RAZROOM_SKIP_GMAIL_WATCHER;
+    delete process.env.RAZROOM_SKIP_PROVIDERS;
   });
 
   afterEach(() => {
     if (prevSkipChannels === undefined) {
-      delete process.env.MOLTBOT_SKIP_CHANNELS;
+      delete process.env.RAZROOM_SKIP_CHANNELS;
     } else {
-      process.env.MOLTBOT_SKIP_CHANNELS = prevSkipChannels;
+      process.env.RAZROOM_SKIP_CHANNELS = prevSkipChannels;
     }
     if (prevSkipGmail === undefined) {
-      delete process.env.MOLTBOT_SKIP_GMAIL_WATCHER;
+      delete process.env.RAZROOM_SKIP_GMAIL_WATCHER;
     } else {
-      process.env.MOLTBOT_SKIP_GMAIL_WATCHER = prevSkipGmail;
+      process.env.RAZROOM_SKIP_GMAIL_WATCHER = prevSkipGmail;
     }
     if (prevSkipProviders === undefined) {
-      delete process.env.MOLTBOT_SKIP_PROVIDERS;
+      delete process.env.RAZROOM_SKIP_PROVIDERS;
     } else {
-      process.env.MOLTBOT_SKIP_PROVIDERS = prevSkipProviders;
+      process.env.RAZROOM_SKIP_PROVIDERS = prevSkipProviders;
     }
   });
 

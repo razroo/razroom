@@ -79,22 +79,22 @@ describe("gateway SIGTERM", () => {
   });
 
   it("exits 0 on SIGTERM", { timeout: 180_000 }, async () => {
-    const stateDir = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-gateway-test-"));
+    const stateDir = fs.mkdtempSync(path.join(os.tmpdir(), "razroom-gateway-test-"));
     const out: string[] = [];
     const err: string[] = [];
 
     const nodeBin = process.execPath;
     const env = {
       ...process.env,
-      MOLTBOT_NO_RESPAWN: "1",
-      MOLTBOT_STATE_DIR: stateDir,
-      MOLTBOT_SKIP_CHANNELS: "1",
-      MOLTBOT_SKIP_GMAIL_WATCHER: "1",
-      MOLTBOT_SKIP_CRON: "1",
-      MOLTBOT_SKIP_BROWSER_CONTROL_SERVER: "1",
-      MOLTBOT_SKIP_CANVAS_HOST: "1",
+      RAZROOM_NO_RESPAWN: "1",
+      RAZROOM_STATE_DIR: stateDir,
+      RAZROOM_SKIP_CHANNELS: "1",
+      RAZROOM_SKIP_GMAIL_WATCHER: "1",
+      RAZROOM_SKIP_CRON: "1",
+      RAZROOM_SKIP_BROWSER_CONTROL_SERVER: "1",
+      RAZROOM_SKIP_CANVAS_HOST: "1",
     };
-    const bootstrapPath = path.join(stateDir, "moltbot-entry-bootstrap.mjs");
+    const bootstrapPath = path.join(stateDir, "razroom-entry-bootstrap.mjs");
     const runLoopPath = path.resolve("src/cli/gateway-cli/run-loop.ts");
     const runtimePath = path.resolve("src/runtime.ts");
     fs.writeFileSync(

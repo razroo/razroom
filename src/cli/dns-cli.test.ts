@@ -9,10 +9,10 @@ describe("dns cli", () => {
     try {
       const program = new Command();
       registerDnsCli(program);
-      await program.parseAsync(["dns", "setup", "--domain", "moltbot.internal"], { from: "user" });
+      await program.parseAsync(["dns", "setup", "--domain", "razroom.internal"], { from: "user" });
       const output = log.mock.calls.map((call) => call.join(" ")).join("\n");
       expect(output).toContain("DNS setup");
-      expect(output).toContain("moltbot.internal");
+      expect(output).toContain("razroom.internal");
     } finally {
       log.mockRestore();
     }

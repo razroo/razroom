@@ -1,16 +1,16 @@
-# MoltBot Chrome Extension (Browser Relay)
+# Razroom Chrome Extension (Browser Relay)
 
-Purpose: attach MoltBot to an existing Chrome tab so the Gateway can automate it (via the local CDP relay server).
+Purpose: attach Razroom to an existing Chrome tab so the Gateway can automate it (via the local CDP relay server).
 
 ## Dev / load unpacked
 
-1. Build/run MoltBot Gateway with browser control enabled.
+1. Build/run Razroom Gateway with browser control enabled.
 2. Ensure the relay server is reachable at `http://127.0.0.1:18792/` (default).
 3. Install the extension to a stable path:
 
    ```bash
-   moltbot browser extension install
-   moltbot browser extension path
+   razroom browser extension install
+   razroom browser extension path
    ```
 
 4. Chrome → `chrome://extensions` → enable “Developer mode”.

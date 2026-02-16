@@ -1,6 +1,6 @@
 import "./test-helpers.js";
 import { describe, expect, it, mock, spyOn } from "bun:test";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import { monitorWebChannelWithCapture } from "./auto-reply.broadcast-groups.test-harness.js";
 import {
   installWebAutoReplyTestHomeHooks,
@@ -25,7 +25,7 @@ describe("broadcast groups", () => {
       broadcast: {
         "+1000": ["alfred", "missing"],
       },
-    } satisfies MoltBotConfig);
+    } satisfies RazroomConfig);
 
     const seen: string[] = [];
     const resolver = mock(async (ctx: { SessionKey?: unknown }) => {

@@ -14,13 +14,13 @@ function withNodeServiceEnv(
 ): Record<string, string | undefined> {
   return {
     ...env,
-    MOLTBOT_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
-    MOLTBOT_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
-    MOLTBOT_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
-    MOLTBOT_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
-    MOLTBOT_LOG_PREFIX: "node",
-    MOLTBOT_SERVICE_MARKER: NODE_SERVICE_MARKER,
-    MOLTBOT_SERVICE_KIND: NODE_SERVICE_KIND,
+    RAZROOM_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
+    RAZROOM_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
+    RAZROOM_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
+    RAZROOM_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
+    RAZROOM_LOG_PREFIX: "node",
+    RAZROOM_SERVICE_MARKER: NODE_SERVICE_MARKER,
+    RAZROOM_SERVICE_KIND: NODE_SERVICE_KIND,
   };
 }
 
@@ -30,13 +30,13 @@ function withNodeInstallEnv(args: GatewayServiceInstallArgs): GatewayServiceInst
     env: withNodeServiceEnv(args.env),
     environment: {
       ...args.environment,
-      MOLTBOT_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
-      MOLTBOT_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
-      MOLTBOT_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
-      MOLTBOT_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
-      MOLTBOT_LOG_PREFIX: "node",
-      MOLTBOT_SERVICE_MARKER: NODE_SERVICE_MARKER,
-      MOLTBOT_SERVICE_KIND: NODE_SERVICE_KIND,
+      RAZROOM_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
+      RAZROOM_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
+      RAZROOM_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
+      RAZROOM_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
+      RAZROOM_LOG_PREFIX: "node",
+      RAZROOM_SERVICE_MARKER: NODE_SERVICE_MARKER,
+      RAZROOM_SERVICE_KIND: NODE_SERVICE_KIND,
     },
   };
 }

@@ -29,8 +29,8 @@ const mocks = vi.hoisted(() => {
 
   return {
     store,
-    resolveMoltBotAgentDir: mock().mockReturnValue("/tmp/moltbot-agent"),
-    resolveAgentDir: mock().mockReturnValue("/tmp/moltbot-agent"),
+    resolveRazroomAgentDir: mock().mockReturnValue("/tmp/razroom-agent"),
+    resolveAgentDir: mock().mockReturnValue("/tmp/razroom-agent"),
     resolveAgentModelPrimary: mock().mockReturnValue(undefined),
     resolveAgentModelFallbacksOverride: mock().mockReturnValue(undefined),
     listAgentIds: mock().mockReturnValue(["main", "jeremiah"]),
@@ -43,7 +43,7 @@ const mocks = vi.hoisted(() => {
     resolveAuthProfileDisplayLabel: mock(({ profileId }: { profileId: string }) => profileId),
     resolveAuthStorePathForDisplay: vi
       .fn()
-      .mockReturnValue("/tmp/moltbot-agent/auth-profiles.json"),
+      .mockReturnValue("/tmp/razroom-agent/auth-profiles.json"),
     resolveEnvApiKey: mock((provider: string) => {
       if (provider === "openai") {
         return {
@@ -76,7 +76,7 @@ const mocks = vi.hoisted(() => {
 });
 
 mock("../../agents/agent-paths.js", () => ({
-  resolveMoltBotAgentDir: mocks.resolveMoltBotAgentDir,
+  resolveRazroomAgentDir: mocks.resolveRazroomAgentDir,
 }));
 
 mock("../../agents/agent-scope.js", () => ({
@@ -128,9 +128,9 @@ describe("modelsStatusCommand auth overview", () => {
     await modelsStatusCommand({ json: true }, runtime as never);
     const payload = JSON.parse(String((runtime.log as vi.Mock).mock.calls[0][0]));
 
-    expect(mocks.resolveMoltBotAgentDir).toHaveBeenCalled();
+    expect(mocks.resolveRazroomAgentDir).toHaveBeenCalled();
     expect(payload.defaultModel).toBe("anthropic/claude-opus-4-5");
-    expect(payload.auth.storePath).toBe("/tmp/moltbot-agent/auth-profiles.json");
+    expect(payload.auth.storePath).toBe("/tmp/razroom-agent/auth-profiles.json");
     expect(payload.auth.shellEnvFallback.enabled).toBe(true);
     expect(payload.auth.shellEnvFallback.appliedKeys).toContain("OPENAI_API_KEY");
     expect(payload.auth.missingProvidersInUse).toEqual([]);
@@ -171,14 +171,14 @@ describe("modelsStatusCommand auth overview", () => {
 
     mocks.resolveAgentModelPrimary.mockReturnValue("openai/gpt-4");
     mocks.resolveAgentModelFallbacksOverride.mockReturnValue(["openai/gpt-3.5"]);
-    mocks.resolveAgentDir.mockReturnValue("/tmp/moltbot-agent-custom");
+    mocks.resolveAgentDir.mockReturnValue("/tmp/razroom-agent-custom");
 
     try {
       await modelsStatusCommand({ json: true, agent: "Jeremiah" }, localRuntime as never);
       expect(mocks.resolveAgentDir).toHaveBeenCalledWith(expect.anything(), "jeremiah");
       const payload = JSON.parse(String((localRuntime.log as vi.Mock).mock.calls[0][0]));
       expect(payload.agentId).toBe("jeremiah");
-      expect(payload.agentDir).toBe("/tmp/moltbot-agent-custom");
+      expect(payload.agentDir).toBe("/tmp/razroom-agent-custom");
       expect(payload.defaultModel).toBe("openai/gpt-4");
       expect(payload.fallbacks).toEqual(["openai/gpt-3.5"]);
       expect(payload.modelConfig).toEqual({

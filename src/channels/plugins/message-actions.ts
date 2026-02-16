@@ -1,9 +1,9 @@
 import type { AgentToolResult } from "@mariozechner/pi-agent-core";
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 import type { ChannelMessageActionContext, ChannelMessageActionName } from "./types.js";
 import { getChannelPlugin, listChannelPlugins } from "./index.js";
 
-export function listChannelMessageActions(cfg: MoltBotConfig): ChannelMessageActionName[] {
+export function listChannelMessageActions(cfg: RazroomConfig): ChannelMessageActionName[] {
   const actions = new Set<ChannelMessageActionName>(["send", "broadcast"]);
   for (const plugin of listChannelPlugins()) {
     const list = plugin.actions?.listActions?.({ cfg });
@@ -17,7 +17,7 @@ export function listChannelMessageActions(cfg: MoltBotConfig): ChannelMessageAct
   return Array.from(actions);
 }
 
-export function supportsChannelMessageButtons(cfg: MoltBotConfig): boolean {
+export function supportsChannelMessageButtons(cfg: RazroomConfig): boolean {
   for (const plugin of listChannelPlugins()) {
     if (plugin.actions?.supportsButtons?.({ cfg })) {
       return true;
@@ -26,7 +26,7 @@ export function supportsChannelMessageButtons(cfg: MoltBotConfig): boolean {
   return false;
 }
 
-export function supportsChannelMessageCards(cfg: MoltBotConfig): boolean {
+export function supportsChannelMessageCards(cfg: RazroomConfig): boolean {
   for (const plugin of listChannelPlugins()) {
     if (plugin.actions?.supportsCards?.({ cfg })) {
       return true;

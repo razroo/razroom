@@ -223,25 +223,25 @@ describe("buildServiceEnvironment", () => {
     } else {
       expect(env.PATH).toContain("/usr/bin");
     }
-    expect(env.MOLTBOT_GATEWAY_PORT).toBe("18789");
-    expect(env.MOLTBOT_GATEWAY_TOKEN).toBe("secret");
-    expect(env.MOLTBOT_SERVICE_MARKER).toBe("moltbot");
-    expect(env.MOLTBOT_SERVICE_KIND).toBe("gateway");
-    expect(typeof env.MOLTBOT_SERVICE_VERSION).toBe("string");
-    expect(env.MOLTBOT_SYSTEMD_UNIT).toBe("moltbot-gateway.service");
+    expect(env.RAZROOM_GATEWAY_PORT).toBe("18789");
+    expect(env.RAZROOM_GATEWAY_TOKEN).toBe("secret");
+    expect(env.RAZROOM_SERVICE_MARKER).toBe("razroom");
+    expect(env.RAZROOM_SERVICE_KIND).toBe("gateway");
+    expect(typeof env.RAZROOM_SERVICE_VERSION).toBe("string");
+    expect(env.RAZROOM_SYSTEMD_UNIT).toBe("razroom-gateway.service");
     if (process.platform === "darwin") {
-      expect(env.MOLTBOT_LAUNCHD_LABEL).toBe("ai.moltbot.gateway");
+      expect(env.RAZROOM_LAUNCHD_LABEL).toBe("ai.razroom.gateway");
     }
   });
 
   it("uses profile-specific unit and label", () => {
     const env = buildServiceEnvironment({
-      env: { HOME: "/home/user", MOLTBOT_PROFILE: "work" },
+      env: { HOME: "/home/user", RAZROOM_PROFILE: "work" },
       port: 18789,
     });
-    expect(env.MOLTBOT_SYSTEMD_UNIT).toBe("moltbot-gateway-work.service");
+    expect(env.RAZROOM_SYSTEMD_UNIT).toBe("razroom-gateway-work.service");
     if (process.platform === "darwin") {
-      expect(env.MOLTBOT_LAUNCHD_LABEL).toBe("ai.moltbot.work");
+      expect(env.RAZROOM_LAUNCHD_LABEL).toBe("ai.razroom.work");
     }
   });
 });

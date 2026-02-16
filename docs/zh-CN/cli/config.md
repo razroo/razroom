@@ -1,7 +1,7 @@
 ---
 read_when:
   - 你想以非交互方式读取或编辑配置
-summary: "`moltbot config` 的 CLI 参考（获取/设置/取消设置配置值）"
+summary: "`razroom config` 的 CLI 参考（获取/设置/取消设置配置值）"
 title: config
 x-i18n:
   generated_at: "2026-02-03T10:04:13Z"
@@ -12,19 +12,19 @@ x-i18n:
   workflow: 15
 ---
 
-# `moltbot config`
+# `razroom config`
 
 配置辅助命令：通过路径获取/设置/取消设置值。不带子命令运行将打开
-配置向导（与 `moltbot configure` 相同）。
+配置向导（与 `razroom configure` 相同）。
 
 ## 示例
 
 ```bash
-moltbot config get browser.executablePath
-moltbot config set browser.executablePath "/usr/bin/google-chrome"
-moltbot config set agents.defaults.heartbeat.every "2h"
-moltbot config set agents.list[0].tools.exec.node "node-id-or-name"
-moltbot config unset tools.web.search.apiKey
+razroom config get browser.executablePath
+razroom config set browser.executablePath "/usr/bin/google-chrome"
+razroom config set agents.defaults.heartbeat.every "2h"
+razroom config set agents.list[0].tools.exec.node "node-id-or-name"
+razroom config unset tools.web.search.apiKey
 ```
 
 ## 路径
@@ -32,15 +32,15 @@ moltbot config unset tools.web.search.apiKey
 路径使用点号或括号表示法：
 
 ```bash
-moltbot config get agents.defaults.workspace
-moltbot config get agents.list[0].id
+razroom config get agents.defaults.workspace
+razroom config get agents.list[0].id
 ```
 
 使用智能体列表索引来定位特定智能体：
 
 ```bash
-moltbot config get agents.list
-moltbot config set agents.list[1].tools.exec.node "node-id-or-name"
+razroom config get agents.list
+razroom config set agents.list[1].tools.exec.node "node-id-or-name"
 ```
 
 ## 值
@@ -49,9 +49,9 @@ moltbot config set agents.list[1].tools.exec.node "node-id-or-name"
 使用 `--json` 强制要求 JSON5 解析。
 
 ```bash
-moltbot config set agents.defaults.heartbeat.every "0m"
-moltbot config set gateway.port 19001 --json
-moltbot config set channels.whatsapp.groups '["*"]' --json
+razroom config set agents.defaults.heartbeat.every "0m"
+razroom config set gateway.port 19001 --json
+razroom config set channels.whatsapp.groups '["*"]' --json
 ```
 
 编辑后请重启 Gateway 网关。

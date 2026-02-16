@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import type { ReplyPayload } from "../auto-reply/types.js";
 import type { ChannelHeartbeatDeps } from "../channels/plugins/types.js";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { AgentDefaultsConfig } from "../config/types.agent-defaults.js";
 import type { OutboundSendDeps } from "./outbound/deliver.js";
 import {
@@ -113,15 +113,15 @@ type HeartbeatAgentState = {
 
 export type HeartbeatRunner = {
   stop: () => void;
-  updateConfig: (cfg: MoltBotConfig) => void;
+  updateConfig: (cfg: RazroomConfig) => void;
 };
 
-function hasExplicitHeartbeatAgents(cfg: MoltBotConfig) {
+function hasExplicitHeartbeatAgents(cfg: RazroomConfig) {
   const list = cfg.agents?.list ?? [];
   return list.some((entry) => Boolean(entry?.heartbeat));
 }
 
-export function isHeartbeatEnabledForAgent(cfg: MoltBotConfig, agentId?: string): boolean {
+export function isHeartbeatEnabledForAgent(cfg: RazroomConfig, agentId?: string): boolean {
   const resolvedAgentId = normalizeAgentId(agentId ?? resolveDefaultAgentId(cfg));
   const list = cfg.agents?.list ?? [];
   const hasExplicit = hasExplicitHeartbeatAgents(cfg);
@@ -134,7 +134,7 @@ export function isHeartbeatEnabledForAgent(cfg: MoltBotConfig, agentId?: string)
 }
 
 function resolveHeartbeatConfig(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   agentId?: string,
 ): HeartbeatConfig | undefined {
   const defaults = cfg.agents?.defaults?.heartbeat;
@@ -149,7 +149,7 @@ function resolveHeartbeatConfig(
 }
 
 export function resolveHeartbeatSummaryForAgent(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   agentId?: string,
 ): HeartbeatSummary {
   const defaults = cfg.agents?.defaults?.heartbeat;
@@ -196,7 +196,7 @@ export function resolveHeartbeatSummaryForAgent(
   };
 }
 
-function resolveHeartbeatAgents(cfg: MoltBotConfig): HeartbeatAgent[] {
+function resolveHeartbeatAgents(cfg: RazroomConfig): HeartbeatAgent[] {
   const list = cfg.agents?.list ?? [];
   if (hasExplicitHeartbeatAgents(cfg)) {
     return list
@@ -212,7 +212,7 @@ function resolveHeartbeatAgents(cfg: MoltBotConfig): HeartbeatAgent[] {
 }
 
 export function resolveHeartbeatIntervalMs(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   overrideEvery?: string,
   heartbeat?: HeartbeatConfig,
 ) {
@@ -240,11 +240,11 @@ export function resolveHeartbeatIntervalMs(
   return ms;
 }
 
-export function resolveHeartbeatPrompt(cfg: MoltBotConfig, heartbeat?: HeartbeatConfig) {
+export function resolveHeartbeatPrompt(cfg: RazroomConfig, heartbeat?: HeartbeatConfig) {
   return resolveHeartbeatPromptText(heartbeat?.prompt ?? cfg.agents?.defaults?.heartbeat?.prompt);
 }
 
-function resolveHeartbeatAckMaxChars(cfg: MoltBotConfig, heartbeat?: HeartbeatConfig) {
+function resolveHeartbeatAckMaxChars(cfg: RazroomConfig, heartbeat?: HeartbeatConfig) {
   return Math.max(
     0,
     heartbeat?.ackMaxChars ??
@@ -254,7 +254,7 @@ function resolveHeartbeatAckMaxChars(cfg: MoltBotConfig, heartbeat?: HeartbeatCo
 }
 
 function resolveHeartbeatSession(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   agentId?: string,
   heartbeat?: HeartbeatConfig,
 ) {
@@ -375,7 +375,7 @@ function normalizeHeartbeatReply(
 }
 
 export async function runHeartbeatOnce(opts: {
-  cfg?: MoltBotConfig;
+  cfg?: RazroomConfig;
   agentId?: string;
   heartbeat?: HeartbeatConfig;
   reason?: string;
@@ -767,7 +767,7 @@ export async function runHeartbeatOnce(opts: {
 }
 
 export function startHeartbeatRunner(opts: {
-  cfg?: MoltBotConfig;
+  cfg?: RazroomConfig;
   runtime?: RuntimeEnv;
   abortSignal?: AbortSignal;
   runOnce?: typeof runHeartbeatOnce;
@@ -827,7 +827,7 @@ export function startHeartbeatRunner(opts: {
     state.timer.unref?.();
   };
 
-  const updateConfig = (cfg: MoltBotConfig) => {
+  const updateConfig = (cfg: RazroomConfig) => {
     if (state.stopped) {
       return;
     }

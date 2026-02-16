@@ -1,10 +1,10 @@
-# @moltbot/nostr
+# @razroom/nostr
 
-Nostr DM channel plugin for MoltBot using NIP-04 encrypted direct messages.
+Nostr DM channel plugin for Razroom using NIP-04 encrypted direct messages.
 
 ## Overview
 
-This extension adds Nostr as a messaging channel to MoltBot. It enables your bot to:
+This extension adds Nostr as a messaging channel to Razroom. It enables your bot to:
 
 - Receive encrypted DMs from Nostr users
 - Send encrypted responses back
@@ -13,7 +13,7 @@ This extension adds Nostr as a messaging channel to MoltBot. It enables your bot
 ## Installation
 
 ```bash
-moltbot plugins install @moltbot/nostr
+razroom plugins install @razroom/nostr
 ```
 
 ## Quick Setup
@@ -90,7 +90,7 @@ moltbot plugins install @moltbot/nostr
 # Using strfry
 docker run -p 7777:7777 ghcr.io/hoytech/strfry
 
-# Configure moltbot to use local relay
+# Configure razroom to use local relay
 "relays": ["ws://localhost:7777"]
 ```
 

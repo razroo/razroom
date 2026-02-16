@@ -63,7 +63,7 @@ function isGatewayArgv(args: string[]): boolean {
   const entryCandidates = [
     "dist/index.js",
     "dist/entry.js",
-    "moltbot.mjs",
+    "razroom.mjs",
     "scripts/run-node.mjs",
     "src/index.ts",
   ];
@@ -72,7 +72,7 @@ function isGatewayArgv(args: string[]): boolean {
   }
 
   const exe = normalized[0] ?? "";
-  return exe.endsWith("/moltbot") || exe === "moltbot";
+  return exe.endsWith("/razroom") || exe === "razroom";
 }
 
 function readLinuxCmdline(pid: number): string[] | null {
@@ -168,7 +168,7 @@ export async function acquireGatewayLock(
   const env = opts.env ?? process.env;
   const allowInTests = opts.allowInTests === true;
   if (
-    env.MOLTBOT_ALLOW_MULTI_GATEWAY === "1" ||
+    env.RAZROOM_ALLOW_MULTI_GATEWAY === "1" ||
     (!allowInTests && (env.VITEST || env.NODE_ENV === "test"))
   ) {
     return null;

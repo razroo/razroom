@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 import { callGateway } from "../../gateway/call.js";
 import {
   isAcpSessionKey,
@@ -49,7 +49,7 @@ function normalizeKey(value?: string) {
   return trimmed ? trimmed : undefined;
 }
 
-export function resolveMainSessionAlias(cfg: MoltBotConfig) {
+export function resolveMainSessionAlias(cfg: RazroomConfig) {
   const mainKey = normalizeMainKey(cfg.session?.mainKey);
   const scope = cfg.session?.scope ?? "per-sender";
   const alias = scope === "global" ? "global" : mainKey;
@@ -73,12 +73,12 @@ export function resolveInternalSessionKey(params: { key: string; alias: string; 
   return params.key;
 }
 
-export function resolveSandboxSessionToolsVisibility(cfg: MoltBotConfig): "spawned" | "all" {
+export function resolveSandboxSessionToolsVisibility(cfg: RazroomConfig): "spawned" | "all" {
   return cfg.agents?.defaults?.sandbox?.sessionToolsVisibility ?? "spawned";
 }
 
 export function resolveSandboxedSessionToolContext(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   agentSessionKey?: string;
   sandboxed?: boolean;
 }): {
@@ -112,7 +112,7 @@ export type AgentToAgentPolicy = {
   isAllowed: (requesterAgentId: string, targetAgentId: string) => boolean;
 };
 
-export function createAgentToAgentPolicy(cfg: MoltBotConfig): AgentToAgentPolicy {
+export function createAgentToAgentPolicy(cfg: RazroomConfig): AgentToAgentPolicy {
   const routingA2A = cfg.tools?.agentToAgent;
   const enabled = routingA2A?.enabled === true;
   const allowPatterns = Array.isArray(routingA2A?.allow) ? routingA2A.allow : [];

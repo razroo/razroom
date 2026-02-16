@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import {
   __setModelCatalogImportForTest,
   loadModelCatalog,
@@ -9,11 +9,11 @@ import {
 type PiSdkModule = typeof import("./pi-model-discovery.js");
 
 mock("./models-config.js", () => ({
-  ensureMoltBotModelsJson: mock().mockResolvedValue({ agentDir: "/tmp", wrote: false }),
+  ensureRazroomModelsJson: mock().mockResolvedValue({ agentDir: "/tmp", wrote: false }),
 }));
 
 mock("./agent-paths.js", () => ({
-  resolveMoltBotAgentDir: () => "/tmp/moltbot",
+  resolveRazroomAgentDir: () => "/tmp/razroom",
 }));
 
 describe("loadModelCatalog e2e smoke", () => {
@@ -44,7 +44,7 @@ describe("loadModelCatalog e2e smoke", () => {
       } as unknown as PiSdkModule;
     });
 
-    const cfg = {} as MoltBotConfig;
+    const cfg = {} as RazroomConfig;
     expect(await loadModelCatalog({ config: cfg })).toEqual([]);
     expect(await loadModelCatalog({ config: cfg })).toEqual([
       { id: "gpt-4.1", name: "GPT-4.1", provider: "openai" },

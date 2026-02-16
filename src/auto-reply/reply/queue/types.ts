@@ -1,6 +1,6 @@
 import type { ExecToolDefaults } from "../../../agents/bash-tools.js";
 import type { SkillSnapshot } from "../../../agents/skills.js";
-import type { MoltBotConfig } from "../../../config/config.js";
+import type { RazroomConfig } from "../../../config/config.js";
 import type { SessionEntry } from "../../../config/sessions.js";
 import type { OriginatingChannelType } from "../../templating.js";
 import type { ElevatedLevel, ReasoningLevel, ThinkLevel, VerboseLevel } from "../directives.js";
@@ -57,7 +57,7 @@ export type FollowupRun = {
     senderE164?: string;
     sessionFile: string;
     workspaceDir: string;
-    config: MoltBotConfig;
+    config: RazroomConfig;
     skillsSnapshot?: SkillSnapshot;
     provider: string;
     model: string;
@@ -82,7 +82,7 @@ export type FollowupRun = {
 };
 
 export type ResolveQueueSettingsParams = {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   channel?: string;
   sessionEntry?: SessionEntry;
   inlineMode?: QueueMode;

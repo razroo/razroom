@@ -1,15 +1,15 @@
-import type { MoltBotConfig } from "../../../config/config.js";
+import type { RazroomConfig } from "../../../config/config.js";
 import type { RuntimeEnv } from "../../../runtime.js";
 import type { OnboardOptions } from "../../onboard-types.js";
 import { randomToken } from "../../onboard-helpers.js";
 
 export function applyNonInteractiveGatewayConfig(params: {
-  nextConfig: MoltBotConfig;
+  nextConfig: RazroomConfig;
   opts: OnboardOptions;
   runtime: RuntimeEnv;
   defaultPort: number;
 }): {
-  nextConfig: MoltBotConfig;
+  nextConfig: RazroomConfig;
   port: number;
   bind: string;
   authMode: string;

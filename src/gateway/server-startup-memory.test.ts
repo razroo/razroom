@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 
 const { getMemorySearchManagerMock } = vi.hoisted(() => ({
   getMemorySearchManagerMock: mock(),
@@ -20,7 +20,7 @@ describe("startGatewayMemoryBackend", () => {
     const cfg = {
       agents: { list: [{ id: "main", default: true }] },
       memory: { backend: "builtin" },
-    } as MoltBotConfig;
+    } as RazroomConfig;
     const log = { info: mock(), warn: mock() };
 
     await startGatewayMemoryBackend({ cfg, log });
@@ -34,7 +34,7 @@ describe("startGatewayMemoryBackend", () => {
     const cfg = {
       agents: { list: [{ id: "ops", default: true }, { id: "main" }] },
       memory: { backend: "qmd", qmd: {} },
-    } as MoltBotConfig;
+    } as RazroomConfig;
     const log = { info: mock(), warn: mock() };
     getMemorySearchManagerMock.mockResolvedValue({ manager: { search: mock() } });
 
@@ -51,7 +51,7 @@ describe("startGatewayMemoryBackend", () => {
     const cfg = {
       agents: { list: [{ id: "main", default: true }] },
       memory: { backend: "qmd", qmd: {} },
-    } as MoltBotConfig;
+    } as RazroomConfig;
     const log = { info: mock(), warn: mock() };
     getMemorySearchManagerMock.mockResolvedValue({ manager: null, error: "qmd missing" });
 

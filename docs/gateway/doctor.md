@@ -8,44 +8,44 @@ title: "Doctor"
 
 # Doctor
 
-`moltbot doctor` is the repair + migration tool for MoltBot. It fixes stale
+`razroom doctor` is the repair + migration tool for Razroom. It fixes stale
 config/state, checks health, and provides actionable repair steps.
 
 ## Quick start
 
 ```bash
-moltbot doctor
+razroom doctor
 ```
 
 ### Headless / automation
 
 ```bash
-moltbot doctor --yes
+razroom doctor --yes
 ```
 
 Accept defaults without prompting (including restart/service/sandbox repair steps when applicable).
 
 ```bash
-moltbot doctor --repair
+razroom doctor --repair
 ```
 
 Apply recommended repairs without prompting (repairs + restarts where safe).
 
 ```bash
-moltbot doctor --repair --force
+razroom doctor --repair --force
 ```
 
 Apply aggressive repairs too (overwrites custom supervisor configs).
 
 ```bash
-moltbot doctor --non-interactive
+razroom doctor --non-interactive
 ```
 
 Run without prompts and only apply safe migrations (config normalization + on-disk state moves). Skips restart/service/sandbox actions that require human confirmation.
 Legacy state migrations run automatically when detected.
 
 ```bash
-moltbot doctor --deep
+razroom doctor --deep
 ```
 
 Scan system services for extra gateway installs (launchd/systemd/schtasks).
@@ -53,7 +53,7 @@ Scan system services for extra gateway installs (launchd/systemd/schtasks).
 If you want to review changes before writing, open the config file first:
 
 ```bash
-cat ~/.moltbot/moltbot.json
+cat ~/.razroom/razroom.json
 ```
 
 ## What it does (summary)
@@ -68,7 +68,7 @@ cat ~/.moltbot/moltbot.json
 - State integrity and permissions checks (sessions, transcripts, state dir).
 - Config file permission checks (chmod 600) when running locally.
 - Model auth health: checks OAuth expiry, can refresh expiring tokens, and reports auth-profile cooldown/disabled states.
-- Extra workspace dir detection (`~/moltbot`).
+- Extra workspace dir detection (`~/razroom`).
 - Sandbox image repair when sandboxing is enabled.
 - Legacy service migration and extra gateway detection.
 - Gateway runtime checks (service installed but not running; cached launchd label).
@@ -98,13 +98,13 @@ schema.
 ### 2) Legacy config key migrations
 
 When the config contains deprecated keys, other commands refuse to run and ask
-you to run `moltbot doctor`.
+you to run `razroom doctor`.
 
 Doctor will:
 
 - Explain which legacy keys were found.
 - Show the migration it applied.
-- Rewrite `~/.moltbot/moltbot.json` with the updated schema.
+- Rewrite `~/.razroom/razroom.json` with the updated schema.
 
 The Gateway also auto-runs doctor migrations on startup when it detects a
 legacy config format, so stale configs are repaired without manual intervention.
@@ -138,18 +138,18 @@ remove the override and restore per-model API routing + costs.
 Doctor can migrate older on-disk layouts into the current structure:
 
 - Sessions store + transcripts:
-  - from `~/.moltbot/sessions/` to `~/.moltbot/agents/<agentId>/sessions/`
+  - from `~/.razroom/sessions/` to `~/.razroom/agents/<agentId>/sessions/`
 - Agent dir:
-  - from `~/.moltbot/agent/` to `~/.moltbot/agents/<agentId>/agent/`
+  - from `~/.razroom/agent/` to `~/.razroom/agents/<agentId>/agent/`
 - WhatsApp auth state (Baileys):
-  - from legacy `~/.moltbot/credentials/*.json` (except `oauth.json`)
-  - to `~/.moltbot/credentials/whatsapp/<accountId>/...` (default account id: `default`)
+  - from legacy `~/.razroom/credentials/*.json` (except `oauth.json`)
+  - to `~/.razroom/credentials/whatsapp/<accountId>/...` (default account id: `default`)
 
 These migrations are best-effort and idempotent; doctor will emit warnings when
 it leaves any legacy folders behind as backups. The Gateway/CLI also auto-migrates
 the legacy sessions + agent dir on startup so history/auth/models land in the
 per-agent path without a manual doctor run. WhatsApp auth is intentionally only
-migrated via `moltbot doctor`.
+migrated via `razroom doctor`.
 
 ### 4) State integrity checks (session persistence, routing, and safety)
 
@@ -168,12 +168,12 @@ Doctor checks:
   transcript files.
 - **Main session “1-line JSONL”**: flags when the main transcript has only one
   line (history is not accumulating).
-- **Multiple state dirs**: warns when multiple `~/.moltbot` folders exist across
-  home directories or when `MOLTBOT_STATE_DIR` points elsewhere (history can
+- **Multiple state dirs**: warns when multiple `~/.razroom` folders exist across
+  home directories or when `RAZROOM_STATE_DIR` points elsewhere (history can
   split between installs).
 - **Remote mode reminder**: if `gateway.mode=remote`, doctor reminds you to run
   it on the remote host (the state lives there).
-- **Config file permissions**: warns if `~/.moltbot/moltbot.json` is
+- **Config file permissions**: warns if `~/.razroom/razroom.json` is
   group/world readable and offers to tighten to `600`.
 
 ### 5) Model auth health (OAuth expiry)
@@ -202,9 +202,9 @@ switch to legacy names if the current image is missing.
 ### 8) Gateway service migrations and cleanup hints
 
 Doctor detects legacy gateway services (launchd/systemd/schtasks) and
-offers to remove them and install the MoltBot service using the current gateway
+offers to remove them and install the Razroom service using the current gateway
 port. It can also scan for extra gateway-like services and print cleanup hints.
-Profile-named MoltBot gateway services are considered first-class and are not
+Profile-named Razroom gateway services are considered first-class and are not
 flagged as "extra."
 
 ### 9) Security warnings
@@ -225,7 +225,7 @@ workspace.
 ### 12) Gateway auth checks (local token)
 
 Doctor warns when `gateway.auth` is missing on a local gateway and offers to
-generate a token. Use `moltbot doctor --generate-gateway-token` to force token
+generate a token. Use `razroom doctor --generate-gateway-token` to force token
 creation in automation.
 
 ### 13) Gateway health check + restart
@@ -247,11 +247,11 @@ rewrite the service file/task to the current defaults.
 
 Notes:
 
-- `moltbot doctor` prompts before rewriting supervisor config.
-- `moltbot doctor --yes` accepts the default repair prompts.
-- `moltbot doctor --repair` applies recommended fixes without prompts.
-- `moltbot doctor --repair --force` overwrites custom supervisor configs.
-- You can always force a full rewrite via `moltbot gateway install --force`.
+- `razroom doctor` prompts before rewriting supervisor config.
+- `razroom doctor --yes` accepts the default repair prompts.
+- `razroom doctor --repair` applies recommended fixes without prompts.
+- `razroom doctor --repair --force` overwrites custom supervisor configs.
+- You can always force a full rewrite via `razroom gateway install --force`.
 
 ### 16) Gateway runtime + port diagnostics
 

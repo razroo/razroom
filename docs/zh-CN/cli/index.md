@@ -2,7 +2,7 @@
 read_when:
   - 添加或修改 CLI 命令或选项
   - 为新命令界面编写文档
-summary: MoltBot `moltbot` 命令、子命令和选项的 CLI 参考
+summary: Razroom `razroom` 命令、子命令和选项的 CLI 参考
 title: CLI 参考
 x-i18n:
   generated_at: "2026-02-03T07:47:54Z"
@@ -61,10 +61,10 @@ x-i18n:
 
 ## 全局标志
 
-- `--dev`：将状态隔离到 `~/.moltbot-dev` 下并调整默认端口。
-- `--profile <name>`：将状态隔离到 `~/.moltbot-<name>` 下。
+- `--dev`：将状态隔离到 `~/.razroom-dev` 下并调整默认端口。
+- `--profile <name>`：将状态隔离到 `~/.razroom-<name>` 下。
 - `--no-color`：禁用 ANSI 颜色。
-- `--update`：`moltbot update` 的简写（仅限源码安装）。
+- `--update`：`razroom update` 的简写（仅限源码安装）。
 - `-V`、`--version`、`-v`：打印版本并退出。
 
 ## 输出样式
@@ -77,7 +77,7 @@ x-i18n:
 
 ## 颜色调色板
 
-MoltBot 在 CLI 输出中使用龙虾调色板。
+Razroom 在 CLI 输出中使用龙虾调色板。
 
 - `accent`（#FF5A2D）：标题、标签、主要高亮。
 - `accentBright`（#FF7A3D）：命令名称、强调。
@@ -93,7 +93,7 @@ MoltBot 在 CLI 输出中使用龙虾调色板。
 ## 命令树
 
 ```
-moltbot [--dev] [--profile <name>] <command>
+razroom [--dev] [--profile <name>] <command>
   setup
   onboard
   configure
@@ -244,23 +244,23 @@ moltbot [--dev] [--profile <name>] <command>
   tui
 ```
 
-注意：插件可以添加额外的顶级命令（例如 `moltbot voicecall`）。
+注意：插件可以添加额外的顶级命令（例如 `razroom voicecall`）。
 
 ## 安全
 
-- `moltbot security audit` — 审计配置 + 本地状态中常见的安全隐患。
-- `moltbot security audit --deep` — 尽力进行实时 Gateway 网关探测。
-- `moltbot security audit --fix` — 收紧安全默认值并 chmod 状态/配置。
+- `razroom security audit` — 审计配置 + 本地状态中常见的安全隐患。
+- `razroom security audit --deep` — 尽力进行实时 Gateway 网关探测。
+- `razroom security audit --fix` — 收紧安全默认值并 chmod 状态/配置。
 
 ## 插件
 
 管理扩展及其配置：
 
-- `moltbot plugins list` — 发现插件（使用 `--json` 获取机器可读输出）。
-- `moltbot plugins info <id>` — 显示插件详情。
-- `moltbot plugins install <path|.tgz|npm-spec>` — 安装插件（或将插件路径添加到 `plugins.load.paths`）。
-- `moltbot plugins enable <id>` / `disable <id>` — 切换 `plugins.entries.<id>.enabled`。
-- `moltbot plugins doctor` — 报告插件加载错误。
+- `razroom plugins list` — 发现插件（使用 `--json` 获取机器可读输出）。
+- `razroom plugins info <id>` — 显示插件详情。
+- `razroom plugins install <path|.tgz|npm-spec>` — 安装插件（或将插件路径添加到 `plugins.load.paths`）。
+- `razroom plugins enable <id>` / `disable <id>` — 切换 `plugins.entries.<id>.enabled`。
+- `razroom plugins doctor` — 报告插件加载错误。
 
 大多数插件更改需要重启 Gateway 网关。参见 [/plugin](/tools/plugin)。
 
@@ -268,9 +268,9 @@ moltbot [--dev] [--profile <name>] <command>
 
 对 `MEMORY.md` + `memory/*.md` 进行向量搜索：
 
-- `moltbot memory status` — 显示索引统计。
-- `moltbot memory index` — 重新索引记忆文件。
-- `moltbot memory search "<query>"` — 对记忆进行语义搜索。
+- `razroom memory status` — 显示索引统计。
+- `razroom memory index` — 重新索引记忆文件。
+- `razroom memory search "<query>"` — 对记忆进行语义搜索。
 
 ## 聊天斜杠命令
 
@@ -290,7 +290,7 @@ moltbot [--dev] [--profile <name>] <command>
 
 选项：
 
-- `--workspace <dir>`：智能体工作区路径（默认 `~/.moltbot/workspace`）。
+- `--workspace <dir>`：智能体工作区路径（默认 `~/.razroom/workspace`）。
 - `--wizard`：运行新手引导向导。
 - `--non-interactive`：无提示运行向导。
 - `--mode <local|remote>`：向导模式。
@@ -350,7 +350,7 @@ moltbot [--dev] [--profile <name>] <command>
 
 ### `config`
 
-非交互式配置辅助工具（get/set/unset）。不带子命令运行 `moltbot config` 会启动向导。
+非交互式配置辅助工具（get/set/unset）。不带子命令运行 `razroom config` 会启动向导。
 
 子命令：
 
@@ -378,8 +378,8 @@ moltbot [--dev] [--profile <name>] <command>
 子命令：
 
 - `channels list`：显示已配置的渠道和认证配置文件。
-- `channels status`：检查 Gateway 网关可达性和渠道健康状况（`--probe` 运行额外检查；使用 `moltbot health` 或 `moltbot status --deep` 进行 Gateway 网关健康探测）。
-- 提示：`channels status` 在检测到常见配置错误时会打印带有建议修复的警告（然后指向 `moltbot doctor`）。
+- `channels status`：检查 Gateway 网关可达性和渠道健康状况（`--probe` 运行额外检查；使用 `razroom health` 或 `razroom status --deep` 进行 Gateway 网关健康探测）。
+- 提示：`channels status` 在检测到常见配置错误时会打印带有建议修复的警告（然后指向 `razroom doctor`）。
 - `channels logs`：显示 Gateway 网关日志文件中最近的渠道日志。
 - `channels add`：不传标志时使用向导式设置；标志切换到非交互模式。
 - `channels remove`：默认禁用；传 `--delete` 可无提示删除配置条目。
@@ -419,11 +419,11 @@ moltbot [--dev] [--profile <name>] <command>
 示例：
 
 ```bash
-moltbot channels add --channel telegram --account alerts --name "Alerts Bot" --token $TELEGRAM_BOT_TOKEN
-moltbot channels add --channel discord --account work --name "Work Bot" --token $DISCORD_BOT_TOKEN
-moltbot channels remove --channel discord --account work --delete
-moltbot channels status --probe
-moltbot status --deep
+razroom channels add --channel telegram --account alerts --name "Alerts Bot" --token $TELEGRAM_BOT_TOKEN
+razroom channels add --channel discord --account work --name "Work Bot" --token $DISCORD_BOT_TOKEN
+razroom channels remove --channel discord --account work --delete
+razroom channels status --probe
+razroom status --deep
 ```
 
 ### `skills`
@@ -492,8 +492,8 @@ Gmail Pub/Sub 钩子设置 + 运行器。参见 [/automation/gmail-pubsub](/auto
 
 示例：
 
-- `moltbot message send --target +15555550123 --message "Hi"`
-- `moltbot message poll --channel discord --target channel:123 --poll-question "Snack?" --poll-option Pizza --poll-option Sushi`
+- `razroom message send --target +15555550123 --message "Hi"`
+- `razroom message poll --channel discord --target channel:123 --poll-question "Snack?" --poll-option Pizza --poll-option Sushi`
 
 ### `agent`
 
@@ -578,12 +578,12 @@ Gmail Pub/Sub 钩子设置 + 运行器。参见 [/automation/gmail-pubsub](/auto
 
 ### 用量跟踪
 
-当 OAuth/API 凭证可用时，MoltBot 可以显示提供商用量/配额。
+当 OAuth/API 凭证可用时，Razroom 可以显示提供商用量/配额。
 
 显示位置：
 
 - `/status`（可用时添加简短的提供商用量行）
-- `moltbot status --usage`（打印完整的提供商明细）
+- `razroom status --usage`（打印完整的提供商明细）
 - macOS 菜单栏（上下文下的用量部分）
 
 说明：
@@ -693,7 +693,7 @@ Gmail Pub/Sub 钩子设置 + 运行器。参见 [/automation/gmail-pubsub](/auto
 
 - `gateway status` 默认使用服务解析的端口/配置探测 Gateway 网关 RPC（使用 `--url/--token/--password` 覆盖）。
 - `gateway status` 支持 `--no-probe`、`--deep` 和 `--json` 用于脚本化。
-- `gateway status` 在检测到旧版或额外的 Gateway 网关服务时也会显示（`--deep` 添加系统级扫描）。配置文件命名的 MoltBot 服务被视为一等公民，不会被标记为"额外"。
+- `gateway status` 在检测到旧版或额外的 Gateway 网关服务时也会显示（`--deep` 添加系统级扫描）。配置文件命名的 Razroom 服务被视为一等公民，不会被标记为"额外"。
 - `gateway status` 打印 CLI 使用的配置路径与服务可能使用的配置（服务环境），以及解析的探测目标 URL。
 - `gateway install|uninstall|start|stop|restart` 支持 `--json` 用于脚本化（默认输出保持人类友好）。
 - `gateway install` 默认使用 Node 运行时；**不建议**使用 bun（WhatsApp/Telegram bug）。
@@ -711,11 +711,11 @@ Gmail Pub/Sub 钩子设置 + 运行器。参见 [/automation/gmail-pubsub](/auto
 示例：
 
 ```bash
-moltbot logs --follow
-moltbot logs --limit 200
-moltbot logs --plain
-moltbot logs --json
-moltbot logs --no-color
+razroom logs --follow
+razroom logs --limit 200
+razroom logs --plain
+razroom logs --json
+razroom logs --no-color
 ```
 
 ### `gateway <subcommand>`
@@ -748,13 +748,13 @@ Gateway 网关 CLI 辅助工具（RPC 子命令使用 `--url`、`--token`、`--p
 
 ```bash
 claude setup-token
-moltbot models auth setup-token --provider anthropic
-moltbot models status
+razroom models auth setup-token --provider anthropic
+razroom models status
 ```
 
 ### `models`（根命令）
 
-`moltbot models` 是 `models status` 的别名。
+`razroom models` 是 `models status` 的别名。
 
 根选项：
 
@@ -908,7 +908,7 @@ moltbot models status
 
 ## 节点主机
 
-`node` 运行**无头节点主机**或将其作为后台服务管理。参见 [`moltbot node`](/cli/node)。
+`node` 运行**无头节点主机**或将其作为后台服务管理。参见 [`razroom node`](/cli/node)。
 
 子命令：
 
@@ -963,7 +963,7 @@ moltbot models status
 
 ## 浏览器
 
-浏览器控制 CLI（专用 Chrome/Brave/Edge/Chromium）。参见 [`moltbot browser`](/cli/browser) 和[浏览器工具](/tools/browser)。
+浏览器控制 CLI（专用 Chrome/Brave/Edge/Chromium）。参见 [`razroom browser`](/cli/browser) 和[浏览器工具](/tools/browser)。
 
 通用选项：
 

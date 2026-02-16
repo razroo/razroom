@@ -393,7 +393,7 @@ export async function statusCommand(
     },
   ];
 
-  runtime.log(theme.heading("MoltBot status"));
+  runtime.log(theme.heading("Razroom status"));
   runtime.log("");
   runtime.log(theme.heading("Overview"));
   runtime.log(
@@ -450,8 +450,8 @@ export async function statusCommand(
       runtime.log(theme.muted(`… +${sorted.length - shown.length} more`));
     }
   }
-  runtime.log(theme.muted(`Full report: ${formatCliCommand("moltbot security audit")}`));
-  runtime.log(theme.muted(`Deep probe: ${formatCliCommand("moltbot security audit --deep")}`));
+  runtime.log(theme.muted(`Full report: ${formatCliCommand("razroom security audit")}`));
+  runtime.log(theme.muted(`Deep probe: ${formatCliCommand("razroom security audit --deep")}`));
 
   runtime.log("");
   runtime.log(theme.heading("Channels"));
@@ -615,8 +615,8 @@ export async function statusCommand(
   }
 
   runtime.log("");
-  runtime.log("FAQ: https://docs.moltbot.ai/faq");
-  runtime.log("Troubleshooting: https://docs.moltbot.ai/troubleshooting");
+  runtime.log("FAQ: https://docs.razroom.ai/faq");
+  runtime.log("Troubleshooting: https://docs.razroom.ai/troubleshooting");
   runtime.log("");
   const updateHint = formatUpdateAvailableHint(update);
   if (updateHint) {
@@ -624,11 +624,11 @@ export async function statusCommand(
     runtime.log("");
   }
   runtime.log("Next steps:");
-  runtime.log(`  Need to share?      ${formatCliCommand("moltbot status --all")}`);
-  runtime.log(`  Need to debug live? ${formatCliCommand("moltbot logs --follow")}`);
+  runtime.log(`  Need to share?      ${formatCliCommand("razroom status --all")}`);
+  runtime.log(`  Need to debug live? ${formatCliCommand("razroom logs --follow")}`);
   if (gatewayReachable) {
-    runtime.log(`  Need to test channels? ${formatCliCommand("moltbot status --deep")}`);
+    runtime.log(`  Need to test channels? ${formatCliCommand("razroom status --deep")}`);
   } else {
-    runtime.log(`  Fix reachability first: ${formatCliCommand("moltbot gateway probe")}`);
+    runtime.log(`  Fix reachability first: ${formatCliCommand("razroom gateway probe")}`);
   }
 }

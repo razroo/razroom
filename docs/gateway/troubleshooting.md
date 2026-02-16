@@ -16,29 +16,29 @@ Start at [/help/troubleshooting](/help/troubleshooting) if you want the fast tri
 Run these first, in this order:
 
 ```bash
-moltbot status
-moltbot gateway status
-moltbot logs --follow
-moltbot doctor
-moltbot channels status --probe
+razroom status
+razroom gateway status
+razroom logs --follow
+razroom doctor
+razroom channels status --probe
 ```
 
 Expected healthy signals:
 
-- `moltbot gateway status` shows `Runtime: running` and `RPC probe: ok`.
-- `moltbot doctor` reports no blocking config/service issues.
-- `moltbot channels status --probe` shows connected/ready channels.
+- `razroom gateway status` shows `Runtime: running` and `RPC probe: ok`.
+- `razroom doctor` reports no blocking config/service issues.
+- `razroom channels status --probe` shows connected/ready channels.
 
 ## No replies
 
 If channels are up but nothing answers, check routing and policy before reconnecting anything.
 
 ```bash
-moltbot status
-moltbot channels status --probe
-moltbot pairing list <channel>
-moltbot config get channels
-moltbot logs --follow
+razroom status
+razroom channels status --probe
+razroom pairing list <channel>
+razroom config get channels
+razroom logs --follow
 ```
 
 Look for:
@@ -64,11 +64,11 @@ Related:
 When dashboard/control UI will not connect, validate URL, auth mode, and secure context assumptions.
 
 ```bash
-moltbot gateway status
-moltbot status
-moltbot logs --follow
-moltbot doctor
-moltbot gateway status --json
+razroom gateway status
+razroom status
+razroom logs --follow
+razroom doctor
+razroom gateway status --json
 ```
 
 Look for:
@@ -94,11 +94,11 @@ Related:
 Use this when service is installed but process does not stay up.
 
 ```bash
-moltbot gateway status
-moltbot status
-moltbot logs --follow
-moltbot doctor
-moltbot gateway status --deep
+razroom gateway status
+razroom status
+razroom logs --follow
+razroom doctor
+razroom gateway status --deep
 ```
 
 Look for:
@@ -109,7 +109,7 @@ Look for:
 
 Common signatures:
 
-- `Gateway start blocked: set gateway.mode=local` → local gateway mode is not enabled. Fix: set `gateway.mode="local"` in your config (or run `moltbot configure`). If you are running MoltBot via Podman using the dedicated `moltbot` user, the config lives at `~moltbot/.moltbot/moltbot.json`.
+- `Gateway start blocked: set gateway.mode=local` → local gateway mode is not enabled. Fix: set `gateway.mode="local"` in your config (or run `razroom configure`). If you are running Razroom via Podman using the dedicated `razroom` user, the config lives at `~razroom/.razroom/razroom.json`.
 - `refusing to bind gateway ... without auth` → non-loopback bind without token/password.
 - `another gateway instance is already listening` / `EADDRINUSE` → port conflict.
 
@@ -124,11 +124,11 @@ Related:
 If channel state is connected but message flow is dead, focus on policy, permissions, and channel specific delivery rules.
 
 ```bash
-moltbot channels status --probe
-moltbot pairing list <channel>
-moltbot status --deep
-moltbot logs --follow
-moltbot config get channels
+razroom channels status --probe
+razroom pairing list <channel>
+razroom status --deep
+razroom logs --follow
+razroom config get channels
 ```
 
 Look for:
@@ -155,11 +155,11 @@ Related:
 If cron or heartbeat did not run or did not deliver, verify scheduler state first, then delivery target.
 
 ```bash
-moltbot cron status
-moltbot cron list
-moltbot cron runs --id <jobId> --limit 20
-moltbot system heartbeat last
-moltbot logs --follow
+razroom cron status
+razroom cron list
+razroom cron runs --id <jobId> --limit 20
+razroom system heartbeat last
+razroom logs --follow
 ```
 
 Look for:
@@ -186,11 +186,11 @@ Related:
 If a node is paired but tools fail, isolate foreground, permission, and approval state.
 
 ```bash
-moltbot nodes status
-moltbot nodes describe --node <idOrNameOrIp>
-moltbot approvals get --node <idOrNameOrIp>
-moltbot logs --follow
-moltbot status
+razroom nodes status
+razroom nodes describe --node <idOrNameOrIp>
+razroom approvals get --node <idOrNameOrIp>
+razroom logs --follow
+razroom status
 ```
 
 Look for:
@@ -217,11 +217,11 @@ Related:
 Use this when browser tool actions fail even though the gateway itself is healthy.
 
 ```bash
-moltbot browser status
-moltbot browser start --browser-profile moltbot
-moltbot browser profiles
-moltbot logs --follow
-moltbot doctor
+razroom browser status
+razroom browser start --browser-profile razroom
+razroom browser profiles
+razroom logs --follow
+razroom doctor
 ```
 
 Look for:
@@ -250,10 +250,10 @@ Most post-upgrade breakage is config drift or stricter defaults now being enforc
 ### 1) Auth and URL override behavior changed
 
 ```bash
-moltbot gateway status
-moltbot config get gateway.mode
-moltbot config get gateway.remote.url
-moltbot config get gateway.auth.mode
+razroom gateway status
+razroom config get gateway.mode
+razroom config get gateway.remote.url
+razroom config get gateway.auth.mode
 ```
 
 What to check:
@@ -269,10 +269,10 @@ Common signatures:
 ### 2) Bind and auth guardrails are stricter
 
 ```bash
-moltbot config get gateway.bind
-moltbot config get gateway.auth.token
-moltbot gateway status
-moltbot logs --follow
+razroom config get gateway.bind
+razroom config get gateway.auth.token
+razroom gateway status
+razroom logs --follow
 ```
 
 What to check:
@@ -288,10 +288,10 @@ Common signatures:
 ### 3) Pairing and device identity state changed
 
 ```bash
-moltbot devices list
-moltbot pairing list <channel>
-moltbot logs --follow
-moltbot doctor
+razroom devices list
+razroom pairing list <channel>
+razroom logs --follow
+razroom doctor
 ```
 
 What to check:
@@ -307,8 +307,8 @@ Common signatures:
 If the service config and runtime still disagree after checks, reinstall service metadata from the same profile/state directory:
 
 ```bash
-moltbot gateway install --force
-moltbot gateway restart
+razroom gateway install --force
+razroom gateway restart
 ```
 
 Related:

@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "moltbot/plugin-sdk";
+import type { RazroomConfig } from "razroom/plugin-sdk";
 import type { TwitchAccountConfig } from "./types.js";
 
 /**
@@ -24,7 +24,7 @@ export function getAccountConfig(
     return null;
   }
 
-  const cfg = coreConfig as MoltBotConfig;
+  const cfg = coreConfig as RazroomConfig;
   const twitch = cfg.channels?.twitch;
   // Access accounts via unknown to handle union type (single-account vs multi-account)
   const twitchRaw = twitch as Record<string, unknown> | undefined;
@@ -88,7 +88,7 @@ export function getAccountConfig(
  *
  * Includes both explicit accounts and implicit "default" from base-level config
  */
-export function listAccountIds(cfg: MoltBotConfig): string[] {
+export function listAccountIds(cfg: RazroomConfig): string[] {
   const twitch = cfg.channels?.twitch;
   // Access accounts via unknown to handle union type (single-account vs multi-account)
   const twitchRaw = twitch as Record<string, unknown> | undefined;

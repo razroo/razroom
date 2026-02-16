@@ -1,5 +1,5 @@
 import path from "node:path";
-import type { MoltBotConfig } from "../../../config/config.js";
+import type { RazroomConfig } from "../../../config/config.js";
 import type { DmPolicy } from "../../../config/types.js";
 import type { RuntimeEnv } from "../../../runtime.js";
 import type { WizardPrompter } from "../../../wizard/prompts.js";
@@ -19,19 +19,19 @@ import { promptAccountId } from "./helpers.js";
 
 const channel = "whatsapp" as const;
 
-function setWhatsAppDmPolicy(cfg: MoltBotConfig, dmPolicy: DmPolicy): MoltBotConfig {
+function setWhatsAppDmPolicy(cfg: RazroomConfig, dmPolicy: DmPolicy): RazroomConfig {
   return mergeWhatsAppConfig(cfg, { dmPolicy });
 }
 
-function setWhatsAppAllowFrom(cfg: MoltBotConfig, allowFrom?: string[]): MoltBotConfig {
+function setWhatsAppAllowFrom(cfg: RazroomConfig, allowFrom?: string[]): RazroomConfig {
   return mergeWhatsAppConfig(cfg, { allowFrom }, { unsetOnUndefined: ["allowFrom"] });
 }
 
-function setWhatsAppSelfChatMode(cfg: MoltBotConfig, selfChatMode: boolean): MoltBotConfig {
+function setWhatsAppSelfChatMode(cfg: RazroomConfig, selfChatMode: boolean): RazroomConfig {
   return mergeWhatsAppConfig(cfg, { selfChatMode });
 }
 
-async function detectWhatsAppLinked(cfg: MoltBotConfig, accountId: string): Promise<boolean> {
+async function detectWhatsAppLinked(cfg: RazroomConfig, accountId: string): Promise<boolean> {
   const { authDir } = resolveWhatsAppAuthDir({ cfg, accountId });
   const credsPath = path.join(authDir, "creds.json");
   return await pathExists(credsPath);
@@ -44,7 +44,7 @@ async function promptWhatsAppOwnerAllowFrom(params: {
   const { prompter, existingAllowFrom } = params;
 
   await prompter.note(
-    "We need the sender/owner number so MoltBot can allowlist you.",
+    "We need the sender/owner number so Razroom can allowlist you.",
     "WhatsApp number",
   );
   const entry = await prompter.text({
@@ -80,11 +80,11 @@ async function promptWhatsAppOwnerAllowFrom(params: {
 }
 
 async function promptWhatsAppAllowFrom(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   _runtime: RuntimeEnv,
   prompter: WizardPrompter,
   options?: { forceAllowlist?: boolean },
-): Promise<MoltBotConfig> {
+): Promise<RazroomConfig> {
   const existingPolicy = cfg.channels?.whatsapp?.dmPolicy ?? "pairing";
   const existingAllowFrom = cfg.channels?.whatsapp?.allowFrom ?? [];
   const existingLabel = existingAllowFrom.length > 0 ? existingAllowFrom.join(", ") : "unset";
@@ -122,7 +122,7 @@ async function promptWhatsAppAllowFrom(
     message: "WhatsApp phone setup",
     options: [
       { value: "personal", label: "This is my personal phone number" },
-      { value: "separate", label: "Separate phone just for MoltBot" },
+      { value: "separate", label: "Separate phone just for Razroom" },
     ],
   });
 
@@ -323,7 +323,7 @@ export const whatsappOnboardingAdapter: ChannelOnboardingAdapter = {
       }
     } else if (!linked) {
       await prompter.note(
-        `Run \`${formatCliCommand("moltbot channels login")}\` later to link WhatsApp.`,
+        `Run \`${formatCliCommand("razroom channels login")}\` later to link WhatsApp.`,
         "WhatsApp",
       );
     }

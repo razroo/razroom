@@ -3,34 +3,34 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "bun:test";
-import { discoverMoltBotPlugins } from "./discovery.js";
+import { discoverRazroomPlugins } from "./discovery.js";
 
 const tempDirs: string[] = [];
 
 function makeTempDir() {
-  const dir = path.join(os.tmpdir(), `moltbot-plugins-${randomUUID()}`);
+  const dir = path.join(os.tmpdir(), `razroom-plugins-${randomUUID()}`);
   fs.mkdirSync(dir, { recursive: true });
   tempDirs.push(dir);
   return dir;
 }
 
 async function withStateDir<T>(stateDir: string, fn: () => Promise<T>) {
-  const prev = process.env.MOLTBOT_STATE_DIR;
-  const prevBundled = process.env.MOLTBOT_BUNDLED_PLUGINS_DIR;
-  process.env.MOLTBOT_STATE_DIR = stateDir;
-  process.env.MOLTBOT_BUNDLED_PLUGINS_DIR = "/nonexistent/bundled/plugins";
+  const prev = process.env.RAZROOM_STATE_DIR;
+  const prevBundled = process.env.RAZROOM_BUNDLED_PLUGINS_DIR;
+  process.env.RAZROOM_STATE_DIR = stateDir;
+  process.env.RAZROOM_BUNDLED_PLUGINS_DIR = "/nonexistent/bundled/plugins";
   try {
     return await fn();
   } finally {
     if (prev === undefined) {
-      delete process.env.MOLTBOT_STATE_DIR;
+      delete process.env.RAZROOM_STATE_DIR;
     } else {
-      process.env.MOLTBOT_STATE_DIR = prev;
+      process.env.RAZROOM_STATE_DIR = prev;
     }
     if (prevBundled === undefined) {
-      delete process.env.MOLTBOT_BUNDLED_PLUGINS_DIR;
+      delete process.env.RAZROOM_BUNDLED_PLUGINS_DIR;
     } else {
-      process.env.MOLTBOT_BUNDLED_PLUGINS_DIR = prevBundled;
+      process.env.RAZROOM_BUNDLED_PLUGINS_DIR = prevBundled;
     }
   }
 }
@@ -45,7 +45,7 @@ afterEach(() => {
   }
 });
 
-describe("discoverMoltBotPlugins", () => {
+describe("discoverRazroomPlugins", () => {
   it("discovers global and workspace extensions", async () => {
     const stateDir = makeTempDir();
     const workspaceDir = path.join(stateDir, "workspace");
@@ -54,12 +54,12 @@ describe("discoverMoltBotPlugins", () => {
     fs.mkdirSync(globalExt, { recursive: true });
     fs.writeFileSync(path.join(globalExt, "alpha.ts"), "export default function () {}", "utf-8");
 
-    const workspaceExt = path.join(workspaceDir, ".moltbot", "extensions");
+    const workspaceExt = path.join(workspaceDir, ".razroom", "extensions");
     fs.mkdirSync(workspaceExt, { recursive: true });
     fs.writeFileSync(path.join(workspaceExt, "beta.ts"), "export default function () {}", "utf-8");
 
     const { candidates } = await withStateDir(stateDir, async () => {
-      return discoverMoltBotPlugins({ workspaceDir });
+      return discoverRazroomPlugins({ workspaceDir });
     });
 
     const ids = candidates.map((c) => c.idHint);
@@ -76,7 +76,7 @@ describe("discoverMoltBotPlugins", () => {
       path.join(globalExt, "package.json"),
       JSON.stringify({
         name: "pack",
-        moltbot: { extensions: ["./src/one.ts", "./src/two.ts"] },
+        razroom: { extensions: ["./src/one.ts", "./src/two.ts"] },
       }),
       "utf-8",
     );
@@ -92,7 +92,7 @@ describe("discoverMoltBotPlugins", () => {
     );
 
     const { candidates } = await withStateDir(stateDir, async () => {
-      return discoverMoltBotPlugins({});
+      return discoverRazroomPlugins({});
     });
 
     const ids = candidates.map((c) => c.idHint);
@@ -108,8 +108,8 @@ describe("discoverMoltBotPlugins", () => {
     fs.writeFileSync(
       path.join(globalExt, "package.json"),
       JSON.stringify({
-        name: "@moltbot/voice-call",
-        moltbot: { extensions: ["./src/index.ts"] },
+        name: "@razroom/voice-call",
+        razroom: { extensions: ["./src/index.ts"] },
       }),
       "utf-8",
     );
@@ -120,7 +120,7 @@ describe("discoverMoltBotPlugins", () => {
     );
 
     const { candidates } = await withStateDir(stateDir, async () => {
-      return discoverMoltBotPlugins({});
+      return discoverRazroomPlugins({});
     });
 
     const ids = candidates.map((c) => c.idHint);
@@ -135,15 +135,15 @@ describe("discoverMoltBotPlugins", () => {
     fs.writeFileSync(
       path.join(packDir, "package.json"),
       JSON.stringify({
-        name: "@moltbot/demo-plugin-dir",
-        moltbot: { extensions: ["./index.js"] },
+        name: "@razroom/demo-plugin-dir",
+        razroom: { extensions: ["./index.js"] },
       }),
       "utf-8",
     );
     fs.writeFileSync(path.join(packDir, "index.js"), "module.exports = {}", "utf-8");
 
     const { candidates } = await withStateDir(stateDir, async () => {
-      return discoverMoltBotPlugins({ extraPaths: [packDir] });
+      return discoverRazroomPlugins({ extraPaths: [packDir] });
     });
 
     const ids = candidates.map((c) => c.idHint);

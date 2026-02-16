@@ -132,7 +132,7 @@ export function isUnhandledRejectionHandled(reason: unknown): boolean {
       }
     } catch (err) {
       console.error(
-        "[moltbot] Unhandled rejection handler failed:",
+        "[razroom] Unhandled rejection handler failed:",
         err instanceof Error ? (err.stack ?? err.message) : err,
       );
     }
@@ -149,31 +149,31 @@ export function installUnhandledRejectionHandler(): void {
     // AbortError is typically an intentional cancellation (e.g., during shutdown)
     // Log it but don't crash - these are expected during graceful shutdown
     if (isAbortError(reason)) {
-      console.warn("[moltbot] Suppressed AbortError:", formatUncaughtError(reason));
+      console.warn("[razroom] Suppressed AbortError:", formatUncaughtError(reason));
       return;
     }
 
     if (isFatalError(reason)) {
-      console.error("[moltbot] FATAL unhandled rejection:", formatUncaughtError(reason));
+      console.error("[razroom] FATAL unhandled rejection:", formatUncaughtError(reason));
       process.exit(1);
       return;
     }
 
     if (isConfigError(reason)) {
-      console.error("[moltbot] CONFIGURATION ERROR - requires fix:", formatUncaughtError(reason));
+      console.error("[razroom] CONFIGURATION ERROR - requires fix:", formatUncaughtError(reason));
       process.exit(1);
       return;
     }
 
     if (isTransientNetworkError(reason)) {
       console.warn(
-        "[moltbot] Non-fatal unhandled rejection (continuing):",
+        "[razroom] Non-fatal unhandled rejection (continuing):",
         formatUncaughtError(reason),
       );
       return;
     }
 
-    console.error("[moltbot] Unhandled promise rejection:", formatUncaughtError(reason));
+    console.error("[razroom] Unhandled promise rejection:", formatUncaughtError(reason));
     process.exit(1);
   });
 }

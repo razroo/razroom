@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 import type { ThinkLevel } from "./directives.js";
 import { clearSessionAuthProfileOverride } from "../../agents/auth-profiles/session-override.js";
 import { lookupContextTokens } from "../../agents/context.js";
@@ -259,8 +259,8 @@ function scoreFuzzyMatch(params: {
 }
 
 export async function createModelSelectionState(params: {
-  cfg: MoltBotConfig;
-  agentCfg: NonNullable<NonNullable<MoltBotConfig["agents"]>["defaults"]> | undefined;
+  cfg: RazroomConfig;
+  agentCfg: NonNullable<NonNullable<RazroomConfig["agents"]>["defaults"]> | undefined;
   sessionEntry?: SessionEntry;
   sessionStore?: Record<string, SessionEntry>;
   sessionKey?: string;
@@ -582,7 +582,7 @@ export function resolveModelDirectiveSelection(params: {
 }
 
 export function resolveContextTokens(params: {
-  agentCfg: NonNullable<NonNullable<MoltBotConfig["agents"]>["defaults"]> | undefined;
+  agentCfg: NonNullable<NonNullable<RazroomConfig["agents"]>["defaults"]> | undefined;
   model: string;
 }): number {
   return (

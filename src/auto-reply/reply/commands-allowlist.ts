@@ -1,5 +1,5 @@
 import type { ChannelId } from "../../channels/plugins/types.js";
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 import type { CommandHandler } from "./commands-types.js";
 import { getChannelDock } from "../../channels/dock.js";
 import { resolveChannelConfigWrites } from "../../channels/plugins/config-writes.js";
@@ -142,7 +142,7 @@ function parseAllowlistCommand(raw: string): AllowlistCommand | null {
 }
 
 function normalizeAllowFrom(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   channelId: ChannelId;
   accountId?: string | null;
   values: Array<string | number>;
@@ -282,7 +282,7 @@ function resolveChannelAllowFromPaths(
 }
 
 async function resolveSlackNames(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   accountId?: string | null;
   entries: string[];
 }) {
@@ -302,7 +302,7 @@ async function resolveSlackNames(params: {
 }
 
 async function resolveDiscordNames(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   accountId?: string | null;
   entries: string[];
 }) {

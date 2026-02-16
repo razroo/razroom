@@ -9,14 +9,14 @@ import {
 } from "./workspace-templates.js";
 
 async function makeTempRoot(): Promise<string> {
-  return await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-templates-"));
+  return await fs.mkdtemp(path.join(os.tmpdir(), "razroom-templates-"));
 }
 
 describe("resolveWorkspaceTemplateDir", () => {
   it("resolves templates from package root when module url is dist-rooted", async () => {
     resetWorkspaceTemplateDirCache();
     const root = await makeTempRoot();
-    await fs.writeFile(path.join(root, "package.json"), JSON.stringify({ name: "moltbot" }));
+    await fs.writeFile(path.join(root, "package.json"), JSON.stringify({ name: "razroom" }));
 
     const templatesDir = path.join(root, "docs", "reference", "templates");
     await fs.mkdir(templatesDir, { recursive: true });

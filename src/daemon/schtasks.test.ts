@@ -7,7 +7,7 @@ import { parseSchtasksQuery, readScheduledTaskCommand, resolveTaskScriptPath } f
 describe("schtasks runtime parsing", () => {
   it("parses status and last run info", () => {
     const output = [
-      "TaskName: \\MoltBot Gateway",
+      "TaskName: \\Razroom Gateway",
       "Status: Ready",
       "Last Run Time: 1/8/2026 1:23:45 AM",
       "Last Run Result: 0x0",
@@ -21,7 +21,7 @@ describe("schtasks runtime parsing", () => {
 
   it("parses running status", () => {
     const output = [
-      "TaskName: \\MoltBot Gateway",
+      "TaskName: \\Razroom Gateway",
       "Status: Running",
       "Last Run Time: 1/8/2026 1:23:45 AM",
       "Last Run Result: 0x0",
@@ -35,68 +35,68 @@ describe("schtasks runtime parsing", () => {
 });
 
 describe("resolveTaskScriptPath", () => {
-  it("uses default path when MOLTBOT_PROFILE is default", () => {
-    const env = { USERPROFILE: "C:\\Users\\test", MOLTBOT_PROFILE: "default" };
+  it("uses default path when RAZROOM_PROFILE is default", () => {
+    const env = { USERPROFILE: "C:\\Users\\test", RAZROOM_PROFILE: "default" };
     expect(resolveTaskScriptPath(env)).toBe(
-      path.join("C:\\Users\\test", ".moltbot", "gateway.cmd"),
+      path.join("C:\\Users\\test", ".razroom", "gateway.cmd"),
     );
   });
 
-  it("uses default path when MOLTBOT_PROFILE is unset", () => {
+  it("uses default path when RAZROOM_PROFILE is unset", () => {
     const env = { USERPROFILE: "C:\\Users\\test" };
     expect(resolveTaskScriptPath(env)).toBe(
-      path.join("C:\\Users\\test", ".moltbot", "gateway.cmd"),
+      path.join("C:\\Users\\test", ".razroom", "gateway.cmd"),
     );
   });
 
-  it("uses profile-specific path when MOLTBOT_PROFILE is set to a custom value", () => {
-    const env = { USERPROFILE: "C:\\Users\\test", MOLTBOT_PROFILE: "jbphoenix" };
+  it("uses profile-specific path when RAZROOM_PROFILE is set to a custom value", () => {
+    const env = { USERPROFILE: "C:\\Users\\test", RAZROOM_PROFILE: "jbphoenix" };
     expect(resolveTaskScriptPath(env)).toBe(
-      path.join("C:\\Users\\test", ".moltbot-jbphoenix", "gateway.cmd"),
+      path.join("C:\\Users\\test", ".razroom-jbphoenix", "gateway.cmd"),
     );
   });
 
-  it("prefers MOLTBOT_STATE_DIR over profile-derived defaults", () => {
+  it("prefers RAZROOM_STATE_DIR over profile-derived defaults", () => {
     const env = {
       USERPROFILE: "C:\\Users\\test",
-      MOLTBOT_PROFILE: "rescue",
-      MOLTBOT_STATE_DIR: "C:\\State\\moltbot",
+      RAZROOM_PROFILE: "rescue",
+      RAZROOM_STATE_DIR: "C:\\State\\razroom",
     };
-    expect(resolveTaskScriptPath(env)).toBe(path.join("C:\\State\\moltbot", "gateway.cmd"));
+    expect(resolveTaskScriptPath(env)).toBe(path.join("C:\\State\\razroom", "gateway.cmd"));
   });
 
   it("handles case-insensitive 'Default' profile", () => {
-    const env = { USERPROFILE: "C:\\Users\\test", MOLTBOT_PROFILE: "Default" };
+    const env = { USERPROFILE: "C:\\Users\\test", RAZROOM_PROFILE: "Default" };
     expect(resolveTaskScriptPath(env)).toBe(
-      path.join("C:\\Users\\test", ".moltbot", "gateway.cmd"),
+      path.join("C:\\Users\\test", ".razroom", "gateway.cmd"),
     );
   });
 
   it("handles case-insensitive 'DEFAULT' profile", () => {
-    const env = { USERPROFILE: "C:\\Users\\test", MOLTBOT_PROFILE: "DEFAULT" };
+    const env = { USERPROFILE: "C:\\Users\\test", RAZROOM_PROFILE: "DEFAULT" };
     expect(resolveTaskScriptPath(env)).toBe(
-      path.join("C:\\Users\\test", ".moltbot", "gateway.cmd"),
+      path.join("C:\\Users\\test", ".razroom", "gateway.cmd"),
     );
   });
 
-  it("trims whitespace from MOLTBOT_PROFILE", () => {
-    const env = { USERPROFILE: "C:\\Users\\test", MOLTBOT_PROFILE: "  myprofile  " };
+  it("trims whitespace from RAZROOM_PROFILE", () => {
+    const env = { USERPROFILE: "C:\\Users\\test", RAZROOM_PROFILE: "  myprofile  " };
     expect(resolveTaskScriptPath(env)).toBe(
-      path.join("C:\\Users\\test", ".moltbot-myprofile", "gateway.cmd"),
+      path.join("C:\\Users\\test", ".razroom-myprofile", "gateway.cmd"),
     );
   });
 
   it("falls back to HOME when USERPROFILE is not set", () => {
-    const env = { HOME: "/home/test", MOLTBOT_PROFILE: "default" };
-    expect(resolveTaskScriptPath(env)).toBe(path.join("/home/test", ".moltbot", "gateway.cmd"));
+    const env = { HOME: "/home/test", RAZROOM_PROFILE: "default" };
+    expect(resolveTaskScriptPath(env)).toBe(path.join("/home/test", ".razroom", "gateway.cmd"));
   });
 });
 
 describe("readScheduledTaskCommand", () => {
   it("parses basic command script", async () => {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-schtasks-test-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-schtasks-test-"));
     try {
-      const scriptPath = path.join(tmpDir, ".moltbot", "gateway.cmd");
+      const scriptPath = path.join(tmpDir, ".razroom", "gateway.cmd");
       await fs.mkdir(path.dirname(scriptPath), { recursive: true });
       await fs.writeFile(
         scriptPath,
@@ -104,7 +104,7 @@ describe("readScheduledTaskCommand", () => {
         "utf8",
       );
 
-      const env = { USERPROFILE: tmpDir, MOLTBOT_PROFILE: "default" };
+      const env = { USERPROFILE: tmpDir, RAZROOM_PROFILE: "default" };
       const result = await readScheduledTaskCommand(env);
       expect(result).toEqual({
         programArguments: ["node", "gateway.js", "--port", "18789"],
@@ -115,21 +115,21 @@ describe("readScheduledTaskCommand", () => {
   });
 
   it("parses script with working directory", async () => {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-schtasks-test-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-schtasks-test-"));
     try {
-      const scriptPath = path.join(tmpDir, ".moltbot", "gateway.cmd");
+      const scriptPath = path.join(tmpDir, ".razroom", "gateway.cmd");
       await fs.mkdir(path.dirname(scriptPath), { recursive: true });
       await fs.writeFile(
         scriptPath,
-        ["@echo off", "cd /d C:\\Projects\\moltbot", "node gateway.js"].join("\r\n"),
+        ["@echo off", "cd /d C:\\Projects\\razroom", "node gateway.js"].join("\r\n"),
         "utf8",
       );
 
-      const env = { USERPROFILE: tmpDir, MOLTBOT_PROFILE: "default" };
+      const env = { USERPROFILE: tmpDir, RAZROOM_PROFILE: "default" };
       const result = await readScheduledTaskCommand(env);
       expect(result).toEqual({
         programArguments: ["node", "gateway.js"],
-        workingDirectory: "C:\\Projects\\moltbot",
+        workingDirectory: "C:\\Projects\\razroom",
       });
     } finally {
       await fs.rm(tmpDir, { recursive: true, force: true });
@@ -137,9 +137,9 @@ describe("readScheduledTaskCommand", () => {
   });
 
   it("parses script with environment variables", async () => {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-schtasks-test-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-schtasks-test-"));
     try {
-      const scriptPath = path.join(tmpDir, ".moltbot", "gateway.cmd");
+      const scriptPath = path.join(tmpDir, ".razroom", "gateway.cmd");
       await fs.mkdir(path.dirname(scriptPath), { recursive: true });
       await fs.writeFile(
         scriptPath,
@@ -147,7 +147,7 @@ describe("readScheduledTaskCommand", () => {
         "utf8",
       );
 
-      const env = { USERPROFILE: tmpDir, MOLTBOT_PROFILE: "default" };
+      const env = { USERPROFILE: tmpDir, RAZROOM_PROFILE: "default" };
       const result = await readScheduledTaskCommand(env);
       expect(result).toEqual({
         programArguments: ["node", "gateway.js"],
@@ -162,9 +162,9 @@ describe("readScheduledTaskCommand", () => {
   });
 
   it("parses script with quoted arguments containing spaces", async () => {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-schtasks-test-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-schtasks-test-"));
     try {
-      const scriptPath = path.join(tmpDir, ".moltbot", "gateway.cmd");
+      const scriptPath = path.join(tmpDir, ".razroom", "gateway.cmd");
       await fs.mkdir(path.dirname(scriptPath), { recursive: true });
       // Use forward slashes which work in Windows cmd and avoid escape parsing issues
       await fs.writeFile(
@@ -173,7 +173,7 @@ describe("readScheduledTaskCommand", () => {
         "utf8",
       );
 
-      const env = { USERPROFILE: tmpDir, MOLTBOT_PROFILE: "default" };
+      const env = { USERPROFILE: tmpDir, RAZROOM_PROFILE: "default" };
       const result = await readScheduledTaskCommand(env);
       expect(result).toEqual({
         programArguments: ["C:/Program Files/Node/node.exe", "gateway.js"],
@@ -184,9 +184,9 @@ describe("readScheduledTaskCommand", () => {
   });
 
   it("returns null when script does not exist", async () => {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-schtasks-test-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-schtasks-test-"));
     try {
-      const env = { USERPROFILE: tmpDir, MOLTBOT_PROFILE: "default" };
+      const env = { USERPROFILE: tmpDir, RAZROOM_PROFILE: "default" };
       const result = await readScheduledTaskCommand(env);
       expect(result).toBeNull();
     } finally {
@@ -195,9 +195,9 @@ describe("readScheduledTaskCommand", () => {
   });
 
   it("returns null when script has no command", async () => {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-schtasks-test-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-schtasks-test-"));
     try {
-      const scriptPath = path.join(tmpDir, ".moltbot", "gateway.cmd");
+      const scriptPath = path.join(tmpDir, ".razroom", "gateway.cmd");
       await fs.mkdir(path.dirname(scriptPath), { recursive: true });
       await fs.writeFile(
         scriptPath,
@@ -205,7 +205,7 @@ describe("readScheduledTaskCommand", () => {
         "utf8",
       );
 
-      const env = { USERPROFILE: tmpDir, MOLTBOT_PROFILE: "default" };
+      const env = { USERPROFILE: tmpDir, RAZROOM_PROFILE: "default" };
       const result = await readScheduledTaskCommand(env);
       expect(result).toBeNull();
     } finally {
@@ -214,31 +214,31 @@ describe("readScheduledTaskCommand", () => {
   });
 
   it("parses full script with all components", async () => {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-schtasks-test-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-schtasks-test-"));
     try {
-      const scriptPath = path.join(tmpDir, ".moltbot", "gateway.cmd");
+      const scriptPath = path.join(tmpDir, ".razroom", "gateway.cmd");
       await fs.mkdir(path.dirname(scriptPath), { recursive: true });
       await fs.writeFile(
         scriptPath,
         [
           "@echo off",
-          "rem MoltBot Gateway",
-          "cd /d C:\\Projects\\moltbot",
+          "rem Razroom Gateway",
+          "cd /d C:\\Projects\\razroom",
           "set NODE_ENV=production",
-          "set MOLTBOT_PORT=18789",
+          "set RAZROOM_PORT=18789",
           "node gateway.js --verbose",
         ].join("\r\n"),
         "utf8",
       );
 
-      const env = { USERPROFILE: tmpDir, MOLTBOT_PROFILE: "default" };
+      const env = { USERPROFILE: tmpDir, RAZROOM_PROFILE: "default" };
       const result = await readScheduledTaskCommand(env);
       expect(result).toEqual({
         programArguments: ["node", "gateway.js", "--verbose"],
-        workingDirectory: "C:\\Projects\\moltbot",
+        workingDirectory: "C:\\Projects\\razroom",
         environment: {
           NODE_ENV: "production",
-          MOLTBOT_PORT: "18789",
+          RAZROOM_PORT: "18789",
         },
       });
     } finally {
@@ -246,25 +246,25 @@ describe("readScheduledTaskCommand", () => {
     }
   });
   it("parses command with Windows backslash paths", async () => {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-schtasks-test-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-schtasks-test-"));
     try {
-      const scriptPath = path.join(tmpDir, ".moltbot", "gateway.cmd");
+      const scriptPath = path.join(tmpDir, ".razroom", "gateway.cmd");
       await fs.mkdir(path.dirname(scriptPath), { recursive: true });
       await fs.writeFile(
         scriptPath,
         [
           "@echo off",
-          '"C:\\Program Files\\nodejs\\node.exe" C:\\Users\\test\\AppData\\Roaming\\npm\\node_modules\\moltbot\\dist\\index.js gateway --port 18789',
+          '"C:\\Program Files\\nodejs\\node.exe" C:\\Users\\test\\AppData\\Roaming\\npm\\node_modules\\razroom\\dist\\index.js gateway --port 18789',
         ].join("\r\n"),
         "utf8",
       );
 
-      const env = { USERPROFILE: tmpDir, MOLTBOT_PROFILE: "default" };
+      const env = { USERPROFILE: tmpDir, RAZROOM_PROFILE: "default" };
       const result = await readScheduledTaskCommand(env);
       expect(result).toEqual({
         programArguments: [
           "C:\\Program Files\\nodejs\\node.exe",
-          "C:\\Users\\test\\AppData\\Roaming\\npm\\node_modules\\moltbot\\dist\\index.js",
+          "C:\\Users\\test\\AppData\\Roaming\\npm\\node_modules\\razroom\\dist\\index.js",
           "gateway",
           "--port",
           "18789",
@@ -276,25 +276,25 @@ describe("readScheduledTaskCommand", () => {
   });
 
   it("preserves UNC paths in command arguments", async () => {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-schtasks-test-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-schtasks-test-"));
     try {
-      const scriptPath = path.join(tmpDir, ".moltbot", "gateway.cmd");
+      const scriptPath = path.join(tmpDir, ".razroom", "gateway.cmd");
       await fs.mkdir(path.dirname(scriptPath), { recursive: true });
       await fs.writeFile(
         scriptPath,
         [
           "@echo off",
-          '"\\\\fileserver\\MoltBot Share\\node.exe" "\\\\fileserver\\MoltBot Share\\dist\\index.js" gateway --port 18789',
+          '"\\\\fileserver\\Razroom Share\\node.exe" "\\\\fileserver\\Razroom Share\\dist\\index.js" gateway --port 18789',
         ].join("\r\n"),
         "utf8",
       );
 
-      const env = { USERPROFILE: tmpDir, MOLTBOT_PROFILE: "default" };
+      const env = { USERPROFILE: tmpDir, RAZROOM_PROFILE: "default" };
       const result = await readScheduledTaskCommand(env);
       expect(result).toEqual({
         programArguments: [
-          "\\\\fileserver\\MoltBot Share\\node.exe",
-          "\\\\fileserver\\MoltBot Share\\dist\\index.js",
+          "\\\\fileserver\\Razroom Share\\node.exe",
+          "\\\\fileserver\\Razroom Share\\dist\\index.js",
           "gateway",
           "--port",
           "18789",

@@ -1,19 +1,19 @@
 import { describe, expect, it } from "bun:test";
 import type { ConfigUiHints } from "./schema.js";
-import type { ConfigFileSnapshot } from "./types.moltbot.js";
+import type { ConfigFileSnapshot } from "./types.razroom.js";
 import {
   REDACTED_SENTINEL,
   redactConfigSnapshot,
   restoreRedactedValues as restoreRedactedValues_orig,
 } from "./redact-snapshot.js";
 import { __test__ } from "./schema.hints.js";
-import { MoltBotSchema } from "./zod-schema.js";
+import { RazroomSchema } from "./zod-schema.js";
 
 const { mapSensitivePaths } = __test__;
 
 function makeSnapshot(config: Record<string, unknown>, raw?: string): ConfigFileSnapshot {
   return {
-    path: "/home/user/.moltbot/config.json5",
+    path: "/home/user/.razroom/config.json5",
     exists: true,
     raw: raw ?? JSON.stringify(config),
     parsed: config,
@@ -183,9 +183,9 @@ describe("redactConfigSnapshot", () => {
     const snapshot = makeSnapshot({
       channels: {
         irc: {
-          passwordFile: "/etc/moltbot/irc-password.txt",
+          passwordFile: "/etc/razroom/irc-password.txt",
           nickserv: {
-            passwordFile: "/etc/moltbot/nickserv-password.txt",
+            passwordFile: "/etc/razroom/nickserv-password.txt",
             password: "super-secret-nickserv-password",
           },
         },
@@ -197,8 +197,8 @@ describe("redactConfigSnapshot", () => {
     const irc = channels.irc;
     const nickserv = irc.nickserv as Record<string, unknown>;
 
-    expect(irc.passwordFile).toBe("/etc/moltbot/irc-password.txt");
-    expect(nickserv.passwordFile).toBe("/etc/moltbot/nickserv-password.txt");
+    expect(irc.passwordFile).toBe("/etc/razroom/irc-password.txt");
+    expect(nickserv.passwordFile).toBe("/etc/razroom/nickserv-password.txt");
     expect(nickserv.password).toBe(REDACTED_SENTINEL);
   });
 
@@ -876,12 +876,12 @@ describe("restoreRedactedValues", () => {
 
 describe("realredactConfigSnapshot_real", () => {
   it("main schema redact works (samples)", () => {
-    const schema = MoltBotSchema.toJSONSchema({
+    const schema = RazroomSchema.toJSONSchema({
       target: "draft-07",
       unrepresentable: "any",
     });
-    schema.title = "MoltBotConfig";
-    const hints = mapSensitivePaths(MoltBotSchema, "", {});
+    schema.title = "RazroomConfig";
+    const hints = mapSensitivePaths(RazroomSchema, "", {});
 
     const snapshot = makeSnapshot({
       agents: {

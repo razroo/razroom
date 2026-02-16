@@ -1,17 +1,17 @@
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { WizardPrompter } from "../wizard/prompts.js";
 import { ensureModelAllowlistEntry } from "./model-allowlist.js";
 
 export async function applyDefaultModelChoice(params: {
-  config: MoltBotConfig;
+  config: RazroomConfig;
   setDefaultModel: boolean;
   defaultModel: string;
-  applyDefaultConfig: (config: MoltBotConfig) => MoltBotConfig;
-  applyProviderConfig: (config: MoltBotConfig) => MoltBotConfig;
+  applyDefaultConfig: (config: RazroomConfig) => RazroomConfig;
+  applyProviderConfig: (config: RazroomConfig) => RazroomConfig;
   noteDefault?: string;
   noteAgentModel: (model: string) => Promise<void>;
   prompter: WizardPrompter;
-}): Promise<{ config: MoltBotConfig; agentModelOverride?: string }> {
+}): Promise<{ config: RazroomConfig; agentModelOverride?: string }> {
   if (params.setDefaultModel) {
     const next = params.applyDefaultConfig(params.config);
     if (params.noteDefault) {

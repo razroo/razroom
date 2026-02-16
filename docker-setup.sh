@@ -4,9 +4,9 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 COMPOSE_FILE="$ROOT_DIR/docker-compose.yml"
 EXTRA_COMPOSE_FILE="$ROOT_DIR/docker-compose.extra.yml"
-IMAGE_NAME="${MOLTBOT_IMAGE:-moltbot:local}"
-EXTRA_MOUNTS="${MOLTBOT_EXTRA_MOUNTS:-}"
-HOME_VOLUME_NAME="${MOLTBOT_HOME_VOLUME:-}"
+IMAGE_NAME="${RAZROOM_IMAGE:-razroom:local}"
+EXTRA_MOUNTS="${RAZROOM_EXTRA_MOUNTS:-}"
+HOME_VOLUME_NAME="${RAZROOM_HOME_VOLUME:-}"
 
 require_cmd() {
   if ! command -v "$1" >/dev/null 2>&1; then
@@ -21,34 +21,34 @@ if ! docker compose version >/dev/null 2>&1; then
   exit 1
 fi
 
-MOLTBOT_CONFIG_DIR="${MOLTBOT_CONFIG_DIR:-$HOME/.moltbot}"
-MOLTBOT_WORKSPACE_DIR="${MOLTBOT_WORKSPACE_DIR:-$HOME/.moltbot/workspace}"
+RAZROOM_CONFIG_DIR="${RAZROOM_CONFIG_DIR:-$HOME/.razroom}"
+RAZROOM_WORKSPACE_DIR="${RAZROOM_WORKSPACE_DIR:-$HOME/.razroom/workspace}"
 
-mkdir -p "$MOLTBOT_CONFIG_DIR"
-mkdir -p "$MOLTBOT_WORKSPACE_DIR"
+mkdir -p "$RAZROOM_CONFIG_DIR"
+mkdir -p "$RAZROOM_WORKSPACE_DIR"
 
-export MOLTBOT_CONFIG_DIR
-export MOLTBOT_WORKSPACE_DIR
-export MOLTBOT_GATEWAY_PORT="${MOLTBOT_GATEWAY_PORT:-18789}"
-export MOLTBOT_BRIDGE_PORT="${MOLTBOT_BRIDGE_PORT:-18790}"
-export MOLTBOT_GATEWAY_BIND="${MOLTBOT_GATEWAY_BIND:-lan}"
-export MOLTBOT_IMAGE="$IMAGE_NAME"
-export MOLTBOT_DOCKER_APT_PACKAGES="${MOLTBOT_DOCKER_APT_PACKAGES:-}"
-export MOLTBOT_EXTRA_MOUNTS="$EXTRA_MOUNTS"
-export MOLTBOT_HOME_VOLUME="$HOME_VOLUME_NAME"
+export RAZROOM_CONFIG_DIR
+export RAZROOM_WORKSPACE_DIR
+export RAZROOM_GATEWAY_PORT="${RAZROOM_GATEWAY_PORT:-18789}"
+export RAZROOM_BRIDGE_PORT="${RAZROOM_BRIDGE_PORT:-18790}"
+export RAZROOM_GATEWAY_BIND="${RAZROOM_GATEWAY_BIND:-lan}"
+export RAZROOM_IMAGE="$IMAGE_NAME"
+export RAZROOM_DOCKER_APT_PACKAGES="${RAZROOM_DOCKER_APT_PACKAGES:-}"
+export RAZROOM_EXTRA_MOUNTS="$EXTRA_MOUNTS"
+export RAZROOM_HOME_VOLUME="$HOME_VOLUME_NAME"
 
-if [[ -z "${MOLTBOT_GATEWAY_TOKEN:-}" ]]; then
+if [[ -z "${RAZROOM_GATEWAY_TOKEN:-}" ]]; then
   if command -v openssl >/dev/null 2>&1; then
-    MOLTBOT_GATEWAY_TOKEN="$(openssl rand -hex 32)"
+    RAZROOM_GATEWAY_TOKEN="$(openssl rand -hex 32)"
   else
-    MOLTBOT_GATEWAY_TOKEN="$(python3 - <<'PY'
+    RAZROOM_GATEWAY_TOKEN="$(python3 - <<'PY'
 import secrets
 print(secrets.token_hex(32))
 PY
 )"
   fi
 fi
-export MOLTBOT_GATEWAY_TOKEN
+export RAZROOM_GATEWAY_TOKEN
 
 COMPOSE_FILES=("$COMPOSE_FILE")
 COMPOSE_ARGS=()
@@ -60,14 +60,14 @@ write_extra_compose() {
 
   cat >"$EXTRA_COMPOSE_FILE" <<'YAML'
 services:
-  moltbot-gateway:
+  razroom-gateway:
     volumes:
 YAML
 
   if [[ -n "$home_volume" ]]; then
     printf '      - %s:/home/node\n' "$home_volume" >>"$EXTRA_COMPOSE_FILE"
-    printf '      - %s:/home/node/.moltbot\n' "$MOLTBOT_CONFIG_DIR" >>"$EXTRA_COMPOSE_FILE"
-    printf '      - %s:/home/node/.moltbot/workspace\n' "$MOLTBOT_WORKSPACE_DIR" >>"$EXTRA_COMPOSE_FILE"
+    printf '      - %s:/home/node/.razroom\n' "$RAZROOM_CONFIG_DIR" >>"$EXTRA_COMPOSE_FILE"
+    printf '      - %s:/home/node/.razroom/workspace\n' "$RAZROOM_WORKSPACE_DIR" >>"$EXTRA_COMPOSE_FILE"
   fi
 
   for mount in "$@"; do
@@ -75,14 +75,14 @@ YAML
   done
 
   cat >>"$EXTRA_COMPOSE_FILE" <<'YAML'
-  moltbot-cli:
+  razroom-cli:
     volumes:
 YAML
 
   if [[ -n "$home_volume" ]]; then
     printf '      - %s:/home/node\n' "$home_volume" >>"$EXTRA_COMPOSE_FILE"
-    printf '      - %s:/home/node/.moltbot\n' "$MOLTBOT_CONFIG_DIR" >>"$EXTRA_COMPOSE_FILE"
-    printf '      - %s:/home/node/.moltbot/workspace\n' "$MOLTBOT_WORKSPACE_DIR" >>"$EXTRA_COMPOSE_FILE"
+    printf '      - %s:/home/node/.razroom\n' "$RAZROOM_CONFIG_DIR" >>"$EXTRA_COMPOSE_FILE"
+    printf '      - %s:/home/node/.razroom/workspace\n' "$RAZROOM_WORKSPACE_DIR" >>"$EXTRA_COMPOSE_FILE"
   fi
 
   for mount in "$@"; do
@@ -165,20 +165,20 @@ upsert_env() {
 }
 
 upsert_env "$ENV_FILE" \
-  MOLTBOT_CONFIG_DIR \
-  MOLTBOT_WORKSPACE_DIR \
-  MOLTBOT_GATEWAY_PORT \
-  MOLTBOT_BRIDGE_PORT \
-  MOLTBOT_GATEWAY_BIND \
-  MOLTBOT_GATEWAY_TOKEN \
-  MOLTBOT_IMAGE \
-  MOLTBOT_EXTRA_MOUNTS \
-  MOLTBOT_HOME_VOLUME \
-  MOLTBOT_DOCKER_APT_PACKAGES
+  RAZROOM_CONFIG_DIR \
+  RAZROOM_WORKSPACE_DIR \
+  RAZROOM_GATEWAY_PORT \
+  RAZROOM_BRIDGE_PORT \
+  RAZROOM_GATEWAY_BIND \
+  RAZROOM_GATEWAY_TOKEN \
+  RAZROOM_IMAGE \
+  RAZROOM_EXTRA_MOUNTS \
+  RAZROOM_HOME_VOLUME \
+  RAZROOM_DOCKER_APT_PACKAGES
 
 echo "==> Building Docker image: $IMAGE_NAME"
 docker build \
-  --build-arg "MOLTBOT_DOCKER_APT_PACKAGES=${MOLTBOT_DOCKER_APT_PACKAGES}" \
+  --build-arg "RAZROOM_DOCKER_APT_PACKAGES=${RAZROOM_DOCKER_APT_PACKAGES}" \
   -t "$IMAGE_NAME" \
   -f "$ROOT_DIR/Dockerfile" \
   "$ROOT_DIR"
@@ -188,33 +188,33 @@ echo "==> Onboarding (interactive)"
 echo "When prompted:"
 echo "  - Gateway bind: lan"
 echo "  - Gateway auth: token"
-echo "  - Gateway token: $MOLTBOT_GATEWAY_TOKEN"
+echo "  - Gateway token: $RAZROOM_GATEWAY_TOKEN"
 echo "  - Tailscale exposure: Off"
 echo "  - Install Gateway daemon: No"
 echo ""
-docker compose "${COMPOSE_ARGS[@]}" run --rm moltbot-cli onboard --no-install-daemon
+docker compose "${COMPOSE_ARGS[@]}" run --rm razroom-cli onboard --no-install-daemon
 
 echo ""
 echo "==> Provider setup (optional)"
 echo "WhatsApp (QR):"
-echo "  ${COMPOSE_HINT} run --rm moltbot-cli channels login"
+echo "  ${COMPOSE_HINT} run --rm razroom-cli channels login"
 echo "Telegram (bot token):"
-echo "  ${COMPOSE_HINT} run --rm moltbot-cli channels add --channel telegram --token <token>"
+echo "  ${COMPOSE_HINT} run --rm razroom-cli channels add --channel telegram --token <token>"
 echo "Discord (bot token):"
-echo "  ${COMPOSE_HINT} run --rm moltbot-cli channels add --channel discord --token <token>"
-echo "Docs: https://docs.moltbot.ai/channels"
+echo "  ${COMPOSE_HINT} run --rm razroom-cli channels add --channel discord --token <token>"
+echo "Docs: https://docs.razroom.ai/channels"
 
 echo ""
 echo "==> Starting gateway"
-docker compose "${COMPOSE_ARGS[@]}" up -d moltbot-gateway
+docker compose "${COMPOSE_ARGS[@]}" up -d razroom-gateway
 
 echo ""
 echo "Gateway running with host port mapping."
 echo "Access from tailnet devices via the host's tailnet IP."
-echo "Config: $MOLTBOT_CONFIG_DIR"
-echo "Workspace: $MOLTBOT_WORKSPACE_DIR"
-echo "Token: $MOLTBOT_GATEWAY_TOKEN"
+echo "Config: $RAZROOM_CONFIG_DIR"
+echo "Workspace: $RAZROOM_WORKSPACE_DIR"
+echo "Token: $RAZROOM_GATEWAY_TOKEN"
 echo ""
 echo "Commands:"
-echo "  ${COMPOSE_HINT} logs -f moltbot-gateway"
-echo "  ${COMPOSE_HINT} exec moltbot-gateway node dist/index.js health --token \"$MOLTBOT_GATEWAY_TOKEN\""
+echo "  ${COMPOSE_HINT} logs -f razroom-gateway"
+echo "  ${COMPOSE_HINT} exec razroom-gateway node dist/index.js health --token \"$RAZROOM_GATEWAY_TOKEN\""

@@ -1,14 +1,14 @@
 ---
 name: command-logger
 description: "Log all command events to a centralized audit file"
-homepage: https://docs.moltbot.ai/automation/hooks#command-logger
+homepage: https://docs.razroom.ai/automation/hooks#command-logger
 metadata:
   {
-    "moltbot":
+    "razroom":
       {
         "emoji": "📝",
         "events": ["command"],
-        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with MoltBot" }],
+        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with Razroom" }],
       },
   }
 ---
@@ -22,7 +22,7 @@ Logs all command events (`/new`, `/reset`, `/stop`, etc.) to a centralized audit
 Every time you issue a command to the agent:
 
 1. **Captures event details** - Command action, timestamp, session key, sender ID, source
-2. **Appends to log file** - Writes a JSON line to `~/.moltbot/logs/commands.log`
+2. **Appends to log file** - Writes a JSON line to `~/.razroom/logs/commands.log`
 3. **Silent operation** - Runs in the background without user notifications
 
 ## Output Format
@@ -43,7 +43,7 @@ Log entries are written in JSONL (JSON Lines) format:
 
 ## Log File Location
 
-`~/.moltbot/logs/commands.log`
+`~/.razroom/logs/commands.log`
 
 ## Requirements
 
@@ -62,7 +62,7 @@ No configuration needed. The hook automatically:
 To disable this hook:
 
 ```bash
-moltbot hooks disable command-logger
+razroom hooks disable command-logger
 ```
 
 Or via config:
@@ -86,13 +86,13 @@ The hook does not automatically rotate logs. To manage log size, you can:
 1. **Manual rotation**:
 
    ```bash
-   mv ~/.moltbot/logs/commands.log ~/.moltbot/logs/commands.log.old
+   mv ~/.razroom/logs/commands.log ~/.razroom/logs/commands.log.old
    ```
 
 2. **Use logrotate** (Linux):
-   Create `/etc/logrotate.d/moltbot`:
+   Create `/etc/logrotate.d/razroom`:
    ```
-   /home/username/.moltbot/logs/commands.log {
+   /home/username/.razroom/logs/commands.log {
        weekly
        rotate 4
        compress
@@ -106,17 +106,17 @@ The hook does not automatically rotate logs. To manage log size, you can:
 View recent commands:
 
 ```bash
-tail -n 20 ~/.moltbot/logs/commands.log
+tail -n 20 ~/.razroom/logs/commands.log
 ```
 
 Pretty-print with jq:
 
 ```bash
-cat ~/.moltbot/logs/commands.log | jq .
+cat ~/.razroom/logs/commands.log | jq .
 ```
 
 Filter by action:
 
 ```bash
-grep '"action":"new"' ~/.moltbot/logs/commands.log | jq .
+grep '"action":"new"' ~/.razroom/logs/commands.log | jq .
 ```

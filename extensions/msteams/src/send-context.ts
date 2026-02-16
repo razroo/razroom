@@ -1,8 +1,8 @@
 import {
   resolveChannelMediaMaxBytes,
-  type MoltBotConfig,
+  type RazroomConfig,
   type PluginRuntime,
-} from "moltbot/plugin-sdk";
+} from "razroom/plugin-sdk";
 import type { MSTeamsAccessTokenProvider } from "./attachments/types.js";
 import type {
   MSTeamsConversationStore,
@@ -92,7 +92,7 @@ async function findConversationReference(recipient: {
 }
 
 export async function resolveMSTeamsSendContext(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   to: string;
 }): Promise<MSTeamsProactiveContext> {
   const msteamsCfg = params.cfg.channels?.msteams;

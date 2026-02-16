@@ -5,16 +5,16 @@ describe("buildPairingReply", () => {
   let previousProfile: string | undefined;
 
   beforeEach(() => {
-    previousProfile = process.env.MOLTBOT_PROFILE;
-    process.env.MOLTBOT_PROFILE = "isolated";
+    previousProfile = process.env.RAZROOM_PROFILE;
+    process.env.RAZROOM_PROFILE = "isolated";
   });
 
   afterEach(() => {
     if (previousProfile === undefined) {
-      delete process.env.MOLTBOT_PROFILE;
+      delete process.env.RAZROOM_PROFILE;
       return;
     }
-    process.env.MOLTBOT_PROFILE = previousProfile;
+    process.env.RAZROOM_PROFILE = previousProfile;
   });
 
   const cases = [
@@ -55,9 +55,9 @@ describe("buildPairingReply", () => {
       const text = buildPairingReply(testCase);
       expect(text).toContain(testCase.idLine);
       expect(text).toContain(`Pairing code: ${testCase.code}`);
-      // CLI commands should respect MOLTBOT_PROFILE when set (most tests run with isolated profile)
+      // CLI commands should respect RAZROOM_PROFILE when set (most tests run with isolated profile)
       const commandRe = new RegExp(
-        `(?:moltbot|moltbot) --profile isolated pairing approve ${testCase.channel} ${testCase.code}`,
+        `(?:razroom|razroom) --profile isolated pairing approve ${testCase.channel} ${testCase.code}`,
       );
       expect(text).toMatch(commandRe);
     });

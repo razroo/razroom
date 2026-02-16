@@ -1,4 +1,4 @@
-import type { BaseProbeResult } from "moltbot/plugin-sdk";
+import type { BaseProbeResult } from "razroom/plugin-sdk";
 import type {
   BlockStreamingCoalesceConfig,
   DmConfig,
@@ -7,8 +7,8 @@ import type {
   GroupToolPolicyBySenderConfig,
   GroupToolPolicyConfig,
   MarkdownConfig,
-  MoltBotConfig,
-} from "moltbot/plugin-sdk";
+  RazroomConfig,
+} from "razroom/plugin-sdk";
 
 export type IrcChannelConfig = {
   requireMention?: boolean;
@@ -64,8 +64,8 @@ export type IrcConfig = IrcAccountConfig & {
   accounts?: Record<string, IrcAccountConfig>;
 };
 
-export type CoreConfig = MoltBotConfig & {
-  channels?: MoltBotConfig["channels"] & {
+export type CoreConfig = RazroomConfig & {
+  channels?: RazroomConfig["channels"] & {
     irc?: IrcConfig;
   };
 };

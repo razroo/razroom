@@ -1,16 +1,16 @@
 import type {
   ChannelOnboardingAdapter,
   ChannelOnboardingDmPolicy,
-  MoltBotConfig,
+  RazroomConfig,
   WizardPrompter,
-} from "moltbot/plugin-sdk";
+} from "razroom/plugin-sdk";
 import {
   addWildcardAllowFrom,
   DEFAULT_ACCOUNT_ID,
   normalizeAccountId,
   promptAccountId,
   promptChannelAccessConfig,
-} from "moltbot/plugin-sdk";
+} from "razroom/plugin-sdk";
 import type { ZcaFriend, ZcaGroup } from "./types.js";
 import {
   listZalouserAccountIds,
@@ -23,9 +23,9 @@ import { runZca, runZcaInteractive, checkZcaInstalled, parseJsonOutput } from ".
 const channel = "zalouser" as const;
 
 function setZalouserDmPolicy(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   dmPolicy: "pairing" | "allowlist" | "open" | "disabled",
-): MoltBotConfig {
+): RazroomConfig {
   const allowFrom =
     dmPolicy === "open" ? addWildcardAllowFrom(cfg.channels?.zalouser?.allowFrom) : undefined;
   return {
@@ -38,7 +38,7 @@ function setZalouserDmPolicy(
         ...(allowFrom ? { allowFrom } : {}),
       },
     },
-  } as MoltBotConfig;
+  } as RazroomConfig;
 }
 
 async function noteZalouserHelp(prompter: WizardPrompter): Promise<void> {
@@ -50,17 +50,17 @@ async function noteZalouserHelp(prompter: WizardPrompter): Promise<void> {
       "1) Install zca-cli",
       "2) You'll scan a QR code with your Zalo app",
       "",
-      "Docs: https://docs.moltbot.ai/channels/zalouser",
+      "Docs: https://docs.razroom.ai/channels/zalouser",
     ].join("\n"),
     "Zalo Personal Setup",
   );
 }
 
 async function promptZalouserAllowFrom(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   prompter: WizardPrompter;
   accountId: string;
-}): Promise<MoltBotConfig> {
+}): Promise<RazroomConfig> {
   const { cfg, prompter, accountId } = params;
   const resolved = resolveZalouserAccountSync({ cfg, accountId });
   const existingAllowFrom = resolved.config.allowFrom ?? [];
@@ -138,7 +138,7 @@ async function promptZalouserAllowFrom(params: {
             allowFrom: unique,
           },
         },
-      } as MoltBotConfig;
+      } as RazroomConfig;
     }
 
     return {
@@ -159,15 +159,15 @@ async function promptZalouserAllowFrom(params: {
           },
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
   }
 }
 
 function setZalouserGroupPolicy(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   accountId: string,
   groupPolicy: "open" | "allowlist" | "disabled",
-): MoltBotConfig {
+): RazroomConfig {
   if (accountId === DEFAULT_ACCOUNT_ID) {
     return {
       ...cfg,
@@ -179,7 +179,7 @@ function setZalouserGroupPolicy(
           groupPolicy,
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
   }
   return {
     ...cfg,
@@ -198,14 +198,14 @@ function setZalouserGroupPolicy(
         },
       },
     },
-  } as MoltBotConfig;
+  } as RazroomConfig;
 }
 
 function setZalouserGroupAllowlist(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   accountId: string,
   groupKeys: string[],
-): MoltBotConfig {
+): RazroomConfig {
   const groups = Object.fromEntries(groupKeys.map((key) => [key, { allow: true }]));
   if (accountId === DEFAULT_ACCOUNT_ID) {
     return {
@@ -218,7 +218,7 @@ function setZalouserGroupAllowlist(
           groups,
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
   }
   return {
     ...cfg,
@@ -237,11 +237,11 @@ function setZalouserGroupAllowlist(
         },
       },
     },
-  } as MoltBotConfig;
+  } as RazroomConfig;
 }
 
 async function resolveZalouserGroups(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   accountId: string;
   entries: string[];
 }): Promise<Array<{ input: string; resolved: boolean; id?: string }>> {
@@ -340,7 +340,7 @@ export const zalouserOnboardingAdapter: ChannelOnboardingAdapter = {
           "The `zca` binary was not found in PATH.",
           "",
           "Install zca-cli, then re-run onboarding:",
-          "Docs: https://docs.moltbot.ai/channels/zalouser",
+          "Docs: https://docs.razroom.ai/channels/zalouser",
         ].join("\n"),
         "Missing Dependency",
       );
@@ -417,7 +417,7 @@ export const zalouserOnboardingAdapter: ChannelOnboardingAdapter = {
             profile: account.profile !== "default" ? account.profile : undefined,
           },
         },
-      } as MoltBotConfig;
+      } as RazroomConfig;
     } else {
       next = {
         ...next,
@@ -436,7 +436,7 @@ export const zalouserOnboardingAdapter: ChannelOnboardingAdapter = {
             },
           },
         },
-      } as MoltBotConfig;
+      } as RazroomConfig;
     }
 
     if (forceAllowFrom) {

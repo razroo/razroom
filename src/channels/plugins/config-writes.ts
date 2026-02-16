@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 import type { ChannelId } from "./types.js";
 import { normalizeAccountId } from "../../routing/session-key.js";
 
@@ -21,7 +21,7 @@ function resolveAccountConfig(accounts: ChannelConfigWithAccounts["accounts"], a
 }
 
 export function resolveChannelConfigWrites(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   channelId?: ChannelId | null;
   accountId?: string | null;
 }): boolean {

@@ -1,6 +1,6 @@
 import type { ProviderPlugin } from "./types.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
-import { loadMoltBotPlugins, type PluginLoadOptions } from "./loader.js";
+import { loadRazroomPlugins, type PluginLoadOptions } from "./loader.js";
 
 const log = createSubsystemLogger("plugins");
 
@@ -8,7 +8,7 @@ export function resolvePluginProviders(params: {
   config?: PluginLoadOptions["config"];
   workspaceDir?: string;
 }): ProviderPlugin[] {
-  const registry = loadMoltBotPlugins({
+  const registry = loadRazroomPlugins({
     config: params.config,
     workspaceDir: params.workspaceDir,
     logger: {

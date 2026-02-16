@@ -1,7 +1,7 @@
 ---
 read_when:
   - 你想从脚本运行一个智能体回合（可选发送回复）
-summary: "`moltbot agent` 的 CLI 参考（通过 Gateway 网关发送一个智能体回合）"
+summary: "`razroom agent` 的 CLI 参考（通过 Gateway 网关发送一个智能体回合）"
 title: agent
 x-i18n:
   generated_at: "2026-02-03T07:44:38Z"
@@ -12,7 +12,7 @@ x-i18n:
   workflow: 15
 ---
 
-# `moltbot agent`
+# `razroom agent`
 
 通过 Gateway 网关运行智能体回合（使用 `--local` 进行嵌入式运行）。使用 `--agent <id>` 直接指定已配置的智能体。
 
@@ -23,8 +23,8 @@ x-i18n:
 ## 示例
 
 ```bash
-moltbot agent --to +15555550123 --message "status update" --deliver
-moltbot agent --agent ops --message "Summarize logs"
-moltbot agent --session-id 1234 --message "Summarize inbox" --thinking medium
-moltbot agent --agent ops --message "Generate report" --deliver --reply-channel slack --reply-to "#reports"
+razroom agent --to +15555550123 --message "status update" --deliver
+razroom agent --agent ops --message "Summarize logs"
+razroom agent --session-id 1234 --message "Summarize inbox" --thinking medium
+razroom agent --agent ops --message "Generate report" --deliver --reply-channel slack --reply-to "#reports"
 ```

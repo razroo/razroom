@@ -1,7 +1,7 @@
 ---
 read_when:
-  - 你想从终端搜索实时 MoltBot 文档
-summary: "`moltbot docs` 的 CLI 参考（搜索实时文档索引）"
+  - 你想从终端搜索实时 Razroom 文档
+summary: "`razroom docs` 的 CLI 参考（搜索实时文档索引）"
 title: docs
 x-i18n:
   generated_at: "2026-02-03T07:44:50Z"
@@ -12,11 +12,11 @@ x-i18n:
   workflow: 15
 ---
 
-# `moltbot docs`
+# `razroom docs`
 
 搜索实时文档索引。
 
 ```bash
-moltbot docs browser extension
-moltbot docs sandbox allowHostControl
+razroom docs browser extension
+razroom docs sandbox allowHostControl
 ```

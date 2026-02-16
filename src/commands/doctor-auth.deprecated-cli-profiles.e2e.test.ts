@@ -22,18 +22,18 @@ function makePrompter(confirmValue: boolean): DoctorPrompter {
 }
 
 beforeEach(() => {
-  originalAgentDir = process.env.MOLTBOT_AGENT_DIR;
+  originalAgentDir = process.env.RAZROOM_AGENT_DIR;
   originalPiAgentDir = process.env.PI_CODING_AGENT_DIR;
-  tempAgentDir = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-auth-"));
-  process.env.MOLTBOT_AGENT_DIR = tempAgentDir;
+  tempAgentDir = fs.mkdtempSync(path.join(os.tmpdir(), "razroom-auth-"));
+  process.env.RAZROOM_AGENT_DIR = tempAgentDir;
   process.env.PI_CODING_AGENT_DIR = tempAgentDir;
 });
 
 afterEach(() => {
   if (originalAgentDir === undefined) {
-    delete process.env.MOLTBOT_AGENT_DIR;
+    delete process.env.RAZROOM_AGENT_DIR;
   } else {
-    process.env.MOLTBOT_AGENT_DIR = originalAgentDir;
+    process.env.RAZROOM_AGENT_DIR = originalAgentDir;
   }
   if (originalPiAgentDir === undefined) {
     delete process.env.PI_CODING_AGENT_DIR;

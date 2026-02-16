@@ -1,9 +1,9 @@
-import type { MoltBotConfig } from "../../../config/config.js";
+import type { RazroomConfig } from "../../../config/config.js";
 import type { RuntimeEnv } from "../../../runtime.js";
 import type { OnboardOptions } from "../../onboard-types.js";
 
 export function applyNonInteractiveSkillsConfig(params: {
-  nextConfig: MoltBotConfig;
+  nextConfig: RazroomConfig;
   opts: OnboardOptions;
   runtime: RuntimeEnv;
 }) {

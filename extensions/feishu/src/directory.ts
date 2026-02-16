@@ -1,4 +1,4 @@
-import type { ClawdbotConfig } from "moltbot/plugin-sdk";
+import type { ClawdbotConfig } from "razroom/plugin-sdk";
 import { resolveFeishuAccount } from "./accounts.js";
 import { createFeishuClient } from "./client.js";
 import { normalizeFeishuTarget } from "./targets.js";

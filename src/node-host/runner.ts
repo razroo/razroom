@@ -3,7 +3,7 @@ import { loadConfig } from "../config/config.js";
 import { GatewayClient } from "../gateway/client.js";
 import { loadOrCreateDeviceIdentity } from "../infra/device-identity.js";
 import { getMachineDisplayName } from "../infra/machine-name.js";
-import { ensureMoltBotCliOnPath } from "../infra/path-env.js";
+import { ensureRazroomCliOnPath } from "../infra/path-env.js";
 import { GATEWAY_CLIENT_MODES, GATEWAY_CLIENT_NAMES } from "../utils/message-channel.js";
 import { VERSION } from "../version.js";
 import { ensureNodeHostConfig, saveNodeHostConfig, type NodeHostGatewayConfig } from "./config.js";
@@ -58,7 +58,7 @@ class SkillBinsCache implements SkillBinsProvider {
 }
 
 function ensureNodePathEnv(): string {
-  ensureMoltBotCliOnPath({ pathEnv: process.env.PATH ?? "" });
+  ensureRazroomCliOnPath({ pathEnv: process.env.PATH ?? "" });
   const current = process.env.PATH ?? "";
   if (current.trim()) {
     return current;
@@ -92,10 +92,10 @@ export async function runNodeHost(opts: NodeHostRunOptions): Promise<void> {
     cfg.nodeHost?.browserProxy?.enabled !== false && resolvedBrowser.enabled;
   const isRemoteMode = cfg.gateway?.mode === "remote";
   const token =
-    process.env.MOLTBOT_GATEWAY_TOKEN?.trim() ||
+    process.env.RAZROOM_GATEWAY_TOKEN?.trim() ||
     (isRemoteMode ? cfg.gateway?.remote?.token : cfg.gateway?.auth?.token);
   const password =
-    process.env.MOLTBOT_GATEWAY_PASSWORD?.trim() ||
+    process.env.RAZROOM_GATEWAY_PASSWORD?.trim() ||
     (isRemoteMode ? cfg.gateway?.remote?.password : cfg.gateway?.auth?.password);
 
   const host = gateway.host ?? "127.0.0.1";

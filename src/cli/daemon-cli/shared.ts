@@ -54,11 +54,11 @@ export function pickProbeHostForBind(
 }
 
 const SAFE_DAEMON_ENV_KEYS = [
-  "MOLTBOT_PROFILE",
-  "MOLTBOT_STATE_DIR",
-  "MOLTBOT_CONFIG_PATH",
-  "MOLTBOT_GATEWAY_PORT",
-  "MOLTBOT_NIX_MODE",
+  "RAZROOM_PROFILE",
+  "RAZROOM_STATE_DIR",
+  "RAZROOM_CONFIG_PATH",
+  "RAZROOM_GATEWAY_PORT",
+  "RAZROOM_NIX_MODE",
 ];
 
 export function filterDaemonEnv(env: Record<string, string> | undefined): Record<string, string> {
@@ -107,7 +107,7 @@ export function renderRuntimeHints(
     }
   })();
   if (runtime.missingUnit) {
-    hints.push(`Service not installed. Run: ${formatCliCommand("moltbot gateway install", env)}`);
+    hints.push(`Service not installed. Run: ${formatCliCommand("razroom gateway install", env)}`);
     if (fileLog) {
       hints.push(`File logs: ${fileLog}`);
     }
@@ -122,10 +122,10 @@ export function renderRuntimeHints(
       hints.push(`Launchd stdout (if installed): ${logs.stdoutPath}`);
       hints.push(`Launchd stderr (if installed): ${logs.stderrPath}`);
     } else if (process.platform === "linux") {
-      const unit = resolveGatewaySystemdServiceName(env.MOLTBOT_PROFILE);
+      const unit = resolveGatewaySystemdServiceName(env.RAZROOM_PROFILE);
       hints.push(`Logs: journalctl --user -u ${unit}.service -n 200 --no-pager`);
     } else if (process.platform === "win32") {
-      const task = resolveGatewayWindowsTaskName(env.MOLTBOT_PROFILE);
+      const task = resolveGatewayWindowsTaskName(env.RAZROOM_PROFILE);
       hints.push(`Logs: schtasks /Query /TN "${task}" /V /FO LIST`);
     }
   }
@@ -134,10 +134,10 @@ export function renderRuntimeHints(
 
 export function renderGatewayServiceStartHints(env: NodeJS.ProcessEnv = process.env): string[] {
   const base = [
-    formatCliCommand("moltbot gateway install", env),
-    formatCliCommand("moltbot gateway", env),
+    formatCliCommand("razroom gateway install", env),
+    formatCliCommand("razroom gateway", env),
   ];
-  const profile = env.MOLTBOT_PROFILE;
+  const profile = env.RAZROOM_PROFILE;
   switch (process.platform) {
     case "darwin": {
       const label = resolveGatewayLaunchAgentLabel(profile);

@@ -2,7 +2,7 @@ import type { Page } from "playwright-core";
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { resolvePreferredMoltBotTmpDir } from "../infra/tmp-moltbot-dir.js";
+import { resolvePreferredRazroomTmpDir } from "../infra/tmp-razroom-dir.js";
 import {
   ensurePageState,
   getPageForTargetId,
@@ -50,7 +50,7 @@ function sanitizeDownloadFileName(fileName: string): string {
 function buildTempDownloadPath(fileName: string): string {
   const id = crypto.randomUUID();
   const safeName = sanitizeDownloadFileName(fileName);
-  return path.join(resolvePreferredMoltBotTmpDir(), "downloads", `${id}-${safeName}`);
+  return path.join(resolvePreferredRazroomTmpDir(), "downloads", `${id}-${safeName}`);
 }
 
 function createPageDownloadWaiter(page: Page, timeoutMs: number) {

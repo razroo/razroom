@@ -246,12 +246,12 @@ describe("resolveConfigEnvVars", () => {
       const config = {
         gateway: {
           auth: {
-            token: "${MOLTBOT_GATEWAY_TOKEN}",
+            token: "${RAZROOM_GATEWAY_TOKEN}",
           },
         },
       };
       const result = resolveConfigEnvVars(config, {
-        MOLTBOT_GATEWAY_TOKEN: "secret-token",
+        RAZROOM_GATEWAY_TOKEN: "secret-token",
       });
       expect(result).toEqual({
         gateway: {

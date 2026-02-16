@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import type { ChannelDirectoryEntry } from "../../channels/plugins/types.js";
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 import { resetDirectoryCache, resolveMessagingTarget } from "./target-resolver.js";
 
 const mocks = vi.hoisted(() => ({
@@ -15,7 +15,7 @@ mock("../../channels/plugins/index.js", () => ({
 }));
 
 describe("resolveMessagingTarget (directory fallback)", () => {
-  const cfg = {} as MoltBotConfig;
+  const cfg = {} as RazroomConfig;
 
   beforeEach(() => {
     mocks.listGroups.mockReset();

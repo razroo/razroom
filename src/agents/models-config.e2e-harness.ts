@@ -1,9 +1,9 @@
 import { afterEach, beforeEach } from "vitest";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import { withTempHome as withTempHomeBase } from "../../test/helpers/temp-home.js";
 
 export async function withModelsTempHome<T>(fn: (home: string) => Promise<T>): Promise<T> {
-  return withTempHomeBase(fn, { prefix: "moltbot-models-" });
+  return withTempHomeBase(fn, { prefix: "razroom-models-" });
 }
 
 export function installModelsConfigTestHooks(opts?: { restoreFetch?: boolean }) {
@@ -59,7 +59,7 @@ export const MODELS_CONFIG_IMPLICIT_ENV_VARS = [
   "MOONSHOT_API_KEY",
   "NVIDIA_API_KEY",
   "OLLAMA_API_KEY",
-  "MOLTBOT_AGENT_DIR",
+  "RAZROOM_AGENT_DIR",
   "PI_CODING_AGENT_DIR",
   "QIANFAN_API_KEY",
   "SYNTHETIC_API_KEY",
@@ -79,7 +79,7 @@ export const MODELS_CONFIG_IMPLICIT_ENV_VARS = [
   "AWS_SHARED_CREDENTIALS_FILE",
 ];
 
-export const CUSTOM_PROXY_MODELS_CONFIG: MoltBotConfig = {
+export const CUSTOM_PROXY_MODELS_CONFIG: RazroomConfig = {
   models: {
     providers: {
       "custom-proxy": {

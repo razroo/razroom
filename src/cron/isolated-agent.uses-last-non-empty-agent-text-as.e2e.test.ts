@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import type { CliDeps } from "../cli/deps.js";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { CronJob } from "./types.js";
 import { withTempHome as withTempHomeBase } from "../../test/helpers/temp-home.js";
 
@@ -20,7 +20,7 @@ import { runEmbeddedPiAgent } from "../agents/pi-embedded.js";
 import { runCronIsolatedAgentTurn } from "./isolated-agent.js";
 
 async function withTempHome<T>(fn: (home: string) => Promise<T>): Promise<T> {
-  return withTempHomeBase(fn, { prefix: "moltbot-cron-" });
+  return withTempHomeBase(fn, { prefix: "razroom-cron-" });
 }
 
 function makeDeps(): CliDeps {
@@ -60,7 +60,7 @@ async function writeSessionStore(
   home: string,
   entries: Record<string, Record<string, unknown>> = {},
 ) {
-  const dir = path.join(home, ".moltbot", "sessions");
+  const dir = path.join(home, ".razroom", "sessions");
   await fs.mkdir(dir, { recursive: true });
   const storePath = path.join(dir, "sessions.json");
   await fs.writeFile(
@@ -92,17 +92,17 @@ async function readSessionEntry(storePath: string, key: string) {
 function makeCfg(
   home: string,
   storePath: string,
-  overrides: Partial<MoltBotConfig> = {},
-): MoltBotConfig {
-  const base: MoltBotConfig = {
+  overrides: Partial<RazroomConfig> = {},
+): RazroomConfig {
+  const base: RazroomConfig = {
     agents: {
       defaults: {
         model: "anthropic/claude-opus-4-5",
-        workspace: path.join(home, "moltbot"),
+        workspace: path.join(home, "razroom"),
       },
     },
     session: { store: storePath, mainKey: "main" },
-  } as MoltBotConfig;
+  } as RazroomConfig;
   return { ...base, ...overrides };
 }
 
@@ -200,7 +200,7 @@ describe("runCronIsolatedAgentTurn", () => {
 
       const cfg = makeCfg(
         home,
-        path.join(home, ".moltbot", "agents", "{agentId}", "sessions", "sessions.json"),
+        path.join(home, ".razroom", "agents", "{agentId}", "sessions", "sessions.json"),
         {
           agents: {
             defaults: { workspace: path.join(home, "default-workspace") },

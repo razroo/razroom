@@ -18,13 +18,13 @@ function createLimiterSpy(): AuthRateLimiter & {
 }
 
 describe("gateway auth", () => {
-  it("resolves token/password from MOLTBOT gateway env vars", () => {
+  it("resolves token/password from RAZROOM gateway env vars", () => {
     expect(
       resolveGatewayAuth({
         authConfig: {},
         env: {
-          MOLTBOT_GATEWAY_TOKEN: "env-token",
-          MOLTBOT_GATEWAY_PASSWORD: "env-password",
+          RAZROOM_GATEWAY_TOKEN: "env-token",
+          RAZROOM_GATEWAY_PASSWORD: "env-password",
         } as NodeJS.ProcessEnv,
       }),
     ).toMatchObject({
@@ -34,13 +34,13 @@ describe("gateway auth", () => {
     });
   });
 
-  it("does not resolve legacy MOLTBOT gateway env vars", () => {
+  it("does not resolve legacy RAZROOM gateway env vars", () => {
     expect(
       resolveGatewayAuth({
         authConfig: {},
         env: {
-          MOLTBOT_GATEWAY_TOKEN: "legacy-token",
-          MOLTBOT_GATEWAY_PASSWORD: "legacy-password",
+          RAZROOM_GATEWAY_TOKEN: "legacy-token",
+          RAZROOM_GATEWAY_PASSWORD: "legacy-password",
         } as NodeJS.ProcessEnv,
       }),
     ).toMatchObject({

@@ -11,14 +11,14 @@ const ciWorkers = isWindows ? 2 : 3;
 
 export default defineConfig({
   resolve: {
-    // Keep this ordered: the base `moltbot/plugin-sdk` alias is a prefix match.
+    // Keep this ordered: the base `razroom/plugin-sdk` alias is a prefix match.
     alias: [
       {
-        find: "moltbot/plugin-sdk/account-id",
+        find: "razroom/plugin-sdk/account-id",
         replacement: path.join(repoRoot, "src", "plugin-sdk", "account-id.ts"),
       },
       {
-        find: "moltbot/plugin-sdk",
+        find: "razroom/plugin-sdk",
         replacement: path.join(repoRoot, "src", "plugin-sdk", "index.ts"),
       },
     ],
@@ -41,7 +41,7 @@ export default defineConfig({
       "apps/macos/.build/**",
       "**/node_modules/**",
       "**/vendor/**",
-      "dist/MoltBot.app/**",
+      "dist/Razroom.app/**",
       "**/*.live.test.ts",
       "**/*.e2e.test.ts",
     ],

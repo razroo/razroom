@@ -6,7 +6,7 @@ import {
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 import type {
   ParsedSkillFrontmatter,
   SkillEligibilityContext,
@@ -21,7 +21,7 @@ import { resolveBundledSkillsDir } from "./bundled-dir.js";
 import { shouldIncludeSkill } from "./config.js";
 import {
   parseFrontmatter,
-  resolveMoltBotMetadata,
+  resolveRazroomMetadata,
   resolveSkillInvocationPolicy,
 } from "./frontmatter.js";
 import { resolvePluginSkillDirs } from "./plugin-skills.js";
@@ -45,7 +45,7 @@ function debugSkillCommandOnce(
 
 function filterSkillEntries(
   entries: SkillEntry[],
-  config?: MoltBotConfig,
+  config?: RazroomConfig,
   skillFilter?: string[],
   eligibility?: SkillEligibilityContext,
 ): SkillEntry[] {
@@ -101,7 +101,7 @@ function resolveUniqueSkillCommandName(base: string, used: Set<string>): string 
 function loadSkillEntries(
   workspaceDir: string,
   opts?: {
-    config?: MoltBotConfig;
+    config?: RazroomConfig;
     managedSkillsDir?: string;
     bundledSkillsDir?: string;
   },
@@ -138,19 +138,19 @@ function loadSkillEntries(
   const bundledSkills = bundledSkillsDir
     ? loadSkills({
         dir: bundledSkillsDir,
-        source: "moltbot-bundled",
+        source: "razroom-bundled",
       })
     : [];
   const extraSkills = mergedExtraDirs.flatMap((dir) => {
     const resolved = resolveUserPath(dir);
     return loadSkills({
       dir: resolved,
-      source: "moltbot-extra",
+      source: "razroom-extra",
     });
   });
   const managedSkills = loadSkills({
     dir: managedSkillsDir,
-    source: "moltbot-managed",
+    source: "razroom-managed",
   });
   const personalAgentsSkillsDir = path.resolve(os.homedir(), ".agents", "skills");
   const personalAgentsSkills = loadSkills({
@@ -164,7 +164,7 @@ function loadSkillEntries(
   });
   const workspaceSkills = loadSkills({
     dir: workspaceSkillsDir,
-    source: "moltbot-workspace",
+    source: "razroom-workspace",
   });
 
   const merged = new Map<string, Skill>();
@@ -199,7 +199,7 @@ function loadSkillEntries(
     return {
       skill,
       frontmatter,
-      metadata: resolveMoltBotMetadata(frontmatter),
+      metadata: resolveRazroomMetadata(frontmatter),
       invocation: resolveSkillInvocationPolicy(frontmatter),
     };
   });
@@ -209,7 +209,7 @@ function loadSkillEntries(
 export function buildWorkspaceSkillSnapshot(
   workspaceDir: string,
   opts?: {
-    config?: MoltBotConfig;
+    config?: RazroomConfig;
     managedSkillsDir?: string;
     bundledSkillsDir?: string;
     entries?: SkillEntry[];
@@ -246,7 +246,7 @@ export function buildWorkspaceSkillSnapshot(
 export function buildWorkspaceSkillsPrompt(
   workspaceDir: string,
   opts?: {
-    config?: MoltBotConfig;
+    config?: RazroomConfig;
     managedSkillsDir?: string;
     bundledSkillsDir?: string;
     entries?: SkillEntry[];
@@ -274,7 +274,7 @@ export function buildWorkspaceSkillsPrompt(
 export function resolveSkillsPromptForRun(params: {
   skillsSnapshot?: SkillSnapshot;
   entries?: SkillEntry[];
-  config?: MoltBotConfig;
+  config?: RazroomConfig;
   workspaceDir: string;
 }): string {
   const snapshotPrompt = params.skillsSnapshot?.prompt?.trim();
@@ -294,7 +294,7 @@ export function resolveSkillsPromptForRun(params: {
 export function loadWorkspaceSkillEntries(
   workspaceDir: string,
   opts?: {
-    config?: MoltBotConfig;
+    config?: RazroomConfig;
     managedSkillsDir?: string;
     bundledSkillsDir?: string;
   },
@@ -344,7 +344,7 @@ function resolveSyncedSkillDestinationPath(params: {
 export async function syncSkillsToWorkspace(params: {
   sourceWorkspaceDir: string;
   targetWorkspaceDir: string;
-  config?: MoltBotConfig;
+  config?: RazroomConfig;
   managedSkillsDir?: string;
   bundledSkillsDir?: string;
 }) {
@@ -403,7 +403,7 @@ export async function syncSkillsToWorkspace(params: {
 
 export function filterWorkspaceSkillEntries(
   entries: SkillEntry[],
-  config?: MoltBotConfig,
+  config?: RazroomConfig,
 ): SkillEntry[] {
   return filterSkillEntries(entries, config);
 }
@@ -411,7 +411,7 @@ export function filterWorkspaceSkillEntries(
 export function buildWorkspaceSkillCommandSpecs(
   workspaceDir: string,
   opts?: {
-    config?: MoltBotConfig;
+    config?: RazroomConfig;
     managedSkillsDir?: string;
     bundledSkillsDir?: string;
     entries?: SkillEntry[];

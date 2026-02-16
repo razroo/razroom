@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "./types.js";
+import type { RazroomConfig } from "./types.js";
 import { isPlainObject } from "../utils.js";
 import { parseConfigPath, setConfigValueAtPath, unsetConfigValueAtPath } from "./config-paths.js";
 
@@ -60,9 +60,9 @@ export function unsetConfigOverride(pathRaw: string): {
   return { ok: true, removed };
 }
 
-export function applyConfigOverrides(cfg: MoltBotConfig): MoltBotConfig {
+export function applyConfigOverrides(cfg: RazroomConfig): RazroomConfig {
   if (!overrides || Object.keys(overrides).length === 0) {
     return cfg;
   }
-  return mergeOverrides(cfg, overrides) as MoltBotConfig;
+  return mergeOverrides(cfg, overrides) as RazroomConfig;
 }

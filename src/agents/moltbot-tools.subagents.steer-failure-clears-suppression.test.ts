@@ -25,20 +25,20 @@ mock("../config/config.js", async (importOriginal) => {
 });
 
 import "./test-helpers/fast-core-tools.js";
-import { createMoltBotTools } from "./moltbot-tools.js";
+import { createRazroomTools } from "./razroom-tools.js";
 import {
   addSubagentRunForTests,
   listSubagentRunsForRequester,
   resetSubagentRegistryForTests,
 } from "./subagent-registry.js";
 
-describe("moltbot-tools: subagents steer failure", () => {
+describe("razroom-tools: subagents steer failure", () => {
   beforeEach(() => {
     resetSubagentRegistryForTests();
     callGatewayMock.mockReset();
     const storePath = path.join(
       os.tmpdir(),
-      `moltbot-subagents-steer-${Date.now()}-${Math.random().toString(16).slice(2)}.json`,
+      `razroom-subagents-steer-${Date.now()}-${Math.random().toString(16).slice(2)}.json`,
     );
     configOverride = {
       session: {
@@ -73,7 +73,7 @@ describe("moltbot-tools: subagents steer failure", () => {
       return {};
     });
 
-    const tool = createMoltBotTools({
+    const tool = createRazroomTools({
       agentSessionKey: "agent:main:main",
       agentChannel: "discord",
     }).find((candidate) => candidate.name === "subagents");

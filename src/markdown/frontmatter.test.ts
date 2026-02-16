@@ -21,7 +21,7 @@ description: |
 name: session-memory
 metadata:
   {
-    "moltbot":
+    "razroom":
       {
         "emoji": "disk",
         "events": ["command:new"],
@@ -33,17 +33,17 @@ metadata:
     expect(result.metadata).toBeDefined();
 
     const parsed = JSON5.parse(result.metadata ?? "");
-    expect(parsed.moltbot?.emoji).toBe("disk");
+    expect(parsed.razroom?.emoji).toBe("disk");
   });
 
   it("preserves inline JSON values", () => {
     const content = `---
 name: inline-json
-metadata: {"moltbot": {"events": ["test"]}}
+metadata: {"razroom": {"events": ["test"]}}
 ---
 `;
     const result = parseFrontmatterBlock(content);
-    expect(result.metadata).toBe('{"moltbot": {"events": ["test"]}}');
+    expect(result.metadata).toBe('{"razroom": {"events": ["test"]}}');
   });
 
   it("stringifies YAML objects and arrays", () => {
@@ -55,7 +55,7 @@ tags:
   - alpha
   - beta
 metadata:
-  moltbot:
+  razroom:
     events:
       - command:new
 ---
@@ -65,7 +65,7 @@ metadata:
     expect(result.retries).toBe("3");
     expect(JSON.parse(result.tags ?? "[]")).toEqual(["alpha", "beta"]);
     const parsed = JSON5.parse(result.metadata ?? "");
-    expect(parsed.moltbot?.events).toEqual(["command:new"]);
+    expect(parsed.razroom?.events).toEqual(["command:new"]);
   });
 
   it("returns empty when frontmatter is missing", () => {

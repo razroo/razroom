@@ -1,16 +1,16 @@
 ---
-summary: "CLI reference for `moltbot sessions` (list stored sessions + usage)"
+summary: "CLI reference for `razroom sessions` (list stored sessions + usage)"
 read_when:
   - You want to list stored sessions and see recent activity
 title: "sessions"
 ---
 
-# `moltbot sessions`
+# `razroom sessions`
 
 List stored conversation sessions.
 
 ```bash
-moltbot sessions
-moltbot sessions --active 120
-moltbot sessions --json
+razroom sessions
+razroom sessions --active 120
+razroom sessions --json
 ```

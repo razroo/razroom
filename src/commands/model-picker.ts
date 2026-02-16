@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { WizardPrompter, WizardSelectOption } from "../wizard/prompts.js";
 import { ensureAuthProfileStore, listProfilesForProvider } from "../agents/auth-profiles.js";
 import { DEFAULT_MODEL, DEFAULT_PROVIDER } from "../agents/defaults.js";
@@ -26,7 +26,7 @@ const PROVIDER_FILTER_THRESHOLD = 30;
 const HIDDEN_ROUTER_MODELS = new Set(["openrouter/auto"]);
 
 type PromptDefaultModelParams = {
-  config: MoltBotConfig;
+  config: RazroomConfig;
   prompter: WizardPrompter;
   allowKeep?: boolean;
   includeManual?: boolean;
@@ -37,12 +37,12 @@ type PromptDefaultModelParams = {
   message?: string;
 };
 
-type PromptDefaultModelResult = { model?: string; config?: MoltBotConfig };
+type PromptDefaultModelResult = { model?: string; config?: RazroomConfig };
 type PromptModelAllowlistResult = { models?: string[] };
 
 function hasAuthForProvider(
   provider: string,
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   store: ReturnType<typeof ensureAuthProfileStore>,
 ) {
   if (listProfilesForProvider(store, provider).length > 0) {
@@ -58,7 +58,7 @@ function hasAuthForProvider(
 }
 
 function createProviderAuthChecker(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   agentDir?: string;
 }): (provider: string) => boolean {
   const authStore = ensureAuthProfileStore(params.agentDir, {
@@ -76,7 +76,7 @@ function createProviderAuthChecker(params: {
   };
 }
 
-function resolveConfiguredModelRaw(cfg: MoltBotConfig): string {
+function resolveConfiguredModelRaw(cfg: RazroomConfig): string {
   const raw = cfg.agents?.defaults?.model as { primary?: string } | string | undefined;
   if (typeof raw === "string") {
     return raw.trim();
@@ -84,7 +84,7 @@ function resolveConfiguredModelRaw(cfg: MoltBotConfig): string {
   return raw?.primary?.trim() ?? "";
 }
 
-function resolveConfiguredModelKeys(cfg: MoltBotConfig): string[] {
+function resolveConfiguredModelKeys(cfg: RazroomConfig): string[] {
   const models = cfg.agents?.defaults?.models ?? {};
   return Object.keys(models)
     .map((key) => String(key ?? "").trim())
@@ -341,7 +341,7 @@ export async function promptDefaultModel(
 }
 
 export async function promptModelAllowlist(params: {
-  config: MoltBotConfig;
+  config: RazroomConfig;
   prompter: WizardPrompter;
   message?: string;
   agentDir?: string;
@@ -442,7 +442,7 @@ export async function promptModelAllowlist(params: {
   return { models: [] };
 }
 
-export function applyPrimaryModel(cfg: MoltBotConfig, model: string): MoltBotConfig {
+export function applyPrimaryModel(cfg: RazroomConfig, model: string): RazroomConfig {
   const defaults = cfg.agents?.defaults;
   const existingModel = defaults?.model;
   const existingModels = defaults?.models;
@@ -469,7 +469,7 @@ export function applyPrimaryModel(cfg: MoltBotConfig, model: string): MoltBotCon
   };
 }
 
-export function applyModelAllowlist(cfg: MoltBotConfig, models: string[]): MoltBotConfig {
+export function applyModelAllowlist(cfg: RazroomConfig, models: string[]): RazroomConfig {
   const defaults = cfg.agents?.defaults;
   const normalized = normalizeModelKeys(models);
   if (normalized.length === 0) {
@@ -505,9 +505,9 @@ export function applyModelAllowlist(cfg: MoltBotConfig, models: string[]): MoltB
 }
 
 export function applyModelFallbacksFromSelection(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   selection: string[],
-): MoltBotConfig {
+): RazroomConfig {
   const normalized = normalizeModelKeys(selection);
   if (normalized.length <= 1) {
     return cfg;

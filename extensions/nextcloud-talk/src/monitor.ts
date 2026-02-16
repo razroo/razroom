@@ -4,7 +4,7 @@ import {
   isRequestBodyLimitError,
   readRequestBodyWithLimit,
   requestBodyErrorToText,
-} from "moltbot/plugin-sdk";
+} from "razroom/plugin-sdk";
 import type {
   CoreConfig,
   NextcloudTalkInboundMessage,

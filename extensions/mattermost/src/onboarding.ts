@@ -1,5 +1,5 @@
-import type { ChannelOnboardingAdapter, MoltBotConfig, WizardPrompter } from "moltbot/plugin-sdk";
-import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "moltbot/plugin-sdk/account-id";
+import type { ChannelOnboardingAdapter, RazroomConfig, WizardPrompter } from "razroom/plugin-sdk";
+import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "razroom/plugin-sdk/account-id";
 import {
   listMattermostAccountIds,
   resolveDefaultMattermostAccountId,
@@ -16,7 +16,7 @@ async function noteMattermostSetup(prompter: WizardPrompter): Promise<void> {
       "2) Create a bot + copy its token",
       "3) Use your server base URL (e.g., https://chat.example.com)",
       "Tip: the bot must be a member of any channel you want it to monitor.",
-      "Docs: https://docs.moltbot.ai/channels/mattermost",
+      "Docs: https://docs.razroom.ai/channels/mattermost",
     ].join("\n"),
     "Mattermost bot token",
   );
@@ -176,7 +176,7 @@ export const mattermostOnboardingAdapter: ChannelOnboardingAdapter = {
 
     return { cfg: next, accountId };
   },
-  disable: (cfg: MoltBotConfig) => ({
+  disable: (cfg: RazroomConfig) => ({
     ...cfg,
     channels: {
       ...cfg.channels,

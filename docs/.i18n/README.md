@@ -1,4 +1,4 @@
-# MoltBot docs i18n assets
+# Razroom docs i18n assets
 
 This folder stores **generated** and **config** files for documentation translations.
 

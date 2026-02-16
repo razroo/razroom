@@ -3,11 +3,11 @@ import process from "node:process";
 import type { GatewayLockHandle } from "../infra/gateway-lock.js";
 import { restartGatewayProcessWithFreshPid } from "../infra/process-respawn.js";
 
-declare const __MOLTBOT_VERSION__: string | undefined;
+declare const __RAZROOM_VERSION__: string | undefined;
 
 const BUNDLED_VERSION =
-  (typeof __MOLTBOT_VERSION__ === "string" && __MOLTBOT_VERSION__) ||
-  process.env.MOLTBOT_BUNDLED_VERSION ||
+  (typeof __RAZROOM_VERSION__ === "string" && __RAZROOM_VERSION__) ||
+  process.env.RAZROOM_BUNDLED_VERSION ||
   "0.0.0";
 
 function argValue(args: string[], flag: string): string | undefined {
@@ -29,7 +29,7 @@ type GatewayWsLogStyle = "auto" | "full" | "compact";
 
 async function main() {
   if (hasFlag(args, "--version") || hasFlag(args, "-v")) {
-    // Match `moltbot --version` behavior for Swift env/version checks.
+    // Match `razroom --version` behavior for Swift env/version checks.
     // Keep output a single line.
     console.log(BUNDLED_VERSION);
     process.exit(0);
@@ -84,8 +84,8 @@ async function main() {
   const cfg = loadConfig();
   const portRaw =
     argValue(args, "--port") ??
-    process.env.MOLTBOT_GATEWAY_PORT ??
-    process.env.MOLTBOT_GATEWAY_PORT ??
+    process.env.RAZROOM_GATEWAY_PORT ??
+    process.env.RAZROOM_GATEWAY_PORT ??
     (typeof cfg.gateway?.port === "number" ? String(cfg.gateway.port) : "") ??
     "18789";
   const port = Number.parseInt(portRaw, 10);
@@ -96,8 +96,8 @@ async function main() {
 
   const bindRaw =
     argValue(args, "--bind") ??
-    process.env.MOLTBOT_GATEWAY_BIND ??
-    process.env.MOLTBOT_GATEWAY_BIND ??
+    process.env.RAZROOM_GATEWAY_BIND ??
+    process.env.RAZROOM_GATEWAY_BIND ??
     cfg.gateway?.bind ??
     "loopback";
   const bind =
@@ -115,7 +115,7 @@ async function main() {
 
   const token = argValue(args, "--token");
   if (token) {
-    process.env.MOLTBOT_GATEWAY_TOKEN = token;
+    process.env.RAZROOM_GATEWAY_TOKEN = token;
   }
 
   let server: Awaited<ReturnType<typeof startGatewayServer>> | null = null;
@@ -194,7 +194,7 @@ async function main() {
                 `gateway: full process restart failed (${respawn.detail ?? "unknown error"}); falling back to in-process restart`,
               );
             } else {
-              defaultRuntime.log("gateway: restart mode in-process restart (MOLTBOT_NO_RESPAWN)");
+              defaultRuntime.log("gateway: restart mode in-process restart (RAZROOM_NO_RESPAWN)");
             }
             shuttingDown = false;
             restartResolver?.();
@@ -272,7 +272,7 @@ async function main() {
 
 void main().catch((err) => {
   console.error(
-    "[moltbot] Gateway daemon failed:",
+    "[razroom] Gateway daemon failed:",
     err instanceof Error ? (err.stack ?? err.message) : err,
   );
   process.exit(1);

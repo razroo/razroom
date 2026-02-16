@@ -168,7 +168,7 @@ export async function onTimer(state: CronServiceState) {
     // We use MAX_TIMER_DELAY_MS as a fixed re-check interval to avoid a
     // zero-delay hot-loop when past-due jobs are waiting for the current
     // execution to finish.
-    // See: https://github.com/moltbot/moltbot/issues/12025
+    // See: https://github.com/razroom/razroom/issues/12025
     if (state.timer) {
       clearTimeout(state.timer);
     }
@@ -499,7 +499,7 @@ async function executeJobCore(
   // When `res.delivered` is true the announce flow (or direct outbound
   // delivery) already sent the result, so posting the summary to main
   // would wake the main agent and cause a duplicate message.
-  // See: https://github.com/moltbot/moltbot/issues/15692
+  // See: https://github.com/razroom/razroom/issues/15692
   const summaryText = res.summary?.trim();
   const deliveryPlan = resolveCronDeliveryPlan(job);
   if (summaryText && deliveryPlan.requested && !res.delivered) {

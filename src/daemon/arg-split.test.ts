@@ -3,8 +3,8 @@ import { splitArgsPreservingQuotes } from "./arg-split.js";
 
 describe("splitArgsPreservingQuotes", () => {
   it("splits on whitespace outside quotes", () => {
-    expect(splitArgsPreservingQuotes('/usr/bin/moltbot gateway start --name "My Bot"')).toEqual([
-      "/usr/bin/moltbot",
+    expect(splitArgsPreservingQuotes('/usr/bin/razroom gateway start --name "My Bot"')).toEqual([
+      "/usr/bin/razroom",
       "gateway",
       "start",
       "--name",
@@ -14,23 +14,23 @@ describe("splitArgsPreservingQuotes", () => {
 
   it("supports systemd-style backslash escaping", () => {
     expect(
-      splitArgsPreservingQuotes('moltbot --name "My \\"Bot\\"" --foo bar', {
+      splitArgsPreservingQuotes('razroom --name "My \\"Bot\\"" --foo bar', {
         escapeMode: "backslash",
       }),
-    ).toEqual(["moltbot", "--name", 'My "Bot"', "--foo", "bar"]);
+    ).toEqual(["razroom", "--name", 'My "Bot"', "--foo", "bar"]);
   });
 
   it("supports schtasks-style escaped quotes while preserving other backslashes", () => {
     expect(
-      splitArgsPreservingQuotes('moltbot --path "C:\\\\Program Files\\\\MoltBot"', {
+      splitArgsPreservingQuotes('razroom --path "C:\\\\Program Files\\\\Razroom"', {
         escapeMode: "backslash-quote-only",
       }),
-    ).toEqual(["moltbot", "--path", "C:\\\\Program Files\\\\MoltBot"]);
+    ).toEqual(["razroom", "--path", "C:\\\\Program Files\\\\Razroom"]);
 
     expect(
-      splitArgsPreservingQuotes('moltbot --label "My \\"Quoted\\" Name"', {
+      splitArgsPreservingQuotes('razroom --label "My \\"Quoted\\" Name"', {
         escapeMode: "backslash-quote-only",
       }),
-    ).toEqual(["moltbot", "--label", 'My "Quoted" Name']);
+    ).toEqual(["razroom", "--label", 'My "Quoted" Name']);
   });
 });

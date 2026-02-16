@@ -3,7 +3,7 @@ import { type FSWatcher } from "chokidar";
 import fs from "node:fs/promises";
 import path from "node:path";
 import type { ResolvedMemorySearchConfig } from "../agents/memory-search.js";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type {
   MemoryEmbeddingProbeResult,
   MemoryProviderStatus,
@@ -42,7 +42,7 @@ export class MemoryIndexManager implements MemorySearchManager {
   // oxlint-disable-next-line typescript/no-explicit-any
   [key: string]: any;
   private readonly cacheKey: string;
-  private readonly cfg: MoltBotConfig;
+  private readonly cfg: RazroomConfig;
   private readonly agentId: string;
   private readonly workspaceDir: string;
   private readonly settings: ResolvedMemorySearchConfig;
@@ -99,7 +99,7 @@ export class MemoryIndexManager implements MemorySearchManager {
   private syncing: Promise<void> | null = null;
 
   static async get(params: {
-    cfg: MoltBotConfig;
+    cfg: RazroomConfig;
     agentId: string;
     purpose?: "default" | "status";
   }): Promise<MemoryIndexManager | null> {
@@ -138,7 +138,7 @@ export class MemoryIndexManager implements MemorySearchManager {
 
   private constructor(params: {
     cacheKey: string;
-    cfg: MoltBotConfig;
+    cfg: RazroomConfig;
     agentId: string;
     workspaceDir: string;
     settings: ResolvedMemorySearchConfig;

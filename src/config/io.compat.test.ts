@@ -5,7 +5,7 @@ import { describe, expect, it } from "bun:test";
 import { createConfigIO } from "./io.js";
 
 async function withTempHome(run: (home: string) => Promise<void>): Promise<void> {
-  const home = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-config-"));
+  const home = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-config-"));
   try {
     await run(home);
   } finally {
@@ -15,9 +15,9 @@ async function withTempHome(run: (home: string) => Promise<void>): Promise<void>
 
 async function writeConfig(
   home: string,
-  dirname: ".moltbot",
+  dirname: ".razroom",
   port: number,
-  filename: string = "moltbot.json",
+  filename: string = "razroom.json",
 ) {
   const dir = path.join(home, dirname);
   await fs.mkdir(dir, { recursive: true });
@@ -27,9 +27,9 @@ async function writeConfig(
 }
 
 describe("config io paths", () => {
-  it("uses ~/.moltbot/moltbot.json when config exists", async () => {
+  it("uses ~/.razroom/razroom.json when config exists", async () => {
     await withTempHome(async (home) => {
-      const configPath = await writeConfig(home, ".moltbot", 19001);
+      const configPath = await writeConfig(home, ".razroom", 19001);
       const io = createConfigIO({
         env: {} as NodeJS.ProcessEnv,
         homedir: () => home,
@@ -39,31 +39,31 @@ describe("config io paths", () => {
     });
   });
 
-  it("defaults to ~/.moltbot/moltbot.json when config is missing", async () => {
+  it("defaults to ~/.razroom/razroom.json when config is missing", async () => {
     await withTempHome(async (home) => {
       const io = createConfigIO({
         env: {} as NodeJS.ProcessEnv,
         homedir: () => home,
       });
-      expect(io.configPath).toBe(path.join(home, ".moltbot", "moltbot.json"));
+      expect(io.configPath).toBe(path.join(home, ".razroom", "razroom.json"));
     });
   });
 
-  it("uses MOLTBOT_HOME for default config path", async () => {
+  it("uses RAZROOM_HOME for default config path", async () => {
     await withTempHome(async (home) => {
       const io = createConfigIO({
-        env: { MOLTBOT_HOME: path.join(home, "svc-home") } as NodeJS.ProcessEnv,
+        env: { RAZROOM_HOME: path.join(home, "svc-home") } as NodeJS.ProcessEnv,
         homedir: () => path.join(home, "ignored-home"),
       });
-      expect(io.configPath).toBe(path.join(home, "svc-home", ".moltbot", "moltbot.json"));
+      expect(io.configPath).toBe(path.join(home, "svc-home", ".razroom", "razroom.json"));
     });
   });
 
-  it("honors explicit MOLTBOT_CONFIG_PATH override", async () => {
+  it("honors explicit RAZROOM_CONFIG_PATH override", async () => {
     await withTempHome(async (home) => {
-      const customPath = await writeConfig(home, ".moltbot", 20002, "custom.json");
+      const customPath = await writeConfig(home, ".razroom", 20002, "custom.json");
       const io = createConfigIO({
-        env: { MOLTBOT_CONFIG_PATH: customPath } as NodeJS.ProcessEnv,
+        env: { RAZROOM_CONFIG_PATH: customPath } as NodeJS.ProcessEnv,
         homedir: () => home,
       });
       expect(io.configPath).toBe(customPath);

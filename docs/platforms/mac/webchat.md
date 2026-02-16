@@ -21,7 +21,7 @@ agent (with a session switcher for other sessions).
 - Auto‑open for testing:
 
   ```bash
-  dist/MoltBot.app/Contents/MacOS/MoltBot --webchat
+  dist/Razroom.app/Contents/MacOS/Razroom --webchat
   ```
 
 - Logs: `./scripts/clawlog.sh` (subsystem `bot.molt`, category `WebChatSwiftUI`).

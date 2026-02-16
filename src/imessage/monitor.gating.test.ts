@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { IMessagePayload } from "./monitor/types.js";
 import {
   buildIMessageInboundContext,
@@ -7,7 +7,7 @@ import {
 } from "./monitor/inbound-processing.js";
 import { parseIMessageNotification } from "./monitor/parse-notification.js";
 
-function baseCfg(): MoltBotConfig {
+function baseCfg(): RazroomConfig {
   return {
     channels: {
       imessage: {
@@ -19,13 +19,13 @@ function baseCfg(): MoltBotConfig {
     },
     session: { mainKey: "main" },
     messages: {
-      groupChat: { mentionPatterns: ["@moltbot"] },
+      groupChat: { mentionPatterns: ["@razroom"] },
     },
-  } as unknown as MoltBotConfig;
+  } as unknown as RazroomConfig;
 }
 
 function resolve(params: {
-  cfg?: MoltBotConfig;
+  cfg?: RazroomConfig;
   message: IMessagePayload;
   storeAllowFrom?: string[];
 }) {
@@ -83,7 +83,7 @@ describe("imessage monitor gating + envelope builders", () => {
       chat_id: 42,
       sender: "+15550002222",
       is_from_me: false,
-      text: "@moltbot ping",
+      text: "@razroom ping",
       is_group: true,
       chat_name: "Lobster Squad",
       participants: ["+1555", "+1556"],
@@ -248,12 +248,12 @@ describe("imessage monitor gating + envelope builders", () => {
         chat_id: 123,
         sender: "+15550001111",
         is_from_me: false,
-        text: "@moltbot hello",
+        text: "@razroom hello",
         is_group: true,
       },
       opts: {},
-      messageText: "@moltbot hello",
-      bodyText: "@moltbot hello",
+      messageText: "@razroom hello",
+      bodyText: "@razroom hello",
       allowFrom: ["*"],
       groupAllowFrom: [],
       groupPolicy: "open",
@@ -280,12 +280,12 @@ describe("imessage monitor gating + envelope builders", () => {
         chat_id: 202,
         sender: "+15550003333",
         is_from_me: false,
-        text: "@moltbot hi",
+        text: "@razroom hi",
         is_group: true,
       },
       opts: {},
-      messageText: "@moltbot hi",
-      bodyText: "@moltbot hi",
+      messageText: "@razroom hi",
+      bodyText: "@razroom hi",
       allowFrom: ["*"],
       groupAllowFrom: ["chat_id:101"],
       groupPolicy: "allowlist",
@@ -304,12 +304,12 @@ describe("imessage monitor gating + envelope builders", () => {
         chat_id: 101,
         sender: "+15550003333",
         is_from_me: false,
-        text: "@moltbot ok",
+        text: "@razroom ok",
         is_group: true,
       },
       opts: {},
-      messageText: "@moltbot ok",
-      bodyText: "@moltbot ok",
+      messageText: "@razroom ok",
+      bodyText: "@razroom ok",
       allowFrom: ["*"],
       groupAllowFrom: ["chat_id:101"],
       groupPolicy: "allowlist",
@@ -336,12 +336,12 @@ describe("imessage monitor gating + envelope builders", () => {
         chat_id: 303,
         sender: "+15550003333",
         is_from_me: false,
-        text: "@moltbot hi",
+        text: "@razroom hi",
         is_group: true,
       },
       opts: {},
-      messageText: "@moltbot hi",
-      bodyText: "@moltbot hi",
+      messageText: "@razroom hi",
+      bodyText: "@razroom hi",
       allowFrom: ["*"],
       groupAllowFrom: [],
       groupPolicy: "disabled",

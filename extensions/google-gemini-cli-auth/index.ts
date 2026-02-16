@@ -1,17 +1,17 @@
 import {
   buildOauthProviderAuthResult,
   emptyPluginConfigSchema,
-  type MoltBotPluginApi,
+  type RazroomPluginApi,
   type ProviderAuthContext,
-} from "moltbot/plugin-sdk";
+} from "razroom/plugin-sdk";
 import { loginGeminiCliOAuth } from "./oauth.js";
 
 const PROVIDER_ID = "google-gemini-cli";
 const PROVIDER_LABEL = "Gemini CLI OAuth";
 const DEFAULT_MODEL = "google-gemini-cli/gemini-3-pro-preview";
 const ENV_VARS = [
-  "MOLTBOT_GEMINI_OAUTH_CLIENT_ID",
-  "MOLTBOT_GEMINI_OAUTH_CLIENT_SECRET",
+  "RAZROOM_GEMINI_OAUTH_CLIENT_ID",
+  "RAZROOM_GEMINI_OAUTH_CLIENT_SECRET",
   "GEMINI_CLI_OAUTH_CLIENT_ID",
   "GEMINI_CLI_OAUTH_CLIENT_SECRET",
 ];
@@ -21,7 +21,7 @@ const geminiCliPlugin = {
   name: "Google Gemini CLI Auth",
   description: "OAuth flow for Gemini CLI (Google Code Assist)",
   configSchema: emptyPluginConfigSchema(),
-  register(api: MoltBotPluginApi) {
+  register(api: RazroomPluginApi) {
     api.registerProvider({
       id: PROVIDER_ID,
       label: PROVIDER_LABEL,

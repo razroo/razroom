@@ -1,12 +1,12 @@
 import type { StreamFn } from "@mariozechner/pi-agent-core";
 import type { SimpleStreamOptions } from "@mariozechner/pi-ai";
 import { streamSimple } from "@mariozechner/pi-ai";
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 import { log } from "./logger.js";
 
 const OPENROUTER_APP_HEADERS: Record<string, string> = {
-  "HTTP-Referer": "https://moltbot.ai",
-  "X-Title": "MoltBot",
+  "HTTP-Referer": "https://razroom.ai",
+  "X-Title": "Razroom",
 };
 // NOTE: We only force `store=true` for *direct* OpenAI Responses.
 // Codex responses (chatgpt.com/backend-api/codex/responses) require `store=false`.
@@ -20,7 +20,7 @@ const OPENAI_RESPONSES_PROVIDERS = new Set(["openai"]);
  * @internal Exported for testing only
  */
 export function resolveExtraParams(params: {
-  cfg: MoltBotConfig | undefined;
+  cfg: RazroomConfig | undefined;
   provider: string;
   modelId: string;
 }): Record<string, unknown> | undefined {
@@ -158,7 +158,7 @@ function createOpenAIResponsesStoreWrapper(baseStreamFn: StreamFn | undefined): 
 
 /**
  * Create a streamFn wrapper that adds OpenRouter app attribution headers.
- * These headers allow MoltBot to appear on OpenRouter's leaderboard.
+ * These headers allow Razroom to appear on OpenRouter's leaderboard.
  */
 function createOpenRouterHeadersWrapper(baseStreamFn: StreamFn | undefined): StreamFn {
   const underlying = baseStreamFn ?? streamSimple;
@@ -180,7 +180,7 @@ function createOpenRouterHeadersWrapper(baseStreamFn: StreamFn | undefined): Str
  */
 export function applyExtraParamsToAgent(
   agent: { streamFn?: StreamFn },
-  cfg: MoltBotConfig | undefined,
+  cfg: RazroomConfig | undefined,
   provider: string,
   modelId: string,
   extraParamsOverride?: Record<string, unknown>,

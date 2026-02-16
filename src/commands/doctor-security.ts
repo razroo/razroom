@@ -1,5 +1,5 @@
 import type { ChannelId } from "../channels/plugins/types.js";
-import type { MoltBotConfig, GatewayBindMode } from "../config/config.js";
+import type { RazroomConfig, GatewayBindMode } from "../config/config.js";
 import { resolveChannelDefaultAccountId } from "../channels/plugins/helpers.js";
 import { listChannelPlugins } from "../channels/plugins/index.js";
 import { formatCliCommand } from "../cli/command-format.js";
@@ -8,9 +8,9 @@ import { isLoopbackHost, resolveGatewayBindHost } from "../gateway/net.js";
 import { readChannelAllowFromStore } from "../pairing/pairing-store.js";
 import { note } from "../terminal/note.js";
 
-export async function noteSecurityWarnings(cfg: MoltBotConfig) {
+export async function noteSecurityWarnings(cfg: RazroomConfig) {
   const warnings: string[] = [];
-  const auditHint = `- Run: ${formatCliCommand("moltbot security audit --deep")}`;
+  const auditHint = `- Run: ${formatCliCommand("razroom security audit --deep")}`;
 
   // ===========================================
   // GATEWAY NETWORK EXPOSURE CHECK
@@ -48,19 +48,19 @@ export async function noteSecurityWarnings(cfg: MoltBotConfig) {
       const authFixLines =
         resolvedAuth.mode === "password"
           ? [
-              `  Fix: ${formatCliCommand("moltbot configure")} to set a password`,
-              `  Or switch to token: ${formatCliCommand("moltbot config set gateway.auth.mode token")}`,
+              `  Fix: ${formatCliCommand("razroom configure")} to set a password`,
+              `  Or switch to token: ${formatCliCommand("razroom config set gateway.auth.mode token")}`,
             ]
           : [
-              `  Fix: ${formatCliCommand("moltbot doctor --fix")} to generate a token`,
+              `  Fix: ${formatCliCommand("razroom doctor --fix")} to generate a token`,
               `  Or set token directly: ${formatCliCommand(
-                "moltbot config set gateway.auth.mode token",
+                "razroom config set gateway.auth.mode token",
               )}`,
             ];
       warnings.push(
         `- CRITICAL: Gateway bound to ${bindDescriptor} without authentication.`,
         `  Anyone on your network (or internet if port-forwarded) can fully control your agent.`,
-        `  Fix: ${formatCliCommand("moltbot config set gateway.bind loopback")}`,
+        `  Fix: ${formatCliCommand("razroom config set gateway.bind loopback")}`,
         ...authFixLines,
       );
     } else {
@@ -125,7 +125,7 @@ export async function noteSecurityWarnings(cfg: MoltBotConfig) {
     if (dmScope === "main" && isMultiUserDm) {
       warnings.push(
         `- ${params.label} DMs: multiple senders share the main session; run: ` +
-          formatCliCommand('moltbot config set session.dmScope "per-channel-peer"') +
+          formatCliCommand('razroom config set session.dmScope "per-channel-peer"') +
           ' (or "per-account-channel-peer" for multi-account channels) to isolate sessions.',
       );
     }

@@ -16,8 +16,8 @@ for the first time.
 
 ## What bootstrapping does
 
-On the first agent run, MoltBot bootstraps the workspace (default
-`~/.moltbot/workspace`):
+On the first agent run, Razroom bootstraps the workspace (default
+`~/.razroom/workspace`):
 
 - Seeds `AGENTS.md`, `BOOTSTRAP.md`, `IDENTITY.md`, `USER.md`.
 - Runs a short Q&A ritual (one question at a time).
@@ -32,7 +32,7 @@ machine.
 
 <Note>
 When the Gateway runs on another machine, edit workspace files on the gateway
-host (for example, `user@gateway-host:~/.moltbot/workspace`).
+host (for example, `user@gateway-host:~/.razroom/workspace`).
 </Note>
 
 ## Related docs

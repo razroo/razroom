@@ -81,43 +81,43 @@ mock("./progress.js", () => ({
 
 describe("daemon-cli coverage", () => {
   const originalEnv = {
-    MOLTBOT_STATE_DIR: process.env.MOLTBOT_STATE_DIR,
-    MOLTBOT_CONFIG_PATH: process.env.MOLTBOT_CONFIG_PATH,
-    MOLTBOT_GATEWAY_PORT: process.env.MOLTBOT_GATEWAY_PORT,
-    MOLTBOT_PROFILE: process.env.MOLTBOT_PROFILE,
+    RAZROOM_STATE_DIR: process.env.RAZROOM_STATE_DIR,
+    RAZROOM_CONFIG_PATH: process.env.RAZROOM_CONFIG_PATH,
+    RAZROOM_GATEWAY_PORT: process.env.RAZROOM_GATEWAY_PORT,
+    RAZROOM_PROFILE: process.env.RAZROOM_PROFILE,
   };
 
   beforeEach(() => {
-    process.env.MOLTBOT_STATE_DIR = "/tmp/moltbot-cli-state";
-    process.env.MOLTBOT_CONFIG_PATH = "/tmp/moltbot-cli-state/moltbot.json";
-    delete process.env.MOLTBOT_GATEWAY_PORT;
-    delete process.env.MOLTBOT_PROFILE;
+    process.env.RAZROOM_STATE_DIR = "/tmp/razroom-cli-state";
+    process.env.RAZROOM_CONFIG_PATH = "/tmp/razroom-cli-state/razroom.json";
+    delete process.env.RAZROOM_GATEWAY_PORT;
+    delete process.env.RAZROOM_PROFILE;
     serviceReadCommand.mockResolvedValue(null);
   });
 
   afterEach(() => {
-    if (originalEnv.MOLTBOT_STATE_DIR !== undefined) {
-      process.env.MOLTBOT_STATE_DIR = originalEnv.MOLTBOT_STATE_DIR;
+    if (originalEnv.RAZROOM_STATE_DIR !== undefined) {
+      process.env.RAZROOM_STATE_DIR = originalEnv.RAZROOM_STATE_DIR;
     } else {
-      delete process.env.MOLTBOT_STATE_DIR;
+      delete process.env.RAZROOM_STATE_DIR;
     }
 
-    if (originalEnv.MOLTBOT_CONFIG_PATH !== undefined) {
-      process.env.MOLTBOT_CONFIG_PATH = originalEnv.MOLTBOT_CONFIG_PATH;
+    if (originalEnv.RAZROOM_CONFIG_PATH !== undefined) {
+      process.env.RAZROOM_CONFIG_PATH = originalEnv.RAZROOM_CONFIG_PATH;
     } else {
-      delete process.env.MOLTBOT_CONFIG_PATH;
+      delete process.env.RAZROOM_CONFIG_PATH;
     }
 
-    if (originalEnv.MOLTBOT_GATEWAY_PORT !== undefined) {
-      process.env.MOLTBOT_GATEWAY_PORT = originalEnv.MOLTBOT_GATEWAY_PORT;
+    if (originalEnv.RAZROOM_GATEWAY_PORT !== undefined) {
+      process.env.RAZROOM_GATEWAY_PORT = originalEnv.RAZROOM_GATEWAY_PORT;
     } else {
-      delete process.env.MOLTBOT_GATEWAY_PORT;
+      delete process.env.RAZROOM_GATEWAY_PORT;
     }
 
-    if (originalEnv.MOLTBOT_PROFILE !== undefined) {
-      process.env.MOLTBOT_PROFILE = originalEnv.MOLTBOT_PROFILE;
+    if (originalEnv.RAZROOM_PROFILE !== undefined) {
+      process.env.RAZROOM_PROFILE = originalEnv.RAZROOM_PROFILE;
     } else {
-      delete process.env.MOLTBOT_PROFILE;
+      delete process.env.RAZROOM_PROFILE;
     }
   });
 
@@ -148,10 +148,10 @@ describe("daemon-cli coverage", () => {
     serviceReadCommand.mockResolvedValueOnce({
       programArguments: ["/bin/node", "cli", "gateway", "--port", "19001"],
       environment: {
-        MOLTBOT_PROFILE: "dev",
-        MOLTBOT_STATE_DIR: "/tmp/moltbot-daemon-state",
-        MOLTBOT_CONFIG_PATH: "/tmp/moltbot-daemon-state/moltbot.json",
-        MOLTBOT_GATEWAY_PORT: "19001",
+        RAZROOM_PROFILE: "dev",
+        RAZROOM_STATE_DIR: "/tmp/razroom-daemon-state",
+        RAZROOM_CONFIG_PATH: "/tmp/razroom-daemon-state/razroom.json",
+        RAZROOM_GATEWAY_PORT: "19001",
       },
       sourcePath: "/tmp/bot.molt.gateway.plist",
     });

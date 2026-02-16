@@ -1,5 +1,5 @@
 ---
-summary: "MoltBot Gateway CLI (`moltbot gateway`) — run, query, and discover gateways"
+summary: "Razroom Gateway CLI (`razroom gateway`) — run, query, and discover gateways"
 read_when:
   - Running the Gateway from the CLI (dev or servers)
   - Debugging Gateway auth, bind modes, and connectivity
@@ -9,9 +9,9 @@ title: "gateway"
 
 # Gateway CLI
 
-The Gateway is MoltBot’s WebSocket server (channels, nodes, sessions, hooks).
+The Gateway is Razroom’s WebSocket server (channels, nodes, sessions, hooks).
 
-Subcommands in this page live under `moltbot gateway …`.
+Subcommands in this page live under `razroom gateway …`.
 
 Related docs:
 
@@ -24,18 +24,18 @@ Related docs:
 Run a local Gateway process:
 
 ```bash
-moltbot gateway
+razroom gateway
 ```
 
 Foreground alias:
 
 ```bash
-moltbot gateway run
+razroom gateway run
 ```
 
 Notes:
 
-- By default, the Gateway refuses to start unless `gateway.mode=local` is set in `~/.moltbot/moltbot.json`. Use `--allow-unconfigured` for ad-hoc/dev runs.
+- By default, the Gateway refuses to start unless `gateway.mode=local` is set in `~/.razroom/razroom.json`. Use `--allow-unconfigured` for ad-hoc/dev runs.
 - Binding beyond loopback without auth is blocked (safety guardrail).
 - `SIGUSR1` triggers an in-process restart when authorized (enable `commands.restart` or use the gateway tool/config apply/update).
 - `SIGINT`/`SIGTERM` handlers stop the gateway process, but they don’t restore any custom terminal state. If you wrap the CLI with a TUI or raw-mode input, restore the terminal before exit.
@@ -45,8 +45,8 @@ Notes:
 - `--port <port>`: WebSocket port (default comes from config/env; usually `18789`).
 - `--bind <loopback|lan|tailnet|auto|custom>`: listener bind mode.
 - `--auth <token|password>`: auth mode override.
-- `--token <token>`: token override (also sets `MOLTBOT_GATEWAY_TOKEN` for the process).
-- `--password <password>`: password override (also sets `MOLTBOT_GATEWAY_PASSWORD` for the process).
+- `--token <token>`: token override (also sets `RAZROOM_GATEWAY_TOKEN` for the process).
+- `--password <password>`: password override (also sets `RAZROOM_GATEWAY_PASSWORD` for the process).
 - `--tailscale <off|serve|funnel>`: expose the Gateway via Tailscale.
 - `--tailscale-reset-on-exit`: reset Tailscale serve/funnel config on shutdown.
 - `--allow-unconfigured`: allow gateway start without `gateway.mode=local` in config.
@@ -84,7 +84,7 @@ Pass `--token` or `--password` explicitly. Missing explicit credentials is an er
 ### `gateway health`
 
 ```bash
-moltbot gateway health --url ws://127.0.0.1:18789
+razroom gateway health --url ws://127.0.0.1:18789
 ```
 
 ### `gateway status`
@@ -92,8 +92,8 @@ moltbot gateway health --url ws://127.0.0.1:18789
 `gateway status` shows the Gateway service (launchd/systemd/schtasks) plus an optional RPC probe.
 
 ```bash
-moltbot gateway status
-moltbot gateway status --json
+razroom gateway status
+razroom gateway status --json
 ```
 
 Options:
@@ -115,8 +115,8 @@ Options:
 If multiple gateways are reachable, it prints all of them. Multiple gateways are supported when you use isolated profiles/ports (e.g., a rescue bot), but most installs still run a single gateway.
 
 ```bash
-moltbot gateway probe
-moltbot gateway probe --json
+razroom gateway probe
+razroom gateway probe --json
 ```
 
 #### Remote over SSH (Mac app parity)
@@ -126,7 +126,7 @@ The macOS app “Remote over SSH” mode uses a local port-forward so the remote
 CLI equivalent:
 
 ```bash
-moltbot gateway probe --ssh user@gateway-host
+razroom gateway probe --ssh user@gateway-host
 ```
 
 Options:
@@ -145,18 +145,18 @@ Config (optional, used as defaults):
 Low-level RPC helper.
 
 ```bash
-moltbot gateway call status
-moltbot gateway call logs.tail --params '{"sinceMs": 60000}'
+razroom gateway call status
+razroom gateway call logs.tail --params '{"sinceMs": 60000}'
 ```
 
 ## Manage the Gateway service
 
 ```bash
-moltbot gateway install
-moltbot gateway start
-moltbot gateway stop
-moltbot gateway restart
-moltbot gateway uninstall
+razroom gateway install
+razroom gateway start
+razroom gateway stop
+razroom gateway restart
+razroom gateway uninstall
 ```
 
 Notes:
@@ -166,10 +166,10 @@ Notes:
 
 ## Discover gateways (Bonjour)
 
-`gateway discover` scans for Gateway beacons (`_moltbot-gw._tcp`).
+`gateway discover` scans for Gateway beacons (`_razroom-gw._tcp`).
 
 - Multicast DNS-SD: `local.`
-- Unicast DNS-SD (Wide-Area Bonjour): choose a domain (example: `moltbot.internal.`) and set up split DNS + a DNS server; see [/gateway/bonjour](/gateway/bonjour)
+- Unicast DNS-SD (Wide-Area Bonjour): choose a domain (example: `razroom.internal.`) and set up split DNS + a DNS server; see [/gateway/bonjour](/gateway/bonjour)
 
 Only gateways with Bonjour discovery enabled (default) advertise the beacon.
 
@@ -186,7 +186,7 @@ Wide-Area discovery records include (TXT):
 ### `gateway discover`
 
 ```bash
-moltbot gateway discover
+razroom gateway discover
 ```
 
 Options:
@@ -197,6 +197,6 @@ Options:
 Examples:
 
 ```bash
-moltbot gateway discover --timeout 4000
-moltbot gateway discover --json | jq '.beacons[].wsUrl'
+razroom gateway discover --timeout 4000
+razroom gateway discover --json | jq '.beacons[].wsUrl'
 ```

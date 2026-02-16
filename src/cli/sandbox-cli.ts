@@ -14,30 +14,30 @@ type CommandOptions = Record<string, unknown>;
 
 const SANDBOX_EXAMPLES = {
   main: [
-    ["moltbot sandbox list", "List all sandbox containers."],
-    ["moltbot sandbox list --browser", "List only browser containers."],
-    ["moltbot sandbox recreate --all", "Recreate all containers."],
-    ["moltbot sandbox recreate --session main", "Recreate a specific session."],
-    ["moltbot sandbox recreate --agent mybot", "Recreate agent containers."],
-    ["moltbot sandbox explain", "Explain effective sandbox config."],
+    ["razroom sandbox list", "List all sandbox containers."],
+    ["razroom sandbox list --browser", "List only browser containers."],
+    ["razroom sandbox recreate --all", "Recreate all containers."],
+    ["razroom sandbox recreate --session main", "Recreate a specific session."],
+    ["razroom sandbox recreate --agent mybot", "Recreate agent containers."],
+    ["razroom sandbox explain", "Explain effective sandbox config."],
   ],
   list: [
-    ["moltbot sandbox list", "List all sandbox containers."],
-    ["moltbot sandbox list --browser", "List only browser containers."],
-    ["moltbot sandbox list --json", "JSON output."],
+    ["razroom sandbox list", "List all sandbox containers."],
+    ["razroom sandbox list --browser", "List only browser containers."],
+    ["razroom sandbox list --json", "JSON output."],
   ],
   recreate: [
-    ["moltbot sandbox recreate --all", "Recreate all containers."],
-    ["moltbot sandbox recreate --session main", "Recreate a specific session."],
-    ["moltbot sandbox recreate --agent mybot", "Recreate a specific agent (includes sub-agents)."],
-    ["moltbot sandbox recreate --browser --all", "Recreate only browser containers."],
-    ["moltbot sandbox recreate --all --force", "Skip confirmation."],
+    ["razroom sandbox recreate --all", "Recreate all containers."],
+    ["razroom sandbox recreate --session main", "Recreate a specific session."],
+    ["razroom sandbox recreate --agent mybot", "Recreate a specific agent (includes sub-agents)."],
+    ["razroom sandbox recreate --browser --all", "Recreate only browser containers."],
+    ["razroom sandbox recreate --all --force", "Skip confirmation."],
   ],
   explain: [
-    ["moltbot sandbox explain", "Show effective sandbox config."],
-    ["moltbot sandbox explain --session agent:main:main", "Explain a specific session."],
-    ["moltbot sandbox explain --agent work", "Explain an agent sandbox."],
-    ["moltbot sandbox explain --json", "JSON output."],
+    ["razroom sandbox explain", "Show effective sandbox config."],
+    ["razroom sandbox explain --session agent:main:main", "Explain a specific session."],
+    ["razroom sandbox explain --agent work", "Explain an agent sandbox."],
+    ["razroom sandbox explain --json", "JSON output."],
   ],
 } as const;
 
@@ -67,7 +67,7 @@ export function registerSandboxCli(program: Command) {
     .addHelpText(
       "after",
       () =>
-        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/sandbox", "docs.moltbot.ai/cli/sandbox")}\n`,
+        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/sandbox", "docs.razroom.ai/cli/sandbox")}\n`,
     )
     .action(() => {
       sandbox.help({ error: true });

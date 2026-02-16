@@ -1,5 +1,5 @@
-import type { MoltBotPluginApi } from "../../src/plugins/types.js";
+import type { RazroomPluginApi } from "../../src/plugins/types.js";
 
-export default function register(_api: MoltBotPluginApi) {
+export default function register(_api: RazroomPluginApi) {
   // OpenProse is delivered via plugin-shipped skills.
 }

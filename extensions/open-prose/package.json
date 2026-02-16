@@ -1,13 +1,13 @@
 {
-  "name": "@moltbot/open-prose",
+  "name": "@razroom/open-prose",
   "version": "2026.2.15",
   "private": true,
   "description": "OpenProse VM skill pack plugin (slash command + telemetry).",
   "type": "module",
   "devDependencies": {
-    "moltbot": "workspace:*"
+    "razroom": "workspace:*"
   },
-  "moltbot": {
+  "razroom": {
     "extensions": [
       "./index.ts"
     ]

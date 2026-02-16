@@ -1,7 +1,7 @@
 ---
-summary: "Symptom first troubleshooting hub for MoltBot"
+summary: "Symptom first troubleshooting hub for Razroom"
 read_when:
-  - MoltBot is not working and you need the fastest path to a fix
+  - Razroom is not working and you need the fastest path to a fix
   - You want a triage flow before diving into deep runbooks
 title: "Troubleshooting"
 ---
@@ -15,30 +15,30 @@ If you only have 2 minutes, use this page as a triage front door.
 Run this exact ladder in order:
 
 ```bash
-moltbot status
-moltbot status --all
-moltbot gateway probe
-moltbot gateway status
-moltbot doctor
-moltbot channels status --probe
-moltbot logs --follow
+razroom status
+razroom status --all
+razroom gateway probe
+razroom gateway status
+razroom doctor
+razroom channels status --probe
+razroom logs --follow
 ```
 
 Good output in one line:
 
-- `moltbot status` → shows configured channels and no obvious auth errors.
-- `moltbot status --all` → full report is present and shareable.
-- `moltbot gateway probe` → expected gateway target is reachable.
-- `moltbot gateway status` → `Runtime: running` and `RPC probe: ok`.
-- `moltbot doctor` → no blocking config/service errors.
-- `moltbot channels status --probe` → channels report `connected` or `ready`.
-- `moltbot logs --follow` → steady activity, no repeating fatal errors.
+- `razroom status` → shows configured channels and no obvious auth errors.
+- `razroom status --all` → full report is present and shareable.
+- `razroom gateway probe` → expected gateway target is reachable.
+- `razroom gateway status` → `Runtime: running` and `RPC probe: ok`.
+- `razroom doctor` → no blocking config/service errors.
+- `razroom channels status --probe` → channels report `connected` or `ready`.
+- `razroom logs --follow` → steady activity, no repeating fatal errors.
 
 ## Decision tree
 
 ```mermaid
 flowchart TD
-  A[MoltBot is not working] --> B{What breaks first}
+  A[Razroom is not working] --> B{What breaks first}
   B --> C[No replies]
   B --> D[Dashboard or Control UI will not connect]
   B --> E[Gateway will not start or service not running]
@@ -59,11 +59,11 @@ flowchart TD
 <AccordionGroup>
   <Accordion title="No replies">
     ```bash
-    moltbot status
-    moltbot gateway status
-    moltbot channels status --probe
-    moltbot pairing list <channel>
-    moltbot logs --follow
+    razroom status
+    razroom gateway status
+    razroom channels status --probe
+    razroom pairing list <channel>
+    razroom logs --follow
     ```
 
     Good output looks like:
@@ -89,16 +89,16 @@ flowchart TD
 
   <Accordion title="Dashboard or Control UI will not connect">
     ```bash
-    moltbot status
-    moltbot gateway status
-    moltbot logs --follow
-    moltbot doctor
-    moltbot channels status --probe
+    razroom status
+    razroom gateway status
+    razroom logs --follow
+    razroom doctor
+    razroom channels status --probe
     ```
 
     Good output looks like:
 
-    - `Dashboard: http://...` is shown in `moltbot gateway status`
+    - `Dashboard: http://...` is shown in `razroom gateway status`
     - `RPC probe: ok`
     - No auth loop in logs
 
@@ -118,11 +118,11 @@ flowchart TD
 
   <Accordion title="Gateway will not start or service installed but not running">
     ```bash
-    moltbot status
-    moltbot gateway status
-    moltbot logs --follow
-    moltbot doctor
-    moltbot channels status --probe
+    razroom status
+    razroom gateway status
+    razroom logs --follow
+    razroom doctor
+    razroom channels status --probe
     ```
 
     Good output looks like:
@@ -147,11 +147,11 @@ flowchart TD
 
   <Accordion title="Channel connects but messages do not flow">
     ```bash
-    moltbot status
-    moltbot gateway status
-    moltbot logs --follow
-    moltbot doctor
-    moltbot channels status --probe
+    razroom status
+    razroom gateway status
+    razroom logs --follow
+    razroom doctor
+    razroom channels status --probe
     ```
 
     Good output looks like:
@@ -175,12 +175,12 @@ flowchart TD
 
   <Accordion title="Cron or heartbeat did not fire or did not deliver">
     ```bash
-    moltbot status
-    moltbot gateway status
-    moltbot cron status
-    moltbot cron list
-    moltbot cron runs --id <jobId> --limit 20
-    moltbot logs --follow
+    razroom status
+    razroom gateway status
+    razroom cron status
+    razroom cron list
+    razroom cron runs --id <jobId> --limit 20
+    razroom logs --follow
     ```
 
     Good output looks like:
@@ -206,11 +206,11 @@ flowchart TD
 
   <Accordion title="Node is paired but tool fails camera canvas screen exec">
     ```bash
-    moltbot status
-    moltbot gateway status
-    moltbot nodes status
-    moltbot nodes describe --node <idOrNameOrIp>
-    moltbot logs --follow
+    razroom status
+    razroom gateway status
+    razroom nodes status
+    razroom nodes describe --node <idOrNameOrIp>
+    razroom logs --follow
     ```
 
     Good output looks like:
@@ -236,17 +236,17 @@ flowchart TD
 
   <Accordion title="Browser tool fails">
     ```bash
-    moltbot status
-    moltbot gateway status
-    moltbot browser status
-    moltbot logs --follow
-    moltbot doctor
+    razroom status
+    razroom gateway status
+    razroom browser status
+    razroom logs --follow
+    razroom doctor
     ```
 
     Good output looks like:
 
     - Browser status shows `running: true` and a chosen browser/profile.
-    - `moltbot` profile starts or `chrome` relay has an attached tab.
+    - `razroom` profile starts or `chrome` relay has an attached tab.
 
     Common log signatures:
 

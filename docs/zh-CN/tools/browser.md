@@ -1,10 +1,10 @@
 ---
 read_when:
   - 添加智能体控制的浏览器自动化
-  - 调试 moltbot 干扰你自己 Chrome 的问题
+  - 调试 razroom 干扰你自己 Chrome 的问题
   - 在 macOS 应用中实现浏览器设置和生命周期管理
 summary: 集成浏览器控制服务 + 操作命令
-title: 浏览器（MoltBot 托管）
+title: 浏览器（Razroom 托管）
 x-i18n:
   generated_at: "2026-02-03T09:26:06Z"
   model: claude-opus-4-5
@@ -14,48 +14,48 @@ x-i18n:
   workflow: 15
 ---
 
-# 浏览器（moltbot 托管）
+# 浏览器（razroom 托管）
 
-MoltBot 可以运行一个由智能体控制的**专用 Chrome/Brave/Edge/Chromium 配置文件**。
+Razroom 可以运行一个由智能体控制的**专用 Chrome/Brave/Edge/Chromium 配置文件**。
 它与你的个人浏览器隔离，通过 Gateway 网关内部的小型本地控制服务进行管理（仅限 loopback）。
 
 新手视角：
 
 - 把它想象成一个**独立的、仅供智能体使用的浏览器**。
-- `moltbot` 配置文件**不会**触及你的个人浏览器配置文件。
+- `razroom` 配置文件**不会**触及你的个人浏览器配置文件。
 - 智能体可以在安全的通道中**打开标签页、读取页面、点击和输入**。
-- 默认的 `chrome` 配置文件通过扩展中继使用**系统默认的 Chromium 浏览器**；切换到 `moltbot` 可使用隔离的托管浏览器。
+- 默认的 `chrome` 配置文件通过扩展中继使用**系统默认的 Chromium 浏览器**；切换到 `razroom` 可使用隔离的托管浏览器。
 
 ## 功能概览
 
-- 一个名为 **moltbot** 的独立浏览器配置文件（默认橙色主题）。
+- 一个名为 **razroom** 的独立浏览器配置文件（默认橙色主题）。
 - 确定性标签页控制（列出/打开/聚焦/关闭）。
 - 智能体操作（点击/输入/拖动/选择）、快照、截图、PDF。
-- 可选的多配置文件支持（`moltbot`、`work`、`remote` 等）。
+- 可选的多配置文件支持（`razroom`、`work`、`remote` 等）。
 
 此浏览器**不是**你的日常浏览器。它是一个安全、隔离的界面，用于智能体自动化和验证。
 
 ## 快速开始
 
 ```bash
-moltbot browser --browser-profile moltbot status
-moltbot browser --browser-profile moltbot start
-moltbot browser --browser-profile moltbot open https://example.com
-moltbot browser --browser-profile moltbot snapshot
+razroom browser --browser-profile razroom status
+razroom browser --browser-profile razroom start
+razroom browser --browser-profile razroom open https://example.com
+razroom browser --browser-profile razroom snapshot
 ```
 
 如果出现"Browser disabled"，请在配置中启用它（见下文）并重启 Gateway 网关。
 
-## 配置文件：`moltbot` 与 `chrome`
+## 配置文件：`razroom` 与 `chrome`
 
-- `moltbot`：托管的隔离浏览器（无需扩展）。
-- `chrome`：到你**系统浏览器**的扩展中继（需要将 MoltBot 扩展附加到标签页）。
+- `razroom`：托管的隔离浏览器（无需扩展）。
+- `chrome`：到你**系统浏览器**的扩展中继（需要将 Razroom 扩展附加到标签页）。
 
-如果你希望默认使用托管模式，请设置 `browser.defaultProfile: "moltbot"`。
+如果你希望默认使用托管模式，请设置 `browser.defaultProfile: "razroom"`。
 
 ## 配置
 
-浏览器设置位于 `~/.moltbot/moltbot.json`。
+浏览器设置位于 `~/.razroom/razroom.json`。
 
 ```json5
 {
@@ -71,7 +71,7 @@ moltbot browser --browser-profile moltbot snapshot
     attachOnly: false,
     executablePath: "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser",
     profiles: {
-      moltbot: { cdpPort: 18800, color: "#FF4500" },
+      razroom: { cdpPort: 18800, color: "#FF4500" },
       work: { cdpPort: 18801, color: "#0066CC" },
       remote: { cdpUrl: "http://10.0.0.42:9222", color: "#00AA00" },
     },
@@ -82,24 +82,24 @@ moltbot browser --browser-profile moltbot snapshot
 注意事项：
 
 - 浏览器控制服务绑定到 loopback 上的端口，该端口从 `gateway.port` 派生（默认：`18791`，即 gateway + 2）。中继使用下一个端口（`18792`）。
-- 如果你覆盖了 Gateway 网关端口（`gateway.port` 或 `MOLTBOT_GATEWAY_PORT`），派生的浏览器端口会相应调整以保持在同一"系列"中。
+- 如果你覆盖了 Gateway 网关端口（`gateway.port` 或 `RAZROOM_GATEWAY_PORT`），派生的浏览器端口会相应调整以保持在同一"系列"中。
 - 未设置时，`cdpUrl` 默认为中继端口。
 - `remoteCdpTimeoutMs` 适用于远程（非 loopback）CDP 可达性检查。
 - `remoteCdpHandshakeTimeoutMs` 适用于远程 CDP WebSocket 可达性检查。
 - `attachOnly: true` 表示"永不启动本地浏览器；仅在浏览器已运行时附加"。
 - `color` + 每个配置文件的 `color` 为浏览器 UI 着色，以便你能看到哪个配置文件处于活动状态。
-- 默认配置文件是 `chrome`（扩展中继）。使用 `defaultProfile: "moltbot"` 来使用托管浏览器。
+- 默认配置文件是 `chrome`（扩展中继）。使用 `defaultProfile: "razroom"` 来使用托管浏览器。
 - 自动检测顺序：如果系统默认浏览器是基于 Chromium 的则使用它；否则 Chrome → Brave → Edge → Chromium → Chrome Canary。
-- 本地 `moltbot` 配置文件会自动分配 `cdpPort`/`cdpUrl` — 仅为远程 CDP 设置这些。
+- 本地 `razroom` 配置文件会自动分配 `cdpPort`/`cdpUrl` — 仅为远程 CDP 设置这些。
 
 ## 使用 Brave（或其他基于 Chromium 的浏览器）
 
-如果你的**系统默认**浏览器是基于 Chromium 的（Chrome/Brave/Edge 等），MoltBot 会自动使用它。设置 `browser.executablePath` 可覆盖自动检测：
+如果你的**系统默认**浏览器是基于 Chromium 的（Chrome/Brave/Edge 等），Razroom 会自动使用它。设置 `browser.executablePath` 可覆盖自动检测：
 
 CLI 示例：
 
 ```bash
-moltbot config set browser.executablePath "/usr/bin/google-chrome"
+razroom config set browser.executablePath "/usr/bin/google-chrome"
 ```
 
 ```json5
@@ -129,18 +129,18 @@ moltbot config set browser.executablePath "/usr/bin/google-chrome"
 
 - **本地控制（默认）：** Gateway 网关启动 loopback 控制服务，可以启动本地浏览器。
 - **远程控制（节点主机）：** 在有浏览器的机器上运行节点主机；Gateway 网关将浏览器操作代理到该节点。
-- **远程 CDP：** 设置 `browser.profiles.<name>.cdpUrl`（或 `browser.cdpUrl`）以附加到远程的基于 Chromium 的浏览器。在这种情况下，MoltBot 不会启动本地浏览器。
+- **远程 CDP：** 设置 `browser.profiles.<name>.cdpUrl`（或 `browser.cdpUrl`）以附加到远程的基于 Chromium 的浏览器。在这种情况下，Razroom 不会启动本地浏览器。
 
 远程 CDP URL 可以包含认证信息：
 
 - 查询令牌（例如 `https://provider.example?token=<token>`）
 - HTTP Basic 认证（例如 `https://user:pass@provider.example`）
 
-MoltBot 在调用 `/json/*` 端点和连接 CDP WebSocket 时会保留认证信息。建议使用环境变量或密钥管理器存储令牌，而不是将其提交到配置文件中。
+Razroom 在调用 `/json/*` 端点和连接 CDP WebSocket 时会保留认证信息。建议使用环境变量或密钥管理器存储令牌，而不是将其提交到配置文件中。
 
 ## 节点浏览器代理（零配置默认）
 
-如果你在有浏览器的机器上运行**节点主机**，MoltBot 可以自动将浏览器工具调用路由到该节点，无需任何额外的浏览器配置。这是远程 Gateway 网关的默认路径。
+如果你在有浏览器的机器上运行**节点主机**，Razroom 可以自动将浏览器工具调用路由到该节点，无需任何额外的浏览器配置。这是远程 Gateway 网关的默认路径。
 
 注意事项：
 
@@ -152,7 +152,7 @@ MoltBot 在调用 `/json/*` 端点和连接 CDP WebSocket 时会保留认证信�
 
 ## Browserless（托管远程 CDP）
 
-[Browserless](https://browserless.io) 是一个托管的 Chromium 服务，通过 HTTPS 暴露 CDP 端点。你可以将 MoltBot 浏览器配置文件指向 Browserless 区域端点，并使用你的 API 密钥进行认证。
+[Browserless](https://browserless.io) 是一个托管的 Chromium 服务，通过 HTTPS 暴露 CDP 端点。你可以将 Razroom 浏览器配置文件指向 Browserless 区域端点，并使用你的 API 密钥进行认证。
 
 示例：
 
@@ -193,15 +193,15 @@ MoltBot 在调用 `/json/*` 端点和连接 CDP WebSocket 时会保留认证信�
 
 ## 配置文件（多浏览器）
 
-MoltBot 支持多个命名配置文件（路由配置）。配置文件可以是：
+Razroom 支持多个命名配置文件（路由配置）。配置文件可以是：
 
-- **moltbot 托管**：具有独立用户数据目录和 CDP 端口的专用基于 Chromium 的浏览器实例
+- **razroom 托管**：具有独立用户数据目录和 CDP 端口的专用基于 Chromium 的浏览器实例
 - **远程**：显式 CDP URL（在其他地方运行的基于 Chromium 的浏览器）
 - **扩展中继**：通过本地中继 + Chrome 扩展访问你现有的 Chrome 标签页
 
 默认值：
 
-- 如果缺少 `moltbot` 配置文件，会自动创建。
+- 如果缺少 `razroom` 配置文件，会自动创建。
 - `chrome` 配置文件是内置的，用于 Chrome 扩展中继（默认指向 `http://127.0.0.1:18792`）。
 - 本地 CDP 端口默认从 **18800–18899** 分配。
 - 删除配置文件会将其本地数据目录移至回收站。
@@ -210,7 +210,7 @@ MoltBot 支持多个命名配置文件（路由配置）。配置文件可以是
 
 ## Chrome 扩展中继（使用你现有的 Chrome）
 
-MoltBot 还可以通过本地 CDP 中继 + Chrome 扩展驱动**你现有的 Chrome 标签页**（无需单独的"moltbot"Chrome 实例）。
+Razroom 还可以通过本地 CDP 中继 + Chrome 扩展驱动**你现有的 Chrome 标签页**（无需单独的"razroom"Chrome 实例）。
 
 完整指南：[Chrome 扩展](/tools/chrome-extension)
 
@@ -218,7 +218,7 @@ MoltBot 还可以通过本地 CDP 中继 + Chrome 扩展驱动**你现有的 Chr
 
 - Gateway 网关在本地运行（同一台机器）或节点主机在浏览器所在机器上运行。
 - 本地**中继服务器**在 loopback 的 `cdpUrl` 上监听（默认：`http://127.0.0.1:18792`）。
-- 你点击标签页上的 **MoltBot Browser Relay** 扩展图标来附加（它不会自动附加）。
+- 你点击标签页上的 **Razroom Browser Relay** 扩展图标来附加（它不会自动附加）。
 - 智能体通过选择正确的配置文件，使用普通的 `browser` 工具控制该标签页。
 
 如果 Gateway 网关在其他地方运行，请在浏览器所在机器上运行节点主机，以便 Gateway 网关可以代理浏览器操作。
@@ -236,22 +236,22 @@ Chrome 扩展中继接管需要主机浏览器控制，因此要么：
 1. 加载扩展（开发/未打包）：
 
 ```bash
-moltbot browser extension install
+razroom browser extension install
 ```
 
 - Chrome → `chrome://extensions` → 启用"开发者模式"
-- "加载已解压的扩展程序" → 选择 `moltbot browser extension path` 打印的目录
+- "加载已解压的扩展程序" → 选择 `razroom browser extension path` 打印的目录
 - 固定扩展，然后在你想要控制的标签页上点击它（徽章显示 `ON`）。
 
 2. 使用它：
 
-- CLI：`moltbot browser --browser-profile chrome tabs`
+- CLI：`razroom browser --browser-profile chrome tabs`
 - 智能体工具：`browser` 配合 `profile="chrome"`
 
 可选：如果你想要不同的名称或中继端口，创建你自己的配置文件：
 
 ```bash
-moltbot browser create-profile \
+razroom browser create-profile \
   --name my-chrome \
   --driver extension \
   --cdp-url http://127.0.0.1:18792 \
@@ -271,7 +271,7 @@ moltbot browser create-profile \
 
 ## 浏览器选择
 
-本地启动时，MoltBot 选择第一个可用的：
+本地启动时，Razroom 选择第一个可用的：
 
 1. Chrome
 2. Brave
@@ -308,20 +308,20 @@ moltbot browser create-profile \
 
 ### Playwright 要求
 
-某些功能（navigate/act/AI 快照/角色快照、元素截图、PDF）需要 Playwright。如果未安装 Playwright，这些端点会返回明确的 501 错误。ARIA 快照和基本截图对于 moltbot 托管的 Chrome 仍然有效。对于 Chrome 扩展中继驱动程序，ARIA 快照和截图需要 Playwright。
+某些功能（navigate/act/AI 快照/角色快照、元素截图、PDF）需要 Playwright。如果未安装 Playwright，这些端点会返回明确的 501 错误。ARIA 快照和基本截图对于 razroom 托管的 Chrome 仍然有效。对于 Chrome 扩展中继驱动程序，ARIA 快照和截图需要 Playwright。
 
-如果你看到 `Playwright is not available in this gateway build`，请安装完整的 Playwright 包（不是 `playwright-core`）并重启 Gateway 网关，或者重新安装带浏览器支持的 MoltBot。
+如果你看到 `Playwright is not available in this gateway build`，请安装完整的 Playwright 包（不是 `playwright-core`）并重启 Gateway 网关，或者重新安装带浏览器支持的 Razroom。
 
 #### Docker Playwright 安装
 
 如果你的 Gateway 网关在 Docker 中运行，避免使用 `npx playwright`（npm 覆盖冲突）。改用捆绑的 CLI：
 
 ```bash
-docker compose run --rm moltbot-cli \
+docker compose run --rm razroom-cli \
   node /app/node_modules/playwright-core/cli.js install chromium
 ```
 
-要持久化浏览器下载，设置 `PLAYWRIGHT_BROWSERS_PATH`（例如 `/home/node/.cache/ms-playwright`）并确保 `/home/node` 通过 `MOLTBOT_HOME_VOLUME` 或绑定挂载持久化。参见 [Docker](/install/docker)。
+要持久化浏览器下载，设置 `PLAYWRIGHT_BROWSERS_PATH`（例如 `/home/node/.cache/ms-playwright`）并确保 `/home/node` 通过 `RAZROOM_HOME_VOLUME` 或绑定挂载持久化。参见 [Docker](/install/docker)。
 
 ## 工作原理（内部）
 
@@ -341,79 +341,79 @@ docker compose run --rm moltbot-cli \
 
 基础操作：
 
-- `moltbot browser status`
-- `moltbot browser start`
-- `moltbot browser stop`
-- `moltbot browser tabs`
-- `moltbot browser tab`
-- `moltbot browser tab new`
-- `moltbot browser tab select 2`
-- `moltbot browser tab close 2`
-- `moltbot browser open https://example.com`
-- `moltbot browser focus abcd1234`
-- `moltbot browser close abcd1234`
+- `razroom browser status`
+- `razroom browser start`
+- `razroom browser stop`
+- `razroom browser tabs`
+- `razroom browser tab`
+- `razroom browser tab new`
+- `razroom browser tab select 2`
+- `razroom browser tab close 2`
+- `razroom browser open https://example.com`
+- `razroom browser focus abcd1234`
+- `razroom browser close abcd1234`
 
 检查：
 
-- `moltbot browser screenshot`
-- `moltbot browser screenshot --full-page`
-- `moltbot browser screenshot --ref 12`
-- `moltbot browser screenshot --ref e12`
-- `moltbot browser snapshot`
-- `moltbot browser snapshot --format aria --limit 200`
-- `moltbot browser snapshot --interactive --compact --depth 6`
-- `moltbot browser snapshot --efficient`
-- `moltbot browser snapshot --labels`
-- `moltbot browser snapshot --selector "#main" --interactive`
-- `moltbot browser snapshot --frame "iframe#main" --interactive`
-- `moltbot browser console --level error`
-- `moltbot browser errors --clear`
-- `moltbot browser requests --filter api --clear`
-- `moltbot browser pdf`
-- `moltbot browser responsebody "**/api" --max-chars 5000`
+- `razroom browser screenshot`
+- `razroom browser screenshot --full-page`
+- `razroom browser screenshot --ref 12`
+- `razroom browser screenshot --ref e12`
+- `razroom browser snapshot`
+- `razroom browser snapshot --format aria --limit 200`
+- `razroom browser snapshot --interactive --compact --depth 6`
+- `razroom browser snapshot --efficient`
+- `razroom browser snapshot --labels`
+- `razroom browser snapshot --selector "#main" --interactive`
+- `razroom browser snapshot --frame "iframe#main" --interactive`
+- `razroom browser console --level error`
+- `razroom browser errors --clear`
+- `razroom browser requests --filter api --clear`
+- `razroom browser pdf`
+- `razroom browser responsebody "**/api" --max-chars 5000`
 
 操作：
 
-- `moltbot browser navigate https://example.com`
-- `moltbot browser resize 1280 720`
-- `moltbot browser click 12 --double`
-- `moltbot browser click e12 --double`
-- `moltbot browser type 23 "hello" --submit`
-- `moltbot browser press Enter`
-- `moltbot browser hover 44`
-- `moltbot browser scrollintoview e12`
-- `moltbot browser drag 10 11`
-- `moltbot browser select 9 OptionA OptionB`
-- `moltbot browser download e12 /tmp/report.pdf`
-- `moltbot browser waitfordownload /tmp/report.pdf`
-- `moltbot browser upload /tmp/file.pdf`
-- `moltbot browser fill --fields '[{"ref":"1","type":"text","value":"Ada"}]'`
-- `moltbot browser dialog --accept`
-- `moltbot browser wait --text "Done"`
-- `moltbot browser wait "#main" --url "**/dash" --load networkidle --fn "window.ready===true"`
-- `moltbot browser evaluate --fn '(el) => el.textContent' --ref 7`
-- `moltbot browser highlight e12`
-- `moltbot browser trace start`
-- `moltbot browser trace stop`
+- `razroom browser navigate https://example.com`
+- `razroom browser resize 1280 720`
+- `razroom browser click 12 --double`
+- `razroom browser click e12 --double`
+- `razroom browser type 23 "hello" --submit`
+- `razroom browser press Enter`
+- `razroom browser hover 44`
+- `razroom browser scrollintoview e12`
+- `razroom browser drag 10 11`
+- `razroom browser select 9 OptionA OptionB`
+- `razroom browser download e12 /tmp/report.pdf`
+- `razroom browser waitfordownload /tmp/report.pdf`
+- `razroom browser upload /tmp/file.pdf`
+- `razroom browser fill --fields '[{"ref":"1","type":"text","value":"Ada"}]'`
+- `razroom browser dialog --accept`
+- `razroom browser wait --text "Done"`
+- `razroom browser wait "#main" --url "**/dash" --load networkidle --fn "window.ready===true"`
+- `razroom browser evaluate --fn '(el) => el.textContent' --ref 7`
+- `razroom browser highlight e12`
+- `razroom browser trace start`
+- `razroom browser trace stop`
 
 状态：
 
-- `moltbot browser cookies`
-- `moltbot browser cookies set session abc123 --url "https://example.com"`
-- `moltbot browser cookies clear`
-- `moltbot browser storage local get`
-- `moltbot browser storage local set theme dark`
-- `moltbot browser storage session clear`
-- `moltbot browser set offline on`
-- `moltbot browser set headers --json '{"X-Debug":"1"}'`
-- `moltbot browser set credentials user pass`
-- `moltbot browser set credentials --clear`
-- `moltbot browser set geo 37.7749 -122.4194 --origin "https://example.com"`
-- `moltbot browser set geo --clear`
-- `moltbot browser set media dark`
-- `moltbot browser set timezone America/New_York`
-- `moltbot browser set locale en-US`
-- `moltbot browser set device "iPhone 14"`
+- `razroom browser cookies`
+- `razroom browser cookies set session abc123 --url "https://example.com"`
+- `razroom browser cookies clear`
+- `razroom browser storage local get`
+- `razroom browser storage local set theme dark`
+- `razroom browser storage session clear`
+- `razroom browser set offline on`
+- `razroom browser set headers --json '{"X-Debug":"1"}'`
+- `razroom browser set credentials user pass`
+- `razroom browser set credentials --clear`
+- `razroom browser set geo 37.7749 -122.4194 --origin "https://example.com"`
+- `razroom browser set geo --clear`
+- `razroom browser set media dark`
+- `razroom browser set timezone America/New_York`
+- `razroom browser set locale en-US`
+- `razroom browser set device "iPhone 14"`
 
 注意事项：
 
@@ -423,7 +423,7 @@ docker compose run --rm moltbot-cli \
   - `--format ai`（安装 Playwright 时的默认值）：返回带有数字 ref 的 AI 快照（`aria-ref="<n>"`）。
   - `--format aria`：返回无障碍树（无 ref；仅供检查）。
   - `--efficient`（或 `--mode efficient`）：紧凑角色快照预设（interactive + compact + depth + 较低的 maxChars）。
-  - 配置默认值（仅限工具/CLI）：设置 `browser.snapshotDefaults.mode: "efficient"` 以在调用者未传递模式时使用高效快照（参见 [Gateway 网关配置](/gateway/configuration#browser-moltbot-managed-browser)）。
+  - 配置默认值（仅限工具/CLI）：设置 `browser.snapshotDefaults.mode: "efficient"` 以在调用者未传递模式时使用高效快照（参见 [Gateway 网关配置](/gateway/configuration#browser-razroom-managed-browser)）。
   - 角色快照选项（`--interactive`、`--compact`、`--depth`、`--selector`）强制使用带有 `ref=e12` 等 ref 的基于角色的快照。
   - `--frame "<iframe selector>"` 将角色快照范围限定到 iframe（与 `e12` 等角色 ref 配合使用）。
   - `--interactive` 输出一个扁平的、易于选择的交互元素列表（最适合驱动操作）。
@@ -433,16 +433,16 @@ docker compose run --rm moltbot-cli \
 
 ## 快照和 ref
 
-MoltBot 支持两种"快照"风格：
+Razroom 支持两种"快照"风格：
 
-- **AI 快照（数字 ref）**：`moltbot browser snapshot`（默认；`--format ai`）
+- **AI 快照（数字 ref）**：`razroom browser snapshot`（默认；`--format ai`）
   - 输出：包含数字 ref 的文本快照。
-  - 操作：`moltbot browser click 12`、`moltbot browser type 23 "hello"`。
+  - 操作：`razroom browser click 12`、`razroom browser type 23 "hello"`。
   - 内部通过 Playwright 的 `aria-ref` 解析 ref。
 
-- **角色快照（角色 ref 如 `e12`）**：`moltbot browser snapshot --interactive`（或 `--compact`、`--depth`、`--selector`、`--frame`）
+- **角色快照（角色 ref 如 `e12`）**：`razroom browser snapshot --interactive`（或 `--compact`、`--depth`、`--selector`、`--frame`）
   - 输出：带有 `[ref=e12]`（和可选的 `[nth=1]`）的基于角色的列表/树。
-  - 操作：`moltbot browser click e12`、`moltbot browser highlight e12`。
+  - 操作：`razroom browser click e12`、`razroom browser highlight e12`。
   - 内部通过 `getByRole(...)`（加上重复项的 `nth()`）解析 ref。
   - 添加 `--labels` 可包含带有叠加 `e12` 标签的视口截图。
 
@@ -456,18 +456,18 @@ ref 行为：
 你可以等待的不仅仅是时间/文本：
 
 - 等待 URL（Playwright 支持通配符）：
-  - `moltbot browser wait --url "**/dash"`
+  - `razroom browser wait --url "**/dash"`
 - 等待加载状态：
-  - `moltbot browser wait --load networkidle`
+  - `razroom browser wait --load networkidle`
 - 等待 JS 断言：
-  - `moltbot browser wait --fn "window.ready===true"`
+  - `razroom browser wait --fn "window.ready===true"`
 - 等待选择器变得可见：
-  - `moltbot browser wait "#main"`
+  - `razroom browser wait "#main"`
 
 这些可以组合使用：
 
 ```bash
-moltbot browser wait "#main" \
+razroom browser wait "#main" \
   --url "**/dash" \
   --load networkidle \
   --fn "window.ready===true" \
@@ -478,16 +478,16 @@ moltbot browser wait "#main" \
 
 当操作失败时（例如"not visible"、"strict mode violation"、"covered"）：
 
-1. `moltbot browser snapshot --interactive`
+1. `razroom browser snapshot --interactive`
 2. 使用 `click <ref>` / `type <ref>`（在交互模式下优先使用角色 ref）
-3. 如果仍然失败：`moltbot browser highlight <ref>` 查看 Playwright 定位的目标
+3. 如果仍然失败：`razroom browser highlight <ref>` 查看 Playwright 定位的目标
 4. 如果页面行为异常：
-   - `moltbot browser errors --clear`
-   - `moltbot browser requests --filter api --clear`
+   - `razroom browser errors --clear`
+   - `razroom browser requests --filter api --clear`
 5. 深度调试：录制 trace：
-   - `moltbot browser trace start`
+   - `razroom browser trace start`
    - 重现问题
-   - `moltbot browser trace stop`（打印 `TRACE:<path>`）
+   - `razroom browser trace stop`（打印 `TRACE:<path>`）
 
 ## JSON 输出
 
@@ -496,10 +496,10 @@ moltbot browser wait "#main" \
 示例：
 
 ```bash
-moltbot browser status --json
-moltbot browser snapshot --interactive --json
-moltbot browser requests --filter api --json
-moltbot browser cookies --json
+razroom browser status --json
+razroom browser snapshot --interactive --json
+razroom browser requests --filter api --json
+razroom browser cookies --json
 ```
 
 JSON 格式的角色快照包含 `refs` 加上一个小的 `stats` 块（lines/chars/refs/interactive），以便工具可以推断负载大小和密度。
@@ -522,8 +522,8 @@ JSON 格式的角色快照包含 `refs` 加上一个小的 `stats` 块（lines/c
 
 ## 安全与隐私
 
-- moltbot 浏览器配置文件可能包含已登录的会话；请将其视为敏感信息。
-- `browser act kind=evaluate` / `moltbot browser evaluate` 和 `wait --fn` 在页面上下文中执行任意 JavaScript。提示注入可能会操纵它。如果不需要，请使用 `browser.evaluateEnabled=false` 禁用它。
+- razroom 浏览器配置文件可能包含已登录的会话；请将其视为敏感信息。
+- `browser act kind=evaluate` / `razroom browser evaluate` 和 `wait --fn` 在页面上下文中执行任意 JavaScript。提示注入可能会操纵它。如果不需要，请使用 `browser.evaluateEnabled=false` 禁用它。
 - 有关登录和反机器人注意事项（X/Twitter 等），请参阅 [浏览器登录 + X/Twitter 发帖](/tools/browser-login)。
 - 保持 Gateway 网关/节点主机私有（仅限 loopback 或 tailnet）。
 - 远程 CDP 端点功能强大；请通过隧道保护它们。
@@ -544,7 +544,7 @@ JSON 格式的角色快照包含 `refs` 加上一个小的 `stats` 块（lines/c
 - `browser act` 使用快照 `ref` ID 来点击/输入/拖动/选择。
 - `browser screenshot` 捕获像素（整页或元素）。
 - `browser` 接受：
-  - `profile` 来选择命名的浏览器配置文件（moltbot、chrome 或远程 CDP）。
+  - `profile` 来选择命名的浏览器配置文件（razroom、chrome 或远程 CDP）。
   - `target`（`sandbox` | `host` | `node`）来选择浏览器所在位置。
   - 在沙箱会话中，`target: "host"` 需要 `agents.defaults.sandbox.browser.allowHostControl=true`。
   - 如果省略 `target`：沙箱会话默认为 `sandbox`，非沙箱会话默认为 `host`。

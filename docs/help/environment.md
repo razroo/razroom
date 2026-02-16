@@ -1,5 +1,5 @@
 ---
-summary: "Where MoltBot loads environment variables and the precedence order"
+summary: "Where Razroom loads environment variables and the precedence order"
 read_when:
   - You need to know which env vars are loaded, and in what order
   - You are debugging missing API keys in the Gateway
@@ -9,15 +9,15 @@ title: "Environment Variables"
 
 # Environment variables
 
-MoltBot pulls environment variables from multiple sources. The rule is **never override existing values**.
+Razroom pulls environment variables from multiple sources. The rule is **never override existing values**.
 
 ## Precedence (highest → lowest)
 
 1. **Process environment** (what the Gateway process already has from the parent shell/daemon).
 2. **`.env` in the current working directory** (dotenv default; does not override).
-3. **Global `.env`** at `~/.moltbot/.env` (aka `$MOLTBOT_STATE_DIR/.env`; does not override).
-4. **Config `env` block** in `~/.moltbot/moltbot.json` (applied only if missing).
-5. **Optional login-shell import** (`env.shellEnv.enabled` or `MOLTBOT_LOAD_SHELL_ENV=1`), applied only for missing expected keys.
+3. **Global `.env`** at `~/.razroom/.env` (aka `$RAZROOM_STATE_DIR/.env`; does not override).
+4. **Config `env` block** in `~/.razroom/razroom.json` (applied only if missing).
+5. **Optional login-shell import** (`env.shellEnv.enabled` or `RAZROOM_LOAD_SHELL_ENV=1`), applied only for missing expected keys.
 
 If the config file is missing entirely, step 4 is skipped; shell import still runs if enabled.
 
@@ -53,8 +53,8 @@ Two equivalent ways to set inline env vars (both are non-overriding):
 
 Env var equivalents:
 
-- `MOLTBOT_LOAD_SHELL_ENV=1`
-- `MOLTBOT_SHELL_ENV_TIMEOUT_MS=15000`
+- `RAZROOM_LOAD_SHELL_ENV=1`
+- `RAZROOM_SHELL_ENV_TIMEOUT_MS=15000`
 
 ## Env var substitution in config
 
@@ -78,27 +78,27 @@ See [Configuration: Env var substitution](/gateway/configuration#env-var-substit
 
 | Variable               | Purpose                                                                                                                                                                          |
 | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `MOLTBOT_HOME`        | Override the home directory used for all internal path resolution (`~/.moltbot/`, agent dirs, sessions, credentials). Useful when running MoltBot as a dedicated service user. |
-| `MOLTBOT_STATE_DIR`   | Override the state directory (default `~/.moltbot`).                                                                                                                            |
-| `MOLTBOT_CONFIG_PATH` | Override the config file path (default `~/.moltbot/moltbot.json`).                                                                                                             |
+| `RAZROOM_HOME`        | Override the home directory used for all internal path resolution (`~/.razroom/`, agent dirs, sessions, credentials). Useful when running Razroom as a dedicated service user. |
+| `RAZROOM_STATE_DIR`   | Override the state directory (default `~/.razroom`).                                                                                                                            |
+| `RAZROOM_CONFIG_PATH` | Override the config file path (default `~/.razroom/razroom.json`).                                                                                                             |
 
-### `MOLTBOT_HOME`
+### `RAZROOM_HOME`
 
-When set, `MOLTBOT_HOME` replaces the system home directory (`$HOME` / `os.homedir()`) for all internal path resolution. This enables full filesystem isolation for headless service accounts.
+When set, `RAZROOM_HOME` replaces the system home directory (`$HOME` / `os.homedir()`) for all internal path resolution. This enables full filesystem isolation for headless service accounts.
 
-**Precedence:** `MOLTBOT_HOME` > `$HOME` > `USERPROFILE` > `os.homedir()`
+**Precedence:** `RAZROOM_HOME` > `$HOME` > `USERPROFILE` > `os.homedir()`
 
 **Example** (macOS LaunchDaemon):
 
 ```xml
 <key>EnvironmentVariables</key>
 <dict>
-  <key>MOLTBOT_HOME</key>
+  <key>RAZROOM_HOME</key>
   <string>/Users/kira</string>
 </dict>
 ```
 
-`MOLTBOT_HOME` can also be set to a tilde path (e.g. `~/svc`), which gets expanded using `$HOME` before use.
+`RAZROOM_HOME` can also be set to a tilde path (e.g. `~/svc`), which gets expanded using `$HOME` before use.
 
 ## Related
 

@@ -1,9 +1,9 @@
 ---
 read_when:
-  - 你使用 `moltbot browser` 并想要常见任务的示例
+  - 你使用 `razroom browser` 并想要常见任务的示例
   - 你想通过 node host 控制在另一台机器上运行的浏览器
   - 你想使用 Chrome 扩展中继（通过工具栏按钮附加/分离）
-summary: "`moltbot browser` 的 CLI 参考（配置文件、标签页、操作、扩展中继）"
+summary: "`razroom browser` 的 CLI 参考（配置文件、标签页、操作、扩展中继）"
 title: browser
 x-i18n:
   generated_at: "2026-02-03T07:44:49Z"
@@ -14,9 +14,9 @@ x-i18n:
   workflow: 15
 ---
 
-# `moltbot browser`
+# `razroom browser`
 
-管理 MoltBot 的浏览器控制服务器并运行浏览器操作（标签页、快照、截图、导航、点击、输入）。
+管理 Razroom 的浏览器控制服务器并运行浏览器操作（标签页、快照、截图、导航、点击、输入）。
 
 相关：
 
@@ -34,38 +34,38 @@ x-i18n:
 ## 快速开始（本地）
 
 ```bash
-moltbot browser --browser-profile chrome tabs
-moltbot browser --browser-profile moltbot start
-moltbot browser --browser-profile moltbot open https://example.com
-moltbot browser --browser-profile moltbot snapshot
+razroom browser --browser-profile chrome tabs
+razroom browser --browser-profile razroom start
+razroom browser --browser-profile razroom open https://example.com
+razroom browser --browser-profile razroom snapshot
 ```
 
 ## 配置文件
 
 配置文件是命名的浏览器路由配置。实际上：
 
-- `moltbot`：启动/附加到专用的 MoltBot 管理的 Chrome 实例（隔离的用户数据目录）。
+- `razroom`：启动/附加到专用的 Razroom 管理的 Chrome 实例（隔离的用户数据目录）。
 - `chrome`：通过 Chrome 扩展中继控制你现有的 Chrome 标签页。
 
 ```bash
-moltbot browser profiles
-moltbot browser create-profile --name work --color "#FF5A36"
-moltbot browser delete-profile --name work
+razroom browser profiles
+razroom browser create-profile --name work --color "#FF5A36"
+razroom browser delete-profile --name work
 ```
 
 使用特定配置文件：
 
 ```bash
-moltbot browser --browser-profile work tabs
+razroom browser --browser-profile work tabs
 ```
 
 ## 标签页
 
 ```bash
-moltbot browser tabs
-moltbot browser open https://docs.moltbot.ai
-moltbot browser focus <targetId>
-moltbot browser close <targetId>
+razroom browser tabs
+razroom browser open https://docs.razroom.ai
+razroom browser focus <targetId>
+razroom browser close <targetId>
 ```
 
 ## 快照 / 截图 / 操作
@@ -73,21 +73,21 @@ moltbot browser close <targetId>
 快照：
 
 ```bash
-moltbot browser snapshot
+razroom browser snapshot
 ```
 
 截图：
 
 ```bash
-moltbot browser screenshot
+razroom browser screenshot
 ```
 
 导航/点击/输入（基于 ref 的 UI 自动化）：
 
 ```bash
-moltbot browser navigate https://example.com
-moltbot browser click <ref>
-moltbot browser type <ref> "hello"
+razroom browser navigate https://example.com
+razroom browser click <ref>
+razroom browser type <ref> "hello"
 ```
 
 ## Chrome 扩展中继（通过工具栏按钮附加）
@@ -97,8 +97,8 @@ moltbot browser type <ref> "hello"
 将未打包的扩展安装到稳定路径：
 
 ```bash
-moltbot browser extension install
-moltbot browser extension path
+razroom browser extension install
+razroom browser extension path
 ```
 
 然后 Chrome → `chrome://extensions` → 启用"开发者模式" → "加载已解压的扩展程序" → 选择打印的文件夹。

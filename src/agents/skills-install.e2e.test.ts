@@ -34,7 +34,7 @@ async function writeInstallableSkill(workspaceDir: string, name: string): Promis
     `---
 name: ${name}
 description: test skill
-metadata: {"moltbot":{"install":[{"id":"deps","kind":"node","package":"example-package"}]}}
+metadata: {"razroom":{"install":[{"id":"deps","kind":"node","package":"example-package"}]}}
 ---
 
 # ${name}
@@ -57,7 +57,7 @@ async function writeDownloadSkill(params: {
   const skillDir = path.join(params.workspaceDir, "skills", params.name);
   await fs.mkdir(skillDir, { recursive: true });
   const meta = {
-    moltbot: {
+    razroom: {
       install: [
         {
           id: params.installId,
@@ -111,7 +111,7 @@ describe("installSkill code safety scanning", () => {
   });
 
   it("adds detailed warnings for critical findings and continues install", async () => {
-    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-skills-install-"));
+    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-skills-install-"));
     try {
       const skillDir = await writeInstallableSkill(workspaceDir, "danger-skill");
       scanDirectoryWithSummaryMock.mockResolvedValue({
@@ -148,7 +148,7 @@ describe("installSkill code safety scanning", () => {
   });
 
   it("warns and continues when skill scan fails", async () => {
-    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-skills-install-"));
+    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-skills-install-"));
     try {
       await writeInstallableSkill(workspaceDir, "scanfail-skill");
       scanDirectoryWithSummaryMock.mockRejectedValue(new Error("scanner exploded"));
@@ -187,7 +187,7 @@ describe("installSkill download extraction safety", () => {
   });
 
   it("rejects zip slip traversal", async () => {
-    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-skills-install-"));
+    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-skills-install-"));
     try {
       const targetDir = path.join(workspaceDir, "target");
       const outsideWriteDir = path.join(workspaceDir, "outside-write");
@@ -221,7 +221,7 @@ describe("installSkill download extraction safety", () => {
   });
 
   it("rejects tar.gz traversal", async () => {
-    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-skills-install-"));
+    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-skills-install-"));
     try {
       const targetDir = path.join(workspaceDir, "target");
       const insideDir = path.join(workspaceDir, "inside");
@@ -263,7 +263,7 @@ describe("installSkill download extraction safety", () => {
   });
 
   it("extracts zip with stripComponents safely", async () => {
-    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-skills-install-"));
+    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-skills-install-"));
     try {
       const targetDir = path.join(workspaceDir, "target");
       const url = "https://example.invalid/good.zip";
@@ -295,7 +295,7 @@ describe("installSkill download extraction safety", () => {
   });
 
   it("rejects tar.bz2 traversal before extraction", async () => {
-    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-skills-install-"));
+    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-skills-install-"));
     try {
       const targetDir = path.join(workspaceDir, "target");
       const url = "https://example.invalid/evil.tbz2";
@@ -345,7 +345,7 @@ describe("installSkill download extraction safety", () => {
   });
 
   it("rejects tar.bz2 archives containing symlinks", async () => {
-    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-skills-install-"));
+    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-skills-install-"));
     try {
       const targetDir = path.join(workspaceDir, "target");
       const url = "https://example.invalid/evil.tbz2";
@@ -403,7 +403,7 @@ describe("installSkill download extraction safety", () => {
   });
 
   it("extracts tar.bz2 with stripComponents safely (preflight only)", async () => {
-    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-skills-install-"));
+    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-skills-install-"));
     try {
       const targetDir = path.join(workspaceDir, "target");
       const url = "https://example.invalid/good.tbz2";
@@ -460,7 +460,7 @@ describe("installSkill download extraction safety", () => {
   });
 
   it("rejects tar.bz2 stripComponents escape", async () => {
-    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-skills-install-"));
+    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-skills-install-"));
     try {
       const targetDir = path.join(workspaceDir, "target");
       const url = "https://example.invalid/evil.tbz2";

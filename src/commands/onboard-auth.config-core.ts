@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { ModelApi } from "../config/types.models.js";
 import {
   buildHuggingfaceModelDefinition,
@@ -73,9 +73,9 @@ import {
 } from "./onboard-auth.models.js";
 
 export function applyZaiProviderConfig(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   params?: { endpoint?: string; modelId?: string },
-): MoltBotConfig {
+): RazroomConfig {
   const modelId = params?.modelId?.trim() || ZAI_DEFAULT_MODEL_ID;
   const modelRef = `zai/${modelId}`;
 
@@ -129,16 +129,16 @@ export function applyZaiProviderConfig(
 }
 
 export function applyZaiConfig(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   params?: { endpoint?: string; modelId?: string },
-): MoltBotConfig {
+): RazroomConfig {
   const modelId = params?.modelId?.trim() || ZAI_DEFAULT_MODEL_ID;
   const modelRef = modelId === ZAI_DEFAULT_MODEL_ID ? ZAI_DEFAULT_MODEL_REF : `zai/${modelId}`;
   const next = applyZaiProviderConfig(cfg, params);
   return applyAgentDefaultModelPrimary(next, modelRef);
 }
 
-export function applyOpenrouterProviderConfig(cfg: MoltBotConfig): MoltBotConfig {
+export function applyOpenrouterProviderConfig(cfg: RazroomConfig): RazroomConfig {
   const models = { ...cfg.agents?.defaults?.models };
   models[OPENROUTER_DEFAULT_MODEL_REF] = {
     ...models[OPENROUTER_DEFAULT_MODEL_REF],
@@ -157,23 +157,23 @@ export function applyOpenrouterProviderConfig(cfg: MoltBotConfig): MoltBotConfig
   };
 }
 
-export function applyOpenrouterConfig(cfg: MoltBotConfig): MoltBotConfig {
+export function applyOpenrouterConfig(cfg: RazroomConfig): RazroomConfig {
   const next = applyOpenrouterProviderConfig(cfg);
   return applyAgentDefaultModelPrimary(next, OPENROUTER_DEFAULT_MODEL_REF);
 }
 
-export function applyMoonshotProviderConfig(cfg: MoltBotConfig): MoltBotConfig {
+export function applyMoonshotProviderConfig(cfg: RazroomConfig): RazroomConfig {
   return applyMoonshotProviderConfigWithBaseUrl(cfg, MOONSHOT_BASE_URL);
 }
 
-export function applyMoonshotProviderConfigCn(cfg: MoltBotConfig): MoltBotConfig {
+export function applyMoonshotProviderConfigCn(cfg: RazroomConfig): RazroomConfig {
   return applyMoonshotProviderConfigWithBaseUrl(cfg, MOONSHOT_CN_BASE_URL);
 }
 
 function applyMoonshotProviderConfigWithBaseUrl(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   baseUrl: string,
-): MoltBotConfig {
+): RazroomConfig {
   const models = { ...cfg.agents?.defaults?.models };
   models[MOONSHOT_DEFAULT_MODEL_REF] = {
     ...models[MOONSHOT_DEFAULT_MODEL_REF],
@@ -192,17 +192,17 @@ function applyMoonshotProviderConfigWithBaseUrl(
   });
 }
 
-export function applyMoonshotConfig(cfg: MoltBotConfig): MoltBotConfig {
+export function applyMoonshotConfig(cfg: RazroomConfig): RazroomConfig {
   const next = applyMoonshotProviderConfig(cfg);
   return applyAgentDefaultModelPrimary(next, MOONSHOT_DEFAULT_MODEL_REF);
 }
 
-export function applyMoonshotConfigCn(cfg: MoltBotConfig): MoltBotConfig {
+export function applyMoonshotConfigCn(cfg: RazroomConfig): RazroomConfig {
   const next = applyMoonshotProviderConfigCn(cfg);
   return applyAgentDefaultModelPrimary(next, MOONSHOT_DEFAULT_MODEL_REF);
 }
 
-export function applyKimiCodeProviderConfig(cfg: MoltBotConfig): MoltBotConfig {
+export function applyKimiCodeProviderConfig(cfg: RazroomConfig): RazroomConfig {
   const models = { ...cfg.agents?.defaults?.models };
   models[KIMI_CODING_MODEL_REF] = {
     ...models[KIMI_CODING_MODEL_REF],
@@ -221,12 +221,12 @@ export function applyKimiCodeProviderConfig(cfg: MoltBotConfig): MoltBotConfig {
   };
 }
 
-export function applyKimiCodeConfig(cfg: MoltBotConfig): MoltBotConfig {
+export function applyKimiCodeConfig(cfg: RazroomConfig): RazroomConfig {
   const next = applyKimiCodeProviderConfig(cfg);
   return applyAgentDefaultModelPrimary(next, KIMI_CODING_MODEL_REF);
 }
 
-export function applySyntheticProviderConfig(cfg: MoltBotConfig): MoltBotConfig {
+export function applySyntheticProviderConfig(cfg: RazroomConfig): RazroomConfig {
   const models = { ...cfg.agents?.defaults?.models };
   models[SYNTHETIC_DEFAULT_MODEL_REF] = {
     ...models[SYNTHETIC_DEFAULT_MODEL_REF],
@@ -260,12 +260,12 @@ export function applySyntheticProviderConfig(cfg: MoltBotConfig): MoltBotConfig 
   return applyOnboardAuthAgentModelsAndProviders(cfg, { agentModels: models, providers });
 }
 
-export function applySyntheticConfig(cfg: MoltBotConfig): MoltBotConfig {
+export function applySyntheticConfig(cfg: RazroomConfig): RazroomConfig {
   const next = applySyntheticProviderConfig(cfg);
   return applyAgentDefaultModelPrimary(next, SYNTHETIC_DEFAULT_MODEL_REF);
 }
 
-export function applyXiaomiProviderConfig(cfg: MoltBotConfig): MoltBotConfig {
+export function applyXiaomiProviderConfig(cfg: RazroomConfig): RazroomConfig {
   const models = { ...cfg.agents?.defaults?.models };
   models[XIAOMI_DEFAULT_MODEL_REF] = {
     ...models[XIAOMI_DEFAULT_MODEL_REF],
@@ -283,7 +283,7 @@ export function applyXiaomiProviderConfig(cfg: MoltBotConfig): MoltBotConfig {
   });
 }
 
-export function applyXiaomiConfig(cfg: MoltBotConfig): MoltBotConfig {
+export function applyXiaomiConfig(cfg: RazroomConfig): RazroomConfig {
   const next = applyXiaomiProviderConfig(cfg);
   return applyAgentDefaultModelPrimary(next, XIAOMI_DEFAULT_MODEL_REF);
 }
@@ -292,7 +292,7 @@ export function applyXiaomiConfig(cfg: MoltBotConfig): MoltBotConfig {
  * Apply Venice provider configuration without changing the default model.
  * Registers Venice models and sets up the provider, but preserves existing model selection.
  */
-export function applyVeniceProviderConfig(cfg: MoltBotConfig): MoltBotConfig {
+export function applyVeniceProviderConfig(cfg: RazroomConfig): RazroomConfig {
   const models = { ...cfg.agents?.defaults?.models };
   models[VENICE_DEFAULT_MODEL_REF] = {
     ...models[VENICE_DEFAULT_MODEL_REF],
@@ -313,7 +313,7 @@ export function applyVeniceProviderConfig(cfg: MoltBotConfig): MoltBotConfig {
  * Apply Venice provider configuration AND set Venice as the default model.
  * Use this when Venice is the primary provider choice during onboarding.
  */
-export function applyVeniceConfig(cfg: MoltBotConfig): MoltBotConfig {
+export function applyVeniceConfig(cfg: RazroomConfig): RazroomConfig {
   const next = applyVeniceProviderConfig(cfg);
   return applyAgentDefaultModelPrimary(next, VENICE_DEFAULT_MODEL_REF);
 }
@@ -322,7 +322,7 @@ export function applyVeniceConfig(cfg: MoltBotConfig): MoltBotConfig {
  * Apply Together provider configuration without changing the default model.
  * Registers Together models and sets up the provider, but preserves existing model selection.
  */
-export function applyTogetherProviderConfig(cfg: MoltBotConfig): MoltBotConfig {
+export function applyTogetherProviderConfig(cfg: RazroomConfig): RazroomConfig {
   const models = { ...cfg.agents?.defaults?.models };
   models[TOGETHER_DEFAULT_MODEL_REF] = {
     ...models[TOGETHER_DEFAULT_MODEL_REF],
@@ -343,7 +343,7 @@ export function applyTogetherProviderConfig(cfg: MoltBotConfig): MoltBotConfig {
  * Apply Together provider configuration AND set Together as the default model.
  * Use this when Together is the primary provider choice during onboarding.
  */
-export function applyTogetherConfig(cfg: MoltBotConfig): MoltBotConfig {
+export function applyTogetherConfig(cfg: RazroomConfig): RazroomConfig {
   const next = applyTogetherProviderConfig(cfg);
   return applyAgentDefaultModelPrimary(next, TOGETHER_DEFAULT_MODEL_REF);
 }
@@ -351,7 +351,7 @@ export function applyTogetherConfig(cfg: MoltBotConfig): MoltBotConfig {
 /**
  * Apply Hugging Face (Inference Providers) provider configuration without changing the default model.
  */
-export function applyHuggingfaceProviderConfig(cfg: MoltBotConfig): MoltBotConfig {
+export function applyHuggingfaceProviderConfig(cfg: RazroomConfig): RazroomConfig {
   const models = { ...cfg.agents?.defaults?.models };
   models[HUGGINGFACE_DEFAULT_MODEL_REF] = {
     ...models[HUGGINGFACE_DEFAULT_MODEL_REF],
@@ -371,12 +371,12 @@ export function applyHuggingfaceProviderConfig(cfg: MoltBotConfig): MoltBotConfi
 /**
  * Apply Hugging Face provider configuration AND set Hugging Face as the default model.
  */
-export function applyHuggingfaceConfig(cfg: MoltBotConfig): MoltBotConfig {
+export function applyHuggingfaceConfig(cfg: RazroomConfig): RazroomConfig {
   const next = applyHuggingfaceProviderConfig(cfg);
   return applyAgentDefaultModelPrimary(next, HUGGINGFACE_DEFAULT_MODEL_REF);
 }
 
-export function applyXaiProviderConfig(cfg: MoltBotConfig): MoltBotConfig {
+export function applyXaiProviderConfig(cfg: RazroomConfig): RazroomConfig {
   const models = { ...cfg.agents?.defaults?.models };
   models[XAI_DEFAULT_MODEL_REF] = {
     ...models[XAI_DEFAULT_MODEL_REF],
@@ -395,13 +395,13 @@ export function applyXaiProviderConfig(cfg: MoltBotConfig): MoltBotConfig {
   });
 }
 
-export function applyXaiConfig(cfg: MoltBotConfig): MoltBotConfig {
+export function applyXaiConfig(cfg: RazroomConfig): RazroomConfig {
   const next = applyXaiProviderConfig(cfg);
   return applyAgentDefaultModelPrimary(next, XAI_DEFAULT_MODEL_REF);
 }
 
 export function applyAuthProfileConfig(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   params: {
     profileId: string;
     provider: string;
@@ -409,7 +409,7 @@ export function applyAuthProfileConfig(
     email?: string;
     preferProfileFirst?: boolean;
   },
-): MoltBotConfig {
+): RazroomConfig {
   const profiles = {
     ...cfg.auth?.profiles,
     [params.profileId]: {
@@ -449,7 +449,7 @@ export function applyAuthProfileConfig(
   };
 }
 
-export function applyQianfanProviderConfig(cfg: MoltBotConfig): MoltBotConfig {
+export function applyQianfanProviderConfig(cfg: RazroomConfig): RazroomConfig {
   const models = { ...cfg.agents?.defaults?.models };
   models[QIANFAN_DEFAULT_MODEL_REF] = {
     ...models[QIANFAN_DEFAULT_MODEL_REF],
@@ -480,7 +480,7 @@ export function applyQianfanProviderConfig(cfg: MoltBotConfig): MoltBotConfig {
   });
 }
 
-export function applyQianfanConfig(cfg: MoltBotConfig): MoltBotConfig {
+export function applyQianfanConfig(cfg: RazroomConfig): RazroomConfig {
   const next = applyQianfanProviderConfig(cfg);
   return applyAgentDefaultModelPrimary(next, QIANFAN_DEFAULT_MODEL_REF);
 }

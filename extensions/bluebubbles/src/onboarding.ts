@@ -1,17 +1,17 @@
 import type {
   ChannelOnboardingAdapter,
   ChannelOnboardingDmPolicy,
-  MoltBotConfig,
+  RazroomConfig,
   DmPolicy,
   WizardPrompter,
-} from "moltbot/plugin-sdk";
+} from "razroom/plugin-sdk";
 import {
   DEFAULT_ACCOUNT_ID,
   addWildcardAllowFrom,
   formatDocsLink,
   normalizeAccountId,
   promptAccountId,
-} from "moltbot/plugin-sdk";
+} from "razroom/plugin-sdk";
 import {
   listBlueBubblesAccountIds,
   resolveBlueBubblesAccount,
@@ -22,7 +22,7 @@ import { normalizeBlueBubblesServerUrl } from "./types.js";
 
 const channel = "bluebubbles" as const;
 
-function setBlueBubblesDmPolicy(cfg: MoltBotConfig, dmPolicy: DmPolicy): MoltBotConfig {
+function setBlueBubblesDmPolicy(cfg: RazroomConfig, dmPolicy: DmPolicy): RazroomConfig {
   const allowFrom =
     dmPolicy === "open" ? addWildcardAllowFrom(cfg.channels?.bluebubbles?.allowFrom) : undefined;
   return {
@@ -39,10 +39,10 @@ function setBlueBubblesDmPolicy(cfg: MoltBotConfig, dmPolicy: DmPolicy): MoltBot
 }
 
 function setBlueBubblesAllowFrom(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   accountId: string,
   allowFrom: string[],
-): MoltBotConfig {
+): RazroomConfig {
   if (accountId === DEFAULT_ACCOUNT_ID) {
     return {
       ...cfg,
@@ -81,10 +81,10 @@ function parseBlueBubblesAllowFromInput(raw: string): string[] {
 }
 
 async function promptBlueBubblesAllowFrom(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   prompter: WizardPrompter;
   accountId?: string;
-}): Promise<MoltBotConfig> {
+}): Promise<RazroomConfig> {
   const accountId =
     params.accountId && normalizeAccountId(params.accountId)
       ? (normalizeAccountId(params.accountId) ?? DEFAULT_ACCOUNT_ID)
@@ -330,7 +330,7 @@ export const blueBubblesOnboardingAdapter: ChannelOnboardingAdapter = {
       [
         "Configure the webhook URL in BlueBubbles Server:",
         "1. Open BlueBubbles Server → Settings → Webhooks",
-        "2. Add your MoltBot gateway URL + webhook path",
+        "2. Add your Razroom gateway URL + webhook path",
         "   Example: https://your-gateway-host:3000/bluebubbles-webhook",
         "3. Enable the webhook and save",
         "",

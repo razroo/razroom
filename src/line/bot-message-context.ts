@@ -1,5 +1,5 @@
 import type { MessageEvent, StickerEventMessage, EventSource, PostbackEvent } from "@line/bot-sdk";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { ResolvedLineAccount } from "./types.js";
 import { formatInboundEnvelope, resolveEnvelopeFormatOptions } from "../auto-reply/envelope.js";
 import { finalizeInboundContext } from "../auto-reply/reply/inbound-context.js";
@@ -22,7 +22,7 @@ interface MediaRef {
 interface BuildLineMessageContextParams {
   event: MessageEvent;
   allMedia: MediaRef[];
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   account: ResolvedLineAccount;
 }
 
@@ -64,7 +64,7 @@ function buildPeerId(source: EventSource): string {
 
 function resolveLineInboundRoute(params: {
   source: EventSource;
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   account: ResolvedLineAccount;
 }): {
   userId?: string;
@@ -209,7 +209,7 @@ function resolveLineAddresses(params: {
 }
 
 async function finalizeLineInboundContext(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   account: ResolvedLineAccount;
   event: MessageEvent | PostbackEvent;
   route: LineRouteInfo;
@@ -406,7 +406,7 @@ export async function buildLineMessageContext(params: BuildLineMessageContextPar
 
 export async function buildLinePostbackContext(params: {
   event: PostbackEvent;
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   account: ResolvedLineAccount;
 }) {
   const { event, cfg, account } = params;

@@ -7,7 +7,7 @@ import {
   type ReplyPayload,
   SILENT_REPLY_TOKEN,
   sleep,
-} from "moltbot/plugin-sdk";
+} from "razroom/plugin-sdk";
 import type { MSTeamsAccessTokenProvider } from "./attachments/types.js";
 import type { StoredConversationReference } from "./conversation-store.js";
 import { classifyMSTeamsSendError } from "./errors.js";

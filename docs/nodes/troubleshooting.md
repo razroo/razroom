@@ -13,19 +13,19 @@ Use this page when a node is visible in status but node tools fail.
 ## Command ladder
 
 ```bash
-moltbot status
-moltbot gateway status
-moltbot logs --follow
-moltbot doctor
-moltbot channels status --probe
+razroom status
+razroom gateway status
+razroom logs --follow
+razroom doctor
+razroom channels status --probe
 ```
 
 Then run node specific checks:
 
 ```bash
-moltbot nodes status
-moltbot nodes describe --node <idOrNameOrIp>
-moltbot approvals get --node <idOrNameOrIp>
+razroom nodes status
+razroom nodes describe --node <idOrNameOrIp>
+razroom approvals get --node <idOrNameOrIp>
 ```
 
 Healthy signals:
@@ -41,9 +41,9 @@ Healthy signals:
 Quick check and fix:
 
 ```bash
-moltbot nodes describe --node <idOrNameOrIp>
-moltbot nodes canvas snapshot --node <idOrNameOrIp>
-moltbot logs --follow
+razroom nodes describe --node <idOrNameOrIp>
+razroom nodes canvas snapshot --node <idOrNameOrIp>
+razroom logs --follow
 ```
 
 If you see `NODE_BACKGROUND_UNAVAILABLE`, bring the node app to the foreground and retry.
@@ -67,10 +67,10 @@ These are different gates:
 Quick checks:
 
 ```bash
-moltbot devices list
-moltbot nodes status
-moltbot approvals get --node <idOrNameOrIp>
-moltbot approvals allowlist add --node <idOrNameOrIp> "/usr/bin/uname"
+razroom devices list
+razroom nodes status
+razroom approvals get --node <idOrNameOrIp>
+razroom approvals allowlist add --node <idOrNameOrIp> "/usr/bin/uname"
 ```
 
 If pairing is missing, approve the node device first.
@@ -90,10 +90,10 @@ If pairing is fine but `system.run` fails, fix exec approvals/allowlist.
 ## Fast recovery loop
 
 ```bash
-moltbot nodes status
-moltbot nodes describe --node <idOrNameOrIp>
-moltbot approvals get --node <idOrNameOrIp>
-moltbot logs --follow
+razroom nodes status
+razroom nodes describe --node <idOrNameOrIp>
+razroom approvals get --node <idOrNameOrIp>
+razroom logs --follow
 ```
 
 If still stuck:

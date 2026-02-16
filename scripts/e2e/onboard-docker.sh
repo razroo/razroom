@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-IMAGE_NAME="moltbot-onboard-e2e"
+IMAGE_NAME="razroom-onboard-e2e"
 
 echo "Building Docker image..."
 docker build -t "$IMAGE_NAME" -f "$ROOT_DIR/scripts/e2e/Dockerfile" "$ROOT_DIR"
@@ -15,20 +15,20 @@ docker run --rm -t "$IMAGE_NAME" bash -lc '
 	  ONBOARD_FLAGS="--flow quickstart --auth-choice skip --skip-channels --skip-skills --skip-daemon --skip-ui"
 	  # tsdown may emit dist/index.js or dist/index.mjs depending on runtime/bundler.
 	  if [ -f dist/index.mjs ]; then
-	    MOLTBOT_ENTRY="dist/index.mjs"
+	    RAZROOM_ENTRY="dist/index.mjs"
 	  elif [ -f dist/index.js ]; then
-	    MOLTBOT_ENTRY="dist/index.js"
+	    RAZROOM_ENTRY="dist/index.js"
 	  else
 	    echo "Missing dist/index.(m)js (build output):"
 	    ls -la dist || true
 	    exit 1
 	  fi
-	  export MOLTBOT_ENTRY
+	  export RAZROOM_ENTRY
 
   # Provide a minimal trash shim to avoid noisy "missing trash" logs in containers.
-  export PATH="/tmp/moltbot-bin:$PATH"
-  mkdir -p /tmp/moltbot-bin
-  cat > /tmp/moltbot-bin/trash <<'"'"'TRASH'"'"'
+  export PATH="/tmp/razroom-bin:$PATH"
+  mkdir -p /tmp/razroom-bin
+  cat > /tmp/razroom-bin/trash <<'"'"'TRASH'"'"'
 #!/usr/bin/env bash
 set -euo pipefail
 trash_dir="$HOME/.Trash"
@@ -43,7 +43,7 @@ for target in "$@"; do
   mv "$target" "$dest"
 done
 TRASH
-  chmod +x /tmp/moltbot-bin/trash
+  chmod +x /tmp/razroom-bin/trash
 
   send() {
     local payload="$1"
@@ -106,7 +106,7 @@ TRASH
   }
 
 	  start_gateway() {
-	    node "$MOLTBOT_ENTRY" gateway --port 18789 --bind loopback --allow-unconfigured > /tmp/gateway-e2e.log 2>&1 &
+	    node "$RAZROOM_ENTRY" gateway --port 18789 --bind loopback --allow-unconfigured > /tmp/gateway-e2e.log 2>&1 &
 	    GATEWAY_PID="$!"
 	  }
 
@@ -163,9 +163,9 @@ TRASH
     export HOME="$home_dir"
     mkdir -p "$HOME"
 
-    input_fifo="$(mktemp -u "/tmp/moltbot-onboard-${case_name}.XXXXXX")"
+    input_fifo="$(mktemp -u "/tmp/razroom-onboard-${case_name}.XXXXXX")"
     mkfifo "$input_fifo"
-    local log_path="/tmp/moltbot-onboard-${case_name}.log"
+    local log_path="/tmp/razroom-onboard-${case_name}.log"
     WIZARD_LOG_PATH="$log_path"
     export WIZARD_LOG_PATH
     # Run under script to keep an interactive TTY for clack prompts.
@@ -208,11 +208,11 @@ TRASH
     local validate_fn="${4:-}"
 
 	    # Default onboarding command wrapper.
-	    run_wizard_cmd "$case_name" "$home_dir" "node \"$MOLTBOT_ENTRY\" onboard $ONBOARD_FLAGS" "$send_fn" true "$validate_fn"
+	    run_wizard_cmd "$case_name" "$home_dir" "node \"$RAZROOM_ENTRY\" onboard $ONBOARD_FLAGS" "$send_fn" true "$validate_fn"
 	  }
 
   make_home() {
-    mktemp -d "/tmp/moltbot-e2e-$1.XXXXXX"
+    mktemp -d "/tmp/razroom-e2e-$1.XXXXXX"
   }
 
   assert_file() {
@@ -287,7 +287,7 @@ TRASH
 	    home_dir="$(make_home local-basic)"
 	    export HOME="$home_dir"
 	    mkdir -p "$HOME"
-	    node "$MOLTBOT_ENTRY" onboard \
+	    node "$RAZROOM_ENTRY" onboard \
 	      --non-interactive \
 	      --accept-risk \
       --flow quickstart \
@@ -299,9 +299,9 @@ TRASH
       --skip-health
 
     # Assert config + workspace scaffolding.
-    workspace_dir="$HOME/.moltbot/workspace"
-    config_path="$HOME/.moltbot/moltbot.json"
-    sessions_dir="$HOME/.moltbot/agents/main/sessions"
+    workspace_dir="$HOME/.razroom/workspace"
+    config_path="$HOME/.razroom/razroom.json"
+    sessions_dir="$HOME/.razroom/agents/main/sessions"
 
     assert_file "$config_path"
     assert_dir "$sessions_dir"
@@ -364,14 +364,14 @@ NODE
     export HOME="$home_dir"
 	    mkdir -p "$HOME"
 	    # Smoke test non-interactive remote config write.
-	    node "$MOLTBOT_ENTRY" onboard --non-interactive --accept-risk \
+	    node "$RAZROOM_ENTRY" onboard --non-interactive --accept-risk \
 	      --mode remote \
 	      --remote-url ws://gateway.local:18789 \
       --remote-token remote-token \
       --skip-skills \
       --skip-health
 
-    config_path="$HOME/.moltbot/moltbot.json"
+    config_path="$HOME/.razroom/razroom.json"
     assert_file "$config_path"
 
     CONFIG_PATH="$config_path" node --input-type=module - <<'"'"'NODE'"'"'
@@ -405,9 +405,9 @@ NODE
     local home_dir
     home_dir="$(make_home reset-config)"
     export HOME="$home_dir"
-    mkdir -p "$HOME/.moltbot"
+    mkdir -p "$HOME/.razroom"
     # Seed a remote config to exercise reset path.
-	    cat > "$HOME/.moltbot/moltbot.json" <<'"'"'JSON'"'"'
+	    cat > "$HOME/.razroom/razroom.json" <<'"'"'JSON'"'"'
 {
   "agents": { "defaults": { "workspace": "/root/old" } },
   "gateway": {
@@ -417,7 +417,7 @@ NODE
 }
 JSON
 
-	    node "$MOLTBOT_ENTRY" onboard \
+	    node "$RAZROOM_ENTRY" onboard \
 	      --non-interactive \
 	      --accept-risk \
       --flow quickstart \
@@ -429,7 +429,7 @@ JSON
       --skip-ui \
       --skip-health
 
-    config_path="$HOME/.moltbot/moltbot.json"
+    config_path="$HOME/.razroom/razroom.json"
     assert_file "$config_path"
 
     CONFIG_PATH="$config_path" node --input-type=module - <<'"'"'NODE'"'"'
@@ -460,9 +460,9 @@ NODE
 	    local home_dir
 	    home_dir="$(make_home channels)"
 	    # Channels-only configure flow.
-	    run_wizard_cmd channels "$home_dir" "node \"$MOLTBOT_ENTRY\" configure --section channels" send_channels_flow
+	    run_wizard_cmd channels "$home_dir" "node \"$RAZROOM_ENTRY\" configure --section channels" send_channels_flow
 
-    config_path="$HOME/.moltbot/moltbot.json"
+    config_path="$HOME/.razroom/razroom.json"
     assert_file "$config_path"
 
     CONFIG_PATH="$config_path" node --input-type=module - <<'"'"'NODE'"'"'
@@ -500,9 +500,9 @@ NODE
     local home_dir
     home_dir="$(make_home skills)"
     export HOME="$home_dir"
-    mkdir -p "$HOME/.moltbot"
+    mkdir -p "$HOME/.razroom"
     # Seed skills config to ensure it survives the wizard.
-	    cat > "$HOME/.moltbot/moltbot.json" <<'"'"'JSON'"'"'
+	    cat > "$HOME/.razroom/razroom.json" <<'"'"'JSON'"'"'
 {
   "skills": {
     "allowBundled": ["__none__"],
@@ -511,9 +511,9 @@ NODE
 }
 JSON
 
-	    run_wizard_cmd skills "$home_dir" "node \"$MOLTBOT_ENTRY\" configure --section skills" send_skills_flow
+	    run_wizard_cmd skills "$home_dir" "node \"$RAZROOM_ENTRY\" configure --section skills" send_skills_flow
 
-    config_path="$HOME/.moltbot/moltbot.json"
+    config_path="$HOME/.razroom/razroom.json"
     assert_file "$config_path"
 
     CONFIG_PATH="$config_path" node --input-type=module - <<'"'"'NODE'"'"'

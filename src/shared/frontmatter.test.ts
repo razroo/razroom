@@ -3,7 +3,7 @@ import {
   getFrontmatterString,
   normalizeStringList,
   parseFrontmatterBool,
-  resolveMoltBotManifestBlock,
+  resolveRazroomManifestBlock,
 } from "./frontmatter.js";
 
 describe("shared/frontmatter", () => {
@@ -24,20 +24,20 @@ describe("shared/frontmatter", () => {
     expect(parseFrontmatterBool(undefined, true)).toBe(true);
   });
 
-  test("resolveMoltBotManifestBlock parses JSON5 metadata and picks moltbot block", () => {
+  test("resolveRazroomManifestBlock parses JSON5 metadata and picks razroom block", () => {
     const frontmatter = {
-      metadata: "{ moltbot: { foo: 1, bar: 'baz' } }",
+      metadata: "{ razroom: { foo: 1, bar: 'baz' } }",
     };
-    expect(resolveMoltBotManifestBlock({ frontmatter })).toEqual({ foo: 1, bar: "baz" });
+    expect(resolveRazroomManifestBlock({ frontmatter })).toEqual({ foo: 1, bar: "baz" });
   });
 
-  test("resolveMoltBotManifestBlock returns undefined for invalid input", () => {
-    expect(resolveMoltBotManifestBlock({ frontmatter: {} })).toBeUndefined();
+  test("resolveRazroomManifestBlock returns undefined for invalid input", () => {
+    expect(resolveRazroomManifestBlock({ frontmatter: {} })).toBeUndefined();
     expect(
-      resolveMoltBotManifestBlock({ frontmatter: { metadata: "not-json5" } }),
+      resolveRazroomManifestBlock({ frontmatter: { metadata: "not-json5" } }),
     ).toBeUndefined();
     expect(
-      resolveMoltBotManifestBlock({ frontmatter: { metadata: "{ nope: { a: 1 } }" } }),
+      resolveRazroomManifestBlock({ frontmatter: { metadata: "{ nope: { a: 1 } }" } }),
     ).toBeUndefined();
   });
 });

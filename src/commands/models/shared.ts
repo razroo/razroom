@@ -8,7 +8,7 @@ import {
 } from "../../agents/model-selection.js";
 import { formatCliCommand } from "../../cli/command-format.js";
 import {
-  type MoltBotConfig,
+  type RazroomConfig,
   readConfigFileSnapshot,
   writeConfigFile,
 } from "../../config/config.js";
@@ -60,8 +60,8 @@ export const isLocalBaseUrl = (baseUrl: string) => {
 };
 
 export async function updateConfig(
-  mutator: (cfg: MoltBotConfig) => MoltBotConfig,
-): Promise<MoltBotConfig> {
+  mutator: (cfg: RazroomConfig) => RazroomConfig,
+): Promise<RazroomConfig> {
   const snapshot = await readConfigFileSnapshot();
   if (!snapshot.valid) {
     const issues = snapshot.issues.map((issue) => `- ${issue.path}: ${issue.message}`).join("\n");
@@ -72,7 +72,7 @@ export async function updateConfig(
   return next;
 }
 
-export function resolveModelTarget(params: { raw: string; cfg: MoltBotConfig }): {
+export function resolveModelTarget(params: { raw: string; cfg: RazroomConfig }): {
   provider: string;
   model: string;
 } {
@@ -92,7 +92,7 @@ export function resolveModelTarget(params: { raw: string; cfg: MoltBotConfig }):
 }
 
 export function resolveModelKeysFromEntries(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   entries: readonly string[];
 }): string[] {
   const aliasIndex = buildModelAliasIndex({
@@ -111,7 +111,7 @@ export function resolveModelKeysFromEntries(params: {
     .map((entry) => modelKey(entry.ref.provider, entry.ref.model));
 }
 
-export function buildAllowlistSet(cfg: MoltBotConfig): Set<string> {
+export function buildAllowlistSet(cfg: RazroomConfig): Set<string> {
   const allowed = new Set<string>();
   const models = cfg.agents?.defaults?.models ?? {};
   for (const raw of Object.keys(models)) {
@@ -136,7 +136,7 @@ export function normalizeAlias(alias: string): string {
 }
 
 export function resolveKnownAgentId(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   rawAgentId?: string | null;
 }): string | undefined {
   const raw = params.rawAgentId?.trim();
@@ -147,7 +147,7 @@ export function resolveKnownAgentId(params: {
   const knownAgents = listAgentIds(params.cfg);
   if (!knownAgents.includes(agentId)) {
     throw new Error(
-      `Unknown agent id "${raw}". Use "${formatCliCommand("moltbot agents list")}" to see configured agents.`,
+      `Unknown agent id "${raw}". Use "${formatCliCommand("razroom agents list")}" to see configured agents.`,
     );
   }
   return agentId;

@@ -50,13 +50,13 @@ x-i18n:
 ## 环境变量覆盖（一次性）
 
 ```bash
-MOLTBOT_DIAGNOSTICS=telegram.http,telegram.payload
+RAZROOM_DIAGNOSTICS=telegram.http,telegram.payload
 ```
 
 禁用所有标志：
 
 ```bash
-MOLTBOT_DIAGNOSTICS=0
+RAZROOM_DIAGNOSTICS=0
 ```
 
 ## 日志存储位置
@@ -64,7 +64,7 @@ MOLTBOT_DIAGNOSTICS=0
 标志将日志输出到标准诊断日志文件。默认位置：
 
 ```
-/tmp/moltbot/moltbot-YYYY-MM-DD.log
+/tmp/razroom/razroom-YYYY-MM-DD.log
 ```
 
 如果你设置了 `logging.file`，则使用该路径。日志为 JSONL 格式（每行一个 JSON 对象）。脱敏仍然根据 `logging.redactSensitive` 应用。
@@ -74,22 +74,22 @@ MOLTBOT_DIAGNOSTICS=0
 选择最新的日志文件：
 
 ```bash
-ls -t /tmp/moltbot/moltbot-*.log | head -n 1
+ls -t /tmp/razroom/razroom-*.log | head -n 1
 ```
 
 过滤 Telegram HTTP 诊断：
 
 ```bash
-rg "telegram http error" /tmp/moltbot/moltbot-*.log
+rg "telegram http error" /tmp/razroom/razroom-*.log
 ```
 
 或在复现时使用 tail：
 
 ```bash
-tail -f /tmp/moltbot/moltbot-$(date +%F).log | rg "telegram http error"
+tail -f /tmp/razroom/razroom-$(date +%F).log | rg "telegram http error"
 ```
 
-对于远程 Gateway 网关，你也可以使用 `moltbot logs --follow`（参见 [/cli/logs](/cli/logs)）。
+对于远程 Gateway 网关，你也可以使用 `razroom logs --follow`（参见 [/cli/logs](/cli/logs)）。
 
 ## 注意事项
 

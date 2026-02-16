@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { RuntimeEnv } from "../runtime.js";
 import type { WizardPrompter } from "../wizard/prompts.js";
 import { discordPlugin } from "../../extensions/discord/src/channel.js";
@@ -75,7 +75,7 @@ describe("setupChannels", () => {
       }),
     };
 
-    await setupChannels({} as MoltBotConfig, runtime, prompter, {
+    await setupChannels({} as RazroomConfig, runtime, prompter, {
       skipConfirm: true,
       quickstartDefaults: true,
       forceAllowFromChannels: ["whatsapp"],
@@ -116,7 +116,7 @@ describe("setupChannels", () => {
       }),
     };
 
-    await setupChannels({} as MoltBotConfig, runtime, prompter, {
+    await setupChannels({} as RazroomConfig, runtime, prompter, {
       skipConfirm: true,
     });
 
@@ -172,7 +172,7 @@ describe("setupChannels", () => {
             botToken: "token",
           },
         },
-      } as MoltBotConfig,
+      } as RazroomConfig,
       runtime,
       prompter,
       {
@@ -236,7 +236,7 @@ describe("setupChannels", () => {
             enabled: false,
           },
         },
-      } as MoltBotConfig,
+      } as RazroomConfig,
       runtime,
       prompter,
       {

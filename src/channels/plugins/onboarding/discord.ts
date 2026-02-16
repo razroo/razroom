@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "../../../config/config.js";
+import type { RazroomConfig } from "../../../config/config.js";
 import type { DiscordGuildEntry } from "../../../config/types.discord.js";
 import type { DmPolicy } from "../../../config/types.js";
 import type { WizardPrompter } from "../../../wizard/prompts.js";
@@ -21,7 +21,7 @@ import { addWildcardAllowFrom, promptAccountId } from "./helpers.js";
 
 const channel = "discord" as const;
 
-function setDiscordDmPolicy(cfg: MoltBotConfig, dmPolicy: DmPolicy) {
+function setDiscordDmPolicy(cfg: RazroomConfig, dmPolicy: DmPolicy) {
   const existingAllowFrom =
     cfg.channels?.discord?.allowFrom ?? cfg.channels?.discord?.dm?.allowFrom;
   const allowFrom = dmPolicy === "open" ? addWildcardAllowFrom(existingAllowFrom) : undefined;
@@ -56,10 +56,10 @@ async function noteDiscordTokenHelp(prompter: WizardPrompter): Promise<void> {
 }
 
 function patchDiscordConfigForAccount(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   accountId: string,
   patch: Record<string, unknown>,
-): MoltBotConfig {
+): RazroomConfig {
   if (accountId === DEFAULT_ACCOUNT_ID) {
     return {
       ...cfg,
@@ -94,21 +94,21 @@ function patchDiscordConfigForAccount(
 }
 
 function setDiscordGroupPolicy(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   accountId: string,
   groupPolicy: "open" | "allowlist" | "disabled",
-): MoltBotConfig {
+): RazroomConfig {
   return patchDiscordConfigForAccount(cfg, accountId, { groupPolicy });
 }
 
 function setDiscordGuildChannelAllowlist(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   accountId: string,
   entries: Array<{
     guildKey: string;
     channelKey?: string;
   }>,
-): MoltBotConfig {
+): RazroomConfig {
   const baseGuilds =
     accountId === DEFAULT_ACCOUNT_ID
       ? (cfg.channels?.discord?.guilds ?? {})
@@ -128,7 +128,7 @@ function setDiscordGuildChannelAllowlist(
   return patchDiscordConfigForAccount(cfg, accountId, { guilds });
 }
 
-function setDiscordAllowFrom(cfg: MoltBotConfig, allowFrom: string[]): MoltBotConfig {
+function setDiscordAllowFrom(cfg: RazroomConfig, allowFrom: string[]): RazroomConfig {
   return {
     ...cfg,
     channels: {
@@ -153,10 +153,10 @@ function parseDiscordAllowFromInput(raw: string): string[] {
 }
 
 async function promptDiscordAllowFrom(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   prompter: WizardPrompter;
   accountId?: string;
-}): Promise<MoltBotConfig> {
+}): Promise<RazroomConfig> {
   const accountId =
     params.accountId && normalizeAccountId(params.accountId)
       ? (normalizeAccountId(params.accountId) ?? DEFAULT_ACCOUNT_ID)

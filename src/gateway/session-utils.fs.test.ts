@@ -17,7 +17,7 @@ describe("readFirstUserMessageFromTranscript", () => {
   let storePath: string;
 
   beforeAll(() => {
-    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-session-fs-test-"));
+    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "razroom-session-fs-test-"));
     storePath = path.join(tmpDir, "sessions.json");
   });
 
@@ -184,7 +184,7 @@ describe("readLastMessagePreviewFromTranscript", () => {
   let storePath: string;
 
   beforeAll(() => {
-    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-session-fs-test-"));
+    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "razroom-session-fs-test-"));
     storePath = path.join(tmpDir, "sessions.json");
   });
 
@@ -373,7 +373,7 @@ describe("readSessionTitleFieldsFromTranscript cache", () => {
   let storePath: string;
 
   beforeAll(() => {
-    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-session-fs-test-"));
+    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "razroom-session-fs-test-"));
     storePath = path.join(tmpDir, "sessions.json");
   });
 
@@ -437,7 +437,7 @@ describe("readSessionMessages", () => {
   let storePath: string;
 
   beforeAll(() => {
-    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-session-fs-test-"));
+    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "razroom-session-fs-test-"));
     storePath = path.join(tmpDir, "sessions.json");
   });
 
@@ -468,13 +468,13 @@ describe("readSessionMessages", () => {
     const marker = out[1] as {
       role: string;
       content?: Array<{ text?: string }>;
-      __moltbot?: { kind?: string; id?: string };
+      __razroom?: { kind?: string; id?: string };
       timestamp?: number;
     };
     expect(marker.role).toBe("system");
     expect(marker.content?.[0]?.text).toBe("Compaction");
-    expect(marker.__moltbot?.kind).toBe("compaction");
-    expect(marker.__moltbot?.id).toBe("comp-1");
+    expect(marker.__razroom?.kind).toBe("compaction");
+    expect(marker.__razroom?.id).toBe("comp-1");
     expect(typeof marker.timestamp).toBe("number");
   });
 
@@ -536,7 +536,7 @@ describe("readSessionPreviewItemsFromTranscript", () => {
   let storePath: string;
 
   beforeAll(() => {
-    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-session-preview-test-"));
+    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "razroom-session-preview-test-"));
     storePath = path.join(tmpDir, "sessions.json");
   });
 
@@ -635,22 +635,22 @@ describe("resolveSessionTranscriptCandidates", () => {
     vi.unstubAllEnvs();
   });
 
-  test("fallback candidate uses MOLTBOT_HOME instead of os.homedir()", () => {
-    vi.stubEnv("MOLTBOT_HOME", "/srv/moltbot-home");
+  test("fallback candidate uses RAZROOM_HOME instead of os.homedir()", () => {
+    vi.stubEnv("RAZROOM_HOME", "/srv/razroom-home");
     vi.stubEnv("HOME", "/home/other");
 
     const candidates = resolveSessionTranscriptCandidates("sess-1", undefined);
     const fallback = candidates[candidates.length - 1];
     expect(fallback).toBe(
-      path.join(path.resolve("/srv/moltbot-home"), ".moltbot", "sessions", "sess-1.jsonl"),
+      path.join(path.resolve("/srv/razroom-home"), ".razroom", "sessions", "sess-1.jsonl"),
     );
   });
 });
 
 describe("resolveSessionTranscriptCandidates safety", () => {
   test("keeps cross-agent absolute sessionFile when storePath agent context differs", () => {
-    const storePath = "/tmp/moltbot/agents/main/sessions/sessions.json";
-    const sessionFile = "/tmp/moltbot/agents/ops/sessions/sess-safe.jsonl";
+    const storePath = "/tmp/razroom/agents/main/sessions/sessions.json";
+    const sessionFile = "/tmp/razroom/agents/ops/sessions/sess-safe.jsonl";
     const candidates = resolveSessionTranscriptCandidates("sess-safe", storePath, sessionFile);
 
     expect(candidates.map((value) => path.resolve(value))).toContain(path.resolve(sessionFile));
@@ -667,14 +667,14 @@ describe("resolveSessionTranscriptCandidates safety", () => {
   test("drops unsafe session IDs instead of producing traversal paths", () => {
     const candidates = resolveSessionTranscriptCandidates(
       "../etc/passwd",
-      "/tmp/moltbot/agents/main/sessions/sessions.json",
+      "/tmp/razroom/agents/main/sessions/sessions.json",
     );
 
     expect(candidates).toEqual([]);
   });
 
   test("drops unsafe sessionFile candidates and keeps safe fallbacks", () => {
-    const storePath = "/tmp/moltbot/agents/main/sessions/sessions.json";
+    const storePath = "/tmp/razroom/agents/main/sessions/sessions.json";
     const candidates = resolveSessionTranscriptCandidates(
       "sess-safe",
       storePath,
@@ -693,9 +693,9 @@ describe("archiveSessionTranscripts", () => {
   let storePath: string;
 
   beforeAll(() => {
-    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-archive-test-"));
+    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "razroom-archive-test-"));
     storePath = path.join(tmpDir, "sessions.json");
-    vi.stubEnv("MOLTBOT_HOME", tmpDir);
+    vi.stubEnv("RAZROOM_HOME", tmpDir);
   });
 
   afterAll(() => {

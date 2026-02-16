@@ -22,7 +22,7 @@ describe("trigger handling", () => {
         agents: {
           defaults: {
             model: "anthropic/claude-opus-4-5",
-            workspace: join(home, "moltbot"),
+            workspace: join(home, "razroom"),
           },
         },
         tools: {
@@ -64,7 +64,7 @@ describe("trigger handling", () => {
         agents: {
           defaults: {
             model: "anthropic/claude-opus-4-5",
-            workspace: join(home, "moltbot"),
+            workspace: join(home, "razroom"),
           },
         },
         tools: {
@@ -113,7 +113,7 @@ describe("trigger handling", () => {
         agents: {
           defaults: {
             model: "anthropic/claude-opus-4-5",
-            workspace: join(home, "moltbot"),
+            workspace: join(home, "razroom"),
           },
         },
         tools: {

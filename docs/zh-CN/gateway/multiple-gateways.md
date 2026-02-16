@@ -2,7 +2,7 @@
 read_when:
   - 在同一台机器上运行多个 Gateway 网关
   - 你需要每个 Gateway 网关有隔离的配置/状态/端口
-summary: 在同一主机上运行多个 MoltBot Gateway 网关（隔离、端口和配置文件）
+summary: 在同一主机上运行多个 Razroom Gateway 网关（隔离、端口和配置文件）
 title: 多 Gateway 网关
 x-i18n:
   generated_at: "2026-02-03T07:48:13Z"
@@ -19,8 +19,8 @@ x-i18n:
 
 ## 隔离检查清单（必需）
 
-- `MOLTBOT_CONFIG_PATH` — 每个实例的配置文件
-- `MOLTBOT_STATE_DIR` — 每个实例的会话、凭证、缓存
+- `RAZROOM_CONFIG_PATH` — 每个实例的配置文件
+- `RAZROOM_STATE_DIR` — 每个实例的会话、凭证、缓存
 - `agents.defaults.workspace` — 每个实例的工作区根目录
 - `gateway.port`（或 `--port`）— 每个实例唯一
 - 派生端口（浏览器/画布）不得重叠
@@ -29,23 +29,23 @@ x-i18n:
 
 ## 推荐：配置文件（`--profile`）
 
-配置文件自动限定 `MOLTBOT_STATE_DIR` + `MOLTBOT_CONFIG_PATH` 范围并为服务名称添加后缀。
+配置文件自动限定 `RAZROOM_STATE_DIR` + `RAZROOM_CONFIG_PATH` 范围并为服务名称添加后缀。
 
 ```bash
 # main
-moltbot --profile main setup
-moltbot --profile main gateway --port 18789
+razroom --profile main setup
+razroom --profile main gateway --port 18789
 
 # rescue
-moltbot --profile rescue setup
-moltbot --profile rescue gateway --port 19001
+razroom --profile rescue setup
+razroom --profile rescue gateway --port 19001
 ```
 
 按配置文件的服务：
 
 ```bash
-moltbot --profile main gateway install
-moltbot --profile rescue gateway install
+razroom --profile main gateway install
+razroom --profile rescue gateway install
 ```
 
 ## 救援机器人指南
@@ -66,11 +66,11 @@ moltbot --profile rescue gateway install
 ```bash
 # 主机器人（现有或新建，不带 --profile 参数）
 # 运行在端口 18789 + Chrome CDC/Canvas/... 端口
-moltbot onboard
-moltbot gateway install
+razroom onboard
+razroom gateway install
 
 # 救援机器人（隔离的配置文件 + 端口）
-moltbot --profile rescue onboard
+razroom --profile rescue onboard
 # 注意：
 # - 工作区名称默认会添加 -rescue 后缀
 # - 端口应至少为 18789 + 20 个端口，
@@ -78,12 +78,12 @@ moltbot --profile rescue onboard
 # - 其余的新手引导与正常相同
 
 # 安装服务（如果在新手引导期间没有自动完成）
-moltbot --profile rescue gateway install
+razroom --profile rescue gateway install
 ```
 
 ## 端口映射（派生）
 
-基础端口 = `gateway.port`（或 `MOLTBOT_GATEWAY_PORT` / `--port`）。
+基础端口 = `gateway.port`（或 `RAZROOM_GATEWAY_PORT` / `--port`）。
 
 - 浏览器控制服务端口 = 基础 + 2（仅 loopback）
 - `canvasHost.port = 基础 + 4`
@@ -101,19 +101,19 @@ moltbot --profile rescue gateway install
 ## 手动环境变量示例
 
 ```bash
-MOLTBOT_CONFIG_PATH=~/.moltbot/main.json \
-MOLTBOT_STATE_DIR=~/.moltbot-main \
-moltbot gateway --port 18789
+RAZROOM_CONFIG_PATH=~/.razroom/main.json \
+RAZROOM_STATE_DIR=~/.razroom-main \
+razroom gateway --port 18789
 
-MOLTBOT_CONFIG_PATH=~/.moltbot/rescue.json \
-MOLTBOT_STATE_DIR=~/.moltbot-rescue \
-moltbot gateway --port 19001
+RAZROOM_CONFIG_PATH=~/.razroom/rescue.json \
+RAZROOM_STATE_DIR=~/.razroom-rescue \
+razroom gateway --port 19001
 ```
 
 ## 快速检查
 
 ```bash
-moltbot --profile main status
-moltbot --profile rescue status
-moltbot --profile rescue browser status
+razroom --profile main status
+razroom --profile rescue status
+razroom --profile rescue browser status
 ```

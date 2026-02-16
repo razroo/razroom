@@ -4,8 +4,8 @@ import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 
 type FakeFsEntry = { kind: "file"; content: string } | { kind: "dir" };
 
-const VITEST_FS_BASE = path.join(path.parse(process.cwd()).root, "__moltbot_vitest__");
-const FIXTURE_BASE = path.join(VITEST_FS_BASE, "moltbot-root");
+const VITEST_FS_BASE = path.join(path.parse(process.cwd()).root, "__razroom_vitest__");
+const FIXTURE_BASE = path.join(VITEST_FS_BASE, "razroom-root");
 
 const state = vi.hoisted(() => ({
   entries: new Map<string, FakeFsEntry>(),
@@ -91,60 +91,60 @@ mock("node:fs/promises", async (importOriginal) => {
   return { ...wrapped, default: wrapped };
 });
 
-describe("resolveMoltBotPackageRoot", () => {
+describe("resolveRazroomPackageRoot", () => {
   beforeEach(() => {
     state.entries.clear();
     state.realpaths.clear();
   });
 
   it("resolves package root from .bin argv1", async () => {
-    const { resolveMoltBotPackageRootSync } = await import("./moltbot-root.js");
+    const { resolveRazroomPackageRootSync } = await import("./razroom-root.js");
 
     const project = fx("bin-scenario");
-    const argv1 = path.join(project, "node_modules", ".bin", "moltbot");
-    const pkgRoot = path.join(project, "node_modules", "moltbot");
-    setFile(path.join(pkgRoot, "package.json"), JSON.stringify({ name: "moltbot" }));
+    const argv1 = path.join(project, "node_modules", ".bin", "razroom");
+    const pkgRoot = path.join(project, "node_modules", "razroom");
+    setFile(path.join(pkgRoot, "package.json"), JSON.stringify({ name: "razroom" }));
 
-    expect(resolveMoltBotPackageRootSync({ argv1 })).toBe(pkgRoot);
+    expect(resolveRazroomPackageRootSync({ argv1 })).toBe(pkgRoot);
   });
 
   it("resolves package root via symlinked argv1", async () => {
-    const { resolveMoltBotPackageRootSync } = await import("./moltbot-root.js");
+    const { resolveRazroomPackageRootSync } = await import("./razroom-root.js");
 
     const project = fx("symlink-scenario");
-    const bin = path.join(project, "bin", "moltbot");
+    const bin = path.join(project, "bin", "razroom");
     const realPkg = path.join(project, "real-pkg");
-    state.realpaths.set(abs(bin), abs(path.join(realPkg, "moltbot.mjs")));
-    setFile(path.join(realPkg, "package.json"), JSON.stringify({ name: "moltbot" }));
+    state.realpaths.set(abs(bin), abs(path.join(realPkg, "razroom.mjs")));
+    setFile(path.join(realPkg, "package.json"), JSON.stringify({ name: "razroom" }));
 
-    expect(resolveMoltBotPackageRootSync({ argv1: bin })).toBe(realPkg);
+    expect(resolveRazroomPackageRootSync({ argv1: bin })).toBe(realPkg);
   });
 
   it("prefers moduleUrl candidates", async () => {
-    const { resolveMoltBotPackageRootSync } = await import("./moltbot-root.js");
+    const { resolveRazroomPackageRootSync } = await import("./razroom-root.js");
 
     const pkgRoot = fx("moduleurl");
-    setFile(path.join(pkgRoot, "package.json"), JSON.stringify({ name: "moltbot" }));
+    setFile(path.join(pkgRoot, "package.json"), JSON.stringify({ name: "razroom" }));
     const moduleUrl = pathToFileURL(path.join(pkgRoot, "dist", "index.js")).toString();
 
-    expect(resolveMoltBotPackageRootSync({ moduleUrl })).toBe(pkgRoot);
+    expect(resolveRazroomPackageRootSync({ moduleUrl })).toBe(pkgRoot);
   });
 
-  it("returns null for non-moltbot package roots", async () => {
-    const { resolveMoltBotPackageRootSync } = await import("./moltbot-root.js");
+  it("returns null for non-razroom package roots", async () => {
+    const { resolveRazroomPackageRootSync } = await import("./razroom-root.js");
 
-    const pkgRoot = fx("not-moltbot");
-    setFile(path.join(pkgRoot, "package.json"), JSON.stringify({ name: "not-moltbot" }));
+    const pkgRoot = fx("not-razroom");
+    setFile(path.join(pkgRoot, "package.json"), JSON.stringify({ name: "not-razroom" }));
 
-    expect(resolveMoltBotPackageRootSync({ cwd: pkgRoot })).toBeNull();
+    expect(resolveRazroomPackageRootSync({ cwd: pkgRoot })).toBeNull();
   });
 
   it("async resolver matches sync behavior", async () => {
-    const { resolveMoltBotPackageRoot } = await import("./moltbot-root.js");
+    const { resolveRazroomPackageRoot } = await import("./razroom-root.js");
 
     const pkgRoot = fx("async");
-    setFile(path.join(pkgRoot, "package.json"), JSON.stringify({ name: "moltbot" }));
+    setFile(path.join(pkgRoot, "package.json"), JSON.stringify({ name: "razroom" }));
 
-    await expect(resolveMoltBotPackageRoot({ cwd: pkgRoot })).resolves.toBe(pkgRoot);
+    await expect(resolveRazroomPackageRoot({ cwd: pkgRoot })).resolves.toBe(pkgRoot);
   });
 });

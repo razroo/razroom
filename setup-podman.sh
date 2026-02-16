@@ -1,24 +1,24 @@
 #!/usr/bin/env bash
-# One-time host setup for rootless MoltBot in Podman: creates the moltbot
+# One-time host setup for rootless Razroom in Podman: creates the razroom
 # user, builds the image, loads it into that user's Podman store, and installs
 # the launch script. Run from repo root with sudo capability.
 #
 # Usage: ./setup-podman.sh [--quadlet|--container]
 #   --quadlet   Install systemd Quadlet so the container runs as a user service
 #   --container Only install user + image + launch script; you start the container manually (default)
-#   Or set MOLTBOT_PODMAN_QUADLET=1 (or 0) to choose without a flag.
+#   Or set RAZROOM_PODMAN_QUADLET=1 (or 0) to choose without a flag.
 #
 # After this, start the gateway manually:
-#   ./scripts/run-moltbot-podman.sh launch
-#   ./scripts/run-moltbot-podman.sh launch setup   # onboarding wizard
-# Or as the moltbot user: sudo -u moltbot /home/moltbot/run-moltbot-podman.sh
-# If you used --quadlet, you can also: sudo systemctl --machine moltbot@ --user start moltbot.service
+#   ./scripts/run-razroom-podman.sh launch
+#   ./scripts/run-razroom-podman.sh launch setup   # onboarding wizard
+# Or as the razroom user: sudo -u razroom /home/razroom/run-razroom-podman.sh
+# If you used --quadlet, you can also: sudo systemctl --machine razroom@ --user start razroom.service
 set -euo pipefail
 
-MOLTBOT_USER="${MOLTBOT_PODMAN_USER:-moltbot}"
-REPO_PATH="${MOLTBOT_REPO_PATH:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"
-RUN_SCRIPT_SRC="$REPO_PATH/scripts/run-moltbot-podman.sh"
-QUADLET_TEMPLATE="$REPO_PATH/scripts/podman/moltbot.container.in"
+RAZROOM_USER="${RAZROOM_PODMAN_USER:-razroom}"
+REPO_PATH="${RAZROOM_REPO_PATH:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"
+RUN_SCRIPT_SRC="$REPO_PATH/scripts/run-razroom-podman.sh"
+QUADLET_TEMPLATE="$REPO_PATH/scripts/podman/razroom.container.in"
 
 require_cmd() {
   if ! command -v "$1" >/dev/null 2>&1; then
@@ -50,13 +50,13 @@ run_as_user() {
   fi
 }
 
-run_as_moltbot() {
-  # Avoid root writes into $MOLTBOT_HOME (symlink/hardlink/TOCTOU footguns).
+run_as_razroom() {
+  # Avoid root writes into $RAZROOM_HOME (symlink/hardlink/TOCTOU footguns).
   # Anything under the target user's home should be created/modified as that user.
-  run_as_user "$MOLTBOT_USER" env HOME="$MOLTBOT_HOME" "$@"
+  run_as_user "$RAZROOM_USER" env HOME="$RAZROOM_HOME" "$@"
 }
 
-# Quadlet: opt-in via --quadlet or MOLTBOT_PODMAN_QUADLET=1
+# Quadlet: opt-in via --quadlet or RAZROOM_PODMAN_QUADLET=1
 INSTALL_QUADLET=false
 for arg in "$@"; do
   case "$arg" in
@@ -64,8 +64,8 @@ for arg in "$@"; do
     --container) INSTALL_QUADLET=false ;;
   esac
 done
-if [[ -n "${MOLTBOT_PODMAN_QUADLET:-}" ]]; then
-  case "${MOLTBOT_PODMAN_QUADLET,,}" in
+if [[ -n "${RAZROOM_PODMAN_QUADLET:-}" ]]; then
+  case "${RAZROOM_PODMAN_QUADLET,,}" in
     1|yes|true)  INSTALL_QUADLET=true ;;
     0|no|false) INSTALL_QUADLET=false ;;
   esac
@@ -76,7 +76,7 @@ if ! is_root; then
   require_cmd sudo
 fi
 if [[ ! -f "$REPO_PATH/Dockerfile" ]]; then
-  echo "Dockerfile not found at $REPO_PATH. Set MOLTBOT_REPO_PATH to the repo root." >&2
+  echo "Dockerfile not found at $REPO_PATH. Set RAZROOM_REPO_PATH to the repo root." >&2
   exit 1
 fi
 if [[ ! -f "$RUN_SCRIPT_SRC" ]]; then
@@ -101,7 +101,7 @@ PY
     od -An -N32 -tx1 /dev/urandom | tr -d " \n"
     return 0
   fi
-  echo "Missing dependency: need openssl or python3 (or od) to generate MOLTBOT_GATEWAY_TOKEN." >&2
+  echo "Missing dependency: need openssl or python3 (or od) to generate RAZROOM_GATEWAY_TOKEN." >&2
   exit 1
 }
 
@@ -138,100 +138,100 @@ resolve_nologin_shell() {
   printf '%s' "/usr/sbin/nologin"
 }
 
-# Create moltbot user (non-login, with home) if missing
-if ! user_exists "$MOLTBOT_USER"; then
+# Create razroom user (non-login, with home) if missing
+if ! user_exists "$RAZROOM_USER"; then
   NOLOGIN_SHELL="$(resolve_nologin_shell)"
-  echo "Creating user $MOLTBOT_USER ($NOLOGIN_SHELL, with home)..."
+  echo "Creating user $RAZROOM_USER ($NOLOGIN_SHELL, with home)..."
   if command -v useradd >/dev/null 2>&1; then
-    run_root useradd -m -s "$NOLOGIN_SHELL" "$MOLTBOT_USER"
+    run_root useradd -m -s "$NOLOGIN_SHELL" "$RAZROOM_USER"
   elif command -v adduser >/dev/null 2>&1; then
     # Debian/Ubuntu: adduser supports --disabled-password/--gecos. Busybox adduser differs.
-    run_root adduser --disabled-password --gecos "" --shell "$NOLOGIN_SHELL" "$MOLTBOT_USER"
+    run_root adduser --disabled-password --gecos "" --shell "$NOLOGIN_SHELL" "$RAZROOM_USER"
   else
-    echo "Neither useradd nor adduser found, cannot create user $MOLTBOT_USER." >&2
+    echo "Neither useradd nor adduser found, cannot create user $RAZROOM_USER." >&2
     exit 1
   fi
 else
-  echo "User $MOLTBOT_USER already exists."
+  echo "User $RAZROOM_USER already exists."
 fi
 
-MOLTBOT_HOME="$(resolve_user_home "$MOLTBOT_USER")"
-MOLTBOT_UID="$(id -u "$MOLTBOT_USER" 2>/dev/null || true)"
-MOLTBOT_CONFIG="$MOLTBOT_HOME/.moltbot"
-LAUNCH_SCRIPT_DST="$MOLTBOT_HOME/run-moltbot-podman.sh"
+RAZROOM_HOME="$(resolve_user_home "$RAZROOM_USER")"
+RAZROOM_UID="$(id -u "$RAZROOM_USER" 2>/dev/null || true)"
+RAZROOM_CONFIG="$RAZROOM_HOME/.razroom"
+LAUNCH_SCRIPT_DST="$RAZROOM_HOME/run-razroom-podman.sh"
 
 # Prefer systemd user services (Quadlet) for production. Enable lingering early so rootless Podman can run
 # without an interactive login.
 if command -v loginctl &>/dev/null; then
-  run_root loginctl enable-linger "$MOLTBOT_USER" 2>/dev/null || true
+  run_root loginctl enable-linger "$RAZROOM_USER" 2>/dev/null || true
 fi
-if [[ -n "${MOLTBOT_UID:-}" && -d /run/user ]] && command -v systemctl &>/dev/null; then
-  run_root systemctl start "user@${MOLTBOT_UID}.service" 2>/dev/null || true
+if [[ -n "${RAZROOM_UID:-}" && -d /run/user ]] && command -v systemctl &>/dev/null; then
+  run_root systemctl start "user@${RAZROOM_UID}.service" 2>/dev/null || true
 fi
 
 # Rootless Podman needs subuid/subgid for the run user
-if ! grep -q "^${MOLTBOT_USER}:" /etc/subuid 2>/dev/null; then
-  echo "Warning: $MOLTBOT_USER has no subuid range. Rootless Podman may fail." >&2
-  echo "  Add a line to /etc/subuid and /etc/subgid, e.g.: $MOLTBOT_USER:100000:65536" >&2
+if ! grep -q "^${RAZROOM_USER}:" /etc/subuid 2>/dev/null; then
+  echo "Warning: $RAZROOM_USER has no subuid range. Rootless Podman may fail." >&2
+  echo "  Add a line to /etc/subuid and /etc/subgid, e.g.: $RAZROOM_USER:100000:65536" >&2
 fi
 
-echo "Creating $MOLTBOT_CONFIG and workspace..."
-run_as_moltbot mkdir -p "$MOLTBOT_CONFIG/workspace"
-run_as_moltbot chmod 700 "$MOLTBOT_CONFIG" "$MOLTBOT_CONFIG/workspace" 2>/dev/null || true
+echo "Creating $RAZROOM_CONFIG and workspace..."
+run_as_razroom mkdir -p "$RAZROOM_CONFIG/workspace"
+run_as_razroom chmod 700 "$RAZROOM_CONFIG" "$RAZROOM_CONFIG/workspace" 2>/dev/null || true
 
-ENV_FILE="$MOLTBOT_CONFIG/.env"
-if run_as_moltbot test -f "$ENV_FILE"; then
-  if ! run_as_moltbot grep -q '^MOLTBOT_GATEWAY_TOKEN=' "$ENV_FILE" 2>/dev/null; then
+ENV_FILE="$RAZROOM_CONFIG/.env"
+if run_as_razroom test -f "$ENV_FILE"; then
+  if ! run_as_razroom grep -q '^RAZROOM_GATEWAY_TOKEN=' "$ENV_FILE" 2>/dev/null; then
     TOKEN="$(generate_token_hex_32)"
-    printf 'MOLTBOT_GATEWAY_TOKEN=%s\n' "$TOKEN" | run_as_moltbot tee -a "$ENV_FILE" >/dev/null
-    echo "Added MOLTBOT_GATEWAY_TOKEN to $ENV_FILE."
+    printf 'RAZROOM_GATEWAY_TOKEN=%s\n' "$TOKEN" | run_as_razroom tee -a "$ENV_FILE" >/dev/null
+    echo "Added RAZROOM_GATEWAY_TOKEN to $ENV_FILE."
   fi
-  run_as_moltbot chmod 600 "$ENV_FILE" 2>/dev/null || true
+  run_as_razroom chmod 600 "$ENV_FILE" 2>/dev/null || true
 else
   TOKEN="$(generate_token_hex_32)"
-  printf 'MOLTBOT_GATEWAY_TOKEN=%s\n' "$TOKEN" | run_as_moltbot tee "$ENV_FILE" >/dev/null
-  run_as_moltbot chmod 600 "$ENV_FILE" 2>/dev/null || true
+  printf 'RAZROOM_GATEWAY_TOKEN=%s\n' "$TOKEN" | run_as_razroom tee "$ENV_FILE" >/dev/null
+  run_as_razroom chmod 600 "$ENV_FILE" 2>/dev/null || true
   echo "Created $ENV_FILE with new token."
 fi
 
 # The gateway refuses to start unless gateway.mode=local is set in config.
 # Make first-run non-interactive; users can run the wizard later to configure channels/providers.
-MOLTBOT_JSON="$MOLTBOT_CONFIG/moltbot.json"
-if ! run_as_moltbot test -f "$MOLTBOT_JSON"; then
-  printf '%s\n' '{ gateway: { mode: "local" } }' | run_as_moltbot tee "$MOLTBOT_JSON" >/dev/null
-  run_as_moltbot chmod 600 "$MOLTBOT_JSON" 2>/dev/null || true
-  echo "Created $MOLTBOT_JSON (minimal gateway.mode=local)."
+RAZROOM_JSON="$RAZROOM_CONFIG/razroom.json"
+if ! run_as_razroom test -f "$RAZROOM_JSON"; then
+  printf '%s\n' '{ gateway: { mode: "local" } }' | run_as_razroom tee "$RAZROOM_JSON" >/dev/null
+  run_as_razroom chmod 600 "$RAZROOM_JSON" 2>/dev/null || true
+  echo "Created $RAZROOM_JSON (minimal gateway.mode=local)."
 fi
 
 echo "Building image from $REPO_PATH..."
-podman build -t moltbot:local -f "$REPO_PATH/Dockerfile" "$REPO_PATH"
+podman build -t razroom:local -f "$REPO_PATH/Dockerfile" "$REPO_PATH"
 
-echo "Loading image into $MOLTBOT_USER's Podman store..."
-TMP_IMAGE="$(mktemp -p /tmp moltbot-image.XXXXXX.tar)"
+echo "Loading image into $RAZROOM_USER's Podman store..."
+TMP_IMAGE="$(mktemp -p /tmp razroom-image.XXXXXX.tar)"
 trap 'rm -f "$TMP_IMAGE"' EXIT
-podman save moltbot:local -o "$TMP_IMAGE"
+podman save razroom:local -o "$TMP_IMAGE"
 chmod 644 "$TMP_IMAGE"
-(cd /tmp && run_as_user "$MOLTBOT_USER" env HOME="$MOLTBOT_HOME" podman load -i "$TMP_IMAGE")
+(cd /tmp && run_as_user "$RAZROOM_USER" env HOME="$RAZROOM_HOME" podman load -i "$TMP_IMAGE")
 rm -f "$TMP_IMAGE"
 trap - EXIT
 
 echo "Copying launch script to $LAUNCH_SCRIPT_DST..."
-run_root cat "$RUN_SCRIPT_SRC" | run_as_moltbot tee "$LAUNCH_SCRIPT_DST" >/dev/null
-run_as_moltbot chmod 755 "$LAUNCH_SCRIPT_DST"
+run_root cat "$RUN_SCRIPT_SRC" | run_as_razroom tee "$LAUNCH_SCRIPT_DST" >/dev/null
+run_as_razroom chmod 755 "$LAUNCH_SCRIPT_DST"
 
-# Optionally install systemd quadlet for moltbot user (rootless Podman + systemd)
-QUADLET_DIR="$MOLTBOT_HOME/.config/containers/systemd"
+# Optionally install systemd quadlet for razroom user (rootless Podman + systemd)
+QUADLET_DIR="$RAZROOM_HOME/.config/containers/systemd"
 if [[ "$INSTALL_QUADLET" == true && -f "$QUADLET_TEMPLATE" ]]; then
-  echo "Installing systemd quadlet for $MOLTBOT_USER..."
-  run_as_moltbot mkdir -p "$QUADLET_DIR"
-  MOLTBOT_HOME_SED="$(printf '%s' "$MOLTBOT_HOME" | sed -e 's/[\\/&|]/\\\\&/g')"
-  sed "s|{{MOLTBOT_HOME}}|$MOLTBOT_HOME_SED|g" "$QUADLET_TEMPLATE" | run_as_moltbot tee "$QUADLET_DIR/moltbot.container" >/dev/null
-  run_as_moltbot chmod 700 "$MOLTBOT_HOME/.config" "$MOLTBOT_HOME/.config/containers" "$QUADLET_DIR" 2>/dev/null || true
-  run_as_moltbot chmod 600 "$QUADLET_DIR/moltbot.container" 2>/dev/null || true
+  echo "Installing systemd quadlet for $RAZROOM_USER..."
+  run_as_razroom mkdir -p "$QUADLET_DIR"
+  RAZROOM_HOME_SED="$(printf '%s' "$RAZROOM_HOME" | sed -e 's/[\\/&|]/\\\\&/g')"
+  sed "s|{{RAZROOM_HOME}}|$RAZROOM_HOME_SED|g" "$QUADLET_TEMPLATE" | run_as_razroom tee "$QUADLET_DIR/razroom.container" >/dev/null
+  run_as_razroom chmod 700 "$RAZROOM_HOME/.config" "$RAZROOM_HOME/.config/containers" "$QUADLET_DIR" 2>/dev/null || true
+  run_as_razroom chmod 600 "$QUADLET_DIR/razroom.container" 2>/dev/null || true
   if command -v systemctl &>/dev/null; then
-    run_root systemctl --machine "${MOLTBOT_USER}@" --user daemon-reload 2>/dev/null || true
-    run_root systemctl --machine "${MOLTBOT_USER}@" --user enable moltbot.service 2>/dev/null || true
-    run_root systemctl --machine "${MOLTBOT_USER}@" --user start moltbot.service 2>/dev/null || true
+    run_root systemctl --machine "${RAZROOM_USER}@" --user daemon-reload 2>/dev/null || true
+    run_root systemctl --machine "${RAZROOM_USER}@" --user enable razroom.service 2>/dev/null || true
+    run_root systemctl --machine "${RAZROOM_USER}@" --user start razroom.service 2>/dev/null || true
   fi
 fi
 
@@ -239,13 +239,13 @@ echo ""
 echo "Setup complete. Start the gateway:"
 echo "  $RUN_SCRIPT_SRC launch"
 echo "  $RUN_SCRIPT_SRC launch setup   # onboarding wizard"
-echo "Or as $MOLTBOT_USER (e.g. from cron):"
-echo "  sudo -u $MOLTBOT_USER $LAUNCH_SCRIPT_DST"
-echo "  sudo -u $MOLTBOT_USER $LAUNCH_SCRIPT_DST setup"
+echo "Or as $RAZROOM_USER (e.g. from cron):"
+echo "  sudo -u $RAZROOM_USER $LAUNCH_SCRIPT_DST"
+echo "  sudo -u $RAZROOM_USER $LAUNCH_SCRIPT_DST setup"
 if [[ "$INSTALL_QUADLET" == true ]]; then
   echo "Or use systemd (quadlet):"
-  echo "  sudo systemctl --machine ${MOLTBOT_USER}@ --user start moltbot.service"
-  echo "  sudo systemctl --machine ${MOLTBOT_USER}@ --user status moltbot.service"
+  echo "  sudo systemctl --machine ${RAZROOM_USER}@ --user start razroom.service"
+  echo "  sudo systemctl --machine ${RAZROOM_USER}@ --user status razroom.service"
 else
   echo "To install systemd quadlet later: $0 --quadlet"
 fi

@@ -1,4 +1,4 @@
-import { normalizeAccountId } from "moltbot/plugin-sdk/account-id";
+import { normalizeAccountId } from "razroom/plugin-sdk/account-id";
 import type { CoreConfig } from "../../types.js";
 import type { MatrixActionClient, MatrixActionClientOpts } from "./types.js";
 import { getMatrixRuntime } from "../../runtime.js";
@@ -29,7 +29,7 @@ export async function resolveActionClient(
   if (active) {
     return { client: active, stopOnDone: false };
   }
-  const shouldShareClient = Boolean(process.env.MOLTBOT_GATEWAY_PORT);
+  const shouldShareClient = Boolean(process.env.RAZROOM_GATEWAY_PORT);
   if (shouldShareClient) {
     const client = await resolveSharedMatrixClient({
       cfg: getMatrixRuntime().config.loadConfig() as CoreConfig,

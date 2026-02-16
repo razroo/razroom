@@ -3,10 +3,10 @@ import {
   createTypingCallbacks,
   logTypingFailure,
   resolveChannelMediaMaxBytes,
-  type MoltBotConfig,
+  type RazroomConfig,
   type MSTeamsReplyStyle,
   type RuntimeEnv,
-} from "moltbot/plugin-sdk";
+} from "razroom/plugin-sdk";
 import type { MSTeamsAccessTokenProvider } from "./attachments/types.js";
 import type { StoredConversationReference } from "./conversation-store.js";
 import type { MSTeamsMonitorLogger } from "./monitor-types.js";
@@ -24,7 +24,7 @@ import {
 import { getMSTeamsRuntime } from "./runtime.js";
 
 export function createMSTeamsReplyDispatcher(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   agentId: string;
   accountId?: string;
   runtime: RuntimeEnv;

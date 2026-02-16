@@ -31,9 +31,9 @@ async function withTempHome<T>(fn: (home: string) => Promise<T>): Promise<T> {
     },
     {
       env: {
-        MOLTBOT_BUNDLED_SKILLS_DIR: (home) => path.join(home, "bundled-skills"),
+        RAZROOM_BUNDLED_SKILLS_DIR: (home) => path.join(home, "bundled-skills"),
       },
-      prefix: "moltbot-media-note-",
+      prefix: "razroom-media-note-",
     },
   );
 }
@@ -43,7 +43,7 @@ function makeCfg(home: string) {
     agents: {
       defaults: {
         model: "anthropic/claude-opus-4-5",
-        workspace: path.join(home, "moltbot"),
+        workspace: path.join(home, "razroom"),
       },
     },
     channels: { whatsapp: { allowFrom: ["*"] } },

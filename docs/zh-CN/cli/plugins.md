@@ -2,7 +2,7 @@
 read_when:
   - 你想安装或管理进程内 Gateway 网关插件
   - 你想调试插件加载失败问题
-summary: "`moltbot plugins` 的 CLI 参考（列出、安装、启用/禁用、诊断）"
+summary: "`razroom plugins` 的 CLI 参考（列出、安装、启用/禁用、诊断）"
 title: plugins
 x-i18n:
   generated_at: "2026-02-03T07:45:08Z"
@@ -13,7 +13,7 @@ x-i18n:
   workflow: 15
 ---
 
-# `moltbot plugins`
+# `razroom plugins`
 
 管理 Gateway 网关插件/扩展（进程内加载）。
 
@@ -26,23 +26,23 @@ x-i18n:
 ## 命令
 
 ```bash
-moltbot plugins list
-moltbot plugins info <id>
-moltbot plugins enable <id>
-moltbot plugins disable <id>
-moltbot plugins doctor
-moltbot plugins update <id>
-moltbot plugins update --all
+razroom plugins list
+razroom plugins info <id>
+razroom plugins enable <id>
+razroom plugins disable <id>
+razroom plugins doctor
+razroom plugins update <id>
+razroom plugins update --all
 ```
 
-内置插件随 MoltBot 一起发布，但默认禁用。使用 `plugins enable` 来激活它们。
+内置插件随 Razroom 一起发布，但默认禁用。使用 `plugins enable` 来激活它们。
 
-所有插件必须提供 `moltbot.plugin.json` 文件，其中包含内联 JSON Schema（`configSchema`，即使为空）。缺少或无效的清单或模式会阻止插件加载并导致配置验证失败。
+所有插件必须提供 `razroom.plugin.json` 文件，其中包含内联 JSON Schema（`configSchema`，即使为空）。缺少或无效的清单或模式会阻止插件加载并导致配置验证失败。
 
 ### 安装
 
 ```bash
-moltbot plugins install <path-or-spec>
+razroom plugins install <path-or-spec>
 ```
 
 安全提示：将插件安装视为运行代码。优先使用固定版本。
@@ -52,15 +52,15 @@ moltbot plugins install <path-or-spec>
 使用 `--link` 避免复制本地目录（添加到 `plugins.load.paths`）：
 
 ```bash
-moltbot plugins install -l ./my-plugin
+razroom plugins install -l ./my-plugin
 ```
 
 ### 更新
 
 ```bash
-moltbot plugins update <id>
-moltbot plugins update --all
-moltbot plugins update <id> --dry-run
+razroom plugins update <id>
+razroom plugins update --all
+razroom plugins update <id> --dry-run
 ```
 
 更新仅适用于从 npm 安装的插件（在 `plugins.installs` 中跟踪）。

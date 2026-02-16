@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { AgentBinding } from "../config/types.agents.js";
 import { resolveDefaultAgentId } from "../agents/agent-scope.js";
 import { normalizeChatChannelId } from "../channels/registry.js";
@@ -13,7 +13,7 @@ function normalizeBindingChannelId(raw?: string | null): string | null {
   return fallback || null;
 }
 
-export function listBindings(cfg: MoltBotConfig): AgentBinding[] {
+export function listBindings(cfg: RazroomConfig): AgentBinding[] {
   return Array.isArray(cfg.bindings) ? cfg.bindings : [];
 }
 
@@ -44,7 +44,7 @@ function resolveNormalizedBindingMatch(binding: AgentBinding): {
   };
 }
 
-export function listBoundAccountIds(cfg: MoltBotConfig, channelId: string): string[] {
+export function listBoundAccountIds(cfg: RazroomConfig, channelId: string): string[] {
   const normalizedChannel = normalizeBindingChannelId(channelId);
   if (!normalizedChannel) {
     return [];
@@ -61,7 +61,7 @@ export function listBoundAccountIds(cfg: MoltBotConfig, channelId: string): stri
 }
 
 export function resolveDefaultAgentBoundAccountId(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   channelId: string,
 ): string | null {
   const normalizedChannel = normalizeBindingChannelId(channelId);
@@ -83,7 +83,7 @@ export function resolveDefaultAgentBoundAccountId(
   return null;
 }
 
-export function buildChannelAccountBindings(cfg: MoltBotConfig) {
+export function buildChannelAccountBindings(cfg: RazroomConfig) {
   const map = new Map<string, Map<string, string[]>>();
   for (const binding of listBindings(cfg)) {
     const resolved = resolveNormalizedBindingMatch(binding);

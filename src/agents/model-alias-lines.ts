@@ -1,6 +1,6 @@
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 
-export function buildModelAliasLines(cfg?: MoltBotConfig) {
+export function buildModelAliasLines(cfg?: RazroomConfig) {
   const models = cfg?.agents?.defaults?.models ?? {};
   const entries: Array<{ alias: string; model: string }> = [];
   for (const [keyRaw, entryRaw] of Object.entries(models)) {

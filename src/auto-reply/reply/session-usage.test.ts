@@ -19,7 +19,7 @@ async function seedSessionStore(params: {
 
 describe("persistSessionUsageUpdate", () => {
   it("uses lastCallUsage for totalTokens when provided", async () => {
-    const tmp = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-usage-"));
+    const tmp = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-usage-"));
     const storePath = path.join(tmp, "sessions.json");
     const sessionKey = "main";
     await seedSessionStore({
@@ -51,7 +51,7 @@ describe("persistSessionUsageUpdate", () => {
   });
 
   it("marks totalTokens as unknown when no fresh context snapshot is available", async () => {
-    const tmp = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-usage-"));
+    const tmp = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-usage-"));
     const storePath = path.join(tmp, "sessions.json");
     const sessionKey = "main";
     await seedSessionStore({
@@ -73,7 +73,7 @@ describe("persistSessionUsageUpdate", () => {
   });
 
   it("uses promptTokens when available without lastCallUsage", async () => {
-    const tmp = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-usage-"));
+    const tmp = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-usage-"));
     const storePath = path.join(tmp, "sessions.json");
     const sessionKey = "main";
     await seedSessionStore({
@@ -96,7 +96,7 @@ describe("persistSessionUsageUpdate", () => {
   });
 
   it("keeps non-clamped lastCallUsage totalTokens when exceeding context window", async () => {
-    const tmp = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-usage-"));
+    const tmp = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-usage-"));
     const storePath = path.join(tmp, "sessions.json");
     const sessionKey = "main";
     await seedSessionStore({

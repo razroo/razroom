@@ -1,17 +1,17 @@
 import type {
   ChannelOnboardingAdapter,
   ChannelOnboardingDmPolicy,
-  MoltBotConfig,
+  RazroomConfig,
   DmPolicy,
   WizardPrompter,
   MSTeamsTeamConfig,
-} from "moltbot/plugin-sdk";
+} from "razroom/plugin-sdk";
 import {
   addWildcardAllowFrom,
   DEFAULT_ACCOUNT_ID,
   formatDocsLink,
   promptChannelAccessConfig,
-} from "moltbot/plugin-sdk";
+} from "razroom/plugin-sdk";
 import {
   parseMSTeamsTeamEntry,
   resolveMSTeamsChannelAllowlist,
@@ -21,7 +21,7 @@ import { resolveMSTeamsCredentials } from "./token.js";
 
 const channel = "msteams" as const;
 
-function setMSTeamsDmPolicy(cfg: MoltBotConfig, dmPolicy: DmPolicy) {
+function setMSTeamsDmPolicy(cfg: RazroomConfig, dmPolicy: DmPolicy) {
   const allowFrom =
     dmPolicy === "open"
       ? addWildcardAllowFrom(cfg.channels?.msteams?.allowFrom)?.map((entry) => String(entry))
@@ -39,7 +39,7 @@ function setMSTeamsDmPolicy(cfg: MoltBotConfig, dmPolicy: DmPolicy) {
   };
 }
 
-function setMSTeamsAllowFrom(cfg: MoltBotConfig, allowFrom: string[]): MoltBotConfig {
+function setMSTeamsAllowFrom(cfg: RazroomConfig, allowFrom: string[]): RazroomConfig {
   return {
     ...cfg,
     channels: {
@@ -90,9 +90,9 @@ async function promptMSTeamsCredentials(prompter: WizardPrompter): Promise<{
 }
 
 async function promptMSTeamsAllowFrom(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   prompter: WizardPrompter;
-}): Promise<MoltBotConfig> {
+}): Promise<RazroomConfig> {
   const existing = params.cfg.channels?.msteams?.allowFrom ?? [];
   await params.prompter.note(
     [
@@ -168,9 +168,9 @@ async function noteMSTeamsCredentialHelp(prompter: WizardPrompter): Promise<void
 }
 
 function setMSTeamsGroupPolicy(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   groupPolicy: "open" | "allowlist" | "disabled",
-): MoltBotConfig {
+): RazroomConfig {
   return {
     ...cfg,
     channels: {
@@ -185,9 +185,9 @@ function setMSTeamsGroupPolicy(
 }
 
 function setMSTeamsTeamsAllowlist(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   entries: Array<{ teamKey: string; channelKey?: string }>,
-): MoltBotConfig {
+): RazroomConfig {
   const baseTeams = cfg.channels?.msteams?.teams ?? {};
   const teams: Record<string, { channels?: Record<string, unknown> }> = { ...baseTeams };
   for (const entry of entries) {

@@ -18,11 +18,11 @@ see-also:
 
 This document defines how to execute OpenProse programs. You are the OpenProse VM—an intelligent virtual machine that spawns subagent sessions according to a structured program.
 
-## MoltBot Runtime Mapping
+## Razroom Runtime Mapping
 
-- **Task tool** in the upstream spec == MoltBot `sessions_spawn`
-- **File I/O** == MoltBot `read`/`write`
-- **Remote fetch** == MoltBot `web_fetch` (or `exec` with curl when POST is required)
+- **Task tool** in the upstream spec == Razroom `sessions_spawn`
+- **File I/O** == Razroom `read`/`write`
+- **Remote fetch** == Razroom `web_fetch` (or `exec` with curl when POST is required)
 
 ## CLI Commands
 

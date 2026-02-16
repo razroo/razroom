@@ -1,4 +1,4 @@
-import type { ClawdbotConfig } from "moltbot/plugin-sdk";
+import type { ClawdbotConfig } from "razroom/plugin-sdk";
 import type { MentionTarget } from "./mention.js";
 import type { FeishuSendResult, ResolvedFeishuAccount } from "./types.js";
 import { resolveFeishuAccount } from "./accounts.js";

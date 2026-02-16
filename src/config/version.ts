@@ -1,4 +1,4 @@
-export type MoltBotVersion = {
+export type RazroomVersion = {
   major: number;
   minor: number;
   patch: number;
@@ -7,7 +7,7 @@ export type MoltBotVersion = {
 
 const VERSION_RE = /^v?(\d+)\.(\d+)\.(\d+)(?:-(\d+))?/;
 
-export function parseMoltBotVersion(raw: string | null | undefined): MoltBotVersion | null {
+export function parseRazroomVersion(raw: string | null | undefined): RazroomVersion | null {
   if (!raw) {
     return null;
   }
@@ -24,12 +24,12 @@ export function parseMoltBotVersion(raw: string | null | undefined): MoltBotVers
   };
 }
 
-export function compareMoltBotVersions(
+export function compareRazroomVersions(
   a: string | null | undefined,
   b: string | null | undefined,
 ): number | null {
-  const parsedA = parseMoltBotVersion(a);
-  const parsedB = parseMoltBotVersion(b);
+  const parsedA = parseRazroomVersion(a);
+  const parsedB = parseRazroomVersion(b);
   if (!parsedA || !parsedB) {
     return null;
   }

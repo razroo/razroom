@@ -4,7 +4,7 @@ import { loadDotEnv } from "../infra/dotenv.js";
 import { normalizeEnv } from "../infra/env.js";
 import { formatUncaughtError } from "../infra/errors.js";
 import { isMainModule } from "../infra/is-main.js";
-import { ensureMoltBotCliOnPath } from "../infra/path-env.js";
+import { ensureRazroomCliOnPath } from "../infra/path-env.js";
 import { assertSupportedRuntime } from "../infra/runtime-guard.js";
 import { installUnhandledRejectionHandler } from "../infra/unhandled-rejections.js";
 import { enableConsoleCapture } from "../logging.js";
@@ -66,7 +66,7 @@ export async function runCli(argv: string[] = process.argv) {
   loadDotEnv({ quiet: true });
   normalizeEnv();
   if (shouldEnsureCliPath(normalizedArgv)) {
-    ensureMoltBotCliOnPath();
+    ensureRazroomCliOnPath();
   }
 
   // Enforce the minimum supported runtime before doing any work.
@@ -87,7 +87,7 @@ export async function runCli(argv: string[] = process.argv) {
   installUnhandledRejectionHandler();
 
   process.on("uncaughtException", (error) => {
-    console.error("[moltbot] Uncaught exception:", formatUncaughtError(error));
+    console.error("[razroom] Uncaught exception:", formatUncaughtError(error));
     process.exit(1);
   });
 

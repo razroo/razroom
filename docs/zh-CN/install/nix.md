@@ -3,7 +3,7 @@ read_when:
   - 你想要可复现、可回滚的安装
   - 你已经在使用 Nix/NixOS/Home Manager
   - 你想要所有内容都固定并以声明式管理
-summary: 使用 Nix 声明式安装 MoltBot
+summary: 使用 Nix 声明式安装 Razroom
 title: Nix
 x-i18n:
   generated_at: "2026-02-03T07:49:51Z"
@@ -16,30 +16,30 @@ x-i18n:
 
 # Nix 安装
 
-使用 Nix 运行 MoltBot 的推荐方式是通过 **[nix-moltbot](https://github.com/moltbot/nix-moltbot)** — 一个开箱即用的 Home Manager 模块。
+使用 Nix 运行 Razroom 的推荐方式是通过 **[nix-razroom](https://github.com/razroom/nix-razroom)** — 一个开箱即用的 Home Manager 模块。
 
 ## 快速开始
 
 将此粘贴给你的 AI 智能体（Claude、Cursor 等）：
 
 ```text
-I want to set up nix-moltbot on my Mac.
-Repository: github:moltbot/nix-moltbot
+I want to set up nix-razroom on my Mac.
+Repository: github:razroom/nix-razroom
 
 What I need you to do:
 1. Check if Determinate Nix is installed (if not, install it)
-2. Create a local flake at ~/code/moltbot-local using templates/agent-first/flake.nix
+2. Create a local flake at ~/code/razroom-local using templates/agent-first/flake.nix
 3. Help me create a Telegram bot (@BotFather) and get my chat ID (@userinfobot)
 4. Set up secrets (bot token, Anthropic key) - plain files at ~/.secrets/ is fine
 5. Fill in the template placeholders and run home-manager switch
 6. Verify: launchd running, bot responds to messages
 
-Reference the nix-moltbot README for module options.
+Reference the nix-razroom README for module options.
 ```
 
-> **📦 完整指南：[github.com/moltbot/nix-moltbot](https://github.com/moltbot/nix-moltbot)**
+> **📦 完整指南：[github.com/razroom/nix-razroom](https://github.com/razroom/nix-razroom)**
 >
-> nix-moltbot 仓库是 Nix 安装的权威来源。本页只是一个快速概述。
+> nix-razroom 仓库是 Nix 安装的权威来源。本页只是一个快速概述。
 
 ## 你将获得
 
@@ -52,27 +52,27 @@ Reference the nix-moltbot README for module options.
 
 ## Nix 模式运行时行为
 
-当设置 `MOLTBOT_NIX_MODE=1` 时（nix-moltbot 会自动设置）：
+当设置 `RAZROOM_NIX_MODE=1` 时（nix-razroom 会自动设置）：
 
-MoltBot 支持 **Nix 模式**，使配置确定性并禁用自动安装流程。
+Razroom 支持 **Nix 模式**，使配置确定性并禁用自动安装流程。
 通过导出以下环境变量启用：
 
 ```bash
-MOLTBOT_NIX_MODE=1
+RAZROOM_NIX_MODE=1
 ```
 
 在 macOS 上，GUI 应用不会自动继承 shell 环境变量。你也可以通过 defaults 启用 Nix 模式：
 
 ```bash
-defaults write bot.molt.mac moltbot.nixMode -bool true
+defaults write bot.molt.mac razroom.nixMode -bool true
 ```
 
 ### 配置 + 状态路径
 
-MoltBot 从 `MOLTBOT_CONFIG_PATH` 读取 JSON5 配置，并将可变数据存储在 `MOLTBOT_STATE_DIR` 中。
+Razroom 从 `RAZROOM_CONFIG_PATH` 读取 JSON5 配置，并将可变数据存储在 `RAZROOM_STATE_DIR` 中。
 
-- `MOLTBOT_STATE_DIR`（默认：`~/.moltbot`）
-- `MOLTBOT_CONFIG_PATH`（默认：`$MOLTBOT_STATE_DIR/moltbot.json`）
+- `RAZROOM_STATE_DIR`（默认：`~/.razroom`）
+- `RAZROOM_CONFIG_PATH`（默认：`$RAZROOM_STATE_DIR/razroom.json`）
 
 在 Nix 下运行时，将这些显式设置为 Nix 管理的位置，以便运行时状态和配置不会进入不可变存储。
 
@@ -87,13 +87,13 @@ MoltBot 从 `MOLTBOT_CONFIG_PATH` 读取 JSON5 配置，并将可变数据存储
 macOS 打包流程期望在以下位置有一个稳定的 Info.plist 模板：
 
 ```
-apps/macos/Sources/MoltBot/Resources/Info.plist
+apps/macos/Sources/Razroom/Resources/Info.plist
 ```
 
-[`scripts/package-mac-app.sh`](https://github.com/moltbot/moltbot/blob/main/scripts/package-mac-app.sh) 将此模板复制到应用包中并修补动态字段（bundle ID、版本/构建号、Git SHA、Sparkle 密钥）。这使 plist 对于 SwiftPM 打包和 Nix 构建保持确定性（它们不依赖完整的 Xcode 工具链）。
+[`scripts/package-mac-app.sh`](https://github.com/razroom/razroom/blob/main/scripts/package-mac-app.sh) 将此模板复制到应用包中并修补动态字段（bundle ID、版本/构建号、Git SHA、Sparkle 密钥）。这使 plist 对于 SwiftPM 打包和 Nix 构建保持确定性（它们不依赖完整的 Xcode 工具链）。
 
 ## 相关内容
 
-- [nix-moltbot](https://github.com/moltbot/nix-moltbot) — 完整设置指南
+- [nix-razroom](https://github.com/razroom/nix-razroom) — 完整设置指南
 - [向导](/start/wizard) — 非 Nix CLI 设置
 - [Docker](/install/docker) — 容器化设置

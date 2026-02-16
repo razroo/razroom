@@ -15,7 +15,7 @@ x-i18n:
 
 # 认证
 
-MoltBot 支持模型提供商的 OAuth 和 API 密钥。对于 Anthropic 账户，我们推荐使用 **API 密钥**。对于 Claude 订阅访问，使用 `claude setup-token` 创建的长期令牌。
+Razroom 支持模型提供商的 OAuth 和 API 密钥。对于 Anthropic 账户，我们推荐使用 **API 密钥**。对于 Claude 订阅访问，使用 `claude setup-token` 创建的长期令牌。
 
 参阅 [/concepts/oauth](/concepts/oauth) 了解完整的 OAuth 流程和存储布局。
 
@@ -24,17 +24,17 @@ MoltBot 支持模型提供商的 OAuth 和 API 密钥。对于 Anthropic 账户�
 如果你直接使用 Anthropic，请使用 API 密钥。
 
 1. 在 Anthropic 控制台创建 API 密钥。
-2. 将其放在 **Gateway 网关主机**（运行 `moltbot gateway` 的机器）上。
+2. 将其放在 **Gateway 网关主机**（运行 `razroom gateway` 的机器）上。
 
 ```bash
 export ANTHROPIC_API_KEY="..."
-moltbot models status
+razroom models status
 ```
 
-3. 如果 Gateway 网关在 systemd/launchd 下运行，最好将密钥放在 `~/.moltbot/.env` 中以便守护进程可以读取：
+3. 如果 Gateway 网关在 systemd/launchd 下运行，最好将密钥放在 `~/.razroom/.env` 中以便守护进程可以读取：
 
 ```bash
-cat >> ~/.moltbot/.env <<'EOF'
+cat >> ~/.razroom/.env <<'EOF'
 ANTHROPIC_API_KEY=...
 EOF
 ```
@@ -42,13 +42,13 @@ EOF
 然后重启守护进程（或重启你的 Gateway 网关进程）并重新检查：
 
 ```bash
-moltbot models status
-moltbot doctor
+razroom models status
+razroom doctor
 ```
 
-如果你不想自己管理环境变量，新手引导向导可以为守护进程使用存储 API 密钥：`moltbot onboard`。
+如果你不想自己管理环境变量，新手引导向导可以为守护进程使用存储 API 密钥：`razroom onboard`。
 
-参阅[帮助](/help)了解环境变量继承的详情（`env.shellEnv`、`~/.moltbot/.env`、systemd/launchd）。
+参阅[帮助](/help)了解环境变量继承的详情（`env.shellEnv`、`~/.razroom/.env`、systemd/launchd）。
 
 ## Anthropic：setup-token（订阅认证）
 
@@ -58,16 +58,16 @@ moltbot doctor
 claude setup-token
 ```
 
-然后将其粘贴到 MoltBot：
+然后将其粘贴到 Razroom：
 
 ```bash
-moltbot models auth setup-token --provider anthropic
+razroom models auth setup-token --provider anthropic
 ```
 
 如果令牌是在另一台机器上创建的，手动粘贴：
 
 ```bash
-moltbot models auth paste-token --provider anthropic
+razroom models auth paste-token --provider anthropic
 ```
 
 如果你看到类似这样的 Anthropic 错误：
@@ -81,14 +81,14 @@ This credential is only authorized for use with Claude Code and cannot be used f
 手动令牌输入（任何提供商；写入 `auth-profiles.json` + 更新配置）：
 
 ```bash
-moltbot models auth paste-token --provider anthropic
-moltbot models auth paste-token --provider openrouter
+razroom models auth paste-token --provider anthropic
+razroom models auth paste-token --provider openrouter
 ```
 
 自动化友好检查（过期/缺失时退出 `1`，即将过期时退出 `2`）：
 
 ```bash
-moltbot models status --check
+razroom models status --check
 ```
 
 可选的运维脚本（systemd/Termux）在此处记录：[/automation/auth-monitoring](/automation/auth-monitoring)
@@ -98,8 +98,8 @@ moltbot models status --check
 ## 检查模型认证状态
 
 ```bash
-moltbot models status
-moltbot doctor
+razroom models status
+razroom doctor
 ```
 
 ## 控制使用哪个凭证
@@ -115,9 +115,9 @@ moltbot doctor
 为智能体设置显式的认证配置文件顺序覆盖（存储在该智能体的 `auth-profiles.json` 中）：
 
 ```bash
-moltbot models auth order get --provider anthropic
-moltbot models auth order set --provider anthropic anthropic:default
-moltbot models auth order clear --provider anthropic
+razroom models auth order get --provider anthropic
+razroom models auth order set --provider anthropic anthropic:default
+razroom models auth order clear --provider anthropic
 ```
 
 使用 `--agent <id>` 指定特定智能体；省略它则使用配置的默认智能体。
@@ -129,12 +129,12 @@ moltbot models auth order clear --provider anthropic
 如果 Anthropic 令牌配置文件缺失，在 **Gateway 网关主机**上运行 `claude setup-token`，然后重新检查：
 
 ```bash
-moltbot models status
+razroom models status
 ```
 
 ### 令牌即将过期/已过期
 
-运行 `moltbot models status` 确认哪个配置文件即将过期。如果配置文件缺失，重新运行 `claude setup-token` 并再次粘贴令牌。
+运行 `razroom models status` 确认哪个配置文件即将过期。如果配置文件缺失，重新运行 `claude setup-token` 并再次粘贴令牌。
 
 ## 要求
 

@@ -1,5 +1,5 @@
-import type { MoltBotConfig } from "moltbot/plugin-sdk";
-import { loadWebMedia, resolveChannelMediaMaxBytes } from "moltbot/plugin-sdk";
+import type { RazroomConfig } from "razroom/plugin-sdk";
+import { loadWebMedia, resolveChannelMediaMaxBytes } from "razroom/plugin-sdk";
 import { createMSTeamsConversationStoreFs } from "./conversation-store-fs.js";
 import {
   classifyMSTeamsSendError,
@@ -21,7 +21,7 @@ import { resolveMSTeamsSendContext, type MSTeamsProactiveContext } from "./send-
 
 export type SendMSTeamsMessageParams = {
   /** Full config (for credentials) */
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   /** Conversation ID or user ID to send to */
   to: string;
   /** Message text */
@@ -48,7 +48,7 @@ const MSTEAMS_MAX_MEDIA_BYTES = 100 * 1024 * 1024;
 
 export type SendMSTeamsPollParams = {
   /** Full config (for credentials) */
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   /** Conversation ID or user ID to send to */
   to: string;
   /** Poll question */
@@ -67,7 +67,7 @@ export type SendMSTeamsPollResult = {
 
 export type SendMSTeamsCardParams = {
   /** Full config (for credentials) */
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   /** Conversation ID or user ID to send to */
   to: string;
   /** Adaptive Card JSON object */

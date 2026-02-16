@@ -1,1 +1,1 @@
-export { withFileLock } from "moltbot/plugin-sdk";
+export { withFileLock } from "razroom/plugin-sdk";

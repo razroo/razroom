@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
 import {
   parseFrontmatter,
-  resolveMoltBotMetadata,
+  resolveRazroomMetadata,
   resolveHookInvocationPolicy,
 } from "./frontmatter.js";
 
@@ -41,7 +41,7 @@ name: session-memory
 description: "Save session context"
 metadata:
   {
-    "moltbot": {
+    "razroom": {
       "emoji": "💾",
       "events": ["command:new"]
     }
@@ -58,8 +58,8 @@ metadata:
 
     // Verify the metadata is valid JSON
     const parsed = JSON.parse(result.metadata);
-    expect(parsed.moltbot.emoji).toBe("💾");
-    expect(parsed.moltbot.events).toEqual(["command:new"]);
+    expect(parsed.razroom.emoji).toBe("💾");
+    expect(parsed.razroom.events).toEqual(["command:new"]);
   });
 
   it("parses multi-line metadata with complex nested structure", () => {
@@ -68,7 +68,7 @@ name: command-logger
 description: "Log all command events"
 metadata:
   {
-    "moltbot":
+    "razroom":
       {
         "emoji": "📝",
         "events": ["command"],
@@ -83,21 +83,21 @@ metadata:
     expect(result.metadata).toBeDefined();
 
     const parsed = JSON.parse(result.metadata);
-    expect(parsed.moltbot.emoji).toBe("📝");
-    expect(parsed.moltbot.events).toEqual(["command"]);
-    expect(parsed.moltbot.requires.config).toEqual(["workspace.dir"]);
-    expect(parsed.moltbot.install[0].kind).toBe("bundled");
+    expect(parsed.razroom.emoji).toBe("📝");
+    expect(parsed.razroom.events).toEqual(["command"]);
+    expect(parsed.razroom.requires.config).toEqual(["workspace.dir"]);
+    expect(parsed.razroom.install[0].kind).toBe("bundled");
   });
 
   it("handles single-line metadata (inline JSON)", () => {
     const content = `---
 name: simple-hook
-metadata: {"moltbot": {"events": ["test"]}}
+metadata: {"razroom": {"events": ["test"]}}
 ---
 `;
     const result = parseFrontmatter(content);
     expect(result.name).toBe("simple-hook");
-    expect(result.metadata).toBe('{"moltbot": {"events": ["test"]}}');
+    expect(result.metadata).toBe('{"razroom": {"events": ["test"]}}');
   });
 
   it("handles mixed single-line and multi-line values", () => {
@@ -107,7 +107,7 @@ description: "A hook with mixed values"
 homepage: https://example.com
 metadata:
   {
-    "moltbot": {
+    "razroom": {
       "events": ["command:new"]
     }
   }
@@ -148,12 +148,12 @@ description: 'single-quoted'
   });
 });
 
-describe("resolveMoltBotMetadata", () => {
-  it("extracts moltbot metadata from parsed frontmatter", () => {
+describe("resolveRazroomMetadata", () => {
+  it("extracts razroom metadata from parsed frontmatter", () => {
     const frontmatter = {
       name: "test-hook",
       metadata: JSON.stringify({
-        moltbot: {
+        razroom: {
           emoji: "🔥",
           events: ["command:new", "command:reset"],
           requires: {
@@ -164,7 +164,7 @@ describe("resolveMoltBotMetadata", () => {
       }),
     };
 
-    const result = resolveMoltBotMetadata(frontmatter);
+    const result = resolveRazroomMetadata(frontmatter);
     expect(result).toBeDefined();
     expect(result?.emoji).toBe("🔥");
     expect(result?.events).toEqual(["command:new", "command:reset"]);
@@ -174,15 +174,15 @@ describe("resolveMoltBotMetadata", () => {
 
   it("returns undefined when metadata is missing", () => {
     const frontmatter = { name: "no-metadata" };
-    const result = resolveMoltBotMetadata(frontmatter);
+    const result = resolveRazroomMetadata(frontmatter);
     expect(result).toBeUndefined();
   });
 
-  it("returns undefined when moltbot key is missing", () => {
+  it("returns undefined when razroom key is missing", () => {
     const frontmatter = {
       metadata: JSON.stringify({ other: "data" }),
     };
-    const result = resolveMoltBotMetadata(frontmatter);
+    const result = resolveRazroomMetadata(frontmatter);
     expect(result).toBeUndefined();
   });
 
@@ -190,41 +190,41 @@ describe("resolveMoltBotMetadata", () => {
     const frontmatter = {
       metadata: "not valid json {",
     };
-    const result = resolveMoltBotMetadata(frontmatter);
+    const result = resolveRazroomMetadata(frontmatter);
     expect(result).toBeUndefined();
   });
 
   it("handles install specs", () => {
     const frontmatter = {
       metadata: JSON.stringify({
-        moltbot: {
+        razroom: {
           events: ["command"],
           install: [
-            { id: "bundled", kind: "bundled", label: "Bundled with MoltBot" },
-            { id: "npm", kind: "npm", package: "@moltbot/hook" },
+            { id: "bundled", kind: "bundled", label: "Bundled with Razroom" },
+            { id: "npm", kind: "npm", package: "@razroom/hook" },
           ],
         },
       }),
     };
 
-    const result = resolveMoltBotMetadata(frontmatter);
+    const result = resolveRazroomMetadata(frontmatter);
     expect(result?.install).toHaveLength(2);
     expect(result?.install?.[0].kind).toBe("bundled");
     expect(result?.install?.[1].kind).toBe("npm");
-    expect(result?.install?.[1].package).toBe("@moltbot/hook");
+    expect(result?.install?.[1].package).toBe("@razroom/hook");
   });
 
   it("handles os restrictions", () => {
     const frontmatter = {
       metadata: JSON.stringify({
-        moltbot: {
+        razroom: {
           events: ["command"],
           os: ["darwin", "linux"],
         },
       }),
     };
 
-    const result = resolveMoltBotMetadata(frontmatter);
+    const result = resolveRazroomMetadata(frontmatter);
     expect(result?.os).toEqual(["darwin", "linux"]);
   });
 
@@ -233,15 +233,15 @@ describe("resolveMoltBotMetadata", () => {
     const content = `---
 name: session-memory
 description: "Save session context to memory when /new command is issued"
-homepage: https://docs.moltbot.ai/automation/hooks#session-memory
+homepage: https://docs.razroom.ai/automation/hooks#session-memory
 metadata:
   {
-    "moltbot":
+    "razroom":
       {
         "emoji": "💾",
         "events": ["command:new"],
         "requires": { "config": ["workspace.dir"] },
-        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with MoltBot" }],
+        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with Razroom" }],
       },
   }
 ---
@@ -253,28 +253,28 @@ metadata:
     expect(frontmatter.name).toBe("session-memory");
     expect(frontmatter.metadata).toBeDefined();
 
-    const moltbot = resolveMoltBotMetadata(frontmatter);
-    expect(moltbot).toBeDefined();
-    expect(moltbot?.emoji).toBe("💾");
-    expect(moltbot?.events).toEqual(["command:new"]);
-    expect(moltbot?.requires?.config).toEqual(["workspace.dir"]);
-    expect(moltbot?.install?.[0].kind).toBe("bundled");
+    const razroom = resolveRazroomMetadata(frontmatter);
+    expect(razroom).toBeDefined();
+    expect(razroom?.emoji).toBe("💾");
+    expect(razroom?.events).toEqual(["command:new"]);
+    expect(razroom?.requires?.config).toEqual(["workspace.dir"]);
+    expect(razroom?.install?.[0].kind).toBe("bundled");
   });
 
   it("parses YAML metadata map", () => {
     const content = `---
 name: yaml-metadata
 metadata:
-  moltbot:
+  razroom:
     emoji: disk
     events:
       - command:new
 ---
 `;
     const frontmatter = parseFrontmatter(content);
-    const moltbot = resolveMoltBotMetadata(frontmatter);
-    expect(moltbot?.emoji).toBe("disk");
-    expect(moltbot?.events).toEqual(["command:new"]);
+    const razroom = resolveRazroomMetadata(frontmatter);
+    expect(razroom?.emoji).toBe("disk");
+    expect(razroom?.events).toEqual(["command:new"]);
   });
 });
 

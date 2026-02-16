@@ -1,5 +1,5 @@
 import { describe, expect, it, mock, spyOn } from "bun:test";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 
 const mocks = vi.hoisted(() => ({
   clackIntro: mock(),
@@ -29,7 +29,7 @@ mock("@clack/prompts", () => ({
 }));
 
 mock("../config/config.js", () => ({
-  CONFIG_PATH: "~/.moltbot/moltbot.json",
+  CONFIG_PATH: "~/.razroom/razroom.json",
   readConfigFileSnapshot: mocks.readConfigFileSnapshot,
   writeConfigFile: mocks.writeConfigFile,
   resolveGatewayPort: mocks.resolveGatewayPort,
@@ -48,8 +48,8 @@ mock("../terminal/note.js", () => ({
 }));
 
 mock("./onboard-helpers.js", () => ({
-  DEFAULT_WORKSPACE: "~/.moltbot/workspace",
-  applyWizardMetadata: (cfg: MoltBotConfig) => cfg,
+  DEFAULT_WORKSPACE: "~/.razroom/workspace",
+  applyWizardMetadata: (cfg: RazroomConfig) => cfg,
   ensureWorkspaceAndSessions: mock(),
   guardCancel: <T>(value: T) => value,
   printWizardHeader: mocks.printWizardHeader,

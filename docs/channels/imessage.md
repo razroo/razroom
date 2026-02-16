@@ -42,7 +42,7 @@ imsg rpc --help
 
       </Step>
 
-      <Step title="Configure MoltBot">
+      <Step title="Configure Razroom">
 
 ```json5
 {
@@ -61,7 +61,7 @@ imsg rpc --help
       <Step title="Start gateway">
 
 ```bash
-moltbot gateway
+razroom gateway
 ```
 
       </Step>
@@ -69,8 +69,8 @@ moltbot gateway
       <Step title="Approve first DM pairing (default dmPolicy)">
 
 ```bash
-moltbot pairing list imessage
-moltbot pairing approve imessage <CODE>
+razroom pairing list imessage
+razroom pairing approve imessage <CODE>
 ```
 
         Pairing requests expire after 1 hour.
@@ -80,7 +80,7 @@ moltbot pairing approve imessage <CODE>
   </Tab>
 
   <Tab title="Remote Mac over SSH">
-    MoltBot only requires a stdio-compatible `cliPath`, so you can point `cliPath` at a wrapper script that SSHes to a remote Mac and runs `imsg`.
+    Razroom only requires a stdio-compatible `cliPath`, so you can point `cliPath` at a wrapper script that SSHes to a remote Mac and runs `imsg`.
 
 ```bash
 #!/usr/bin/env bash
@@ -94,7 +94,7 @@ exec ssh -T gateway-host imsg "$@"
   channels: {
     imessage: {
       enabled: true,
-      cliPath: "~/.moltbot/scripts/imsg-ssh",
+      cliPath: "~/.razroom/scripts/imsg-ssh",
       remoteHost: "user@gateway-host", // used for SCP attachment fetches
       includeAttachments: true,
     },
@@ -102,7 +102,7 @@ exec ssh -T gateway-host imsg "$@"
 }
 ```
 
-    If `remoteHost` is not set, MoltBot attempts to auto-detect it by parsing the SSH wrapper script.
+    If `remoteHost` is not set, Razroom attempts to auto-detect it by parsing the SSH wrapper script.
 
   </Tab>
 </Tabs>
@@ -110,7 +110,7 @@ exec ssh -T gateway-host imsg "$@"
 ## Requirements and permissions (macOS)
 
 - Messages must be signed in on the Mac running `imsg`.
-- Full Disk Access is required for the process context running MoltBot/`imsg` (Messages DB access).
+- Full Disk Access is required for the process context running Razroom/`imsg` (Messages DB access).
 - Automation permission is required to send messages through Messages.app.
 
 <Tip>
@@ -171,7 +171,7 @@ imsg send <handle> "test"
     Group-ish thread behavior:
 
     Some multi-participant iMessage threads can arrive with `is_group=false`.
-    If that `chat_id` is explicitly configured under `channels.imessage.groups`, MoltBot treats it as group traffic (group gating + group session isolation).
+    If that `chat_id` is explicitly configured under `channels.imessage.groups`, Razroom treats it as group traffic (group gating + group session isolation).
 
   </Tab>
 </Tabs>
@@ -187,7 +187,7 @@ imsg send <handle> "test"
     1. Create/sign in a dedicated macOS user.
     2. Sign into Messages with the bot Apple ID in that user.
     3. Install `imsg` in that user.
-    4. Create SSH wrapper so MoltBot can run `imsg` in that user context.
+    4. Create SSH wrapper so Razroom can run `imsg` in that user context.
     5. Point `channels.imessage.accounts.<id>.cliPath` and `.dbPath` to that user profile.
 
     First run may require GUI approvals (Automation + Full Disk Access) in that bot user session.
@@ -209,7 +209,7 @@ imsg send <handle> "test"
   channels: {
     imessage: {
       enabled: true,
-      cliPath: "~/.moltbot/scripts/imsg-ssh",
+      cliPath: "~/.razroom/scripts/imsg-ssh",
       remoteHost: "bot@mac-mini.tailnet-1234.ts.net",
       includeAttachments: true,
       dbPath: "/Users/bot/Library/Messages/chat.db",
@@ -295,7 +295,7 @@ Disable:
 
 ```bash
 imsg rpc --help
-moltbot channels status --probe
+razroom channels status --probe
 ```
 
     If probe reports RPC unsupported, update `imsg`.
@@ -307,7 +307,7 @@ moltbot channels status --probe
 
     - `channels.imessage.dmPolicy`
     - `channels.imessage.allowFrom`
-    - pairing approvals (`moltbot pairing list imessage`)
+    - pairing approvals (`razroom pairing list imessage`)
 
   </Accordion>
 
@@ -338,7 +338,7 @@ imsg chats --limit 1
 imsg send <handle> "test"
 ```
 
-    Confirm Full Disk Access + Automation are granted for the process context that runs MoltBot/`imsg`.
+    Confirm Full Disk Access + Automation are granted for the process context that runs Razroom/`imsg`.
 
   </Accordion>
 </AccordionGroup>

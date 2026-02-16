@@ -99,15 +99,15 @@ const runtime = {
 describe("onboard (non-interactive): gateway and remote auth", () => {
   const prev = {
     home: process.env.HOME,
-    stateDir: process.env.MOLTBOT_STATE_DIR,
-    configPath: process.env.MOLTBOT_CONFIG_PATH,
-    skipChannels: process.env.MOLTBOT_SKIP_CHANNELS,
-    skipGmail: process.env.MOLTBOT_SKIP_GMAIL_WATCHER,
-    skipCron: process.env.MOLTBOT_SKIP_CRON,
-    skipCanvas: process.env.MOLTBOT_SKIP_CANVAS_HOST,
-    skipBrowser: process.env.MOLTBOT_SKIP_BROWSER_CONTROL_SERVER,
-    token: process.env.MOLTBOT_GATEWAY_TOKEN,
-    password: process.env.MOLTBOT_GATEWAY_PASSWORD,
+    stateDir: process.env.RAZROOM_STATE_DIR,
+    configPath: process.env.RAZROOM_CONFIG_PATH,
+    skipChannels: process.env.RAZROOM_SKIP_CHANNELS,
+    skipGmail: process.env.RAZROOM_SKIP_GMAIL_WATCHER,
+    skipCron: process.env.RAZROOM_SKIP_CRON,
+    skipCanvas: process.env.RAZROOM_SKIP_CANVAS_HOST,
+    skipBrowser: process.env.RAZROOM_SKIP_BROWSER_CONTROL_SERVER,
+    token: process.env.RAZROOM_GATEWAY_TOKEN,
+    password: process.env.RAZROOM_GATEWAY_PASSWORD,
   };
   let tempHome: string | undefined;
 
@@ -116,21 +116,21 @@ describe("onboard (non-interactive): gateway and remote auth", () => {
       throw new Error("temp home not initialized");
     }
     const stateDir = await fs.mkdtemp(path.join(tempHome, prefix));
-    process.env.MOLTBOT_STATE_DIR = stateDir;
-    delete process.env.MOLTBOT_CONFIG_PATH;
+    process.env.RAZROOM_STATE_DIR = stateDir;
+    delete process.env.RAZROOM_CONFIG_PATH;
     return stateDir;
   };
 
   beforeAll(async () => {
-    process.env.MOLTBOT_SKIP_CHANNELS = "1";
-    process.env.MOLTBOT_SKIP_GMAIL_WATCHER = "1";
-    process.env.MOLTBOT_SKIP_CRON = "1";
-    process.env.MOLTBOT_SKIP_CANVAS_HOST = "1";
-    process.env.MOLTBOT_SKIP_BROWSER_CONTROL_SERVER = "1";
-    delete process.env.MOLTBOT_GATEWAY_TOKEN;
-    delete process.env.MOLTBOT_GATEWAY_PASSWORD;
+    process.env.RAZROOM_SKIP_CHANNELS = "1";
+    process.env.RAZROOM_SKIP_GMAIL_WATCHER = "1";
+    process.env.RAZROOM_SKIP_CRON = "1";
+    process.env.RAZROOM_SKIP_CANVAS_HOST = "1";
+    process.env.RAZROOM_SKIP_BROWSER_CONTROL_SERVER = "1";
+    delete process.env.RAZROOM_GATEWAY_TOKEN;
+    delete process.env.RAZROOM_GATEWAY_PASSWORD;
 
-    tempHome = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-onboard-"));
+    tempHome = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-onboard-"));
     process.env.HOME = tempHome;
   });
 
@@ -139,21 +139,21 @@ describe("onboard (non-interactive): gateway and remote auth", () => {
       await fs.rm(tempHome, { recursive: true, force: true });
     }
     process.env.HOME = prev.home;
-    process.env.MOLTBOT_STATE_DIR = prev.stateDir;
-    process.env.MOLTBOT_CONFIG_PATH = prev.configPath;
-    process.env.MOLTBOT_SKIP_CHANNELS = prev.skipChannels;
-    process.env.MOLTBOT_SKIP_GMAIL_WATCHER = prev.skipGmail;
-    process.env.MOLTBOT_SKIP_CRON = prev.skipCron;
-    process.env.MOLTBOT_SKIP_CANVAS_HOST = prev.skipCanvas;
-    process.env.MOLTBOT_SKIP_BROWSER_CONTROL_SERVER = prev.skipBrowser;
-    process.env.MOLTBOT_GATEWAY_TOKEN = prev.token;
-    process.env.MOLTBOT_GATEWAY_PASSWORD = prev.password;
+    process.env.RAZROOM_STATE_DIR = prev.stateDir;
+    process.env.RAZROOM_CONFIG_PATH = prev.configPath;
+    process.env.RAZROOM_SKIP_CHANNELS = prev.skipChannels;
+    process.env.RAZROOM_SKIP_GMAIL_WATCHER = prev.skipGmail;
+    process.env.RAZROOM_SKIP_CRON = prev.skipCron;
+    process.env.RAZROOM_SKIP_CANVAS_HOST = prev.skipCanvas;
+    process.env.RAZROOM_SKIP_BROWSER_CONTROL_SERVER = prev.skipBrowser;
+    process.env.RAZROOM_GATEWAY_TOKEN = prev.token;
+    process.env.RAZROOM_GATEWAY_PASSWORD = prev.password;
   });
 
   it("writes gateway token auth into config and gateway enforces it", async () => {
     const stateDir = await initStateDir("state-noninteractive-");
     const token = "tok_test_123";
-    const workspace = path.join(stateDir, "moltbot");
+    const workspace = path.join(stateDir, "razroom");
 
     const { runNonInteractiveOnboarding } = await import("./onboard-non-interactive.js");
     await runNonInteractiveOnboarding(
@@ -236,11 +236,11 @@ describe("onboard (non-interactive): gateway and remote auth", () => {
       return;
     }
     const stateDir = await initStateDir("state-lan-");
-    process.env.MOLTBOT_STATE_DIR = stateDir;
-    process.env.MOLTBOT_CONFIG_PATH = path.join(stateDir, "moltbot.json");
+    process.env.RAZROOM_STATE_DIR = stateDir;
+    process.env.RAZROOM_CONFIG_PATH = path.join(stateDir, "razroom.json");
 
     const port = await getFreeGatewayPort();
-    const workspace = path.join(stateDir, "moltbot");
+    const workspace = path.join(stateDir, "razroom");
 
     const { runNonInteractiveOnboarding } = await import("./onboard-non-interactive.js");
     await runNonInteractiveOnboarding(

@@ -54,7 +54,7 @@ function createHarness() {
     channelsConfig: undefined,
     slashCommand: {
       enabled: true,
-      name: "moltbot",
+      name: "razroom",
       ephemeral: true,
       sessionPrefix: "slack:slash",
     },
@@ -106,7 +106,7 @@ describe("Slack native command argument menus", () => {
     const { actions, ctx, account } = createHarness();
     await registerCommands(ctx, account);
 
-    const handler = actions.get("moltbot_cmdarg");
+    const handler = actions.get("razroom_cmdarg");
     if (!handler) {
       throw new Error("Missing arg-menu action handler");
     }
@@ -134,7 +134,7 @@ describe("Slack native command argument menus", () => {
     const { actions, ctx, account } = createHarness();
     await registerCommands(ctx, account);
 
-    const handler = actions.get("moltbot_cmdarg");
+    const handler = actions.get("razroom_cmdarg");
     if (!handler) {
       throw new Error("Missing arg-menu action handler");
     }
@@ -164,7 +164,7 @@ describe("Slack native command argument menus", () => {
     const { actions, postEphemeral, ctx, account } = createHarness();
     await registerCommands(ctx, account);
 
-    const handler = actions.get("moltbot_cmdarg");
+    const handler = actions.get("razroom_cmdarg");
     if (!handler) {
       throw new Error("Missing arg-menu action handler");
     }
@@ -188,7 +188,7 @@ describe("Slack native command argument menus", () => {
     const { actions, postEphemeral, ctx, account } = createHarness();
     await registerCommands(ctx, account);
 
-    const handler = actions.get("moltbot_cmdarg");
+    const handler = actions.get("razroom_cmdarg");
     if (!handler) {
       throw new Error("Missing arg-menu action handler");
     }

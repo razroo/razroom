@@ -3,7 +3,7 @@ import {
   TtsConfigSchema,
   TtsModeSchema,
   TtsProviderSchema,
-} from "moltbot/plugin-sdk";
+} from "razroom/plugin-sdk";
 import { z } from "zod";
 
 // -----------------------------------------------------------------------------

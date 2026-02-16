@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import { resolveDefaultAgentId } from "../agents/agent-scope.js";
 import { createConfigIO } from "../config/config.js";
 import { collectIncludePathsRecursive } from "../config/includes-scan.js";
@@ -184,7 +184,7 @@ async function safeAclReset(params: {
 }
 
 function setGroupPolicyAllowlist(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   channel: string;
   changes: string[];
   policyFlips: Set<string>;
@@ -192,7 +192,7 @@ function setGroupPolicyAllowlist(params: {
   if (!params.cfg.channels) {
     return;
   }
-  const section = params.cfg.channels[params.channel as keyof MoltBotConfig["channels"]] as
+  const section = params.cfg.channels[params.channel as keyof RazroomConfig["channels"]] as
     | Record<string, unknown>
     | undefined;
   if (!section || typeof section !== "object") {
@@ -229,7 +229,7 @@ function setGroupPolicyAllowlist(params: {
 }
 
 function setWhatsAppGroupAllowFromFromStore(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   storeAllowFrom: string[];
   changes: string[];
   policyFlips: Set<string>;
@@ -273,8 +273,8 @@ function setWhatsAppGroupAllowFromFromStore(params: {
   }
 }
 
-function applyConfigFixes(params: { cfg: MoltBotConfig; env: NodeJS.ProcessEnv }): {
-  cfg: MoltBotConfig;
+function applyConfigFixes(params: { cfg: RazroomConfig; env: NodeJS.ProcessEnv }): {
+  cfg: RazroomConfig;
   changes: string[];
   policyFlips: Set<string>;
 } {
@@ -305,7 +305,7 @@ function applyConfigFixes(params: { cfg: MoltBotConfig; env: NodeJS.ProcessEnv }
 async function chmodCredentialsAndAgentState(params: {
   env: NodeJS.ProcessEnv;
   stateDir: string;
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   actions: SecurityFixAction[];
   applyPerms: (params: {
     path: string;

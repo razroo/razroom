@@ -39,7 +39,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: "openai-codex/gpt-5.2-codex",
-              workspace: path.join(home, "moltbot"),
+              workspace: path.join(home, "razroom"),
             },
           },
           channels: { whatsapp: { allowFrom: ["*"] } },
@@ -67,7 +67,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: "openai/gpt-5.2",
-              workspace: path.join(home, "moltbot"),
+              workspace: path.join(home, "razroom"),
             },
           },
           channels: { whatsapp: { allowFrom: ["*"] } },
@@ -95,7 +95,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: "openai/gpt-4.1-mini",
-              workspace: path.join(home, "moltbot"),
+              workspace: path.join(home, "razroom"),
             },
           },
           channels: { whatsapp: { allowFrom: ["*"] } },
@@ -123,7 +123,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: "anthropic/claude-opus-4-5",
-              workspace: path.join(home, "moltbot"),
+              workspace: path.join(home, "razroom"),
               models: {
                 "anthropic/claude-opus-4-5": { alias: " help " },
               },
@@ -141,7 +141,7 @@ describe("directive behavior", () => {
   });
   it("treats skill commands as reserved for model aliases", async () => {
     await withTempHome(async (home) => {
-      const workspace = path.join(home, "moltbot");
+      const workspace = path.join(home, "razroom");
       await writeSkill({
         workspaceDir: workspace,
         name: "demo-skill",
@@ -190,7 +190,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: "anthropic/claude-opus-4-5",
-              workspace: path.join(home, "moltbot"),
+              workspace: path.join(home, "razroom"),
             },
           },
           channels: { whatsapp: { allowFrom: ["*"] } },
@@ -220,7 +220,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: "anthropic/claude-opus-4-5",
-              workspace: path.join(home, "moltbot"),
+              workspace: path.join(home, "razroom"),
             },
           },
           messages: {
@@ -255,7 +255,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: "anthropic/claude-opus-4-5",
-              workspace: path.join(home, "moltbot"),
+              workspace: path.join(home, "razroom"),
               thinkingDefault: "high",
             },
           },

@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "moltbot/plugin-sdk";
+import type { RazroomConfig } from "razroom/plugin-sdk";
 import crypto from "node:crypto";
 import path from "node:path";
 import { resolveBlueBubblesAccount } from "./accounts.js";
@@ -18,7 +18,7 @@ export type BlueBubblesAttachmentOpts = {
   password?: string;
   accountId?: string;
   timeoutMs?: number;
-  cfg?: MoltBotConfig;
+  cfg?: RazroomConfig;
 };
 
 const DEFAULT_ATTACHMENT_MAX_BYTES = 8 * 1024 * 1024;

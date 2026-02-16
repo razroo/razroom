@@ -11,7 +11,7 @@ title: "Agent Workspace"
 The workspace is the agent's home. It is the only working directory used for
 file tools and for workspace context. Keep it private and treat it as memory.
 
-This is separate from `~/.moltbot/`, which stores config, credentials, and
+This is separate from `~/.razroom/`, which stores config, credentials, and
 sessions.
 
 **Important:** the workspace is the **default cwd**, not a hard sandbox. Tools
@@ -19,24 +19,24 @@ resolve relative paths against the workspace, but absolute paths can still reach
 elsewhere on the host unless sandboxing is enabled. If you need isolation, use
 [`agents.defaults.sandbox`](/gateway/sandboxing) (and/or per‑agent sandbox config).
 When sandboxing is enabled and `workspaceAccess` is not `"rw"`, tools operate
-inside a sandbox workspace under `~/.moltbot/sandboxes`, not your host workspace.
+inside a sandbox workspace under `~/.razroom/sandboxes`, not your host workspace.
 
 ## Default location
 
-- Default: `~/.moltbot/workspace`
-- If `MOLTBOT_PROFILE` is set and not `"default"`, the default becomes
-  `~/.moltbot/workspace-<profile>`.
-- Override in `~/.moltbot/moltbot.json`:
+- Default: `~/.razroom/workspace`
+- If `RAZROOM_PROFILE` is set and not `"default"`, the default becomes
+  `~/.razroom/workspace-<profile>`.
+- Override in `~/.razroom/razroom.json`:
 
 ```json5
 {
   agent: {
-    workspace: "~/.moltbot/workspace",
+    workspace: "~/.razroom/workspace",
   },
 }
 ```
 
-`moltbot onboard`, `moltbot configure`, or `moltbot setup` will create the
+`razroom onboard`, `razroom configure`, or `razroom setup` will create the
 workspace and seed the bootstrap files if they are missing.
 
 If you already manage the workspace files yourself, you can disable bootstrap
@@ -48,20 +48,20 @@ file creation:
 
 ## Extra workspace folders
 
-Older installs may have created `~/moltbot`. Keeping multiple workspace
+Older installs may have created `~/razroom`. Keeping multiple workspace
 directories around can cause confusing auth or state drift, because only one
 workspace is active at a time.
 
 **Recommendation:** keep a single active workspace. If you no longer use the
-extra folders, archive or move them to Trash (for example `trash ~/moltbot`).
+extra folders, archive or move them to Trash (for example `trash ~/razroom`).
 If you intentionally keep multiple workspaces, make sure
 `agents.defaults.workspace` points to the active one.
 
-`moltbot doctor` warns when it detects extra workspace directories.
+`razroom doctor` warns when it detects extra workspace directories.
 
 ## Workspace file map (what each file means)
 
-These are the standard files MoltBot expects inside the workspace:
+These are the standard files Razroom expects inside the workspace:
 
 - `AGENTS.md`
   - Operating instructions for the agent and how it should use memory.
@@ -114,20 +114,20 @@ See [Memory](/concepts/memory) for the workflow and automatic memory flush.
 - `canvas/` (optional)
   - Canvas UI files for node displays (for example `canvas/index.html`).
 
-If any bootstrap file is missing, MoltBot injects a "missing file" marker into
+If any bootstrap file is missing, Razroom injects a "missing file" marker into
 the session and continues. Large bootstrap files are truncated when injected;
 adjust the limit with `agents.defaults.bootstrapMaxChars` (default: 20000).
-`moltbot setup` can recreate missing defaults without overwriting existing
+`razroom setup` can recreate missing defaults without overwriting existing
 files.
 
 ## What is NOT in the workspace
 
-These live under `~/.moltbot/` and should NOT be committed to the workspace repo:
+These live under `~/.razroom/` and should NOT be committed to the workspace repo:
 
-- `~/.moltbot/moltbot.json` (config)
-- `~/.moltbot/credentials/` (OAuth tokens, API keys)
-- `~/.moltbot/agents/<agentId>/sessions/` (session transcripts + metadata)
-- `~/.moltbot/skills/` (managed skills)
+- `~/.razroom/razroom.json` (config)
+- `~/.razroom/credentials/` (OAuth tokens, API keys)
+- `~/.razroom/agents/<agentId>/sessions/` (session transcripts + metadata)
+- `~/.razroom/skills/` (managed skills)
 
 If you need to migrate sessions or config, copy them separately and keep them
 out of version control.
@@ -146,7 +146,7 @@ If git is installed, brand-new workspaces are initialized automatically. If this
 workspace is not already a repo, run:
 
 ```bash
-cd ~/.moltbot/workspace
+cd ~/.razroom/workspace
 git init
 git add AGENTS.md SOUL.md TOOLS.md IDENTITY.md USER.md HEARTBEAT.md memory/
 git commit -m "Add agent workspace"
@@ -171,7 +171,7 @@ Option B: GitHub CLI (`gh`)
 
 ```bash
 gh auth login
-gh repo create moltbot-workspace --private --source . --remote origin --push
+gh repo create razroom-workspace --private --source . --remote origin --push
 ```
 
 Option C: GitLab web UI
@@ -201,11 +201,11 @@ git push
 Even in a private repo, avoid storing secrets in the workspace:
 
 - API keys, OAuth tokens, passwords, or private credentials.
-- Anything under `~/.moltbot/`.
+- Anything under `~/.razroom/`.
 - Raw dumps of chats or sensitive attachments.
 
 If you must store sensitive references, use placeholders and keep the real
-secret elsewhere (password manager, environment variables, or `~/.moltbot/`).
+secret elsewhere (password manager, environment variables, or `~/.razroom/`).
 
 Suggested `.gitignore` starter:
 
@@ -219,10 +219,10 @@ Suggested `.gitignore` starter:
 
 ## Moving the workspace to a new machine
 
-1. Clone the repo to the desired path (default `~/.moltbot/workspace`).
-2. Set `agents.defaults.workspace` to that path in `~/.moltbot/moltbot.json`.
-3. Run `moltbot setup --workspace <path>` to seed any missing files.
-4. If you need sessions, copy `~/.moltbot/agents/<agentId>/sessions/` from the
+1. Clone the repo to the desired path (default `~/.razroom/workspace`).
+2. Set `agents.defaults.workspace` to that path in `~/.razroom/razroom.json`.
+3. Run `razroom setup --workspace <path>` to seed any missing files.
+4. If you need sessions, copy `~/.razroom/agents/<agentId>/sessions/` from the
    old machine separately.
 
 ## Advanced notes

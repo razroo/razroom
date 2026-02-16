@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `moltbot hooks` (agent hooks)"
+summary: "CLI reference for `razroom hooks` (agent hooks)"
 read_when:
   - You want to manage agent hooks
   - You want to install or update hooks
 title: "hooks"
 ---
 
-# `moltbot hooks`
+# `razroom hooks`
 
 Manage agent hooks (event-driven automations for commands like `/new`, `/reset`, and gateway startup).
 
@@ -18,7 +18,7 @@ Related:
 ## List All Hooks
 
 ```bash
-moltbot hooks list
+razroom hooks list
 ```
 
 List all discovered hooks from workspace, managed, and bundled directories.
@@ -44,7 +44,7 @@ Ready:
 **Example (verbose):**
 
 ```bash
-moltbot hooks list --verbose
+razroom hooks list --verbose
 ```
 
 Shows missing requirements for ineligible hooks.
@@ -52,7 +52,7 @@ Shows missing requirements for ineligible hooks.
 **Example (JSON):**
 
 ```bash
-moltbot hooks list --json
+razroom hooks list --json
 ```
 
 Returns structured JSON for programmatic use.
@@ -60,7 +60,7 @@ Returns structured JSON for programmatic use.
 ## Get Hook Information
 
 ```bash
-moltbot hooks info <name>
+razroom hooks info <name>
 ```
 
 Show detailed information about a specific hook.
@@ -76,7 +76,7 @@ Show detailed information about a specific hook.
 **Example:**
 
 ```bash
-moltbot hooks info session-memory
+razroom hooks info session-memory
 ```
 
 **Output:**
@@ -87,10 +87,10 @@ moltbot hooks info session-memory
 Save session context to memory when /new command is issued
 
 Details:
-  Source: moltbot-bundled
-  Path: /path/to/moltbot/hooks/bundled/session-memory/HOOK.md
-  Handler: /path/to/moltbot/hooks/bundled/session-memory/handler.ts
-  Homepage: https://docs.moltbot.ai/automation/hooks#session-memory
+  Source: razroom-bundled
+  Path: /path/to/razroom/hooks/bundled/session-memory/HOOK.md
+  Handler: /path/to/razroom/hooks/bundled/session-memory/handler.ts
+  Homepage: https://docs.razroom.ai/automation/hooks#session-memory
   Events: command:new
 
 Requirements:
@@ -100,7 +100,7 @@ Requirements:
 ## Check Hooks Eligibility
 
 ```bash
-moltbot hooks check
+razroom hooks check
 ```
 
 Show summary of hook eligibility status (how many are ready vs. not ready).
@@ -122,12 +122,12 @@ Not ready: 0
 ## Enable a Hook
 
 ```bash
-moltbot hooks enable <name>
+razroom hooks enable <name>
 ```
 
-Enable a specific hook by adding it to your config (`~/.moltbot/config.json`).
+Enable a specific hook by adding it to your config (`~/.razroom/config.json`).
 
-**Note:** Hooks managed by plugins show `plugin:<id>` in `moltbot hooks list` and
+**Note:** Hooks managed by plugins show `plugin:<id>` in `razroom hooks list` and
 can’t be enabled/disabled here. Enable/disable the plugin instead.
 
 **Arguments:**
@@ -137,7 +137,7 @@ can’t be enabled/disabled here. Enable/disable the plugin instead.
 **Example:**
 
 ```bash
-moltbot hooks enable session-memory
+razroom hooks enable session-memory
 ```
 
 **Output:**
@@ -159,7 +159,7 @@ moltbot hooks enable session-memory
 ## Disable a Hook
 
 ```bash
-moltbot hooks disable <name>
+razroom hooks disable <name>
 ```
 
 Disable a specific hook by updating your config.
@@ -171,7 +171,7 @@ Disable a specific hook by updating your config.
 **Example:**
 
 ```bash
-moltbot hooks disable command-logger
+razroom hooks disable command-logger
 ```
 
 **Output:**
@@ -187,7 +187,7 @@ moltbot hooks disable command-logger
 ## Install Hooks
 
 ```bash
-moltbot hooks install <path-or-spec>
+razroom hooks install <path-or-spec>
 ```
 
 Install a hook pack from a local folder/archive or npm.
@@ -197,7 +197,7 @@ specs are rejected. Dependency installs run with `--ignore-scripts` for safety.
 
 **What it does:**
 
-- Copies the hook pack into `~/.moltbot/hooks/<id>`
+- Copies the hook pack into `~/.razroom/hooks/<id>`
 - Enables the installed hooks in `hooks.internal.entries.*`
 - Records the install under `hooks.internal.installs`
 
@@ -211,23 +211,23 @@ specs are rejected. Dependency installs run with `--ignore-scripts` for safety.
 
 ```bash
 # Local directory
-moltbot hooks install ./my-hook-pack
+razroom hooks install ./my-hook-pack
 
 # Local archive
-moltbot hooks install ./my-hook-pack.zip
+razroom hooks install ./my-hook-pack.zip
 
 # NPM package
-moltbot hooks install @moltbot/my-hook-pack
+razroom hooks install @razroom/my-hook-pack
 
 # Link a local directory without copying
-moltbot hooks install -l ./my-hook-pack
+razroom hooks install -l ./my-hook-pack
 ```
 
 ## Update Hooks
 
 ```bash
-moltbot hooks update <id>
-moltbot hooks update --all
+razroom hooks update <id>
+razroom hooks update --all
 ```
 
 Update installed hook packs (npm installs only).
@@ -246,10 +246,10 @@ Saves session context to memory when you issue `/new`.
 **Enable:**
 
 ```bash
-moltbot hooks enable session-memory
+razroom hooks enable session-memory
 ```
 
-**Output:** `~/.moltbot/workspace/memory/YYYY-MM-DD-slug.md`
+**Output:** `~/.razroom/workspace/memory/YYYY-MM-DD-slug.md`
 
 **See:** [session-memory documentation](/automation/hooks#session-memory)
 
@@ -260,7 +260,7 @@ Injects additional bootstrap files (for example monorepo-local `AGENTS.md` / `TO
 **Enable:**
 
 ```bash
-moltbot hooks enable bootstrap-extra-files
+razroom hooks enable bootstrap-extra-files
 ```
 
 **See:** [bootstrap-extra-files documentation](/automation/hooks#bootstrap-extra-files)
@@ -272,22 +272,22 @@ Logs all command events to a centralized audit file.
 **Enable:**
 
 ```bash
-moltbot hooks enable command-logger
+razroom hooks enable command-logger
 ```
 
-**Output:** `~/.moltbot/logs/commands.log`
+**Output:** `~/.razroom/logs/commands.log`
 
 **View logs:**
 
 ```bash
 # Recent commands
-tail -n 20 ~/.moltbot/logs/commands.log
+tail -n 20 ~/.razroom/logs/commands.log
 
 # Pretty-print
-cat ~/.moltbot/logs/commands.log | jq .
+cat ~/.razroom/logs/commands.log | jq .
 
 # Filter by action
-grep '"action":"new"' ~/.moltbot/logs/commands.log | jq .
+grep '"action":"new"' ~/.razroom/logs/commands.log | jq .
 ```
 
 **See:** [command-logger documentation](/automation/hooks#command-logger)
@@ -301,7 +301,7 @@ Runs `BOOT.md` when the gateway starts (after channels start).
 **Enable**:
 
 ```bash
-moltbot hooks enable boot-md
+razroom hooks enable boot-md
 ```
 
 **See:** [boot-md documentation](/automation/hooks#boot-md)

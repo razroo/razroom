@@ -1,13 +1,13 @@
 {
-  "name": "@moltbot/slack",
+  "name": "@razroom/slack",
   "version": "2026.2.15",
   "private": true,
-  "description": "MoltBot Slack channel plugin",
+  "description": "Razroom Slack channel plugin",
   "type": "module",
   "devDependencies": {
-    "moltbot": "workspace:*"
+    "razroom": "workspace:*"
   },
-  "moltbot": {
+  "razroom": {
     "extensions": [
       "./index.ts"
     ]

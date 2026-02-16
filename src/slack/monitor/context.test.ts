@@ -1,11 +1,11 @@
 import type { App } from "@slack/bolt";
 import { describe, expect, it } from "bun:test";
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 import type { RuntimeEnv } from "../../runtime.js";
 import { createSlackMonitorContext, normalizeSlackChannelType } from "./context.js";
 
 const baseParams = () => ({
-  cfg: {} as MoltBotConfig,
+  cfg: {} as RazroomConfig,
   accountId: "default",
   botToken: "token",
   app: { client: {} } as App,
@@ -29,7 +29,7 @@ const baseParams = () => ({
   replyToMode: "off" as const,
   slashCommand: {
     enabled: false,
-    name: "moltbot",
+    name: "razroom",
     sessionPrefix: "slack:slash",
     ephemeral: true,
   },

@@ -77,7 +77,7 @@ mock(import("node:child_process"), async (importOriginal) => {
 });
 
 import { spawn as mockedSpawn } from "node:child_process";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import { resolveMemoryBackendConfig } from "./backend-config.js";
 import { QmdMemoryManager } from "./qmd-manager.js";
 
@@ -89,10 +89,10 @@ describe("QmdMemoryManager", () => {
   let tmpRoot: string;
   let workspaceDir: string;
   let stateDir: string;
-  let cfg: MoltBotConfig;
+  let cfg: RazroomConfig;
   const agentId = "main";
 
-  async function createManager(params?: { mode?: "full" | "status"; cfg?: MoltBotConfig }) {
+  async function createManager(params?: { mode?: "full" | "status"; cfg?: RazroomConfig }) {
     const cfgToUse = params?.cfg ?? cfg;
     const resolved = resolveMemoryBackendConfig({ cfg: cfgToUse, agentId });
     const manager = await QmdMemoryManager.create({
@@ -128,7 +128,7 @@ describe("QmdMemoryManager", () => {
     await fs.mkdir(workspaceDir);
     stateDir = path.join(tmpRoot, "state");
     await fs.mkdir(stateDir);
-    process.env.MOLTBOT_STATE_DIR = stateDir;
+    process.env.RAZROOM_STATE_DIR = stateDir;
     cfg = {
       agents: {
         list: [{ id: agentId, default: true, workspace: workspaceDir }],
@@ -141,12 +141,12 @@ describe("QmdMemoryManager", () => {
           paths: [{ path: workspaceDir, pattern: "**/*.md", name: "workspace" }],
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
   });
 
   afterEach(async () => {
     // TODO: Restore real timers;
-    delete process.env.MOLTBOT_STATE_DIR;
+    delete process.env.RAZROOM_STATE_DIR;
   });
 
   it("debounces back-to-back sync calls", async () => {
@@ -181,7 +181,7 @@ describe("QmdMemoryManager", () => {
           paths: [{ path: workspaceDir, pattern: "**/*.md", name: "workspace" }],
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
 
     let releaseUpdate: (() => void) | null = null;
     spawnMock.mockImplementation((_cmd: string, args: string[]) => {
@@ -210,7 +210,7 @@ describe("QmdMemoryManager", () => {
           paths: [{ path: workspaceDir, pattern: "**/*.md", name: "workspace" }],
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
 
     const { manager } = await createManager({ mode: "status" });
     expect(spawnMock).not.toHaveBeenCalled();
@@ -233,7 +233,7 @@ describe("QmdMemoryManager", () => {
           paths: [{ path: workspaceDir, pattern: "**/*.md", name: "workspace" }],
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
 
     const updateSpawned = createDeferred<void>();
     let releaseUpdate: (() => void) | null = null;
@@ -277,7 +277,7 @@ describe("QmdMemoryManager", () => {
           paths: [{ path: workspaceDir, pattern: "**/*.md", name: "workspace" }],
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
 
     spawnMock.mockImplementation((_cmd: string, args: string[]) => {
       if (args[0] === "collection" && args[1] === "list") {
@@ -307,7 +307,7 @@ describe("QmdMemoryManager", () => {
           paths: [{ path: workspaceDir, pattern: "**/*.md", name: "workspace" }],
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
     spawnMock.mockImplementation((_cmd: string, args: string[]) => {
       if (args[0] === "update") {
         return createMockChild({ autoClose: false });
@@ -341,7 +341,7 @@ describe("QmdMemoryManager", () => {
           paths: [],
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
 
     let updateCalls = 0;
     spawnMock.mockImplementation((_cmd: string, args: string[]) => {
@@ -398,7 +398,7 @@ describe("QmdMemoryManager", () => {
           paths: [],
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
 
     spawnMock.mockImplementation((_cmd: string, args: string[]) => {
       if (args[0] === "update") {
@@ -439,7 +439,7 @@ describe("QmdMemoryManager", () => {
           paths: [{ path: workspaceDir, pattern: "**/*.md", name: "workspace" }],
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
     spawnMock.mockImplementation((_cmd: string, args: string[]) => {
       if (args[0] === "search") {
         const child = createMockChild({ autoClose: false });
@@ -486,7 +486,7 @@ describe("QmdMemoryManager", () => {
           paths: [{ path: workspaceDir, pattern: "**/*.md", name: "workspace" }],
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
     spawnMock.mockImplementation((_cmd: string, args: string[]) => {
       if (args[0] === "search") {
         const child = createMockChild({ autoClose: false });
@@ -539,7 +539,7 @@ describe("QmdMemoryManager", () => {
           paths: [{ path: workspaceDir, pattern: "**/*.md", name: "workspace" }],
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
 
     const firstUpdateSpawned = createDeferred<void>();
     let updateCalls = 0;
@@ -591,7 +591,7 @@ describe("QmdMemoryManager", () => {
           paths: [{ path: workspaceDir, pattern: "**/*.md", name: "workspace" }],
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
 
     const firstUpdateSpawned = createDeferred<void>();
     const secondUpdateSpawned = createDeferred<void>();
@@ -657,7 +657,7 @@ describe("QmdMemoryManager", () => {
           ],
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
 
     spawnMock.mockImplementation((_cmd: string, args: string[]) => {
       if (args[0] === "search") {
@@ -705,7 +705,7 @@ describe("QmdMemoryManager", () => {
           ],
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
 
     spawnMock.mockImplementation((_cmd: string, args: string[]) => {
       if (args[0] === "query") {
@@ -751,7 +751,7 @@ describe("QmdMemoryManager", () => {
           ],
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
 
     spawnMock.mockImplementation((_cmd: string, args: string[]) => {
       if (args[0] === "search") {
@@ -799,7 +799,7 @@ describe("QmdMemoryManager", () => {
           paths: [],
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
 
     const { manager } = await createManager();
 
@@ -826,7 +826,7 @@ describe("QmdMemoryManager", () => {
           paths: [{ path: workspaceDir, pattern: "**/*.md", name: "workspace" }],
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
     spawnMock.mockImplementation((_cmd: string, args: string[]) => {
       if (args[0] === "embed") {
         return createMockChild({ autoClose: false });
@@ -864,7 +864,7 @@ describe("QmdMemoryManager", () => {
           },
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
     const { manager } = await createManager();
 
     const isAllowed = (key?: string) =>
@@ -893,7 +893,7 @@ describe("QmdMemoryManager", () => {
           },
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
     const { manager } = await createManager();
 
     logWarnMock.mockClear();
@@ -966,7 +966,7 @@ describe("QmdMemoryManager", () => {
           },
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
 
     const { manager } = await createManager();
 

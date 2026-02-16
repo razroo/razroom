@@ -1,33 +1,33 @@
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import type { MoltBotConfig } from "./types.js";
+import type { RazroomConfig } from "./types.js";
 import { expandHomePrefix, resolveRequiredHomeDir } from "../infra/home-dir.js";
 
 /**
- * Nix mode detection: When MOLTBOT_NIX_MODE=1, the gateway is running under Nix.
+ * Nix mode detection: When RAZROOM_NIX_MODE=1, the gateway is running under Nix.
  * In this mode:
  * - No auto-install flows should be attempted
  * - Missing dependencies should produce actionable Nix-specific error messages
  * - Config is managed externally (read-only from Nix perspective)
  */
 export function resolveIsNixMode(env: NodeJS.ProcessEnv = process.env): boolean {
-  return env.MOLTBOT_NIX_MODE === "1";
+  return env.RAZROOM_NIX_MODE === "1";
 }
 
 export const isNixMode = resolveIsNixMode();
 
 // Support historical (and occasionally misspelled) legacy state dirs.
-const LEGACY_STATE_DIRNAMES = [".moltbot", ".moldbot", ".moltbot"] as const;
-const NEW_STATE_DIRNAME = ".moltbot";
-const CONFIG_FILENAME = "moltbot.json";
-const LEGACY_CONFIG_FILENAMES = ["moltbot.json", "moldbot.json", "moltbot.json"] as const;
+const LEGACY_STATE_DIRNAMES = [".razroom", ".moldbot", ".razroom"] as const;
+const NEW_STATE_DIRNAME = ".razroom";
+const CONFIG_FILENAME = "razroom.json";
+const LEGACY_CONFIG_FILENAMES = ["razroom.json", "moldbot.json", "razroom.json"] as const;
 
 function resolveDefaultHomeDir(): string {
   return resolveRequiredHomeDir(process.env, os.homedir);
 }
 
-/** Build a homedir thunk that respects MOLTBOT_HOME for the given env. */
+/** Build a homedir thunk that respects RAZROOM_HOME for the given env. */
 function envHomedir(env: NodeJS.ProcessEnv): () => string {
   return () => resolveRequiredHomeDir(env, os.homedir);
 }
@@ -54,15 +54,15 @@ export function resolveNewStateDir(homedir: () => string = resolveDefaultHomeDir
 
 /**
  * State directory for mutable data (sessions, logs, caches).
- * Can be overridden via MOLTBOT_STATE_DIR.
- * Default: ~/.moltbot
+ * Can be overridden via RAZROOM_STATE_DIR.
+ * Default: ~/.razroom
  */
 export function resolveStateDir(
   env: NodeJS.ProcessEnv = process.env,
   homedir: () => string = envHomedir(env),
 ): string {
   const effectiveHomedir = () => resolveRequiredHomeDir(env, homedir);
-  const override = env.MOLTBOT_STATE_DIR?.trim() || env.MOLTBOT_STATE_DIR?.trim();
+  const override = env.RAZROOM_STATE_DIR?.trim() || env.RAZROOM_STATE_DIR?.trim();
   if (override) {
     return resolveUserPath(override, env, effectiveHomedir);
   }
@@ -109,14 +109,14 @@ export const STATE_DIR = resolveStateDir();
 
 /**
  * Config file path (JSON5).
- * Can be overridden via MOLTBOT_CONFIG_PATH.
- * Default: ~/.moltbot/moltbot.json (or $MOLTBOT_STATE_DIR/moltbot.json)
+ * Can be overridden via RAZROOM_CONFIG_PATH.
+ * Default: ~/.razroom/razroom.json (or $RAZROOM_STATE_DIR/razroom.json)
  */
 export function resolveCanonicalConfigPath(
   env: NodeJS.ProcessEnv = process.env,
   stateDir: string = resolveStateDir(env, envHomedir(env)),
 ): string {
-  const override = env.MOLTBOT_CONFIG_PATH?.trim() || env.MOLTBOT_CONFIG_PATH?.trim();
+  const override = env.RAZROOM_CONFIG_PATH?.trim() || env.RAZROOM_CONFIG_PATH?.trim();
   if (override) {
     return resolveUserPath(override, env, envHomedir(env));
   }
@@ -153,11 +153,11 @@ export function resolveConfigPath(
   stateDir: string = resolveStateDir(env, envHomedir(env)),
   homedir: () => string = envHomedir(env),
 ): string {
-  const override = env.MOLTBOT_CONFIG_PATH?.trim();
+  const override = env.RAZROOM_CONFIG_PATH?.trim();
   if (override) {
     return resolveUserPath(override, env, homedir);
   }
-  const stateOverride = env.MOLTBOT_STATE_DIR?.trim();
+  const stateOverride = env.RAZROOM_STATE_DIR?.trim();
   const candidates = [
     path.join(stateDir, CONFIG_FILENAME),
     ...LEGACY_CONFIG_FILENAMES.map((name) => path.join(stateDir, name)),
@@ -193,15 +193,15 @@ export function resolveDefaultConfigCandidates(
   homedir: () => string = envHomedir(env),
 ): string[] {
   const effectiveHomedir = () => resolveRequiredHomeDir(env, homedir);
-  const explicit = env.MOLTBOT_CONFIG_PATH?.trim() || env.MOLTBOT_CONFIG_PATH?.trim();
+  const explicit = env.RAZROOM_CONFIG_PATH?.trim() || env.RAZROOM_CONFIG_PATH?.trim();
   if (explicit) {
     return [resolveUserPath(explicit, env, effectiveHomedir)];
   }
 
   const candidates: string[] = [];
-  const moltbotStateDir = env.MOLTBOT_STATE_DIR?.trim() || env.MOLTBOT_STATE_DIR?.trim();
-  if (moltbotStateDir) {
-    const resolved = resolveUserPath(moltbotStateDir, env, effectiveHomedir);
+  const razroomStateDir = env.RAZROOM_STATE_DIR?.trim() || env.RAZROOM_STATE_DIR?.trim();
+  if (razroomStateDir) {
+    const resolved = resolveUserPath(razroomStateDir, env, effectiveHomedir);
     candidates.push(path.join(resolved, CONFIG_FILENAME));
     candidates.push(...LEGACY_CONFIG_FILENAMES.map((name) => path.join(resolved, name)));
   }
@@ -218,12 +218,12 @@ export const DEFAULT_GATEWAY_PORT = 18789;
 
 /**
  * Gateway lock directory (ephemeral).
- * Default: os.tmpdir()/moltbot-<uid> (uid suffix when available).
+ * Default: os.tmpdir()/razroom-<uid> (uid suffix when available).
  */
 export function resolveGatewayLockDir(tmpdir: () => string = os.tmpdir): string {
   const base = tmpdir();
   const uid = typeof process.getuid === "function" ? process.getuid() : undefined;
-  const suffix = uid != null ? `moltbot-${uid}` : "moltbot";
+  const suffix = uid != null ? `razroom-${uid}` : "razroom";
   return path.join(base, suffix);
 }
 
@@ -233,14 +233,14 @@ const OAUTH_FILENAME = "oauth.json";
  * OAuth credentials storage directory.
  *
  * Precedence:
- * - `MOLTBOT_OAUTH_DIR` (explicit override)
+ * - `RAZROOM_OAUTH_DIR` (explicit override)
  * - `$*_STATE_DIR/credentials` (canonical server/default)
  */
 export function resolveOAuthDir(
   env: NodeJS.ProcessEnv = process.env,
   stateDir: string = resolveStateDir(env, envHomedir(env)),
 ): string {
-  const override = env.MOLTBOT_OAUTH_DIR?.trim();
+  const override = env.RAZROOM_OAUTH_DIR?.trim();
   if (override) {
     return resolveUserPath(override, env, envHomedir(env));
   }
@@ -255,10 +255,10 @@ export function resolveOAuthPath(
 }
 
 export function resolveGatewayPort(
-  cfg?: MoltBotConfig,
+  cfg?: RazroomConfig,
   env: NodeJS.ProcessEnv = process.env,
 ): number {
-  const envRaw = env.MOLTBOT_GATEWAY_PORT?.trim() || env.MOLTBOT_GATEWAY_PORT?.trim();
+  const envRaw = env.RAZROOM_GATEWAY_PORT?.trim() || env.RAZROOM_GATEWAY_PORT?.trim();
   if (envRaw) {
     const parsed = Number.parseInt(envRaw, 10);
     if (Number.isFinite(parsed) && parsed > 0) {

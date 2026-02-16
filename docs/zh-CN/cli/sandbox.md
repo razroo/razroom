@@ -18,29 +18,29 @@ x-i18n:
 
 ## 概述
 
-MoltBot 可以在隔离的 Docker 容器中运行智能体以确保安全。`sandbox` 命令帮助你管理这些容器，特别是在更新或配置更改后。
+Razroom 可以在隔离的 Docker 容器中运行智能体以确保安全。`sandbox` 命令帮助你管理这些容器，特别是在更新或配置更改后。
 
 ## 命令
 
-### `moltbot sandbox explain`
+### `razroom sandbox explain`
 
 检查**生效的**沙箱模式/作用域/工作区访问权限、沙箱工具策略和提权门控（附带修复配置的键路径）。
 
 ```bash
-moltbot sandbox explain
-moltbot sandbox explain --session agent:main:main
-moltbot sandbox explain --agent work
-moltbot sandbox explain --json
+razroom sandbox explain
+razroom sandbox explain --session agent:main:main
+razroom sandbox explain --agent work
+razroom sandbox explain --json
 ```
 
-### `moltbot sandbox list`
+### `razroom sandbox list`
 
 列出所有沙箱容器及其状态和配置。
 
 ```bash
-moltbot sandbox list
-moltbot sandbox list --browser  # List only browser containers
-moltbot sandbox list --json     # JSON output
+razroom sandbox list
+razroom sandbox list --browser  # List only browser containers
+razroom sandbox list --json     # JSON output
 ```
 
 **输出包括：**
@@ -51,16 +51,16 @@ moltbot sandbox list --json     # JSON output
 - 空闲时间（自上次使用以来的时间）
 - 关联的会话/智能体
 
-### `moltbot sandbox recreate`
+### `razroom sandbox recreate`
 
 移除沙箱容器以强制使用更新的镜像/配置重新创建。
 
 ```bash
-moltbot sandbox recreate --all                # Recreate all containers
-moltbot sandbox recreate --session main       # Specific session
-moltbot sandbox recreate --agent mybot        # Specific agent
-moltbot sandbox recreate --browser            # Only browser containers
-moltbot sandbox recreate --all --force        # Skip confirmation
+razroom sandbox recreate --all                # Recreate all containers
+razroom sandbox recreate --session main       # Specific session
+razroom sandbox recreate --agent mybot        # Specific agent
+razroom sandbox recreate --browser            # Only browser containers
+razroom sandbox recreate --all --force        # Skip confirmation
 ```
 
 **选项：**
@@ -79,14 +79,14 @@ moltbot sandbox recreate --all --force        # Skip confirmation
 
 ```bash
 # Pull new image
-docker pull moltbot-sandbox:latest
-docker tag moltbot-sandbox:latest moltbot-sandbox:bookworm-slim
+docker pull razroom-sandbox:latest
+docker tag razroom-sandbox:latest razroom-sandbox:bookworm-slim
 
 # Update config to use new image
 # Edit config: agents.defaults.sandbox.docker.image (or agents.list[].sandbox.docker.image)
 
 # Recreate containers
-moltbot sandbox recreate --all
+razroom sandbox recreate --all
 ```
 
 ### 更改沙箱配置后
@@ -95,22 +95,22 @@ moltbot sandbox recreate --all
 # Edit config: agents.defaults.sandbox.* (or agents.list[].sandbox.*)
 
 # Recreate to apply new config
-moltbot sandbox recreate --all
+razroom sandbox recreate --all
 ```
 
 ### 更改 setupCommand 后
 
 ```bash
-moltbot sandbox recreate --all
+razroom sandbox recreate --all
 # or just one agent:
-moltbot sandbox recreate --agent family
+razroom sandbox recreate --agent family
 ```
 
 ### 仅针对特定智能体
 
 ```bash
 # Update only one agent's containers
-moltbot sandbox recreate --agent alfred
+razroom sandbox recreate --agent alfred
 ```
 
 ## 为什么需要这个？
@@ -121,13 +121,13 @@ moltbot sandbox recreate --agent alfred
 - 容器仅在空闲 24 小时后才被清理
 - 经常使用的智能体会无限期保持旧容器运行
 
-**解决方案：** 使用 `moltbot sandbox recreate` 强制移除旧容器。它们会在下次需要时自动使用当前设置重新创建。
+**解决方案：** 使用 `razroom sandbox recreate` 强制移除旧容器。它们会在下次需要时自动使用当前设置重新创建。
 
-提示：优先使用 `moltbot sandbox recreate` 而不是手动 `docker rm`。它使用 Gateway 网关的容器命名规则，避免在作用域/会话键更改时出现不匹配。
+提示：优先使用 `razroom sandbox recreate` 而不是手动 `docker rm`。它使用 Gateway 网关的容器命名规则，避免在作用域/会话键更改时出现不匹配。
 
 ## 配置
 
-沙箱设置位于 `~/.moltbot/moltbot.json` 的 `agents.defaults.sandbox` 下（每个智能体的覆盖设置在 `agents.list[].sandbox` 中）：
+沙箱设置位于 `~/.razroom/razroom.json` 的 `agents.defaults.sandbox` 下（每个智能体的覆盖设置在 `agents.list[].sandbox` 中）：
 
 ```jsonc
 {
@@ -137,8 +137,8 @@ moltbot sandbox recreate --agent alfred
         "mode": "all", // off, non-main, all
         "scope": "agent", // session, agent, shared
         "docker": {
-          "image": "moltbot-sandbox:bookworm-slim",
-          "containerPrefix": "moltbot-sbx-",
+          "image": "razroom-sandbox:bookworm-slim",
+          "containerPrefix": "razroom-sbx-",
           // ... more Docker options
         },
         "prune": {

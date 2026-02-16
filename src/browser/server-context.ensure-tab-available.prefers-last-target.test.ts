@@ -5,10 +5,10 @@ import { afterAll, beforeAll, describe, expect, it, mock, spyOn } from "bun:test
 import type { BrowserServerState } from "./server-context.js";
 import { createBrowserRouteContext } from "./server-context.js";
 
-const chromeUserDataDir = vi.hoisted(() => ({ dir: "/tmp/moltbot" }));
+const chromeUserDataDir = vi.hoisted(() => ({ dir: "/tmp/razroom" }));
 
 beforeAll(async () => {
-  chromeUserDataDir.dir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-chrome-user-data-"));
+  chromeUserDataDir.dir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-chrome-user-data-"));
 });
 
 afterAll(async () => {
@@ -18,11 +18,11 @@ afterAll(async () => {
 mock("./chrome.js", () => ({
   isChromeCdpReady: mock(async () => true),
   isChromeReachable: mock(async () => true),
-  launchMoltBotChrome: mock(async () => {
+  launchRazroomChrome: mock(async () => {
     throw new Error("unexpected launch");
   }),
-  resolveMoltBotUserDataDir: mock(() => chromeUserDataDir.dir),
-  stopMoltBotChrome: mock(async () => {}),
+  resolveRazroomUserDataDir: mock(() => chromeUserDataDir.dir),
+  stopRazroomChrome: mock(async () => {}),
 }));
 
 function makeBrowserState(): BrowserServerState {
@@ -48,7 +48,7 @@ function makeBrowserState(): BrowserServerState {
           cdpPort: 18792,
           color: "#00AA00",
         },
-        moltbot: { cdpPort: 18800, color: "#FF4500" },
+        razroom: { cdpPort: 18800, color: "#FF4500" },
       },
     },
     profiles: new Map(),

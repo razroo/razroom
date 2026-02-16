@@ -1,4 +1,4 @@
-import type { ClawdbotConfig, RuntimeEnv } from "moltbot/plugin-sdk";
+import type { ClawdbotConfig, RuntimeEnv } from "razroom/plugin-sdk";
 import {
   buildAgentMediaPayload,
   buildPendingHistoryContextFromMap,
@@ -6,7 +6,7 @@ import {
   clearHistoryEntriesIfEnabled,
   DEFAULT_GROUP_HISTORY_LIMIT,
   type HistoryEntry,
-} from "moltbot/plugin-sdk";
+} from "razroom/plugin-sdk";
 import type { FeishuMessageContext, FeishuMediaInfo, ResolvedFeishuAccount } from "./types.js";
 import type { DynamicAgentCreationConfig } from "./types.js";
 import { resolveFeishuAccount } from "./accounts.js";

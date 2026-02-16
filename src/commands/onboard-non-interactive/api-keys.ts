@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 import type { RuntimeEnv } from "../../runtime.js";
 import {
   ensureAuthProfileStore,
@@ -12,7 +12,7 @@ export type NonInteractiveApiKeySource = "flag" | "env" | "profile";
 
 async function resolveApiKeyFromProfiles(params: {
   provider: string;
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   agentDir?: string;
 }): Promise<string | null> {
   const store = ensureAuthProfileStore(params.agentDir);
@@ -41,7 +41,7 @@ async function resolveApiKeyFromProfiles(params: {
 
 export async function resolveNonInteractiveApiKey(params: {
   provider: string;
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   flagValue?: string;
   flagName: string;
   envVar: string;

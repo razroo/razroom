@@ -7,7 +7,7 @@ import type { ReplyPayload } from "../auto-reply/types.js";
 import type { ChannelDock } from "../channels/dock.js";
 import type { ChannelId, ChannelPlugin } from "../channels/plugins/types.js";
 import type { createVpsAwareOAuthHandlers } from "../commands/oauth-flow.js";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { ModelProviderConfig } from "../config/types.js";
 import type { GatewayRequestHandler } from "../gateway/server-methods/types.js";
 import type { InternalHookHandler } from "../hooks/internal-hooks.js";
@@ -40,7 +40,7 @@ export type PluginConfigValidation =
   | { ok: true; value?: unknown }
   | { ok: false; errors: string[] };
 
-export type MoltBotPluginConfigSchema = {
+export type RazroomPluginConfigSchema = {
   safeParse?: (value: unknown) => {
     success: boolean;
     data?: unknown;
@@ -54,8 +54,8 @@ export type MoltBotPluginConfigSchema = {
   jsonSchema?: Record<string, unknown>;
 };
 
-export type MoltBotPluginToolContext = {
-  config?: MoltBotConfig;
+export type RazroomPluginToolContext = {
+  config?: RazroomConfig;
   workspaceDir?: string;
   agentDir?: string;
   agentId?: string;
@@ -65,17 +65,17 @@ export type MoltBotPluginToolContext = {
   sandboxed?: boolean;
 };
 
-export type MoltBotPluginToolFactory = (
-  ctx: MoltBotPluginToolContext,
+export type RazroomPluginToolFactory = (
+  ctx: RazroomPluginToolContext,
 ) => AnyAgentTool | AnyAgentTool[] | null | undefined;
 
-export type MoltBotPluginToolOptions = {
+export type RazroomPluginToolOptions = {
   name?: string;
   names?: string[];
   optional?: boolean;
 };
 
-export type MoltBotPluginHookOptions = {
+export type RazroomPluginHookOptions = {
   entry?: HookEntry;
   name?: string;
   description?: string;
@@ -86,13 +86,13 @@ export type ProviderAuthKind = "oauth" | "api_key" | "token" | "device_code" | "
 
 export type ProviderAuthResult = {
   profiles: Array<{ profileId: string; credential: AuthProfileCredential }>;
-  configPatch?: Partial<MoltBotConfig>;
+  configPatch?: Partial<RazroomConfig>;
   defaultModel?: string;
   notes?: string[];
 };
 
 export type ProviderAuthContext = {
-  config: MoltBotConfig;
+  config: RazroomConfig;
   agentDir?: string;
   workspaceDir?: string;
   prompter: WizardPrompter;
@@ -124,7 +124,7 @@ export type ProviderPlugin = {
   refreshOAuth?: (cred: OAuthCredential) => Promise<OAuthCredential>;
 };
 
-export type MoltBotPluginGatewayMethod = {
+export type RazroomPluginGatewayMethod = {
   method: string;
   handler: GatewayRequestHandler;
 };
@@ -149,8 +149,8 @@ export type PluginCommandContext = {
   args?: string;
   /** The full normalized command body */
   commandBody: string;
-  /** Current MoltBot configuration */
-  config: MoltBotConfig;
+  /** Current Razroom configuration */
+  config: RazroomConfig;
   /** Raw "From" value (channel-scoped id) */
   from?: string;
   /** Raw "To" value (channel-scoped id) */
@@ -176,7 +176,7 @@ export type PluginCommandHandler = (
 /**
  * Definition for a plugin-registered command.
  */
-export type MoltBotPluginCommandDefinition = {
+export type RazroomPluginCommandDefinition = {
   /** Command name without leading slash (e.g., "tts") */
   name: string;
   /** Description shown in /help and command menus */
@@ -189,90 +189,90 @@ export type MoltBotPluginCommandDefinition = {
   handler: PluginCommandHandler;
 };
 
-export type MoltBotPluginHttpHandler = (
+export type RazroomPluginHttpHandler = (
   req: IncomingMessage,
   res: ServerResponse,
 ) => Promise<boolean> | boolean;
 
-export type MoltBotPluginHttpRouteHandler = (
+export type RazroomPluginHttpRouteHandler = (
   req: IncomingMessage,
   res: ServerResponse,
 ) => Promise<void> | void;
 
-export type MoltBotPluginCliContext = {
+export type RazroomPluginCliContext = {
   program: Command;
-  config: MoltBotConfig;
+  config: RazroomConfig;
   workspaceDir?: string;
   logger: PluginLogger;
 };
 
-export type MoltBotPluginCliRegistrar = (ctx: MoltBotPluginCliContext) => void | Promise<void>;
+export type RazroomPluginCliRegistrar = (ctx: RazroomPluginCliContext) => void | Promise<void>;
 
-export type MoltBotPluginServiceContext = {
-  config: MoltBotConfig;
+export type RazroomPluginServiceContext = {
+  config: RazroomConfig;
   workspaceDir?: string;
   stateDir: string;
   logger: PluginLogger;
 };
 
-export type MoltBotPluginService = {
+export type RazroomPluginService = {
   id: string;
-  start: (ctx: MoltBotPluginServiceContext) => void | Promise<void>;
-  stop?: (ctx: MoltBotPluginServiceContext) => void | Promise<void>;
+  start: (ctx: RazroomPluginServiceContext) => void | Promise<void>;
+  stop?: (ctx: RazroomPluginServiceContext) => void | Promise<void>;
 };
 
-export type MoltBotPluginChannelRegistration = {
+export type RazroomPluginChannelRegistration = {
   plugin: ChannelPlugin;
   dock?: ChannelDock;
 };
 
-export type MoltBotPluginDefinition = {
+export type RazroomPluginDefinition = {
   id?: string;
   name?: string;
   description?: string;
   version?: string;
   kind?: PluginKind;
-  configSchema?: MoltBotPluginConfigSchema;
-  register?: (api: MoltBotPluginApi) => void | Promise<void>;
-  activate?: (api: MoltBotPluginApi) => void | Promise<void>;
+  configSchema?: RazroomPluginConfigSchema;
+  register?: (api: RazroomPluginApi) => void | Promise<void>;
+  activate?: (api: RazroomPluginApi) => void | Promise<void>;
 };
 
-export type MoltBotPluginModule =
-  | MoltBotPluginDefinition
-  | ((api: MoltBotPluginApi) => void | Promise<void>);
+export type RazroomPluginModule =
+  | RazroomPluginDefinition
+  | ((api: RazroomPluginApi) => void | Promise<void>);
 
-export type MoltBotPluginApi = {
+export type RazroomPluginApi = {
   id: string;
   name: string;
   version?: string;
   description?: string;
   source: string;
-  config: MoltBotConfig;
+  config: RazroomConfig;
   pluginConfig?: Record<string, unknown>;
   runtime: PluginRuntime;
   logger: PluginLogger;
   registerTool: (
-    tool: AnyAgentTool | MoltBotPluginToolFactory,
-    opts?: MoltBotPluginToolOptions,
+    tool: AnyAgentTool | RazroomPluginToolFactory,
+    opts?: RazroomPluginToolOptions,
   ) => void;
   registerHook: (
     events: string | string[],
     handler: InternalHookHandler,
-    opts?: MoltBotPluginHookOptions,
+    opts?: RazroomPluginHookOptions,
   ) => void;
-  registerHttpHandler: (handler: MoltBotPluginHttpHandler) => void;
-  registerHttpRoute: (params: { path: string; handler: MoltBotPluginHttpRouteHandler }) => void;
-  registerChannel: (registration: MoltBotPluginChannelRegistration | ChannelPlugin) => void;
+  registerHttpHandler: (handler: RazroomPluginHttpHandler) => void;
+  registerHttpRoute: (params: { path: string; handler: RazroomPluginHttpRouteHandler }) => void;
+  registerChannel: (registration: RazroomPluginChannelRegistration | ChannelPlugin) => void;
   registerGatewayMethod: (method: string, handler: GatewayRequestHandler) => void;
-  registerCli: (registrar: MoltBotPluginCliRegistrar, opts?: { commands?: string[] }) => void;
-  registerService: (service: MoltBotPluginService) => void;
+  registerCli: (registrar: RazroomPluginCliRegistrar, opts?: { commands?: string[] }) => void;
+  registerService: (service: RazroomPluginService) => void;
   registerProvider: (provider: ProviderPlugin) => void;
   /**
    * Register a custom command that bypasses the LLM agent.
    * Plugin commands are processed before built-in commands and before agent invocation.
    * Use this for simple state-toggling or status commands that don't need AI reasoning.
    */
-  registerCommand: (command: MoltBotPluginCommandDefinition) => void;
+  registerCommand: (command: RazroomPluginCommandDefinition) => void;
   resolvePath: (input: string) => string;
   /** Register a lifecycle hook handler */
   on: <K extends PluginHookName>(

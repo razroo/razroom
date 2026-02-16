@@ -1,5 +1,5 @@
 import fsSync from "node:fs";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import { resolveAgentDir, resolveDefaultAgentId } from "../agents/agent-scope.js";
 import { resolveMemorySearchConfig } from "../agents/memory-search.js";
 import { resolveApiKeyForProvider } from "../agents/model-auth.js";
@@ -9,9 +9,9 @@ import { resolveUserPath } from "../utils.js";
 
 /**
  * Check whether memory search has a usable embedding provider.
- * Runs as part of `moltbot doctor` — config-only, no network calls.
+ * Runs as part of `razroom doctor` — config-only, no network calls.
  */
-export async function noteMemorySearchHealth(cfg: MoltBotConfig): Promise<void> {
+export async function noteMemorySearchHealth(cfg: RazroomConfig): Promise<void> {
   const agentId = resolveDefaultAgentId(cfg);
   const agentDir = resolveAgentDir(cfg, agentId);
   const resolved = resolveMemorySearchConfig(cfg, agentId);
@@ -34,9 +34,9 @@ export async function noteMemorySearchHealth(cfg: MoltBotConfig): Promise<void> 
           "",
           "Fix (pick one):",
           `- Install node-llama-cpp and set a local model path in config`,
-          `- Switch to a remote provider: ${formatCliCommand("moltbot config set agents.defaults.memorySearch.provider openai")}`,
+          `- Switch to a remote provider: ${formatCliCommand("razroom config set agents.defaults.memorySearch.provider openai")}`,
           "",
-          `Verify: ${formatCliCommand("moltbot memory status --deep")}`,
+          `Verify: ${formatCliCommand("razroom memory status --deep")}`,
         ].join("\n"),
         "Memory search",
       );
@@ -54,10 +54,10 @@ export async function noteMemorySearchHealth(cfg: MoltBotConfig): Promise<void> 
         "",
         "Fix (pick one):",
         `- Set ${envVar} in your environment`,
-        `- Add credentials: ${formatCliCommand(`moltbot auth add --provider ${resolved.provider}`)}`,
-        `- To disable: ${formatCliCommand("moltbot config set agents.defaults.memorySearch.enabled false")}`,
+        `- Add credentials: ${formatCliCommand(`razroom auth add --provider ${resolved.provider}`)}`,
+        `- To disable: ${formatCliCommand("razroom config set agents.defaults.memorySearch.enabled false")}`,
         "",
-        `Verify: ${formatCliCommand("moltbot memory status --deep")}`,
+        `Verify: ${formatCliCommand("razroom memory status --deep")}`,
       ].join("\n"),
       "Memory search",
     );
@@ -81,11 +81,11 @@ export async function noteMemorySearchHealth(cfg: MoltBotConfig): Promise<void> 
       "",
       "Fix (pick one):",
       "- Set OPENAI_API_KEY or GEMINI_API_KEY in your environment",
-      `- Add credentials: ${formatCliCommand("moltbot auth add --provider openai")}`,
+      `- Add credentials: ${formatCliCommand("razroom auth add --provider openai")}`,
       `- For local embeddings: configure agents.defaults.memorySearch.provider and local model path`,
-      `- To disable: ${formatCliCommand("moltbot config set agents.defaults.memorySearch.enabled false")}`,
+      `- To disable: ${formatCliCommand("razroom config set agents.defaults.memorySearch.enabled false")}`,
       "",
-      `Verify: ${formatCliCommand("moltbot memory status --deep")}`,
+      `Verify: ${formatCliCommand("razroom memory status --deep")}`,
     ].join("\n"),
     "Memory search",
   );
@@ -112,7 +112,7 @@ function hasLocalEmbeddings(local: { modelPath?: string }): boolean {
 
 async function hasApiKeyForProvider(
   provider: "openai" | "gemini" | "voyage",
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   agentDir: string,
 ): Promise<boolean> {
   // Map embedding provider names to model-auth provider names

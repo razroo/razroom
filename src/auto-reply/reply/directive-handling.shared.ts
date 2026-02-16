@@ -82,7 +82,7 @@ export function formatElevatedUnavailableText(params: {
   }
   if (params.sessionKey) {
     lines.push(
-      `See: ${formatCliCommand(`moltbot sandbox explain --session ${params.sessionKey}`)}`,
+      `See: ${formatCliCommand(`razroom sandbox explain --session ${params.sessionKey}`)}`,
     );
   }
   return lines.join("\n");

@@ -8,7 +8,7 @@ title: "Platforms"
 
 # Platforms
 
-MoltBot core is written in TypeScript. **Node is the recommended runtime**.
+Razroom core is written in TypeScript. **Node is the recommended runtime**.
 Bun is not recommended for the Gateway (WhatsApp/Telegram bugs).
 
 Companion apps exist for macOS (menu bar app). Windows and Linux companion apps are planned, but the Gateway is fully supported today.
@@ -33,18 +33,18 @@ Native companion apps for Windows are also planned; the Gateway is recommended v
 - Install guide: [Getting Started](/start/getting-started)
 - Gateway runbook: [Gateway](/gateway)
 - Gateway configuration: [Configuration](/gateway/configuration)
-- Service status: `moltbot gateway status`
+- Service status: `razroom gateway status`
 
 ## Gateway service install (CLI)
 
 Use one of these (all supported):
 
-- Wizard (recommended): `moltbot onboard --install-daemon`
-- Direct: `moltbot gateway install`
-- Configure flow: `moltbot configure` → select **Gateway service**
-- Repair/migrate: `moltbot doctor` (offers to install or fix the service)
+- Wizard (recommended): `razroom onboard --install-daemon`
+- Direct: `razroom gateway install`
+- Configure flow: `razroom configure` → select **Gateway service**
+- Repair/migrate: `razroom doctor` (offers to install or fix the service)
 
 The service target depends on OS:
 
-- macOS: LaunchAgent (`bot.molt.gateway` or `bot.molt.<profile>`; legacy `com.moltbot.*`)
-- Linux/WSL2: systemd user service (`moltbot-gateway[-<profile>].service`)
+- macOS: LaunchAgent (`bot.molt.gateway` or `bot.molt.<profile>`; legacy `com.razroom.*`)
+- Linux/WSL2: systemd user service (`razroom-gateway[-<profile>].service`)

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import { resolveTelegramAccount } from "./accounts.js";
 
 describe("resolveTelegramAccount", () => {
@@ -7,7 +7,7 @@ describe("resolveTelegramAccount", () => {
     const prevTelegramToken = process.env.TELEGRAM_BOT_TOKEN;
     process.env.TELEGRAM_BOT_TOKEN = "";
     try {
-      const cfg: MoltBotConfig = {
+      const cfg: RazroomConfig = {
         channels: {
           telegram: { accounts: { work: { botToken: "tok-work" } } },
         },
@@ -30,7 +30,7 @@ describe("resolveTelegramAccount", () => {
     const prevTelegramToken = process.env.TELEGRAM_BOT_TOKEN;
     process.env.TELEGRAM_BOT_TOKEN = "tok-env";
     try {
-      const cfg: MoltBotConfig = {
+      const cfg: RazroomConfig = {
         channels: {
           telegram: { accounts: { work: { botToken: "tok-work" } } },
         },
@@ -53,7 +53,7 @@ describe("resolveTelegramAccount", () => {
     const prevTelegramToken = process.env.TELEGRAM_BOT_TOKEN;
     process.env.TELEGRAM_BOT_TOKEN = "tok-env";
     try {
-      const cfg: MoltBotConfig = {
+      const cfg: RazroomConfig = {
         channels: {
           telegram: { botToken: "tok-config" },
         },
@@ -76,7 +76,7 @@ describe("resolveTelegramAccount", () => {
     const prevTelegramToken = process.env.TELEGRAM_BOT_TOKEN;
     process.env.TELEGRAM_BOT_TOKEN = "";
     try {
-      const cfg: MoltBotConfig = {
+      const cfg: RazroomConfig = {
         channels: {
           telegram: { accounts: { work: { botToken: "tok-work" } } },
         },

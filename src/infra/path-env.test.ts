@@ -33,13 +33,13 @@ mock("node:fs", async (importOriginal) => {
   return { ...wrapped, default: wrapped };
 });
 
-let ensureMoltBotCliOnPath: typeof import("./path-env.js").ensureMoltBotCliOnPath;
+let ensureRazroomCliOnPath: typeof import("./path-env.js").ensureRazroomCliOnPath;
 
-describe("ensureMoltBotCliOnPath", () => {
+describe("ensureRazroomCliOnPath", () => {
   const envKeys = [
     "PATH",
-    "MOLTBOT_PATH_BOOTSTRAPPED",
-    "MOLTBOT_ALLOW_PROJECT_LOCAL_BIN",
+    "RAZROOM_PATH_BOOTSTRAPPED",
+    "RAZROOM_ALLOW_PROJECT_LOCAL_BIN",
     "MISE_DATA_DIR",
     "HOMEBREW_PREFIX",
     "HOMEBREW_BREW_FILE",
@@ -48,7 +48,7 @@ describe("ensureMoltBotCliOnPath", () => {
   let envSnapshot: Record<(typeof envKeys)[number], string | undefined>;
 
   beforeAll(async () => {
-    ({ ensureMoltBotCliOnPath } = await import("./path-env.js"));
+    ({ ensureRazroomCliOnPath } = await import("./path-env.js"));
   });
 
   beforeEach(() => {
@@ -72,18 +72,18 @@ describe("ensureMoltBotCliOnPath", () => {
     }
   });
 
-  it("prepends the bundled app bin dir when a sibling moltbot exists", () => {
-    const tmp = abs("/tmp/moltbot-path/case-bundled");
+  it("prepends the bundled app bin dir when a sibling razroom exists", () => {
+    const tmp = abs("/tmp/razroom-path/case-bundled");
     const appBinDir = path.join(tmp, "AppBin");
-    const cliPath = path.join(appBinDir, "moltbot");
+    const cliPath = path.join(appBinDir, "razroom");
     setDir(tmp);
     setDir(appBinDir);
     setExe(cliPath);
 
     process.env.PATH = "/usr/bin";
-    delete process.env.MOLTBOT_PATH_BOOTSTRAPPED;
+    delete process.env.RAZROOM_PATH_BOOTSTRAPPED;
 
-    ensureMoltBotCliOnPath({
+    ensureRazroomCliOnPath({
       execPath: cliPath,
       cwd: tmp,
       homeDir: tmp,
@@ -96,8 +96,8 @@ describe("ensureMoltBotCliOnPath", () => {
 
   it("is idempotent", () => {
     process.env.PATH = "/bin";
-    process.env.MOLTBOT_PATH_BOOTSTRAPPED = "1";
-    ensureMoltBotCliOnPath({
+    process.env.RAZROOM_PATH_BOOTSTRAPPED = "1";
+    ensureRazroomCliOnPath({
       execPath: "/tmp/does-not-matter",
       cwd: "/tmp",
       homeDir: "/tmp",
@@ -107,9 +107,9 @@ describe("ensureMoltBotCliOnPath", () => {
   });
 
   it("prepends mise shims when available", () => {
-    const tmp = abs("/tmp/moltbot-path/case-mise");
+    const tmp = abs("/tmp/razroom-path/case-mise");
     const appBinDir = path.join(tmp, "AppBin");
-    const appCli = path.join(appBinDir, "moltbot");
+    const appCli = path.join(appBinDir, "razroom");
     setDir(tmp);
     setDir(appBinDir);
     setExe(appCli);
@@ -121,9 +121,9 @@ describe("ensureMoltBotCliOnPath", () => {
 
     process.env.MISE_DATA_DIR = miseDataDir;
     process.env.PATH = "/usr/bin";
-    delete process.env.MOLTBOT_PATH_BOOTSTRAPPED;
+    delete process.env.RAZROOM_PATH_BOOTSTRAPPED;
 
-    ensureMoltBotCliOnPath({
+    ensureRazroomCliOnPath({
       execPath: appCli,
       cwd: tmp,
       homeDir: tmp,
@@ -139,23 +139,23 @@ describe("ensureMoltBotCliOnPath", () => {
   });
 
   it("only appends project-local node_modules/.bin when explicitly enabled", () => {
-    const tmp = abs("/tmp/moltbot-path/case-project-local");
+    const tmp = abs("/tmp/razroom-path/case-project-local");
     const appBinDir = path.join(tmp, "AppBin");
-    const appCli = path.join(appBinDir, "moltbot");
+    const appCli = path.join(appBinDir, "razroom");
     setDir(tmp);
     setDir(appBinDir);
     setExe(appCli);
 
     const localBinDir = path.join(tmp, "node_modules", ".bin");
-    const localCli = path.join(localBinDir, "moltbot");
+    const localCli = path.join(localBinDir, "razroom");
     setDir(path.join(tmp, "node_modules"));
     setDir(localBinDir);
     setExe(localCli);
 
     process.env.PATH = "/usr/bin";
-    delete process.env.MOLTBOT_PATH_BOOTSTRAPPED;
+    delete process.env.RAZROOM_PATH_BOOTSTRAPPED;
 
-    ensureMoltBotCliOnPath({
+    ensureRazroomCliOnPath({
       execPath: appCli,
       cwd: tmp,
       homeDir: tmp,
@@ -165,9 +165,9 @@ describe("ensureMoltBotCliOnPath", () => {
     expect(withoutOptIn.includes(localBinDir)).toBe(false);
 
     process.env.PATH = "/usr/bin";
-    delete process.env.MOLTBOT_PATH_BOOTSTRAPPED;
+    delete process.env.RAZROOM_PATH_BOOTSTRAPPED;
 
-    ensureMoltBotCliOnPath({
+    ensureRazroomCliOnPath({
       execPath: appCli,
       cwd: tmp,
       homeDir: tmp,
@@ -182,7 +182,7 @@ describe("ensureMoltBotCliOnPath", () => {
   });
 
   it("prepends Linuxbrew dirs when present", () => {
-    const tmp = abs("/tmp/moltbot-path/case-linuxbrew");
+    const tmp = abs("/tmp/razroom-path/case-linuxbrew");
     const execDir = path.join(tmp, "exec");
     setDir(tmp);
     setDir(execDir);
@@ -195,12 +195,12 @@ describe("ensureMoltBotCliOnPath", () => {
     setDir(linuxbrewSbin);
 
     process.env.PATH = "/usr/bin";
-    delete process.env.MOLTBOT_PATH_BOOTSTRAPPED;
+    delete process.env.RAZROOM_PATH_BOOTSTRAPPED;
     delete process.env.HOMEBREW_PREFIX;
     delete process.env.HOMEBREW_BREW_FILE;
     delete process.env.XDG_BIN_HOME;
 
-    ensureMoltBotCliOnPath({
+    ensureRazroomCliOnPath({
       execPath: path.join(execDir, "node"),
       cwd: tmp,
       homeDir: tmp,

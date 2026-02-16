@@ -86,8 +86,8 @@ describe("applyExtraParamsToAgent", () => {
 
     expect(calls).toHaveLength(1);
     expect(calls[0]?.headers).toEqual({
-      "HTTP-Referer": "https://moltbot.ai",
-      "X-Title": "MoltBot",
+      "HTTP-Referer": "https://razroom.ai",
+      "X-Title": "Razroom",
       "X-Custom": "1",
     });
   });

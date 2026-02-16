@@ -1,12 +1,12 @@
 import path from "node:path";
 import { describe, expect, it } from "bun:test";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import { resolveAgentWorkspaceDir } from "../agents/agent-scope.js";
 import { resolveMemoryBackendConfig } from "./backend-config.js";
 
 describe("resolveMemoryBackendConfig", () => {
   it("defaults to builtin backend when config missing", () => {
-    const cfg = { agents: { defaults: { workspace: "/tmp/memory-test" } } } as MoltBotConfig;
+    const cfg = { agents: { defaults: { workspace: "/tmp/memory-test" } } } as RazroomConfig;
     const resolved = resolveMemoryBackendConfig({ cfg, agentId: "main" });
     expect(resolved.backend).toBe("builtin");
     expect(resolved.citations).toBe("auto");
@@ -20,7 +20,7 @@ describe("resolveMemoryBackendConfig", () => {
         backend: "qmd",
         qmd: {},
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
     const resolved = resolveMemoryBackendConfig({ cfg, agentId: "main" });
     expect(resolved.backend).toBe("qmd");
     expect(resolved.qmd?.collections.length).toBeGreaterThanOrEqual(3);
@@ -42,7 +42,7 @@ describe("resolveMemoryBackendConfig", () => {
           command: '"/Applications/QMD Tools/qmd" --flag',
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
     const resolved = resolveMemoryBackendConfig({ cfg, agentId: "main" });
     expect(resolved.qmd?.command).toBe("/Applications/QMD Tools/qmd");
   });
@@ -65,7 +65,7 @@ describe("resolveMemoryBackendConfig", () => {
           ],
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
     const resolved = resolveMemoryBackendConfig({ cfg, agentId: "main" });
     const custom = resolved.qmd?.collections.find((c) => c.name.startsWith("custom-notes"));
     expect(custom).toBeDefined();
@@ -87,7 +87,7 @@ describe("resolveMemoryBackendConfig", () => {
           },
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
     const resolved = resolveMemoryBackendConfig({ cfg, agentId: "main" });
     expect(resolved.qmd?.update.waitForBootSync).toBe(true);
     expect(resolved.qmd?.update.commandTimeoutMs).toBe(12_000);
@@ -104,7 +104,7 @@ describe("resolveMemoryBackendConfig", () => {
           searchMode: "vsearch",
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
     const resolved = resolveMemoryBackendConfig({ cfg, agentId: "main" });
     expect(resolved.qmd?.searchMode).toBe("vsearch");
   });

@@ -7,7 +7,7 @@ status: active
 
 # Sandbox vs Tool Policy vs Elevated
 
-MoltBot has three related (but different) controls:
+Razroom has three related (but different) controls:
 
 1. **Sandbox** (`agents.defaults.sandbox.*` / `agents.list[].sandbox.*`) decides **where tools run** (Docker vs host).
 2. **Tool policy** (`tools.*`, `tools.sandbox.tools.*`, `agents.list[].tools.*`) decides **which tools are available/allowed**.
@@ -15,13 +15,13 @@ MoltBot has three related (but different) controls:
 
 ## Quick debug
 
-Use the inspector to see what MoltBot is _actually_ doing:
+Use the inspector to see what Razroom is _actually_ doing:
 
 ```bash
-moltbot sandbox explain
-moltbot sandbox explain --session agent:main:main
-moltbot sandbox explain --agent work
-moltbot sandbox explain --json
+razroom sandbox explain
+razroom sandbox explain --session agent:main:main
+razroom sandbox explain --agent work
+razroom sandbox explain --json
 ```
 
 It prints:
@@ -93,7 +93,7 @@ Available groups:
 - `group:automation`: `cron`, `gateway`
 - `group:messaging`: `message`
 - `group:nodes`: `nodes`
-- `group:moltbot`: all built-in MoltBot tools (excludes provider plugins)
+- `group:razroom`: all built-in Razroom tools (excludes provider plugins)
 
 ## Elevated: exec-only “run on host”
 

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Setup MoltBot Auth Management System
+# Setup Razroom Auth Management System
 # Run this once to set up:
 # 1. Long-lived Claude Code token
 # 2. Auth monitoring with notifications
@@ -9,7 +9,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-echo "=== MoltBot Auth System Setup ==="
+echo "=== Razroom Auth System Setup ==="
 echo ""
 
 # Step 1: Check current auth status
@@ -49,19 +49,19 @@ echo ""
 # Check for ntfy
 echo "  ntfy.sh: Free push notifications to your phone"
 echo "  1. Install ntfy app on your phone"
-echo "  2. Subscribe to a topic (e.g., 'moltbot-alerts')"
+echo "  2. Subscribe to a topic (e.g., 'razroom-alerts')"
 echo ""
 echo "Enter ntfy.sh topic (or leave blank to skip):"
 read -r NTFY_TOPIC
 
 # Phone notification
 echo ""
-echo "  MoltBot message: Send warning via MoltBot itself"
+echo "  Razroom message: Send warning via Razroom itself"
 echo "Enter your phone number for alerts (or leave blank to skip):"
 read -r PHONE_NUMBER
 
 # Update service file
-SERVICE_FILE="$SCRIPT_DIR/systemd/moltbot-auth-monitor.service"
+SERVICE_FILE="$SCRIPT_DIR/systemd/razroom-auth-monitor.service"
 if [ -n "$NTFY_TOPIC" ]; then
     sed -i "s|# Environment=NOTIFY_NTFY=.*|Environment=NOTIFY_NTFY=$NTFY_TOPIC|" "$SERVICE_FILE"
 fi
@@ -73,10 +73,10 @@ fi
 echo ""
 echo "Installing systemd timer..."
 mkdir -p ~/.config/systemd/user
-cp "$SCRIPT_DIR/systemd/moltbot-auth-monitor.service" ~/.config/systemd/user/
-cp "$SCRIPT_DIR/systemd/moltbot-auth-monitor.timer" ~/.config/systemd/user/
+cp "$SCRIPT_DIR/systemd/razroom-auth-monitor.service" ~/.config/systemd/user/
+cp "$SCRIPT_DIR/systemd/razroom-auth-monitor.timer" ~/.config/systemd/user/
 systemctl --user daemon-reload
-systemctl --user enable --now moltbot-auth-monitor.timer
+systemctl --user enable --now razroom-auth-monitor.timer
 
 echo "Auth monitor installed and running."
 echo ""
@@ -105,7 +105,7 @@ echo "=== Setup Complete ==="
 echo ""
 echo "What's configured:"
 echo "  - Auth status: $SCRIPT_DIR/claude-auth-status.sh"
-echo "  - Auth monitor: systemctl --user status moltbot-auth-monitor.timer"
+echo "  - Auth monitor: systemctl --user status razroom-auth-monitor.timer"
 echo ""
 echo "Quick commands:"
 echo "  Check auth:  $SCRIPT_DIR/claude-auth-status.sh"

@@ -253,7 +253,7 @@ describe("provider usage loading", () => {
     await withTempHome(
       async (tempHome) => {
         const agentDir = path.join(
-          process.env.MOLTBOT_STATE_DIR ?? path.join(tempHome, ".moltbot"),
+          process.env.RAZROOM_STATE_DIR ?? path.join(tempHome, ".razroom"),
           "agents",
           "main",
           "agent",
@@ -328,9 +328,9 @@ describe("provider usage loading", () => {
       },
       {
         env: {
-          MOLTBOT_STATE_DIR: (home) => path.join(home, ".moltbot"),
+          RAZROOM_STATE_DIR: (home) => path.join(home, ".razroom"),
         },
-        prefix: "moltbot-provider-usage-",
+        prefix: "razroom-provider-usage-",
       },
     );
   });

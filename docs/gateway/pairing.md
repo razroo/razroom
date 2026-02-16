@@ -37,11 +37,11 @@ Pending requests expire automatically after **5 minutes**.
 ## CLI workflow (headless friendly)
 
 ```bash
-moltbot nodes pending
-moltbot nodes approve <requestId>
-moltbot nodes reject <requestId>
-moltbot nodes status
-moltbot nodes rename --node <id|name|ip> --name "Living Room iPad"
+razroom nodes pending
+razroom nodes approve <requestId>
+razroom nodes reject <requestId>
+razroom nodes status
+razroom nodes rename --node <id|name|ip> --name "Living Room iPad"
 ```
 
 `nodes status` shows paired/connected nodes and their capabilities.
@@ -80,12 +80,12 @@ If silent approval fails, it falls back to the normal “Approve/Reject” promp
 
 ## Storage (local, private)
 
-Pairing state is stored under the Gateway state directory (default `~/.moltbot`):
+Pairing state is stored under the Gateway state directory (default `~/.razroom`):
 
-- `~/.moltbot/nodes/paired.json`
-- `~/.moltbot/nodes/pending.json`
+- `~/.razroom/nodes/paired.json`
+- `~/.razroom/nodes/pending.json`
 
-If you override `MOLTBOT_STATE_DIR`, the `nodes/` folder moves with it.
+If you override `RAZROOM_STATE_DIR`, the `nodes/` folder moves with it.
 
 Security notes:
 

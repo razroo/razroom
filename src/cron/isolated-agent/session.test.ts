@@ -1,5 +1,5 @@
 import { describe, expect, it, mock, spyOn } from "bun:test";
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 
 mock("../../config/sessions.js", () => ({
   loadSessionStore: mock(),
@@ -23,7 +23,7 @@ describe("resolveCronSession", () => {
     });
 
     const result = resolveCronSession({
-      cfg: {} as MoltBotConfig,
+      cfg: {} as RazroomConfig,
       sessionKey: "agent:main:cron:test-job",
       agentId: "main",
       nowMs: Date.now(),
@@ -46,7 +46,7 @@ describe("resolveCronSession", () => {
     });
 
     const result = resolveCronSession({
-      cfg: {} as MoltBotConfig,
+      cfg: {} as RazroomConfig,
       sessionKey: "agent:main:cron:test-job",
       agentId: "main",
       nowMs: Date.now(),
@@ -60,7 +60,7 @@ describe("resolveCronSession", () => {
     vi.mocked(loadSessionStore).mockReturnValue({});
 
     const result = resolveCronSession({
-      cfg: {} as MoltBotConfig,
+      cfg: {} as RazroomConfig,
       sessionKey: "agent:main:cron:new-job",
       agentId: "main",
       nowMs: Date.now(),

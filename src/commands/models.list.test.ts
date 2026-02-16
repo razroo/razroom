@@ -3,14 +3,14 @@ import { afterEach, beforeAll, beforeEach, describe, expect, it, mock, spyOn } f
 let modelsListCommand: typeof import("./models/list.list-command.js").modelsListCommand;
 
 const loadConfig = mock();
-const ensureMoltBotModelsJson = mock().mockResolvedValue(undefined);
-const resolveMoltBotAgentDir = mock().mockReturnValue("/tmp/moltbot-agent");
+const ensureRazroomModelsJson = mock().mockResolvedValue(undefined);
+const resolveRazroomAgentDir = mock().mockReturnValue("/tmp/razroom-agent");
 const ensureAuthProfileStore = mock().mockReturnValue({ version: 1, profiles: {} });
 const listProfilesForProvider = mock().mockReturnValue([]);
 const resolveAuthProfileDisplayLabel = mock(({ profileId }: { profileId: string }) => profileId);
 const resolveAuthStorePathForDisplay = vi
   .fn()
-  .mockReturnValue("/tmp/moltbot-agent/auth-profiles.json");
+  .mockReturnValue("/tmp/razroom-agent/auth-profiles.json");
 const resolveProfileUnusableUntilForDisplay = mock().mockReturnValue(null);
 const resolveEnvApiKey = mock().mockReturnValue(undefined);
 const resolveAwsSdkEnvVarName = mock().mockReturnValue(undefined);
@@ -24,17 +24,17 @@ const modelRegistryState = {
 let previousExitCode: number | undefined;
 
 mock("../config/config.js", () => ({
-  CONFIG_PATH: "/tmp/moltbot.json",
-  STATE_DIR: "/tmp/moltbot-state",
+  CONFIG_PATH: "/tmp/razroom.json",
+  STATE_DIR: "/tmp/razroom-state",
   loadConfig,
 }));
 
 mock("../agents/models-config.js", () => ({
-  ensureMoltBotModelsJson,
+  ensureRazroomModelsJson,
 }));
 
 mock("../agents/agent-paths.js", () => ({
-  resolveMoltBotAgentDir,
+  resolveRazroomAgentDir,
 }));
 
 mock("../agents/auth-profiles.js", () => ({

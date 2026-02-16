@@ -1,17 +1,17 @@
 import { beforeEach, describe, expect, it } from "bun:test";
 import { DEFAULT_MODEL, DEFAULT_PROVIDER } from "./defaults.js";
 import "./test-helpers/fast-core-tools.js";
-import { createMoltBotTools } from "./moltbot-tools.js";
+import { createRazroomTools } from "./razroom-tools.js";
 import {
   getCallGatewayMock,
   resetSessionsSpawnConfigOverride,
   setSessionsSpawnConfigOverride,
-} from "./moltbot-tools.subagents.sessions-spawn.test-harness.js";
+} from "./razroom-tools.subagents.sessions-spawn.test-harness.js";
 import { resetSubagentRegistryForTests } from "./subagent-registry.js";
 
 const callGatewayMock = getCallGatewayMock();
 
-describe("moltbot-tools: subagents (sessions_spawn model + thinking)", () => {
+describe("razroom-tools: subagents (sessions_spawn model + thinking)", () => {
   beforeEach(() => {
     resetSessionsSpawnConfigOverride();
   });
@@ -46,7 +46,7 @@ describe("moltbot-tools: subagents (sessions_spawn model + thinking)", () => {
       return {};
     });
 
-    const tool = createMoltBotTools({
+    const tool = createRazroomTools({
       agentSessionKey: "discord:group:req",
       agentChannel: "discord",
     }).find((candidate) => candidate.name === "sessions_spawn");
@@ -93,7 +93,7 @@ describe("moltbot-tools: subagents (sessions_spawn model + thinking)", () => {
       return {};
     });
 
-    const tool = createMoltBotTools({
+    const tool = createRazroomTools({
       agentSessionKey: "discord:group:req",
       agentChannel: "discord",
     }).find((candidate) => candidate.name === "sessions_spawn");
@@ -126,7 +126,7 @@ describe("moltbot-tools: subagents (sessions_spawn model + thinking)", () => {
       return {};
     });
 
-    const tool = createMoltBotTools({
+    const tool = createRazroomTools({
       agentSessionKey: "discord:group:req",
       agentChannel: "discord",
     }).find((candidate) => candidate.name === "sessions_spawn");
@@ -166,7 +166,7 @@ describe("moltbot-tools: subagents (sessions_spawn model + thinking)", () => {
       return {};
     });
 
-    const tool = createMoltBotTools({
+    const tool = createRazroomTools({
       agentSessionKey: "agent:main:main",
       agentChannel: "discord",
     }).find((candidate) => candidate.name === "sessions_spawn");
@@ -207,7 +207,7 @@ describe("moltbot-tools: subagents (sessions_spawn model + thinking)", () => {
       return {};
     });
 
-    const tool = createMoltBotTools({
+    const tool = createRazroomTools({
       agentSessionKey: "agent:main:main",
       agentChannel: "discord",
     }).find((candidate) => candidate.name === "sessions_spawn");
@@ -255,7 +255,7 @@ describe("moltbot-tools: subagents (sessions_spawn model + thinking)", () => {
       return {};
     });
 
-    const tool = createMoltBotTools({
+    const tool = createRazroomTools({
       agentSessionKey: "agent:research:main",
       agentChannel: "discord",
     }).find((candidate) => candidate.name === "sessions_spawn");
@@ -307,7 +307,7 @@ describe("moltbot-tools: subagents (sessions_spawn model + thinking)", () => {
       return {};
     });
 
-    const tool = createMoltBotTools({
+    const tool = createRazroomTools({
       agentSessionKey: "main",
       agentChannel: "whatsapp",
     }).find((candidate) => candidate.name === "sessions_spawn");
@@ -345,7 +345,7 @@ describe("moltbot-tools: subagents (sessions_spawn model + thinking)", () => {
       return {};
     });
 
-    const tool = createMoltBotTools({
+    const tool = createRazroomTools({
       agentSessionKey: "main",
       agentChannel: "whatsapp",
     }).find((candidate) => candidate.name === "sessions_spawn");

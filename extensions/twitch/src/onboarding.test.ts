@@ -11,11 +11,11 @@
  * - setTwitchAccount config updates
  */
 
-import type { WizardPrompter } from "moltbot/plugin-sdk";
+import type { WizardPrompter } from "razroom/plugin-sdk";
 import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import type { TwitchAccountConfig } from "./types.js";
 
-mock("moltbot/plugin-sdk", () => ({
+mock("razroom/plugin-sdk", () => ({
   formatDocsLink: (url: string, fallback: string) => fallback || url,
   promptChannelAccessConfig: mock(async () => null),
 }));

@@ -1,10 +1,10 @@
 import { describe, expect, it } from "bun:test";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import { collectAttackSurfaceSummaryFindings } from "./audit-extra.sync.js";
 
 describe("collectAttackSurfaceSummaryFindings", () => {
   it("distinguishes external webhooks from internal hooks when only internal hooks are enabled", () => {
-    const cfg: MoltBotConfig = {
+    const cfg: RazroomConfig = {
       hooks: { internal: { enabled: true } },
     };
 
@@ -15,7 +15,7 @@ describe("collectAttackSurfaceSummaryFindings", () => {
   });
 
   it("reports both hook systems as enabled when both are configured", () => {
-    const cfg: MoltBotConfig = {
+    const cfg: RazroomConfig = {
       hooks: { enabled: true, internal: { enabled: true } },
     };
 
@@ -25,7 +25,7 @@ describe("collectAttackSurfaceSummaryFindings", () => {
   });
 
   it("reports both hook systems as disabled when neither is configured", () => {
-    const cfg: MoltBotConfig = {};
+    const cfg: RazroomConfig = {};
 
     const [finding] = collectAttackSurfaceSummaryFindings(cfg);
     expect(finding.detail).toContain("hooks.webhooks: disabled");

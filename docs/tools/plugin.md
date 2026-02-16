@@ -1,5 +1,5 @@
 ---
-summary: "MoltBot plugins/extensions: discovery, config, and safety"
+summary: "Razroom plugins/extensions: discovery, config, and safety"
 read_when:
   - Adding or modifying plugins/extensions
   - Documenting plugin install or load rules
@@ -10,11 +10,11 @@ title: "Plugins"
 
 ## Quick start (new to plugins?)
 
-A plugin is just a **small code module** that extends MoltBot with extra
+A plugin is just a **small code module** that extends Razroom with extra
 features (commands, tools, and Gateway RPC).
 
 Most of the time, you’ll use plugins when you want a feature that’s not built
-into core MoltBot yet (or you want to keep optional features out of your main
+into core Razroom yet (or you want to keep optional features out of your main
 install).
 
 Fast path:
@@ -22,13 +22,13 @@ Fast path:
 1. See what’s already loaded:
 
 ```bash
-moltbot plugins list
+razroom plugins list
 ```
 
 2. Install an official plugin (example: Voice Call):
 
 ```bash
-moltbot plugins install @moltbot/voice-call
+razroom plugins install @razroom/voice-call
 ```
 
 Npm specs are **registry-only** (package name + optional version/tag). Git/URL/file
@@ -40,21 +40,21 @@ See [Voice Call](/plugins/voice-call) for a concrete example plugin.
 
 ## Available plugins (official)
 
-- Microsoft Teams is plugin-only as of 2026.1.15; install `@moltbot/msteams` if you use Teams.
+- Microsoft Teams is plugin-only as of 2026.1.15; install `@razroom/msteams` if you use Teams.
 - Memory (Core) — bundled memory search plugin (enabled by default via `plugins.slots.memory`)
 - Memory (LanceDB) — bundled long-term memory plugin (auto-recall/capture; set `plugins.slots.memory = "memory-lancedb"`)
-- [Voice Call](/plugins/voice-call) — `@moltbot/voice-call`
-- [Zalo Personal](/plugins/zalouser) — `@moltbot/zalouser`
-- [Matrix](/channels/matrix) — `@moltbot/matrix`
-- [Nostr](/channels/nostr) — `@moltbot/nostr`
-- [Zalo](/channels/zalo) — `@moltbot/zalo`
-- [Microsoft Teams](/channels/msteams) — `@moltbot/msteams`
+- [Voice Call](/plugins/voice-call) — `@razroom/voice-call`
+- [Zalo Personal](/plugins/zalouser) — `@razroom/zalouser`
+- [Matrix](/channels/matrix) — `@razroom/matrix`
+- [Nostr](/channels/nostr) — `@razroom/nostr`
+- [Zalo](/channels/zalo) — `@razroom/zalo`
+- [Microsoft Teams](/channels/msteams) — `@razroom/msteams`
 - Google Antigravity OAuth (provider auth) — bundled as `google-antigravity-auth` (disabled by default)
 - Gemini CLI OAuth (provider auth) — bundled as `google-gemini-cli-auth` (disabled by default)
 - Qwen OAuth (provider auth) — bundled as `qwen-portal-auth` (disabled by default)
 - Copilot Proxy (provider auth) — local VS Code Copilot Proxy bridge; distinct from built-in `github-copilot` device login (bundled, disabled by default)
 
-MoltBot plugins are **TypeScript modules** loaded at runtime via jiti. **Config
+Razroom plugins are **TypeScript modules** loaded at runtime via jiti. **Config
 validation does not execute plugin code**; it uses the plugin manifest and JSON
 Schema instead. See [Plugin manifest](/plugins/manifest).
 
@@ -78,7 +78,7 @@ Plugins can access selected core helpers via `api.runtime`. For telephony TTS:
 
 ```ts
 const result = await api.runtime.tts.textToSpeechTelephony({
-  text: "Hello from MoltBot",
+  text: "Hello from Razroom",
   cfg: api.config,
 });
 ```
@@ -91,7 +91,7 @@ Notes:
 
 ## Discovery & precedence
 
-MoltBot scans, in order:
+Razroom scans, in order:
 
 1. Config paths
 
@@ -99,23 +99,23 @@ MoltBot scans, in order:
 
 2. Workspace extensions
 
-- `<workspace>/.moltbot/extensions/*.ts`
-- `<workspace>/.moltbot/extensions/*/index.ts`
+- `<workspace>/.razroom/extensions/*.ts`
+- `<workspace>/.razroom/extensions/*/index.ts`
 
 3. Global extensions
 
-- `~/.moltbot/extensions/*.ts`
-- `~/.moltbot/extensions/*/index.ts`
+- `~/.razroom/extensions/*.ts`
+- `~/.razroom/extensions/*/index.ts`
 
-4. Bundled extensions (shipped with MoltBot, **disabled by default**)
+4. Bundled extensions (shipped with Razroom, **disabled by default**)
 
-- `<moltbot>/extensions/*`
+- `<razroom>/extensions/*`
 
 Bundled plugins must be enabled explicitly via `plugins.entries.<id>.enabled`
-or `moltbot plugins enable <id>`. Installed plugins are enabled by default,
+or `razroom plugins enable <id>`. Installed plugins are enabled by default,
 but can be disabled the same way.
 
-Each plugin must include a `moltbot.plugin.json` file in its root. If a path
+Each plugin must include a `razroom.plugin.json` file in its root. If a path
 points at a file, the plugin root is the file's directory and must contain the
 manifest.
 
@@ -124,12 +124,12 @@ wins and lower-precedence copies are ignored.
 
 ### Package packs
 
-A plugin directory may include a `package.json` with `moltbot.extensions`:
+A plugin directory may include a `package.json` with `razroom.extensions`:
 
 ```json
 {
   "name": "my-pack",
-  "moltbot": {
+  "razroom": {
     "extensions": ["./src/safety.ts", "./src/tools.ts"]
   }
 }
@@ -141,21 +141,21 @@ becomes `name/<fileBase>`.
 If your plugin imports npm deps, install them in that directory so
 `node_modules` is available (`npm install` / `pnpm install`).
 
-Security note: `moltbot plugins install` installs plugin dependencies with
+Security note: `razroom plugins install` installs plugin dependencies with
 `npm install --ignore-scripts` (no lifecycle scripts). Keep plugin dependency
 trees "pure JS/TS" and avoid packages that require `postinstall` builds.
 
 ### Channel catalog metadata
 
-Channel plugins can advertise onboarding metadata via `moltbot.channel` and
-install hints via `moltbot.install`. This keeps the core catalog data-free.
+Channel plugins can advertise onboarding metadata via `razroom.channel` and
+install hints via `razroom.install`. This keeps the core catalog data-free.
 
 Example:
 
 ```json
 {
-  "name": "@moltbot/nextcloud-talk",
-  "moltbot": {
+  "name": "@razroom/nextcloud-talk",
+  "razroom": {
     "extensions": ["./index.ts"],
     "channel": {
       "id": "nextcloud-talk",
@@ -168,7 +168,7 @@ Example:
       "aliases": ["nc-talk", "nc"]
     },
     "install": {
-      "npmSpec": "@moltbot/nextcloud-talk",
+      "npmSpec": "@razroom/nextcloud-talk",
       "localPath": "extensions/nextcloud-talk",
       "defaultChoice": "npm"
     }
@@ -176,16 +176,16 @@ Example:
 }
 ```
 
-MoltBot can also merge **external channel catalogs** (for example, an MPM
+Razroom can also merge **external channel catalogs** (for example, an MPM
 registry export). Drop a JSON file at one of:
 
-- `~/.moltbot/mpm/plugins.json`
-- `~/.moltbot/mpm/catalog.json`
-- `~/.moltbot/plugins/catalog.json`
+- `~/.razroom/mpm/plugins.json`
+- `~/.razroom/mpm/catalog.json`
+- `~/.razroom/plugins/catalog.json`
 
-Or point `MOLTBOT_PLUGIN_CATALOG_PATHS` (or `MOLTBOT_MPM_CATALOG_PATHS`) at
+Or point `RAZROOM_PLUGIN_CATALOG_PATHS` (or `RAZROOM_MPM_CATALOG_PATHS`) at
 one or more JSON files (comma/semicolon/`PATH`-delimited). Each file should
-contain `{ "entries": [ { "name": "@scope/pkg", "moltbot": { "channel": {...}, "install": {...} } } ] }`.
+contain `{ "entries": [ { "name": "@scope/pkg", "razroom": { "channel": {...}, "install": {...} } } ] }`.
 
 ## Plugin IDs
 
@@ -194,7 +194,7 @@ Default plugin ids:
 - Package packs: `package.json` `name`
 - Standalone file: file base name (`~/.../voice-call.ts` → `voice-call`)
 
-If a plugin exports `id`, MoltBot uses it but warns when it doesn’t match the
+If a plugin exports `id`, Razroom uses it but warns when it doesn’t match the
 configured id.
 
 ## Config
@@ -229,7 +229,7 @@ Validation rules (strict):
 - Unknown `channels.<id>` keys are **errors** unless a plugin manifest declares
   the channel id.
 - Plugin config is validated using the JSON Schema embedded in
-  `moltbot.plugin.json` (`configSchema`).
+  `razroom.plugin.json` (`configSchema`).
 - If a plugin is disabled, its config is preserved and a **warning** is emitted.
 
 ## Plugin slots (exclusive categories)
@@ -254,7 +254,7 @@ are disabled with diagnostics.
 
 The Control UI uses `config.schema` (JSON Schema + `uiHints`) to render better forms.
 
-MoltBot augments `uiHints` at runtime based on discovered plugins:
+Razroom augments `uiHints` at runtime based on discovered plugins:
 
 - Adds per-plugin labels for `plugins.entries.<id>` / `.enabled` / `.config`
 - Merges optional plugin-provided config field hints under:
@@ -286,24 +286,24 @@ Example:
 ## CLI
 
 ```bash
-moltbot plugins list
-moltbot plugins info <id>
-moltbot plugins install <path>                 # copy a local file/dir into ~/.moltbot/extensions/<id>
-moltbot plugins install ./extensions/voice-call # relative path ok
-moltbot plugins install ./plugin.tgz           # install from a local tarball
-moltbot plugins install ./plugin.zip           # install from a local zip
-moltbot plugins install -l ./extensions/voice-call # link (no copy) for dev
-moltbot plugins install @moltbot/voice-call # install from npm
-moltbot plugins update <id>
-moltbot plugins update --all
-moltbot plugins enable <id>
-moltbot plugins disable <id>
-moltbot plugins doctor
+razroom plugins list
+razroom plugins info <id>
+razroom plugins install <path>                 # copy a local file/dir into ~/.razroom/extensions/<id>
+razroom plugins install ./extensions/voice-call # relative path ok
+razroom plugins install ./plugin.tgz           # install from a local tarball
+razroom plugins install ./plugin.zip           # install from a local zip
+razroom plugins install -l ./extensions/voice-call # link (no copy) for dev
+razroom plugins install @razroom/voice-call # install from npm
+razroom plugins update <id>
+razroom plugins update --all
+razroom plugins enable <id>
+razroom plugins disable <id>
+razroom plugins doctor
 ```
 
 `plugins update` only works for npm installs tracked under `plugins.installs`.
 
-Plugins may also register their own top‑level commands (example: `moltbot voicecall`).
+Plugins may also register their own top‑level commands (example: `razroom voicecall`).
 
 ## Plugin API (overview)
 
@@ -320,7 +320,7 @@ event-driven automation without a separate hook pack install.
 ### Example
 
 ```
-import { registerPluginHooksFromDir } from "moltbot/plugin-sdk";
+import { registerPluginHooksFromDir } from "razroom/plugin-sdk";
 
 export default function register(api) {
   registerPluginHooksFromDir(api, "./hooks");
@@ -331,18 +331,18 @@ Notes:
 
 - Hook directories follow the normal hook structure (`HOOK.md` + `handler.ts`).
 - Hook eligibility rules still apply (OS/bins/env/config requirements).
-- Plugin-managed hooks show up in `moltbot hooks list` with `plugin:<id>`.
-- You cannot enable/disable plugin-managed hooks via `moltbot hooks`; enable/disable the plugin instead.
+- Plugin-managed hooks show up in `razroom hooks list` with `plugin:<id>`.
+- You cannot enable/disable plugin-managed hooks via `razroom hooks`; enable/disable the plugin instead.
 
 ## Provider plugins (model auth)
 
 Plugins can register **model provider auth** flows so users can run OAuth or
-API-key setup inside MoltBot (no external scripts needed).
+API-key setup inside Razroom (no external scripts needed).
 
 Register a provider via `api.registerProvider(...)`. Each provider exposes one
 or more auth methods (OAuth, API key, device code, etc.). These methods power:
 
-- `moltbot models auth login --provider <id> [--method <id>]`
+- `razroom models auth login --provider <id> [--method <id>]`
 
 Example:
 
@@ -568,7 +568,7 @@ Command handler context:
 - `isAuthorizedSender`: Whether the sender is an authorized user
 - `args`: Arguments passed after the command (if `acceptsArgs: true`)
 - `commandBody`: The full command text
-- `config`: The current MoltBot config
+- `config`: The current Razroom config
 
 Command options:
 
@@ -631,14 +631,14 @@ it’s present in your workspace/managed skills locations.
 
 Recommended packaging:
 
-- Main package: `moltbot` (this repo)
-- Plugins: separate npm packages under `@moltbot/*` (example: `@moltbot/voice-call`)
+- Main package: `razroom` (this repo)
+- Plugins: separate npm packages under `@razroom/*` (example: `@razroom/voice-call`)
 
 Publishing contract:
 
-- Plugin `package.json` must include `moltbot.extensions` with one or more entry files.
+- Plugin `package.json` must include `razroom.extensions` with one or more entry files.
 - Entry files can be `.js` or `.ts` (jiti loads TS at runtime).
-- `moltbot plugins install <npm-spec>` uses `npm pack`, extracts into `~/.moltbot/extensions/<id>/`, and enables it in config.
+- `razroom plugins install <npm-spec>` uses `npm pack`, extracts into `~/.razroom/extensions/<id>/`, and enables it in config.
 - Config key stability: scoped packages are normalized to the **unscoped** id for `plugins.entries.*`.
 
 ## Example plugin: Voice Call
@@ -647,7 +647,7 @@ This repo includes a voice‑call plugin (Twilio or log fallback):
 
 - Source: `extensions/voice-call`
 - Skill: `skills/voice-call`
-- CLI: `moltbot voicecall start|status`
+- CLI: `razroom voicecall start|status`
 - Tool: `voice_call`
 - RPC: `voicecall.start`, `voicecall.status`
 - Config (twilio): `provider: "twilio"` + `twilio.accountSid/authToken/from` (optional `statusCallbackUrl`, `twimlUrl`)
@@ -668,4 +668,4 @@ Plugins run in-process with the Gateway. Treat them as trusted code:
 Plugins can (and should) ship tests:
 
 - In-repo plugins can keep Vitest tests under `src/**` (example: `src/plugins/voice-call.plugin.test.ts`).
-- Separately published plugins should run their own CI (lint/build/test) and validate `moltbot.extensions` points at the built entrypoint (`dist/index.js`).
+- Separately published plugins should run their own CI (lint/build/test) and validate `razroom.extensions` points at the built entrypoint (`dist/index.js`).

@@ -1,4 +1,4 @@
-import type { MSTeamsConfig } from "moltbot/plugin-sdk";
+import type { MSTeamsConfig } from "razroom/plugin-sdk";
 import { describe, expect, it, mock, spyOn } from "bun:test";
 
 const hostMockState = vi.hoisted(() => ({

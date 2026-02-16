@@ -53,9 +53,9 @@ const connectNodeClient = async (params: {
   displayName?: string;
   onEvent?: (evt: { event?: string; payload?: unknown }) => void;
 }) => {
-  const token = process.env.MOLTBOT_GATEWAY_TOKEN;
+  const token = process.env.RAZROOM_GATEWAY_TOKEN;
   if (!token) {
-    throw new Error("MOLTBOT_GATEWAY_TOKEN is required for node test clients");
+    throw new Error("RAZROOM_GATEWAY_TOKEN is required for node test clients");
   }
   let settled = false;
   let resolveReady: (() => void) | null = null;
@@ -190,7 +190,7 @@ describe("gateway update.run", () => {
       await waitForSignal(() => sigusr1.mock.calls.length > 0);
       expect(sigusr1).toHaveBeenCalled();
 
-      const sentinelPath = path.join(os.homedir(), ".moltbot", "restart-sentinel.json");
+      const sentinelPath = path.join(os.homedir(), ".razroom", "restart-sentinel.json");
       const raw = await fs.readFile(sentinelPath, "utf-8");
       const parsed = JSON.parse(raw) as {
         payload?: { kind?: string; stats?: { mode?: string } };

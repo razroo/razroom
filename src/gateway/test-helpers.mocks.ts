@@ -189,12 +189,12 @@ export const resetTestPluginRegistry = () => {
 };
 
 const testConfigRoot = {
-  value: path.join(os.tmpdir(), `moltbot-gateway-test-${process.pid}-${crypto.randomUUID()}`),
+  value: path.join(os.tmpdir(), `razroom-gateway-test-${process.pid}-${crypto.randomUUID()}`),
 };
 
 export const setTestConfigRoot = (root: string) => {
   testConfigRoot.value = root;
-  process.env.MOLTBOT_CONFIG_PATH = path.join(root, "moltbot.json");
+  process.env.RAZROOM_CONFIG_PATH = path.join(root, "razroom.json");
 };
 
 export const testTailnetIPv4 = hoisted.testTailnetIPv4;
@@ -287,7 +287,7 @@ vi.mock("../config/sessions.js", async () => {
 
 vi.mock("../config/config.js", async () => {
   const actual = await vi.importActual<typeof import("../config/config.js")>("../config/config.js");
-  const resolveConfigPath = () => path.join(testConfigRoot.value, "moltbot.json");
+  const resolveConfigPath = () => path.join(testConfigRoot.value, "razroom.json");
   const hashConfigRaw = (raw: string | null) =>
     crypto
       .createHash("sha256")
@@ -405,7 +405,7 @@ vi.mock("../config/config.js", async () => {
           : {};
       const defaults = {
         model: { primary: "anthropic/claude-opus-4-6" },
-        workspace: path.join(os.tmpdir(), "moltbot-gateway-test"),
+        workspace: path.join(os.tmpdir(), "razroom-gateway-test"),
         ...fileDefaults,
         ...testState.agentConfig,
       };
@@ -595,11 +595,11 @@ vi.mock("../plugins/loader.js", async () => {
     await vi.importActual<typeof import("../plugins/loader.js")>("../plugins/loader.js");
   return {
     ...actual,
-    loadMoltBotPlugins: () => pluginRegistryState.registry,
+    loadRazroomPlugins: () => pluginRegistryState.registry,
   };
 });
 
-process.env.MOLTBOT_SKIP_CHANNELS = "1";
-process.env.MOLTBOT_SKIP_CRON = "1";
-process.env.MOLTBOT_SKIP_CHANNELS = "1";
-process.env.MOLTBOT_SKIP_CRON = "1";
+process.env.RAZROOM_SKIP_CHANNELS = "1";
+process.env.RAZROOM_SKIP_CRON = "1";
+process.env.RAZROOM_SKIP_CHANNELS = "1";
+process.env.RAZROOM_SKIP_CRON = "1";

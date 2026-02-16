@@ -12,17 +12,17 @@ const {
 const tailscaleBin = expect.stringMatching(/tailscale$/i);
 
 describe("tailscale helpers", () => {
-  const originalForcedBinary = process.env.MOLTBOT_TEST_TAILSCALE_BINARY;
+  const originalForcedBinary = process.env.RAZROOM_TEST_TAILSCALE_BINARY;
 
   beforeEach(() => {
-    process.env.MOLTBOT_TEST_TAILSCALE_BINARY = "tailscale";
+    process.env.RAZROOM_TEST_TAILSCALE_BINARY = "tailscale";
   });
 
   afterEach(() => {
     if (originalForcedBinary === undefined) {
-      delete process.env.MOLTBOT_TEST_TAILSCALE_BINARY;
+      delete process.env.RAZROOM_TEST_TAILSCALE_BINARY;
     } else {
-      process.env.MOLTBOT_TEST_TAILSCALE_BINARY = originalForcedBinary;
+      process.env.RAZROOM_TEST_TAILSCALE_BINARY = originalForcedBinary;
     }
     // TODO: Review mock restoration;
   });

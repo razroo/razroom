@@ -1,28 +1,28 @@
 ---
-summary: "Run MoltBot Gateway 24/7 on a cheap Hetzner VPS (Docker) with durable state and baked-in binaries"
+summary: "Run Razroom Gateway 24/7 on a cheap Hetzner VPS (Docker) with durable state and baked-in binaries"
 read_when:
-  - You want MoltBot running 24/7 on a cloud VPS (not your laptop)
+  - You want Razroom running 24/7 on a cloud VPS (not your laptop)
   - You want a production-grade, always-on Gateway on your own VPS
   - You want full control over persistence, binaries, and restart behavior
-  - You are running MoltBot in Docker on Hetzner or a similar provider
+  - You are running Razroom in Docker on Hetzner or a similar provider
 title: "Hetzner"
 ---
 
-# MoltBot on Hetzner (Docker, Production VPS Guide)
+# Razroom on Hetzner (Docker, Production VPS Guide)
 
 ## Goal
 
-Run a persistent MoltBot Gateway on a Hetzner VPS using Docker, with durable state, baked-in binaries, and safe restart behavior.
+Run a persistent Razroom Gateway on a Hetzner VPS using Docker, with durable state, baked-in binaries, and safe restart behavior.
 
-If you want “MoltBot 24/7 for ~$5”, this is the simplest reliable setup.
+If you want “Razroom 24/7 for ~$5”, this is the simplest reliable setup.
 Hetzner pricing changes; pick the smallest Debian/Ubuntu VPS and scale up if you hit OOMs.
 
 ## What are we doing (simple terms)?
 
 - Rent a small Linux server (Hetzner VPS)
 - Install Docker (isolated app runtime)
-- Start the MoltBot Gateway in Docker
-- Persist `~/.moltbot` + `~/.moltbot/workspace` on the host (survives restarts/rebuilds)
+- Start the Razroom Gateway in Docker
+- Persist `~/.razroom` + `~/.razroom/workspace` on the host (survives restarts/rebuilds)
 - Access the Control UI from your laptop via an SSH tunnel
 
 The Gateway can be accessed via:
@@ -40,7 +40,7 @@ For the generic Docker flow, see [Docker](/install/docker).
 
 1. Provision Hetzner VPS
 2. Install Docker
-3. Clone MoltBot repository
+3. Clone Razroom repository
 4. Create persistent host directories
 5. Configure `.env` and `docker-compose.yml`
 6. Bake required binaries into the image
@@ -96,11 +96,11 @@ docker compose version
 
 ---
 
-## 3) Clone the MoltBot repository
+## 3) Clone the Razroom repository
 
 ```bash
-git clone https://github.com/moltbot/moltbot.git
-cd moltbot
+git clone https://github.com/razroom/razroom.git
+cd razroom
 ```
 
 This guide assumes you will build a custom image to guarantee binary persistence.
@@ -113,10 +113,10 @@ Docker containers are ephemeral.
 All long-lived state must live on the host.
 
 ```bash
-mkdir -p /root/.moltbot/workspace
+mkdir -p /root/.razroom/workspace
 
 # Set ownership to the container user (uid 1000):
-chown -R 1000:1000 /root/.moltbot
+chown -R 1000:1000 /root/.razroom
 ```
 
 ---
@@ -126,16 +126,16 @@ chown -R 1000:1000 /root/.moltbot
 Create `.env` in the repository root.
 
 ```bash
-MOLTBOT_IMAGE=moltbot:latest
-MOLTBOT_GATEWAY_TOKEN=change-me-now
-MOLTBOT_GATEWAY_BIND=lan
-MOLTBOT_GATEWAY_PORT=18789
+RAZROOM_IMAGE=razroom:latest
+RAZROOM_GATEWAY_TOKEN=change-me-now
+RAZROOM_GATEWAY_BIND=lan
+RAZROOM_GATEWAY_PORT=18789
 
-MOLTBOT_CONFIG_DIR=/root/.moltbot
-MOLTBOT_WORKSPACE_DIR=/root/.moltbot/workspace
+RAZROOM_CONFIG_DIR=/root/.razroom
+RAZROOM_WORKSPACE_DIR=/root/.razroom/workspace
 
 GOG_KEYRING_PASSWORD=change-me-now
-XDG_CONFIG_HOME=/home/node/.moltbot
+XDG_CONFIG_HOME=/home/node/.razroom
 ```
 
 Generate strong secrets:
@@ -154,8 +154,8 @@ Create or update `docker-compose.yml`.
 
 ```yaml
 services:
-  moltbot-gateway:
-    image: ${MOLTBOT_IMAGE}
+  razroom-gateway:
+    image: ${RAZROOM_IMAGE}
     build: .
     restart: unless-stopped
     env_file:
@@ -164,28 +164,28 @@ services:
       - HOME=/home/node
       - NODE_ENV=production
       - TERM=xterm-256color
-      - MOLTBOT_GATEWAY_BIND=${MOLTBOT_GATEWAY_BIND}
-      - MOLTBOT_GATEWAY_PORT=${MOLTBOT_GATEWAY_PORT}
-      - MOLTBOT_GATEWAY_TOKEN=${MOLTBOT_GATEWAY_TOKEN}
+      - RAZROOM_GATEWAY_BIND=${RAZROOM_GATEWAY_BIND}
+      - RAZROOM_GATEWAY_PORT=${RAZROOM_GATEWAY_PORT}
+      - RAZROOM_GATEWAY_TOKEN=${RAZROOM_GATEWAY_TOKEN}
       - GOG_KEYRING_PASSWORD=${GOG_KEYRING_PASSWORD}
       - XDG_CONFIG_HOME=${XDG_CONFIG_HOME}
       - PATH=/home/linuxbrew/.linuxbrew/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     volumes:
-      - ${MOLTBOT_CONFIG_DIR}:/home/node/.moltbot
-      - ${MOLTBOT_WORKSPACE_DIR}:/home/node/.moltbot/workspace
+      - ${RAZROOM_CONFIG_DIR}:/home/node/.razroom
+      - ${RAZROOM_WORKSPACE_DIR}:/home/node/.razroom/workspace
     ports:
       # Recommended: keep the Gateway loopback-only on the VPS; access via SSH tunnel.
       # To expose it publicly, remove the `127.0.0.1:` prefix and firewall accordingly.
-      - "127.0.0.1:${MOLTBOT_GATEWAY_PORT}:18789"
+      - "127.0.0.1:${RAZROOM_GATEWAY_PORT}:18789"
     command:
       [
         "node",
         "dist/index.js",
         "gateway",
         "--bind",
-        "${MOLTBOT_GATEWAY_BIND}",
+        "${RAZROOM_GATEWAY_BIND}",
         "--port",
-        "${MOLTBOT_GATEWAY_PORT}",
+        "${RAZROOM_GATEWAY_PORT}",
         "--allow-unconfigured",
       ]
 ```
@@ -261,15 +261,15 @@ CMD ["node","dist/index.js"]
 
 ```bash
 docker compose build
-docker compose up -d moltbot-gateway
+docker compose up -d razroom-gateway
 ```
 
 Verify binaries:
 
 ```bash
-docker compose exec moltbot-gateway which gog
-docker compose exec moltbot-gateway which goplaces
-docker compose exec moltbot-gateway which wacli
+docker compose exec razroom-gateway which gog
+docker compose exec razroom-gateway which goplaces
+docker compose exec razroom-gateway which wacli
 ```
 
 Expected output:
@@ -285,7 +285,7 @@ Expected output:
 ## 9) Verify Gateway
 
 ```bash
-docker compose logs -f moltbot-gateway
+docker compose logs -f razroom-gateway
 ```
 
 Success:
@@ -310,17 +310,17 @@ Paste your gateway token.
 
 ## What persists where (source of truth)
 
-MoltBot runs in Docker, but Docker is not the source of truth.
+Razroom runs in Docker, but Docker is not the source of truth.
 All long-lived state must survive restarts, rebuilds, and reboots.
 
 | Component           | Location                          | Persistence mechanism  | Notes                            |
 | ------------------- | --------------------------------- | ---------------------- | -------------------------------- |
-| Gateway config      | `/home/node/.moltbot/`           | Host volume mount      | Includes `moltbot.json`, tokens |
-| Model auth profiles | `/home/node/.moltbot/`           | Host volume mount      | OAuth tokens, API keys           |
-| Skill configs       | `/home/node/.moltbot/skills/`    | Host volume mount      | Skill-level state                |
-| Agent workspace     | `/home/node/.moltbot/workspace/` | Host volume mount      | Code and agent artifacts         |
-| WhatsApp session    | `/home/node/.moltbot/`           | Host volume mount      | Preserves QR login               |
-| Gmail keyring       | `/home/node/.moltbot/`           | Host volume + password | Requires `GOG_KEYRING_PASSWORD`  |
+| Gateway config      | `/home/node/.razroom/`           | Host volume mount      | Includes `razroom.json`, tokens |
+| Model auth profiles | `/home/node/.razroom/`           | Host volume mount      | OAuth tokens, API keys           |
+| Skill configs       | `/home/node/.razroom/skills/`    | Host volume mount      | Skill-level state                |
+| Agent workspace     | `/home/node/.razroom/workspace/` | Host volume mount      | Code and agent artifacts         |
+| WhatsApp session    | `/home/node/.razroom/`           | Host volume mount      | Preserves QR login               |
+| Gmail keyring       | `/home/node/.razroom/`           | Host volume + password | Requires `GOG_KEYRING_PASSWORD`  |
 | External binaries   | `/usr/local/bin/`                 | Docker image           | Must be baked at build time      |
 | Node runtime        | Container filesystem              | Docker image           | Rebuilt every image build        |
 | OS packages         | Container filesystem              | Docker image           | Do not install at runtime        |
@@ -340,8 +340,8 @@ For teams preferring infrastructure-as-code workflows, a community-maintained Te
 
 **Repositories:**
 
-- Infrastructure: [moltbot-terraform-hetzner](https://github.com/andreesg/moltbot-terraform-hetzner)
-- Docker config: [moltbot-docker-config](https://github.com/andreesg/moltbot-docker-config)
+- Infrastructure: [razroom-terraform-hetzner](https://github.com/andreesg/razroom-terraform-hetzner)
+- Docker config: [razroom-docker-config](https://github.com/andreesg/razroom-docker-config)
 
 This approach complements the Docker setup above with reproducible deployments, version-controlled infrastructure, and automated disaster recovery.
 

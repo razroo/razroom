@@ -1,7 +1,7 @@
 ---
 summary: "LINE Messaging API plugin setup, config, and usage"
 read_when:
-  - You want to connect MoltBot to LINE
+  - You want to connect Razroom to LINE
   - You need LINE webhook + credential setup
   - You want LINE-specific message options
 title: LINE
@@ -9,7 +9,7 @@ title: LINE
 
 # LINE (plugin)
 
-LINE connects to MoltBot via the LINE Messaging API. The plugin runs as a webhook
+LINE connects to Razroom via the LINE Messaging API. The plugin runs as a webhook
 receiver on the gateway and uses your channel access token + channel secret for
 authentication.
 
@@ -22,13 +22,13 @@ are not supported.
 Install the LINE plugin:
 
 ```bash
-moltbot plugins install @moltbot/line
+razroom plugins install @razroom/line
 ```
 
 Local checkout (when running from a git repo):
 
 ```bash
-moltbot plugins install ./extensions/line
+razroom plugins install ./extensions/line
 ```
 
 ## Setup
@@ -107,8 +107,8 @@ Direct messages default to pairing. Unknown senders get a pairing code and their
 messages are ignored until approved.
 
 ```bash
-moltbot pairing list line
-moltbot pairing approve line <CODE>
+razroom pairing list line
+razroom pairing approve line <CODE>
 ```
 
 Allowlists and policies:

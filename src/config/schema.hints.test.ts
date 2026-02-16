@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
 import { z } from "zod";
 import { __test__, isSensitiveConfigPath } from "./schema.hints.js";
-import { MoltBotSchema } from "./zod-schema.js";
+import { RazroomSchema } from "./zod-schema.js";
 import { sensitive } from "./zod-schema.sensitive.js";
 
 const { mapSensitivePaths } = __test__;
@@ -99,12 +99,12 @@ describe("mapSensitivePaths", () => {
   });
 
   it("main schema yields correct hints (samples)", () => {
-    const schema = MoltBotSchema.toJSONSchema({
+    const schema = RazroomSchema.toJSONSchema({
       target: "draft-07",
       unrepresentable: "any",
     });
-    schema.title = "MoltBotConfig";
-    const hints = mapSensitivePaths(MoltBotSchema, "", {});
+    schema.title = "RazroomConfig";
+    const hints = mapSensitivePaths(RazroomSchema, "", {});
 
     expect(hints["agents.defaults.memorySearch.remote.apiKey"]?.sensitive).toBe(true);
     expect(hints["agents.list[].memorySearch.remote.apiKey"]?.sensitive).toBe(true);

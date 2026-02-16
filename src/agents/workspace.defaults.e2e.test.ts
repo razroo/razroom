@@ -7,13 +7,13 @@ afterEach(() => {
 });
 
 describe("DEFAULT_AGENT_WORKSPACE_DIR", () => {
-  it("uses MOLTBOT_HOME when resolving the default workspace dir", () => {
-    const home = path.join(path.sep, "srv", "moltbot-home");
-    vi.stubEnv("MOLTBOT_HOME", home);
+  it("uses RAZROOM_HOME when resolving the default workspace dir", () => {
+    const home = path.join(path.sep, "srv", "razroom-home");
+    vi.stubEnv("RAZROOM_HOME", home);
     vi.stubEnv("HOME", path.join(path.sep, "home", "other"));
 
     expect(resolveDefaultAgentWorkspaceDir()).toBe(
-      path.join(path.resolve(home), ".moltbot", "workspace"),
+      path.join(path.resolve(home), ".razroom", "workspace"),
     );
   });
 });

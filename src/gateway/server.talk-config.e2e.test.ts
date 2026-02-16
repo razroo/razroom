@@ -18,9 +18,9 @@ async function withServer<T>(
     ws.close();
     await server.close();
     if (prevToken === undefined) {
-      delete process.env.MOLTBOT_GATEWAY_TOKEN;
+      delete process.env.RAZROOM_GATEWAY_TOKEN;
     } else {
-      process.env.MOLTBOT_GATEWAY_TOKEN = prevToken;
+      process.env.RAZROOM_GATEWAY_TOKEN = prevToken;
     }
   }
 }
@@ -50,7 +50,7 @@ describe("gateway talk.config", () => {
       );
       expect(res.ok).toBe(true);
       expect(res.payload?.config?.talk?.voiceId).toBe("voice-123");
-      expect(res.payload?.config?.talk?.apiKey).toBe("__MOLTBOT_REDACTED__");
+      expect(res.payload?.config?.talk?.apiKey).toBe("__RAZROOM_REDACTED__");
     });
   });
 

@@ -390,7 +390,7 @@ function buildChatCommands(): ChatCommandDefinition[] {
     defineChatCommand({
       key: "restart",
       nativeName: "restart",
-      description: "Restart MoltBot.",
+      description: "Restart Razroom.",
       textAlias: "/restart",
       category: "tools",
     }),

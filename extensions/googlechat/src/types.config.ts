@@ -1,3 +1,3 @@
-import type { GoogleChatAccountConfig, GoogleChatConfig } from "moltbot/plugin-sdk";
+import type { GoogleChatAccountConfig, GoogleChatConfig } from "razroom/plugin-sdk";
 
 export type { GoogleChatAccountConfig, GoogleChatConfig };

@@ -1,9 +1,9 @@
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { HookInstallRecord } from "../config/types.hooks.js";
 
 export type HookInstallUpdate = HookInstallRecord & { hookId: string };
 
-export function recordHookInstall(cfg: MoltBotConfig, update: HookInstallUpdate): MoltBotConfig {
+export function recordHookInstall(cfg: RazroomConfig, update: HookInstallUpdate): RazroomConfig {
   const { hookId, ...record } = update;
   const installs = {
     ...cfg.hooks?.internal?.installs,

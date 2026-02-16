@@ -3,11 +3,11 @@ import Ajv from "ajv";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-// NOTE: This extension is intended to be bundled with MoltBot.
-// When running from source (tests/dev), MoltBot internals live under src/.
+// NOTE: This extension is intended to be bundled with Razroom.
+// When running from source (tests/dev), Razroom internals live under src/.
 // When running from a built install, internals live under dist/ (no src/ tree).
 // So we resolve internal imports dynamically with src-first, dist-fallback.
-import type { MoltBotPluginApi } from "../../../src/plugins/types.js";
+import type { RazroomPluginApi } from "../../../src/plugins/types.js";
 
 type RunEmbeddedPiAgentFn = (params: Record<string, unknown>) => Promise<unknown>;
 
@@ -66,12 +66,12 @@ type PluginCfg = {
   timeoutMs?: number;
 };
 
-export function createLlmTaskTool(api: MoltBotPluginApi) {
+export function createLlmTaskTool(api: RazroomPluginApi) {
   return {
     name: "llm-task",
     label: "LLM Task",
     description:
-      "Run a generic JSON-only LLM task and return schema-validated JSON. Designed for orchestration from Lobster workflows via moltbot.invoke.",
+      "Run a generic JSON-only LLM task and return schema-validated JSON. Designed for orchestration from Lobster workflows via razroom.invoke.",
     parameters: Type.Object({
       prompt: Type.String({ description: "Task instruction for the LLM." }),
       input: Type.Optional(Type.Unknown({ description: "Optional input payload for the task." })),
@@ -176,7 +176,7 @@ export function createLlmTaskTool(api: MoltBotPluginApi) {
 
       let tmpDir: string | null = null;
       try {
-        tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-llm-task-"));
+        tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-llm-task-"));
         const sessionId = `llm-task-${Date.now()}`;
         const sessionFile = path.join(tmpDir, "session.json");
 

@@ -2,7 +2,7 @@ import type { Command } from "commander";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { PluginRecord } from "../plugins/registry.js";
 import { loadConfig, writeConfigFile } from "../config/config.js";
 import { resolveStateDir } from "../config/paths.js";
@@ -110,9 +110,9 @@ function formatPluginLine(plugin: PluginRecord, verbose = false): string {
 }
 
 function applySlotSelectionForPlugin(
-  config: MoltBotConfig,
+  config: RazroomConfig,
   pluginId: string,
-): { config: MoltBotConfig; warnings: string[] } {
+): { config: RazroomConfig; warnings: string[] } {
   const report = buildPluginStatusReport({ config });
   const plugin = report.plugins.find((entry) => entry.id === pluginId);
   if (!plugin) {
@@ -134,7 +134,7 @@ function createPluginInstallLogger(): { info: (msg: string) => void; warn: (msg:
   };
 }
 
-function enablePluginInConfig(config: MoltBotConfig, pluginId: string): MoltBotConfig {
+function enablePluginInConfig(config: RazroomConfig, pluginId: string): RazroomConfig {
   return {
     ...config,
     plugins: {
@@ -162,11 +162,11 @@ function logSlotWarnings(warnings: string[]) {
 export function registerPluginsCli(program: Command) {
   const plugins = program
     .command("plugins")
-    .description("Manage MoltBot plugins/extensions")
+    .description("Manage Razroom plugins/extensions")
     .addHelpText(
       "after",
       () =>
-        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/plugins", "docs.moltbot.ai/cli/plugins")}\n`,
+        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/plugins", "docs.razroom.ai/cli/plugins")}\n`,
     );
 
   plugins
@@ -351,7 +351,7 @@ export function registerPluginsCli(program: Command) {
     .argument("<id>", "Plugin id")
     .action(async (id: string) => {
       const cfg = loadConfig();
-      let next: MoltBotConfig = {
+      let next: RazroomConfig = {
         ...cfg,
         plugins: {
           ...cfg.plugins,
@@ -554,7 +554,7 @@ export function registerPluginsCli(program: Command) {
             process.exit(1);
           }
 
-          let next: MoltBotConfig = enablePluginInConfig(
+          let next: RazroomConfig = enablePluginInConfig(
             {
               ...cfg,
               plugins: {
@@ -735,7 +735,7 @@ export function registerPluginsCli(program: Command) {
           lines.push(`- ${target}${diag.message}`);
         }
       }
-      const docs = formatDocsLink("/plugin", "docs.moltbot.ai/plugin");
+      const docs = formatDocsLink("/plugin", "docs.razroom.ai/plugin");
       lines.push("");
       lines.push(`${theme.muted("Docs:")} ${docs}`);
       defaultRuntime.log(lines.join("\n"));

@@ -14,28 +14,28 @@ Use this page for scheduler and delivery issues (`cron` + `heartbeat`).
 ## Command ladder
 
 ```bash
-moltbot status
-moltbot gateway status
-moltbot logs --follow
-moltbot doctor
-moltbot channels status --probe
+razroom status
+razroom gateway status
+razroom logs --follow
+razroom doctor
+razroom channels status --probe
 ```
 
 Then run automation checks:
 
 ```bash
-moltbot cron status
-moltbot cron list
-moltbot system heartbeat last
+razroom cron status
+razroom cron list
+razroom system heartbeat last
 ```
 
 ## Cron not firing
 
 ```bash
-moltbot cron status
-moltbot cron list
-moltbot cron runs --id <jobId> --limit 20
-moltbot logs --follow
+razroom cron status
+razroom cron list
+razroom cron runs --id <jobId> --limit 20
+razroom logs --follow
 ```
 
 Good output looks like:
@@ -53,10 +53,10 @@ Common signatures:
 ## Cron fired but no delivery
 
 ```bash
-moltbot cron runs --id <jobId> --limit 20
-moltbot cron list
-moltbot channels status --probe
-moltbot logs --follow
+razroom cron runs --id <jobId> --limit 20
+razroom cron list
+razroom channels status --probe
+razroom logs --follow
 ```
 
 Good output looks like:
@@ -74,10 +74,10 @@ Common signatures:
 ## Heartbeat suppressed or skipped
 
 ```bash
-moltbot system heartbeat last
-moltbot logs --follow
-moltbot config get agents.defaults.heartbeat
-moltbot channels status --probe
+razroom system heartbeat last
+razroom logs --follow
+razroom config get agents.defaults.heartbeat
+razroom channels status --probe
 ```
 
 Good output looks like:
@@ -95,11 +95,11 @@ Common signatures:
 ## Timezone and activeHours gotchas
 
 ```bash
-moltbot config get agents.defaults.heartbeat.activeHours
-moltbot config get agents.defaults.heartbeat.activeHours.timezone
-moltbot config get agents.defaults.userTimezone || echo "agents.defaults.userTimezone not set"
-moltbot cron list
-moltbot logs --follow
+razroom config get agents.defaults.heartbeat.activeHours
+razroom config get agents.defaults.heartbeat.activeHours.timezone
+razroom config get agents.defaults.userTimezone || echo "agents.defaults.userTimezone not set"
+razroom cron list
+razroom logs --follow
 ```
 
 Quick rules:

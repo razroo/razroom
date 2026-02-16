@@ -1,4 +1,4 @@
-import { SsrFBlockedError } from "moltbot/plugin-sdk";
+import { SsrFBlockedError } from "razroom/plugin-sdk";
 import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import { authenticate } from "./auth.js";
 

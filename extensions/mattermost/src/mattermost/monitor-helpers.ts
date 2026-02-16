@@ -1,8 +1,8 @@
-import type { MoltBotConfig } from "moltbot/plugin-sdk";
+import type { RazroomConfig } from "razroom/plugin-sdk";
 import type WebSocket from "ws";
 import { Buffer } from "node:buffer";
 
-export { createDedupeCache } from "moltbot/plugin-sdk";
+export { createDedupeCache } from "razroom/plugin-sdk";
 
 export type ResponsePrefixContext = {
   model?: string;
@@ -77,9 +77,9 @@ function normalizeAgentId(value: string | undefined | null): string {
   );
 }
 
-type AgentEntry = NonNullable<NonNullable<MoltBotConfig["agents"]>["list"]>[number];
+type AgentEntry = NonNullable<NonNullable<RazroomConfig["agents"]>["list"]>[number];
 
-function listAgents(cfg: MoltBotConfig): AgentEntry[] {
+function listAgents(cfg: RazroomConfig): AgentEntry[] {
   const list = cfg.agents?.list;
   if (!Array.isArray(list)) {
     return [];
@@ -87,12 +87,12 @@ function listAgents(cfg: MoltBotConfig): AgentEntry[] {
   return list.filter((entry): entry is AgentEntry => Boolean(entry && typeof entry === "object"));
 }
 
-function resolveAgentEntry(cfg: MoltBotConfig, agentId: string): AgentEntry | undefined {
+function resolveAgentEntry(cfg: RazroomConfig, agentId: string): AgentEntry | undefined {
   const id = normalizeAgentId(agentId);
   return listAgents(cfg).find((entry) => normalizeAgentId(entry.id) === id);
 }
 
-export function resolveIdentityName(cfg: MoltBotConfig, agentId: string): string | undefined {
+export function resolveIdentityName(cfg: RazroomConfig, agentId: string): string | undefined {
   const entry = resolveAgentEntry(cfg, agentId);
   return entry?.identity?.name?.trim() || undefined;
 }

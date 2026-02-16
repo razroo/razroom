@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { FailoverReason } from "./pi-embedded-helpers.js";
 import {
   ensureAuthProfileStore,
@@ -96,7 +96,7 @@ type ModelFallbackRunResult<T> = {
 };
 
 function resolveImageFallbackCandidates(params: {
-  cfg: MoltBotConfig | undefined;
+  cfg: RazroomConfig | undefined;
   defaultProvider: string;
   modelOverride?: string;
 }): ModelCandidate[] {
@@ -154,7 +154,7 @@ function resolveImageFallbackCandidates(params: {
 }
 
 function resolveFallbackCandidates(params: {
-  cfg: MoltBotConfig | undefined;
+  cfg: RazroomConfig | undefined;
   provider: string;
   model: string;
   /** Optional explicit fallbacks list; when provided (even empty), replaces agents.defaults.model.fallbacks. */
@@ -218,7 +218,7 @@ function resolveFallbackCandidates(params: {
 }
 
 export async function runWithModelFallback<T>(params: {
-  cfg: MoltBotConfig | undefined;
+  cfg: RazroomConfig | undefined;
   provider: string;
   model: string;
   agentDir?: string;
@@ -329,7 +329,7 @@ export async function runWithModelFallback<T>(params: {
 }
 
 export async function runWithImageModelFallback<T>(params: {
-  cfg: MoltBotConfig | undefined;
+  cfg: RazroomConfig | undefined;
   modelOverride?: string;
   run: (provider: string, model: string) => Promise<T>;
   onError?: ModelFallbackErrorHandler;

@@ -1,6 +1,6 @@
-# @moltbot/zalouser
+# @razroom/zalouser
 
-MoltBot extension for Zalo Personal Account messaging via [zca-cli](https://zca-cli.dev).
+Razroom extension for Zalo Personal Account messaging via [zca-cli](https://zca-cli.dev).
 
 > **Warning:** Using Zalo automation may result in account suspension or ban. Use at your own risk. This is an unofficial integration.
 
@@ -77,7 +77,7 @@ See [zca-cli](https://zca-cli.dev) for manual download (binaries for macOS/Linux
 ### Option 1: Onboarding Wizard (Recommended)
 
 ```bash
-moltbot onboard
+razroom onboard
 # Select "Zalo Personal" from channel list
 # Follow QR code login flow
 ```
@@ -85,14 +85,14 @@ moltbot onboard
 ### Option 2: Login (QR, on the Gateway machine)
 
 ```bash
-moltbot channels login --channel zalouser
+razroom channels login --channel zalouser
 # Scan QR code with Zalo app
 ```
 
 ### Send a Message
 
 ```bash
-moltbot message send --channel zalouser --target <threadId> --message "Hello from MoltBot!"
+razroom message send --channel zalouser --target <threadId> --message "Hello from Razroom!"
 ```
 
 ## Configuration
@@ -127,19 +127,19 @@ channels:
 ### Authentication
 
 ```bash
-moltbot channels login --channel zalouser              # Login via QR
-moltbot channels login --channel zalouser --account work
-moltbot channels status --probe
-moltbot channels logout --channel zalouser
+razroom channels login --channel zalouser              # Login via QR
+razroom channels login --channel zalouser --account work
+razroom channels status --probe
+razroom channels logout --channel zalouser
 ```
 
 ### Directory (IDs, contacts, groups)
 
 ```bash
-moltbot directory self --channel zalouser
-moltbot directory peers list --channel zalouser --query "name"
-moltbot directory groups list --channel zalouser --query "work"
-moltbot directory groups members --channel zalouser --group-id <id>
+razroom directory self --channel zalouser
+razroom directory peers list --channel zalouser --query "name"
+razroom directory groups list --channel zalouser --query "work"
+razroom directory groups members --channel zalouser --group-id <id>
 ```
 
 ### Account Management
@@ -156,16 +156,16 @@ zca account label <profile> "Work Account"
 
 ```bash
 # Text
-moltbot message send --channel zalouser --target <threadId> --message "message"
+razroom message send --channel zalouser --target <threadId> --message "message"
 
 # Media (URL)
-moltbot message send --channel zalouser --target <threadId> --message "caption" --media-url "https://example.com/img.jpg"
+razroom message send --channel zalouser --target <threadId> --message "caption" --media-url "https://example.com/img.jpg"
 ```
 
 ### Listener
 
 The listener runs inside the Gateway when the channel is enabled. For debugging,
-use `moltbot channels logs --channel zalouser` or run `zca listen` directly.
+use `razroom channels logs --channel zalouser` or run `zca listen` directly.
 
 ### Data Access
 
@@ -191,8 +191,8 @@ zca me id
 Use `--profile` or `-p` to work with multiple accounts:
 
 ```bash
-moltbot channels login --channel zalouser --account work
-moltbot message send --channel zalouser --account work --target <id> --message "Hello"
+razroom channels login --channel zalouser --account work
+razroom message send --channel zalouser --account work --target <id> --message "Hello"
 ZCA_PROFILE=work zca listen
 ```
 

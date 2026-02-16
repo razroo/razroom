@@ -5,7 +5,7 @@ import { buildAgentSystemPrompt, buildRuntimeLine } from "./system-prompt.js";
 describe("buildAgentSystemPrompt", () => {
   it("includes owner numbers when provided", () => {
     const prompt = buildAgentSystemPrompt({
-      workspaceDir: "/tmp/moltbot",
+      workspaceDir: "/tmp/razroom",
       ownerNumbers: ["+123", " +456 ", ""],
     });
 
@@ -17,7 +17,7 @@ describe("buildAgentSystemPrompt", () => {
 
   it("omits owner section when numbers are missing", () => {
     const prompt = buildAgentSystemPrompt({
-      workspaceDir: "/tmp/moltbot",
+      workspaceDir: "/tmp/razroom",
     });
 
     expect(prompt).not.toContain("## User Identity");
@@ -26,14 +26,14 @@ describe("buildAgentSystemPrompt", () => {
 
   it("omits extended sections in minimal prompt mode", () => {
     const prompt = buildAgentSystemPrompt({
-      workspaceDir: "/tmp/moltbot",
+      workspaceDir: "/tmp/razroom",
       promptMode: "minimal",
       ownerNumbers: ["+123"],
       skillsPrompt:
         "<available_skills>\n  <skill>\n    <name>demo</name>\n  </skill>\n</available_skills>",
       heartbeatPrompt: "ping",
       toolNames: ["message", "memory_search"],
-      docsPath: "/tmp/moltbot/docs",
+      docsPath: "/tmp/razroom/docs",
       extraSystemPrompt: "Subagent details",
       ttsHint: "Voice (TTS) is enabled.",
     });
@@ -61,7 +61,7 @@ describe("buildAgentSystemPrompt", () => {
 
   it("includes safety guardrails in full prompts", () => {
     const prompt = buildAgentSystemPrompt({
-      workspaceDir: "/tmp/moltbot",
+      workspaceDir: "/tmp/razroom",
     });
 
     expect(prompt).toContain("## Safety");
@@ -75,7 +75,7 @@ describe("buildAgentSystemPrompt", () => {
 
   it("includes voice hint when provided", () => {
     const prompt = buildAgentSystemPrompt({
-      workspaceDir: "/tmp/moltbot",
+      workspaceDir: "/tmp/razroom",
       ttsHint: "Voice (TTS) is enabled.",
     });
 
@@ -85,7 +85,7 @@ describe("buildAgentSystemPrompt", () => {
 
   it("adds reasoning tag hint when enabled", () => {
     const prompt = buildAgentSystemPrompt({
-      workspaceDir: "/tmp/moltbot",
+      workspaceDir: "/tmp/razroom",
       reasoningTagHint: true,
     });
 
@@ -96,17 +96,17 @@ describe("buildAgentSystemPrompt", () => {
 
   it("includes a CLI quick reference section", () => {
     const prompt = buildAgentSystemPrompt({
-      workspaceDir: "/tmp/moltbot",
+      workspaceDir: "/tmp/razroom",
     });
 
-    expect(prompt).toContain("## MoltBot CLI Quick Reference");
-    expect(prompt).toContain("moltbot gateway restart");
+    expect(prompt).toContain("## Razroom CLI Quick Reference");
+    expect(prompt).toContain("razroom gateway restart");
     expect(prompt).toContain("Do not invent commands");
   });
 
   it("marks system message blocks as internal and not user-visible", () => {
     const prompt = buildAgentSystemPrompt({
-      workspaceDir: "/tmp/moltbot",
+      workspaceDir: "/tmp/razroom",
     });
 
     expect(prompt).toContain("`[System Message] ...` blocks are internal context");
@@ -117,7 +117,7 @@ describe("buildAgentSystemPrompt", () => {
 
   it("guides subagent workflows to avoid polling loops", () => {
     const prompt = buildAgentSystemPrompt({
-      workspaceDir: "/tmp/moltbot",
+      workspaceDir: "/tmp/razroom",
     });
 
     expect(prompt).toContain("Completion is push-based: it will auto-announce when done.");
@@ -126,7 +126,7 @@ describe("buildAgentSystemPrompt", () => {
 
   it("lists available tools when provided", () => {
     const prompt = buildAgentSystemPrompt({
-      workspaceDir: "/tmp/moltbot",
+      workspaceDir: "/tmp/razroom",
       toolNames: ["exec", "sessions_list", "sessions_history", "sessions_send"],
     });
 
@@ -138,11 +138,11 @@ describe("buildAgentSystemPrompt", () => {
 
   it("preserves tool casing in the prompt", () => {
     const prompt = buildAgentSystemPrompt({
-      workspaceDir: "/tmp/moltbot",
+      workspaceDir: "/tmp/razroom",
       toolNames: ["Read", "Exec", "process"],
       skillsPrompt:
         "<available_skills>\n  <skill>\n    <name>demo</name>\n  </skill>\n</available_skills>",
-      docsPath: "/tmp/moltbot/docs",
+      docsPath: "/tmp/razroom/docs",
     });
 
     expect(prompt).toContain("- Read: Read file contents");
@@ -150,28 +150,28 @@ describe("buildAgentSystemPrompt", () => {
     expect(prompt).toContain(
       "- If exactly one skill clearly applies: read its SKILL.md at <location> with `Read`, then follow it.",
     );
-    expect(prompt).toContain("MoltBot docs: /tmp/moltbot/docs");
+    expect(prompt).toContain("Razroom docs: /tmp/razroom/docs");
     expect(prompt).toContain(
-      "For MoltBot behavior, commands, config, or architecture: consult local docs first.",
+      "For Razroom behavior, commands, config, or architecture: consult local docs first.",
     );
   });
 
   it("includes docs guidance when docsPath is provided", () => {
     const prompt = buildAgentSystemPrompt({
-      workspaceDir: "/tmp/moltbot",
-      docsPath: "/tmp/moltbot/docs",
+      workspaceDir: "/tmp/razroom",
+      docsPath: "/tmp/razroom/docs",
     });
 
     expect(prompt).toContain("## Documentation");
-    expect(prompt).toContain("MoltBot docs: /tmp/moltbot/docs");
+    expect(prompt).toContain("Razroom docs: /tmp/razroom/docs");
     expect(prompt).toContain(
-      "For MoltBot behavior, commands, config, or architecture: consult local docs first.",
+      "For Razroom behavior, commands, config, or architecture: consult local docs first.",
     );
   });
 
   it("includes workspace notes when provided", () => {
     const prompt = buildAgentSystemPrompt({
-      workspaceDir: "/tmp/moltbot",
+      workspaceDir: "/tmp/razroom",
       workspaceNotes: ["Reminder: commit your changes in this workspace after edits."],
     });
 
@@ -180,7 +180,7 @@ describe("buildAgentSystemPrompt", () => {
 
   it("includes user timezone when provided (12-hour)", () => {
     const prompt = buildAgentSystemPrompt({
-      workspaceDir: "/tmp/moltbot",
+      workspaceDir: "/tmp/razroom",
       userTimezone: "America/Chicago",
       userTime: "Monday, January 5th, 2026 — 3:26 PM",
       userTimeFormat: "12",
@@ -192,7 +192,7 @@ describe("buildAgentSystemPrompt", () => {
 
   it("includes user timezone when provided (24-hour)", () => {
     const prompt = buildAgentSystemPrompt({
-      workspaceDir: "/tmp/moltbot",
+      workspaceDir: "/tmp/razroom",
       userTimezone: "America/Chicago",
       userTime: "Monday, January 5th, 2026 — 15:26",
       userTimeFormat: "24",
@@ -204,7 +204,7 @@ describe("buildAgentSystemPrompt", () => {
 
   it("shows timezone when only timezone is provided", () => {
     const prompt = buildAgentSystemPrompt({
-      workspaceDir: "/tmp/moltbot",
+      workspaceDir: "/tmp/razroom",
       userTimezone: "America/Chicago",
       userTimeFormat: "24",
     });
@@ -225,10 +225,10 @@ describe("buildAgentSystemPrompt", () => {
 
   // The system prompt intentionally does NOT include the current date/time.
   // Only the timezone is included, to keep the prompt stable for caching.
-  // See: https://github.com/moltbot/moltbot/commit/66eec295b894bce8333886cfbca3b960c57c4946
+  // See: https://github.com/razroom/razroom/commit/66eec295b894bce8333886cfbca3b960c57c4946
   // Agents should use session_status or message timestamps to determine the date/time.
-  // Related: https://github.com/moltbot/moltbot/issues/1897
-  //          https://github.com/moltbot/moltbot/issues/3658
+  // Related: https://github.com/razroom/razroom/issues/1897
+  //          https://github.com/razroom/razroom/issues/3658
   it("does NOT include a date or time in the system prompt (cache stability)", () => {
     const prompt = buildAgentSystemPrompt({
       workspaceDir: "/tmp/clawd",
@@ -240,7 +240,7 @@ describe("buildAgentSystemPrompt", () => {
     // The prompt should contain the timezone but NOT the formatted date/time string.
     // This is intentional for prompt cache stability — the date/time was removed in
     // commit 66eec295b. If you're here because you want to add it back, please see
-    // https://github.com/moltbot/moltbot/issues/3658 for the preferred approach:
+    // https://github.com/razroom/razroom/issues/3658 for the preferred approach:
     // gateway-level timestamp injection into messages, not the system prompt.
     expect(prompt).toContain("Time zone: America/Chicago");
     expect(prompt).not.toContain("Monday, January 5th, 2026");
@@ -250,7 +250,7 @@ describe("buildAgentSystemPrompt", () => {
 
   it("includes model alias guidance when aliases are provided", () => {
     const prompt = buildAgentSystemPrompt({
-      workspaceDir: "/tmp/moltbot",
+      workspaceDir: "/tmp/razroom",
       modelAliasLines: [
         "- Opus: anthropic/claude-opus-4-5",
         "- Sonnet: anthropic/claude-sonnet-4-5",
@@ -264,18 +264,18 @@ describe("buildAgentSystemPrompt", () => {
 
   it("adds ClaudeBot self-update guidance when gateway tool is available", () => {
     const prompt = buildAgentSystemPrompt({
-      workspaceDir: "/tmp/moltbot",
+      workspaceDir: "/tmp/razroom",
       toolNames: ["gateway", "exec"],
     });
 
-    expect(prompt).toContain("## MoltBot Self-Update");
+    expect(prompt).toContain("## Razroom Self-Update");
     expect(prompt).toContain("config.apply");
     expect(prompt).toContain("update.run");
   });
 
   it("includes skills guidance when skills prompt is present", () => {
     const prompt = buildAgentSystemPrompt({
-      workspaceDir: "/tmp/moltbot",
+      workspaceDir: "/tmp/razroom",
       skillsPrompt:
         "<available_skills>\n  <skill>\n    <name>demo</name>\n  </skill>\n</available_skills>",
     });
@@ -288,7 +288,7 @@ describe("buildAgentSystemPrompt", () => {
 
   it("appends available skills when provided", () => {
     const prompt = buildAgentSystemPrompt({
-      workspaceDir: "/tmp/moltbot",
+      workspaceDir: "/tmp/razroom",
       skillsPrompt:
         "<available_skills>\n  <skill>\n    <name>demo</name>\n  </skill>\n</available_skills>",
     });
@@ -299,7 +299,7 @@ describe("buildAgentSystemPrompt", () => {
 
   it("omits skills section when no skills prompt is provided", () => {
     const prompt = buildAgentSystemPrompt({
-      workspaceDir: "/tmp/moltbot",
+      workspaceDir: "/tmp/razroom",
     });
 
     expect(prompt).not.toContain("## Skills");
@@ -308,7 +308,7 @@ describe("buildAgentSystemPrompt", () => {
 
   it("renders project context files when provided", () => {
     const prompt = buildAgentSystemPrompt({
-      workspaceDir: "/tmp/moltbot",
+      workspaceDir: "/tmp/razroom",
       contextFiles: [
         { path: "AGENTS.md", content: "Alpha" },
         { path: "IDENTITY.md", content: "Bravo" },
@@ -324,7 +324,7 @@ describe("buildAgentSystemPrompt", () => {
 
   it("ignores context files with missing or blank paths", () => {
     const prompt = buildAgentSystemPrompt({
-      workspaceDir: "/tmp/moltbot",
+      workspaceDir: "/tmp/razroom",
       contextFiles: [
         { path: undefined as unknown as string, content: "Missing path" },
         { path: "   ", content: "Blank path" },
@@ -341,7 +341,7 @@ describe("buildAgentSystemPrompt", () => {
 
   it("adds SOUL guidance when a soul file is present", () => {
     const prompt = buildAgentSystemPrompt({
-      workspaceDir: "/tmp/moltbot",
+      workspaceDir: "/tmp/razroom",
       contextFiles: [
         { path: "./SOUL.md", content: "Persona" },
         { path: "dir\\SOUL.md", content: "Persona Windows" },
@@ -355,7 +355,7 @@ describe("buildAgentSystemPrompt", () => {
 
   it("summarizes the message tool when available", () => {
     const prompt = buildAgentSystemPrompt({
-      workspaceDir: "/tmp/moltbot",
+      workspaceDir: "/tmp/razroom",
       toolNames: ["message"],
     });
 
@@ -366,7 +366,7 @@ describe("buildAgentSystemPrompt", () => {
 
   it("includes runtime provider capabilities when present", () => {
     const prompt = buildAgentSystemPrompt({
-      workspaceDir: "/tmp/moltbot",
+      workspaceDir: "/tmp/razroom",
       runtimeInfo: {
         channel: "telegram",
         capabilities: ["inlineButtons"],
@@ -379,7 +379,7 @@ describe("buildAgentSystemPrompt", () => {
 
   it("includes agent id in runtime when provided", () => {
     const prompt = buildAgentSystemPrompt({
-      workspaceDir: "/tmp/moltbot",
+      workspaceDir: "/tmp/razroom",
       runtimeInfo: {
         agentId: "work",
         host: "host",
@@ -395,7 +395,7 @@ describe("buildAgentSystemPrompt", () => {
 
   it("includes reasoning visibility hint", () => {
     const prompt = buildAgentSystemPrompt({
-      workspaceDir: "/tmp/moltbot",
+      workspaceDir: "/tmp/razroom",
       reasoningLevel: "off",
     });
 
@@ -435,7 +435,7 @@ describe("buildAgentSystemPrompt", () => {
 
   it("describes sandboxed runtime and elevated when allowed", () => {
     const prompt = buildAgentSystemPrompt({
-      workspaceDir: "/tmp/moltbot",
+      workspaceDir: "/tmp/razroom",
       sandboxInfo: {
         enabled: true,
         workspaceDir: "/tmp/sandbox",
@@ -448,7 +448,7 @@ describe("buildAgentSystemPrompt", () => {
 
     expect(prompt).toContain("Your working directory is: /workspace");
     expect(prompt).toContain(
-      "For read/write/edit/apply_patch, file paths resolve against host workspace: /tmp/moltbot.",
+      "For read/write/edit/apply_patch, file paths resolve against host workspace: /tmp/razroom.",
     );
     expect(prompt).toContain("Sandbox container workdir: /workspace");
     expect(prompt).toContain("Sandbox host workspace: /tmp/sandbox");
@@ -460,7 +460,7 @@ describe("buildAgentSystemPrompt", () => {
 
   it("includes reaction guidance when provided", () => {
     const prompt = buildAgentSystemPrompt({
-      workspaceDir: "/tmp/moltbot",
+      workspaceDir: "/tmp/razroom",
       reactionGuidance: {
         level: "minimal",
         channel: "Telegram",

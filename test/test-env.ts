@@ -54,8 +54,8 @@ function loadProfileEnv(): void {
 export function installTestEnv(): { cleanup: () => void; tempHome: string } {
   const live =
     process.env.LIVE === "1" ||
-    process.env.MOLTBOT_LIVE_TEST === "1" ||
-    process.env.MOLTBOT_LIVE_GATEWAY === "1";
+    process.env.RAZROOM_LIVE_TEST === "1" ||
+    process.env.RAZROOM_LIVE_GATEWAY === "1";
 
   // Live tests must use the real user environment (keys, profiles, config).
   // The default test env isolates HOME to avoid touching real state.
@@ -65,21 +65,21 @@ export function installTestEnv(): { cleanup: () => void; tempHome: string } {
   }
 
   const restore: RestoreEntry[] = [
-    { key: "MOLTBOT_TEST_FAST", value: process.env.MOLTBOT_TEST_FAST },
+    { key: "RAZROOM_TEST_FAST", value: process.env.RAZROOM_TEST_FAST },
     { key: "HOME", value: process.env.HOME },
     { key: "USERPROFILE", value: process.env.USERPROFILE },
     { key: "XDG_CONFIG_HOME", value: process.env.XDG_CONFIG_HOME },
     { key: "XDG_DATA_HOME", value: process.env.XDG_DATA_HOME },
     { key: "XDG_STATE_HOME", value: process.env.XDG_STATE_HOME },
     { key: "XDG_CACHE_HOME", value: process.env.XDG_CACHE_HOME },
-    { key: "MOLTBOT_STATE_DIR", value: process.env.MOLTBOT_STATE_DIR },
-    { key: "MOLTBOT_CONFIG_PATH", value: process.env.MOLTBOT_CONFIG_PATH },
-    { key: "MOLTBOT_GATEWAY_PORT", value: process.env.MOLTBOT_GATEWAY_PORT },
-    { key: "MOLTBOT_BRIDGE_ENABLED", value: process.env.MOLTBOT_BRIDGE_ENABLED },
-    { key: "MOLTBOT_BRIDGE_HOST", value: process.env.MOLTBOT_BRIDGE_HOST },
-    { key: "MOLTBOT_BRIDGE_PORT", value: process.env.MOLTBOT_BRIDGE_PORT },
-    { key: "MOLTBOT_CANVAS_HOST_PORT", value: process.env.MOLTBOT_CANVAS_HOST_PORT },
-    { key: "MOLTBOT_TEST_HOME", value: process.env.MOLTBOT_TEST_HOME },
+    { key: "RAZROOM_STATE_DIR", value: process.env.RAZROOM_STATE_DIR },
+    { key: "RAZROOM_CONFIG_PATH", value: process.env.RAZROOM_CONFIG_PATH },
+    { key: "RAZROOM_GATEWAY_PORT", value: process.env.RAZROOM_GATEWAY_PORT },
+    { key: "RAZROOM_BRIDGE_ENABLED", value: process.env.RAZROOM_BRIDGE_ENABLED },
+    { key: "RAZROOM_BRIDGE_HOST", value: process.env.RAZROOM_BRIDGE_HOST },
+    { key: "RAZROOM_BRIDGE_PORT", value: process.env.RAZROOM_BRIDGE_PORT },
+    { key: "RAZROOM_CANVAS_HOST_PORT", value: process.env.RAZROOM_CANVAS_HOST_PORT },
+    { key: "RAZROOM_TEST_HOME", value: process.env.RAZROOM_TEST_HOME },
     { key: "TELEGRAM_BOT_TOKEN", value: process.env.TELEGRAM_BOT_TOKEN },
     { key: "DISCORD_BOT_TOKEN", value: process.env.DISCORD_BOT_TOKEN },
     { key: "SLACK_BOT_TOKEN", value: process.env.SLACK_BOT_TOKEN },
@@ -91,23 +91,23 @@ export function installTestEnv(): { cleanup: () => void; tempHome: string } {
     { key: "NODE_OPTIONS", value: process.env.NODE_OPTIONS },
   ];
 
-  const tempHome = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-test-home-"));
+  const tempHome = fs.mkdtempSync(path.join(os.tmpdir(), "razroom-test-home-"));
 
   process.env.HOME = tempHome;
   process.env.USERPROFILE = tempHome;
-  process.env.MOLTBOT_TEST_HOME = tempHome;
-  process.env.MOLTBOT_TEST_FAST = "1";
+  process.env.RAZROOM_TEST_HOME = tempHome;
+  process.env.RAZROOM_TEST_FAST = "1";
 
   // Ensure test runs never touch the developer's real config/state, even if they have overrides set.
-  delete process.env.MOLTBOT_CONFIG_PATH;
+  delete process.env.RAZROOM_CONFIG_PATH;
   // Prefer deriving state dir from HOME so nested tests that change HOME also isolate correctly.
-  delete process.env.MOLTBOT_STATE_DIR;
+  delete process.env.RAZROOM_STATE_DIR;
   // Prefer test-controlled ports over developer overrides (avoid port collisions across tests/workers).
-  delete process.env.MOLTBOT_GATEWAY_PORT;
-  delete process.env.MOLTBOT_BRIDGE_ENABLED;
-  delete process.env.MOLTBOT_BRIDGE_HOST;
-  delete process.env.MOLTBOT_BRIDGE_PORT;
-  delete process.env.MOLTBOT_CANVAS_HOST_PORT;
+  delete process.env.RAZROOM_GATEWAY_PORT;
+  delete process.env.RAZROOM_BRIDGE_ENABLED;
+  delete process.env.RAZROOM_BRIDGE_HOST;
+  delete process.env.RAZROOM_BRIDGE_PORT;
+  delete process.env.RAZROOM_CANVAS_HOST_PORT;
   // Avoid leaking real GitHub/Copilot tokens into non-live test runs.
   delete process.env.TELEGRAM_BOT_TOKEN;
   delete process.env.DISCORD_BOT_TOKEN;
@@ -122,7 +122,7 @@ export function installTestEnv(): { cleanup: () => void; tempHome: string } {
 
   // Windows: prefer the default state dir so auth/profile tests match real paths.
   if (process.platform === "win32") {
-    process.env.MOLTBOT_STATE_DIR = path.join(tempHome, ".moltbot");
+    process.env.RAZROOM_STATE_DIR = path.join(tempHome, ".razroom");
   }
 
   process.env.XDG_CONFIG_HOME = path.join(tempHome, ".config");

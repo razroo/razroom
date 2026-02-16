@@ -12,8 +12,8 @@ export type AssistantIdentity = {
 
 declare global {
   interface Window {
-    __MOLTBOT_ASSISTANT_NAME__?: string;
-    __MOLTBOT_ASSISTANT_AVATAR__?: string;
+    __RAZROOM_ASSISTANT_NAME__?: string;
+    __RAZROOM_ASSISTANT_AVATAR__?: string;
   }
 }
 
@@ -46,7 +46,7 @@ export function resolveInjectedAssistantIdentity(): AssistantIdentity {
     return normalizeAssistantIdentity({});
   }
   return normalizeAssistantIdentity({
-    name: window.__MOLTBOT_ASSISTANT_NAME__,
-    avatar: window.__MOLTBOT_ASSISTANT_AVATAR__,
+    name: window.__RAZROOM_ASSISTANT_NAME__,
+    avatar: window.__RAZROOM_ASSISTANT_AVATAR__,
   });
 }

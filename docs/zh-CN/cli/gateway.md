@@ -3,7 +3,7 @@ read_when:
   - 从 CLI 运行 Gateway 网关（开发或服务器）
   - 调试 Gateway 网关认证、绑定模式和连接性
   - 通过 Bonjour 发现 Gateway 网关（局域网 + tailnet）
-summary: MoltBot Gateway 网关 CLI（`moltbot gateway`）— 运行、查询和发现 Gateway 网关
+summary: Razroom Gateway 网关 CLI（`razroom gateway`）— 运行、查询和发现 Gateway 网关
 title: gateway
 x-i18n:
   generated_at: "2026-02-03T07:45:15Z"
@@ -16,9 +16,9 @@ x-i18n:
 
 # Gateway 网关 CLI
 
-Gateway 网关是 MoltBot 的 WebSocket 服务器（渠道、节点、会话、hooks）。
+Gateway 网关是 Razroom 的 WebSocket 服务器（渠道、节点、会话、hooks）。
 
-本页中的子命令位于 `moltbot gateway …` 下。
+本页中的子命令位于 `razroom gateway …` 下。
 
 相关文档：
 
@@ -31,18 +31,18 @@ Gateway 网关是 MoltBot 的 WebSocket 服务器（渠道、节点、会话、h
 运行本地 Gateway 网关进程：
 
 ```bash
-moltbot gateway
+razroom gateway
 ```
 
 前台运行别名：
 
 ```bash
-moltbot gateway run
+razroom gateway run
 ```
 
 注意事项：
 
-- 默认情况下，除非在 `~/.moltbot/moltbot.json` 中设置了 `gateway.mode=local`，否则 Gateway 网关将拒绝启动。使用 `--allow-unconfigured` 进行临时/开发运行。
+- 默认情况下，除非在 `~/.razroom/razroom.json` 中设置了 `gateway.mode=local`，否则 Gateway 网关将拒绝启动。使用 `--allow-unconfigured` 进行临时/开发运行。
 - 在没有认证的情况下绑定到 loopback 之外的地址会被阻止（安全护栏）。
 - `SIGUSR1` 在授权时触发进程内重启（启用 `commands.restart` 或使用 gateway 工具/config apply/update）。
 - `SIGINT`/`SIGTERM` 处理程序会停止 Gateway 网关进程，但不会恢复任何自定义终端状态。如果你用 TUI 或 raw-mode 输入包装 CLI，请在退出前恢复终端。
@@ -52,8 +52,8 @@ moltbot gateway run
 - `--port <port>`：WebSocket 端口（默认来自配置/环境变量；通常为 `18789`）。
 - `--bind <loopback|lan|tailnet|auto|custom>`：监听器绑定模式。
 - `--auth <token|password>`：认证模式覆盖。
-- `--token <token>`：令牌覆盖（同时为进程设置 `MOLTBOT_GATEWAY_TOKEN`）。
-- `--password <password>`：密码覆盖（同时为进程设置 `MOLTBOT_GATEWAY_PASSWORD`）。
+- `--token <token>`：令牌覆盖（同时为进程设置 `RAZROOM_GATEWAY_TOKEN`）。
+- `--password <password>`：密码覆盖（同时为进程设置 `RAZROOM_GATEWAY_PASSWORD`）。
 - `--tailscale <off|serve|funnel>`：通过 Tailscale 暴露 Gateway 网关。
 - `--tailscale-reset-on-exit`：关闭时重置 Tailscale serve/funnel 配置。
 - `--allow-unconfigured`：允许在配置中没有 `gateway.mode=local` 的情况下启动 Gateway 网关。
@@ -88,7 +88,7 @@ moltbot gateway run
 ### `gateway health`
 
 ```bash
-moltbot gateway health --url ws://127.0.0.1:18789
+razroom gateway health --url ws://127.0.0.1:18789
 ```
 
 ### `gateway status`
@@ -96,8 +96,8 @@ moltbot gateway health --url ws://127.0.0.1:18789
 `gateway status` 显示 Gateway 网关服务（launchd/systemd/schtasks）以及可选的 RPC 探测。
 
 ```bash
-moltbot gateway status
-moltbot gateway status --json
+razroom gateway status
+razroom gateway status --json
 ```
 
 选项：
@@ -119,8 +119,8 @@ moltbot gateway status --json
 如果多个 Gateway 网关可达，它会打印所有。当你使用隔离的配置文件/端口（例如救援机器人）时支持多个 Gateway 网关，但大多数安装仍然运行单个 Gateway 网关。
 
 ```bash
-moltbot gateway probe
-moltbot gateway probe --json
+razroom gateway probe
+razroom gateway probe --json
 ```
 
 #### 通过 SSH 远程（Mac 应用对等）
@@ -130,7 +130,7 @@ macOS 应用的"通过 SSH 远程"模式使用本地端口转发，因此远程 
 CLI 等效命令：
 
 ```bash
-moltbot gateway probe --ssh user@gateway-host
+razroom gateway probe --ssh user@gateway-host
 ```
 
 选项：
@@ -149,18 +149,18 @@ moltbot gateway probe --ssh user@gateway-host
 低级 RPC 辅助工具。
 
 ```bash
-moltbot gateway call status
-moltbot gateway call logs.tail --params '{"sinceMs": 60000}'
+razroom gateway call status
+razroom gateway call logs.tail --params '{"sinceMs": 60000}'
 ```
 
 ## 管理 Gateway 网关服务
 
 ```bash
-moltbot gateway install
-moltbot gateway start
-moltbot gateway stop
-moltbot gateway restart
-moltbot gateway uninstall
+razroom gateway install
+razroom gateway start
+razroom gateway stop
+razroom gateway restart
+razroom gateway uninstall
 ```
 
 注意事项：
@@ -170,10 +170,10 @@ moltbot gateway uninstall
 
 ## 发现 Gateway 网关（Bonjour）
 
-`gateway discover` 扫描 Gateway 网关信标（`_moltbot-gw._tcp`）。
+`gateway discover` 扫描 Gateway 网关信标（`_razroom-gw._tcp`）。
 
 - 组播 DNS-SD：`local.`
-- 单播 DNS-SD（广域 Bonjour）：选择一个域（示例：`moltbot.internal.`）并设置分割 DNS + DNS 服务器；参见 [/gateway/bonjour](/gateway/bonjour)
+- 单播 DNS-SD（广域 Bonjour）：选择一个域（示例：`razroom.internal.`）并设置分割 DNS + DNS 服务器；参见 [/gateway/bonjour](/gateway/bonjour)
 
 只有启用了 Bonjour 发现（默认）的 Gateway 网关才会广播信标。
 
@@ -190,7 +190,7 @@ moltbot gateway uninstall
 ### `gateway discover`
 
 ```bash
-moltbot gateway discover
+razroom gateway discover
 ```
 
 选项：
@@ -201,6 +201,6 @@ moltbot gateway discover
 示例：
 
 ```bash
-moltbot gateway discover --timeout 4000
-moltbot gateway discover --json | jq '.beacons[].wsUrl'
+razroom gateway discover --timeout 4000
+razroom gateway discover --json | jq '.beacons[].wsUrl'
 ```

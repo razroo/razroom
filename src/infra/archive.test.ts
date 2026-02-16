@@ -16,7 +16,7 @@ async function makeTempDir(prefix = "case") {
 }
 
 beforeAll(async () => {
-  fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-archive-"));
+  fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-archive-"));
 });
 
 afterAll(async () => {

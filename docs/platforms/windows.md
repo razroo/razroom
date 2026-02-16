@@ -1,14 +1,14 @@
 ---
 summary: "Windows (WSL2) support + companion app status"
 read_when:
-  - Installing MoltBot on Windows
+  - Installing Razroom on Windows
   - Looking for Windows companion app status
 title: "Windows (WSL2)"
 ---
 
 # Windows (WSL2)
 
-MoltBot on Windows is recommended **via WSL2** (Ubuntu recommended). The
+Razroom on Windows is recommended **via WSL2** (Ubuntu recommended). The
 CLI + Gateway run inside Linux, which keeps the runtime consistent and makes
 tooling far more compatible (Node/Bun/pnpm, Linux binaries, skills). Native
 Windows might be trickier. WSL2 gives you the full Linux experience — one command
@@ -32,19 +32,19 @@ Native Windows companion apps are planned.
 Inside WSL2:
 
 ```
-moltbot onboard --install-daemon
+razroom onboard --install-daemon
 ```
 
 Or:
 
 ```
-moltbot gateway install
+razroom gateway install
 ```
 
 Or:
 
 ```
-moltbot configure
+razroom configure
 ```
 
 Select **Gateway service** when prompted.
@@ -52,7 +52,7 @@ Select **Gateway service** when prompted.
 Repair/migrate:
 
 ```
-moltbot doctor
+razroom doctor
 ```
 
 ## Advanced: expose WSL services over LAN (portproxy)
@@ -95,7 +95,7 @@ Notes:
 
 - SSH from another machine targets the **Windows host IP** (example: `ssh user@windows-host -p 2222`).
 - Remote nodes must point at a **reachable** Gateway URL (not `127.0.0.1`); use
-  `moltbot status --all` to confirm.
+  `razroom status --all` to confirm.
 - Use `listenaddress=0.0.0.0` for LAN access; `127.0.0.1` keeps it local only.
 - If you want this automatic, register a Scheduled Task to run the refresh
   step at login.
@@ -138,17 +138,17 @@ Re-open Ubuntu, then verify:
 systemctl --user status
 ```
 
-### 3) Install MoltBot (inside WSL)
+### 3) Install Razroom (inside WSL)
 
 Follow the Linux Getting Started flow inside WSL:
 
 ```bash
-git clone https://github.com/moltbot/moltbot.git
-cd moltbot
+git clone https://github.com/razroom/razroom.git
+cd razroom
 pnpm install
 pnpm ui:build # auto-installs UI deps on first run
 pnpm build
-moltbot onboard
+razroom onboard
 ```
 
 Full guide: [Getting Started](/start/getting-started)

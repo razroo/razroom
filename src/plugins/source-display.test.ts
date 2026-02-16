@@ -6,12 +6,12 @@ describe("formatPluginSourceForTable", () => {
     const out = formatPluginSourceForTable(
       {
         origin: "bundled",
-        source: "/opt/homebrew/lib/node_modules/moltbot/extensions/bluebubbles/index.ts",
+        source: "/opt/homebrew/lib/node_modules/razroom/extensions/bluebubbles/index.ts",
       },
       {
-        stock: "/opt/homebrew/lib/node_modules/moltbot/extensions",
-        global: "/Users/x/.moltbot/extensions",
-        workspace: "/Users/x/ws/.moltbot/extensions",
+        stock: "/opt/homebrew/lib/node_modules/razroom/extensions",
+        global: "/Users/x/.razroom/extensions",
+        workspace: "/Users/x/ws/.razroom/extensions",
       },
     );
     expect(out.value).toBe("stock:bluebubbles/index.ts");
@@ -22,12 +22,12 @@ describe("formatPluginSourceForTable", () => {
     const out = formatPluginSourceForTable(
       {
         origin: "workspace",
-        source: "/Users/x/ws/.moltbot/extensions/matrix/index.ts",
+        source: "/Users/x/ws/.razroom/extensions/matrix/index.ts",
       },
       {
-        stock: "/opt/homebrew/lib/node_modules/moltbot/extensions",
-        global: "/Users/x/.moltbot/extensions",
-        workspace: "/Users/x/ws/.moltbot/extensions",
+        stock: "/opt/homebrew/lib/node_modules/razroom/extensions",
+        global: "/Users/x/.razroom/extensions",
+        workspace: "/Users/x/ws/.razroom/extensions",
       },
     );
     expect(out.value).toBe("workspace:matrix/index.ts");
@@ -38,12 +38,12 @@ describe("formatPluginSourceForTable", () => {
     const out = formatPluginSourceForTable(
       {
         origin: "global",
-        source: "/Users/x/.moltbot/extensions/zalo/index.js",
+        source: "/Users/x/.razroom/extensions/zalo/index.js",
       },
       {
-        stock: "/opt/homebrew/lib/node_modules/moltbot/extensions",
-        global: "/Users/x/.moltbot/extensions",
-        workspace: "/Users/x/ws/.moltbot/extensions",
+        stock: "/opt/homebrew/lib/node_modules/razroom/extensions",
+        global: "/Users/x/.razroom/extensions",
+        workspace: "/Users/x/ws/.razroom/extensions",
       },
     );
     expect(out.value).toBe("global:zalo/index.js");

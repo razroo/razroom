@@ -222,7 +222,7 @@ function normalizeSystemdUnit(raw?: string, profile?: string): string {
   return unit.endsWith(".service") ? unit : `${unit}.service`;
 }
 
-export function triggerMoltBotRestart(): RestartAttempt {
+export function triggerRazroomRestart(): RestartAttempt {
   if (process.env.VITEST || process.env.NODE_ENV === "test") {
     return { ok: true, method: "supervisor", detail: "test mode" };
   }
@@ -230,8 +230,8 @@ export function triggerMoltBotRestart(): RestartAttempt {
   if (process.platform !== "darwin") {
     if (process.platform === "linux") {
       const unit = normalizeSystemdUnit(
-        process.env.MOLTBOT_SYSTEMD_UNIT,
-        process.env.MOLTBOT_PROFILE,
+        process.env.RAZROOM_SYSTEMD_UNIT,
+        process.env.RAZROOM_PROFILE,
       );
       const userArgs = ["--user", "restart", unit];
       tried.push(`systemctl ${userArgs.join(" ")}`);
@@ -265,8 +265,8 @@ export function triggerMoltBotRestart(): RestartAttempt {
   }
 
   const label =
-    process.env.MOLTBOT_LAUNCHD_LABEL ||
-    resolveGatewayLaunchAgentLabel(process.env.MOLTBOT_PROFILE);
+    process.env.RAZROOM_LAUNCHD_LABEL ||
+    resolveGatewayLaunchAgentLabel(process.env.RAZROOM_PROFILE);
   const uid = typeof process.getuid === "function" ? process.getuid() : undefined;
   const target = uid !== undefined ? `gui/${uid}/${label}` : label;
   const args = ["kickstart", "-k", target];

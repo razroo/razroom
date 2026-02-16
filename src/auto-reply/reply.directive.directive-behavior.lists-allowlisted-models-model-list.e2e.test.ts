@@ -24,7 +24,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: { primary: "anthropic/claude-opus-4-5" },
-              workspace: path.join(home, "moltbot"),
+              workspace: path.join(home, "razroom"),
               models: {
                 "anthropic/claude-opus-4-5": {},
                 "openai/gpt-4.1-mini": {},
@@ -56,7 +56,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: { primary: "anthropic/claude-opus-4-5" },
-              workspace: path.join(home, "moltbot"),
+              workspace: path.join(home, "razroom"),
               models: {
                 "anthropic/claude-opus-4-5": {},
                 "openai/gpt-4.1-mini": {},
@@ -95,7 +95,7 @@ describe("directive behavior", () => {
                 fallbacks: ["openai/gpt-4.1-mini"],
               },
               imageModel: { primary: "minimax/MiniMax-M2.1" },
-              workspace: path.join(home, "moltbot"),
+              workspace: path.join(home, "razroom"),
             },
           },
           session: { store: storePath },
@@ -132,7 +132,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: { primary: "anthropic/claude-opus-4-5" },
-              workspace: path.join(home, "moltbot"),
+              workspace: path.join(home, "razroom"),
               models: {
                 "anthropic/claude-opus-4-5": {},
                 "openai/gpt-4.1-mini": {},
@@ -171,7 +171,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: { primary: "anthropic/claude-opus-4-5" },
-              workspace: path.join(home, "moltbot"),
+              workspace: path.join(home, "razroom"),
               models: {
                 "anthropic/claude-opus-4-5": {},
               },
@@ -198,7 +198,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: { primary: "anthropic/claude-opus-4-5" },
-              workspace: path.join(home, "moltbot"),
+              workspace: path.join(home, "razroom"),
               models: {
                 "anthropic/claude-opus-4-5": {},
                 "openai/gpt-4.1-mini": {},
@@ -227,7 +227,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: { primary: "openai/gpt-4.1-mini" },
-              workspace: path.join(home, "moltbot"),
+              workspace: path.join(home, "razroom"),
               models: {
                 "openai/gpt-4.1-mini": {},
                 "anthropic/claude-opus-4-5": { alias: "Opus" },

@@ -1,14 +1,14 @@
 import type { Command } from "commander";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { PluginLogger } from "./types.js";
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../agents/agent-scope.js";
 import { loadConfig } from "../config/config.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
-import { loadMoltBotPlugins } from "./loader.js";
+import { loadRazroomPlugins } from "./loader.js";
 
 const log = createSubsystemLogger("plugins");
 
-export function registerPluginCliCommands(program: Command, cfg?: MoltBotConfig) {
+export function registerPluginCliCommands(program: Command, cfg?: RazroomConfig) {
   const config = cfg ?? loadConfig();
   const workspaceDir = resolveAgentWorkspaceDir(config, resolveDefaultAgentId(config));
   const logger: PluginLogger = {
@@ -17,7 +17,7 @@ export function registerPluginCliCommands(program: Command, cfg?: MoltBotConfig)
     error: (msg: string) => log.error(msg),
     debug: (msg: string) => log.debug(msg),
   };
-  const registry = loadMoltBotPlugins({
+  const registry = loadRazroomPlugins({
     config,
     workspaceDir,
     logger,

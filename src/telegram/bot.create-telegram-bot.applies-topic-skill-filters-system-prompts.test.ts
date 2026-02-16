@@ -175,7 +175,7 @@ describe("createTelegramBot", () => {
         date: 1736380800,
         message_id: 42,
       },
-      me: { username: "moltbot_bot" },
+      me: { username: "razroom_bot" },
       getFile: async () => ({ download: async () => new Uint8Array() }),
     };
 

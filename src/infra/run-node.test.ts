@@ -4,7 +4,7 @@ import path from "node:path";
 import { describe, expect, it } from "bun:test";
 
 async function withTempDir<T>(run: (dir: string) => Promise<T>): Promise<T> {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-run-node-"));
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-run-node-"));
   try {
     return await run(dir);
   } finally {
@@ -50,8 +50,8 @@ describe("run-node script", () => {
           args: ["--version"],
           env: {
             ...process.env,
-            MOLTBOT_FORCE_BUILD: "1",
-            MOLTBOT_RUNNER_LOG: "0",
+            RAZROOM_FORCE_BUILD: "1",
+            RAZROOM_RUNNER_LOG: "0",
           },
           spawn,
           execPath: process.execPath,
@@ -61,7 +61,7 @@ describe("run-node script", () => {
         expect(exitCode).toBe(0);
         await expect(fs.readFile(argsPath, "utf-8")).resolves.toContain("exec tsdown --no-clean");
         await expect(fs.readFile(indexPath, "utf-8")).resolves.toContain("sentinel");
-        expect(nodeCalls).toEqual([[process.execPath, "moltbot.mjs", "--version"]]);
+        expect(nodeCalls).toEqual([[process.execPath, "razroom.mjs", "--version"]]);
       });
     },
   );

@@ -70,7 +70,7 @@ export function registerDirectoryCli(program: Command) {
       () =>
         `\n${theme.muted("Docs:")} ${formatDocsLink(
           "/cli/directory",
-          "docs.moltbot.ai/cli/directory",
+          "docs.razroom.ai/cli/directory",
         )}\n`,
     )
     .action(() => {

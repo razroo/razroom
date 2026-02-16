@@ -1,7 +1,7 @@
 ---
-summary: "Use Qwen OAuth (free tier) in MoltBot"
+summary: "Use Qwen OAuth (free tier) in Razroom"
 read_when:
-  - You want to use Qwen with MoltBot
+  - You want to use Qwen with Razroom
   - You want free-tier OAuth access to Qwen Coder
 title: "Qwen"
 ---
@@ -14,7 +14,7 @@ Qwen provides a free-tier OAuth flow for Qwen Coder and Qwen Vision models
 ## Enable the plugin
 
 ```bash
-moltbot plugins enable qwen-portal-auth
+razroom plugins enable qwen-portal-auth
 ```
 
 Restart the Gateway after enabling.
@@ -22,7 +22,7 @@ Restart the Gateway after enabling.
 ## Authenticate
 
 ```bash
-moltbot models auth login --provider qwen-portal --set-default
+razroom models auth login --provider qwen-portal --set-default
 ```
 
 This runs the Qwen device-code OAuth flow and writes a provider entry to your
@@ -36,12 +36,12 @@ This runs the Qwen device-code OAuth flow and writes a provider entry to your
 Switch models with:
 
 ```bash
-moltbot models set qwen-portal/coder-model
+razroom models set qwen-portal/coder-model
 ```
 
 ## Reuse Qwen Code CLI login
 
-If you already logged in with the Qwen Code CLI, MoltBot will sync credentials
+If you already logged in with the Qwen Code CLI, Razroom will sync credentials
 from `~/.qwen/oauth_creds.json` when it loads the auth store. You still need a
 `models.providers.qwen-portal` entry (use the login command above to create one).
 

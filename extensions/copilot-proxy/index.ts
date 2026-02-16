@@ -1,9 +1,9 @@
 import {
   emptyPluginConfigSchema,
-  type MoltBotPluginApi,
+  type RazroomPluginApi,
   type ProviderAuthContext,
   type ProviderAuthResult,
-} from "moltbot/plugin-sdk";
+} from "razroom/plugin-sdk";
 
 const DEFAULT_BASE_URL = "http://localhost:3000/v1";
 const DEFAULT_API_KEY = "n/a";
@@ -76,7 +76,7 @@ const copilotProxyPlugin = {
   name: "Copilot Proxy",
   description: "Local Copilot Proxy (VS Code LM) provider plugin",
   configSchema: emptyPluginConfigSchema(),
-  register(api: MoltBotPluginApi) {
+  register(api: RazroomPluginApi) {
     api.registerProvider({
       id: "copilot-proxy",
       label: "Copilot Proxy",

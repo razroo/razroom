@@ -34,7 +34,7 @@ Status: production-ready for DMs + channels via Slack app integrations. Default 
         - install app and copy **Bot Token** (`xoxb-...`)
       </Step>
 
-      <Step title="Configure MoltBot">
+      <Step title="Configure Razroom">
 
 ```json5
 {
@@ -74,7 +74,7 @@ SLACK_BOT_TOKEN=xoxb-...
       <Step title="Start gateway">
 
 ```bash
-moltbot gateway
+razroom gateway
 ```
 
       </Step>
@@ -92,7 +92,7 @@ moltbot gateway
 
       </Step>
 
-      <Step title="Configure MoltBot HTTP mode">
+      <Step title="Configure Razroom HTTP mode">
 
 ```json5
 {
@@ -152,7 +152,7 @@ For actions/directory reads, user token can be preferred when configured. For wr
     - `dm.groupEnabled` (group DMs default false)
     - `dm.groupChannels` (optional MPIM allowlist)
 
-    Pairing in DMs uses `moltbot pairing approve slack <code>`.
+    Pairing in DMs uses `razroom pairing approve slack <code>`.
 
   </Tab>
 
@@ -205,7 +205,7 @@ For actions/directory reads, user token can be preferred when configured. For wr
 Default slash command settings:
 
 - `enabled: false`
-- `name: "moltbot"`
+- `name: "razroom"`
 - `sessionPrefix: "slack:slash"`
 - `ephemeral: true`
 
@@ -289,7 +289,7 @@ Available action groups in current Slack tooling:
 
 ## Ack reactions
 
-`ackReaction` sends an acknowledgement emoji while MoltBot is processing an inbound message.
+`ackReaction` sends an acknowledgement emoji while Razroom is processing an inbound message.
 
 Resolution order:
 
@@ -311,12 +311,12 @@ Notes:
 ```json
 {
   "display_information": {
-    "name": "MoltBot",
-    "description": "Slack connector for MoltBot"
+    "name": "Razroom",
+    "description": "Slack connector for Razroom"
   },
   "features": {
     "bot_user": {
-      "display_name": "MoltBot",
+      "display_name": "Razroom",
       "always_online": false
     },
     "app_home": {
@@ -325,8 +325,8 @@ Notes:
     },
     "slash_commands": [
       {
-        "command": "/moltbot",
-        "description": "Send a message to MoltBot",
+        "command": "/razroom",
+        "description": "Send a message to Razroom",
         "should_escape": false
       }
     ]
@@ -405,9 +405,9 @@ Notes:
     Useful commands:
 
 ```bash
-moltbot channels status --probe
-moltbot logs --follow
-moltbot doctor
+razroom channels status --probe
+razroom logs --follow
+razroom doctor
 ```
 
   </Accordion>
@@ -420,7 +420,7 @@ moltbot doctor
     - pairing approvals / allowlist entries
 
 ```bash
-moltbot pairing list slack
+razroom pairing list slack
 ```
 
   </Accordion>

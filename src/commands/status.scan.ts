@@ -143,8 +143,8 @@ export async function scanStatus(
       progress.setLabel("Summarizing channels…");
       const channels = await buildChannelsTable(cfg, {
         // Show token previews in regular status; keep `status --all` redacted.
-        // Set `MOLTBOT_SHOW_SECRETS=0` to force redaction.
-        showSecrets: process.env.MOLTBOT_SHOW_SECRETS?.trim() !== "0",
+        // Set `RAZROOM_SHOW_SECRETS=0` to force redaction.
+        showSecrets: process.env.RAZROOM_SHOW_SECRETS?.trim() !== "0",
       });
       progress.tick();
 

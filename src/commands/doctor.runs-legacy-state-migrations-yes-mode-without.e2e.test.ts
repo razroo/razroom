@@ -22,7 +22,7 @@ describe("doctor command", () => {
 
   it("skips gateway restarts in non-interactive mode", async () => {
     readConfigFileSnapshot.mockResolvedValue({
-      path: "/tmp/moltbot.json",
+      path: "/tmp/razroom.json",
       exists: true,
       raw: "{}",
       parsed: {},
@@ -54,7 +54,7 @@ describe("doctor command", () => {
 
   it("migrates anthropic oauth config profile id when only email profile exists", async () => {
     readConfigFileSnapshot.mockResolvedValue({
-      path: "/tmp/moltbot.json",
+      path: "/tmp/razroom.json",
       exists: true,
       raw: "{}",
       parsed: {},

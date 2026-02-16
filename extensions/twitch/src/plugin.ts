@@ -1,12 +1,12 @@
 /**
- * Twitch channel plugin for MoltBot.
+ * Twitch channel plugin for Razroom.
  *
  * Main plugin export combining all adapters (outbound, actions, status, gateway).
  * This is the primary entry point for the Twitch channel integration.
  */
 
-import type { MoltBotConfig } from "moltbot/plugin-sdk";
-import { buildChannelConfigSchema } from "moltbot/plugin-sdk";
+import type { RazroomConfig } from "razroom/plugin-sdk";
+import { buildChannelConfigSchema } from "razroom/plugin-sdk";
 import type {
   ChannelAccountSnapshot,
   ChannelCapabilities,
@@ -33,7 +33,7 @@ import { isAccountConfigured } from "./utils/twitch.js";
  * Twitch channel plugin.
  *
  * Implements the ChannelPlugin interface to provide Twitch chat integration
- * for MoltBot. Supports message sending, receiving, access control, and
+ * for Razroom. Supports message sending, receiving, access control, and
  * status monitoring.
  */
 export const twitchPlugin: ChannelPlugin<TwitchAccountConfig> = {
@@ -75,10 +75,10 @@ export const twitchPlugin: ChannelPlugin<TwitchAccountConfig> = {
   /** Account configuration management */
   config: {
     /** List all configured account IDs */
-    listAccountIds: (cfg: MoltBotConfig): string[] => listAccountIds(cfg),
+    listAccountIds: (cfg: RazroomConfig): string[] => listAccountIds(cfg),
 
     /** Resolve an account config by ID */
-    resolveAccount: (cfg: MoltBotConfig, accountId?: string | null): TwitchAccountConfig => {
+    resolveAccount: (cfg: RazroomConfig, accountId?: string | null): TwitchAccountConfig => {
       const account = getAccountConfig(cfg, accountId ?? DEFAULT_ACCOUNT_ID);
       if (!account) {
         // Return a default/empty account if not configured
@@ -96,7 +96,7 @@ export const twitchPlugin: ChannelPlugin<TwitchAccountConfig> = {
     defaultAccountId: (): string => DEFAULT_ACCOUNT_ID,
 
     /** Check if an account is configured */
-    isConfigured: (_account: unknown, cfg: MoltBotConfig): boolean => {
+    isConfigured: (_account: unknown, cfg: RazroomConfig): boolean => {
       const account = getAccountConfig(cfg, DEFAULT_ACCOUNT_ID);
       const tokenResolution = resolveTwitchToken(cfg, { accountId: DEFAULT_ACCOUNT_ID });
       return account ? isAccountConfigured(account, tokenResolution.token) : false;
@@ -130,7 +130,7 @@ export const twitchPlugin: ChannelPlugin<TwitchAccountConfig> = {
       kind,
       runtime,
     }: {
-      cfg: MoltBotConfig;
+      cfg: RazroomConfig;
       accountId?: string | null;
       inputs: string[];
       kind: ChannelResolveKind;
@@ -198,7 +198,7 @@ export const twitchPlugin: ChannelPlugin<TwitchAccountConfig> = {
       probe,
     }: {
       account: TwitchAccountConfig;
-      cfg: MoltBotConfig;
+      cfg: RazroomConfig;
       runtime?: ChannelAccountSnapshot;
       probe?: unknown;
     }): ChannelAccountSnapshot => {

@@ -37,8 +37,8 @@ export const TOOL_GROUPS: Record<string, string[]> = {
   "group:messaging": ["message"],
   // Nodes + device tools
   "group:nodes": ["nodes"],
-  // All MoltBot native tools (excludes provider plugins).
-  "group:moltbot": [
+  // All Razroom native tools (excludes provider plugins).
+  "group:razroom": [
     "browser",
     "canvas",
     "nodes",

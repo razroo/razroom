@@ -4,7 +4,7 @@ description: Control Philips Hue lights/scenes via the OpenHue CLI.
 homepage: https://www.openhue.io/cli
 metadata:
   {
-    "moltbot":
+    "razroom":
       {
         "emoji": "💡",
         "requires": { "bins": ["openhue"] },

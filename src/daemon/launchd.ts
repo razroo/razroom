@@ -17,11 +17,11 @@ import { resolveGatewayStateDir, resolveHomeDir } from "./paths.js";
 import { parseKeyValueOutput } from "./runtime-parse.js";
 
 function resolveLaunchAgentLabel(args?: { env?: Record<string, string | undefined> }): string {
-  const envLabel = args?.env?.MOLTBOT_LAUNCHD_LABEL?.trim();
+  const envLabel = args?.env?.RAZROOM_LAUNCHD_LABEL?.trim();
   if (envLabel) {
     return envLabel;
   }
-  return resolveGatewayLaunchAgentLabel(args?.env?.MOLTBOT_PROFILE);
+  return resolveGatewayLaunchAgentLabel(args?.env?.RAZROOM_PROFILE);
 }
 
 function resolveLaunchAgentPlistPathForLabel(
@@ -44,7 +44,7 @@ export function resolveGatewayLogPaths(env: Record<string, string | undefined>):
 } {
   const stateDir = resolveGatewayStateDir(env);
   const logDir = path.join(stateDir, "logs");
-  const prefix = env.MOLTBOT_LOG_PREFIX?.trim() || "gateway";
+  const prefix = env.RAZROOM_LOG_PREFIX?.trim() || "gateway";
   return {
     logDir,
     stdoutPath: path.join(logDir, `${prefix}.log`),
@@ -232,7 +232,7 @@ export async function findLegacyLaunchAgents(
 ): Promise<LegacyLaunchAgent[]> {
   const domain = resolveGuiDomain();
   const results: LegacyLaunchAgent[] = [];
-  for (const label of resolveLegacyGatewayLaunchAgentLabels(env.MOLTBOT_PROFILE)) {
+  for (const label of resolveLegacyGatewayLaunchAgentLabels(env.RAZROOM_PROFILE)) {
     const plistPath = resolveLaunchAgentPlistPathForLabel(env, label);
     const res = await execLaunchctl(["print", `${domain}/${label}`]);
     const loaded = res.code === 0;
@@ -370,7 +370,7 @@ export async function installLaunchAgent({
 
   const domain = resolveGuiDomain();
   const label = resolveLaunchAgentLabel({ env });
-  for (const legacyLabel of resolveLegacyGatewayLaunchAgentLabels(env.MOLTBOT_PROFILE)) {
+  for (const legacyLabel of resolveLegacyGatewayLaunchAgentLabels(env.RAZROOM_PROFILE)) {
     const legacyPlistPath = resolveLaunchAgentPlistPathForLabel(env, legacyLabel);
     await execLaunchctl(["bootout", domain, legacyPlistPath]);
     await execLaunchctl(["unload", legacyPlistPath]);
@@ -387,8 +387,8 @@ export async function installLaunchAgent({
   const serviceDescription =
     description ??
     formatGatewayServiceDescription({
-      profile: env.MOLTBOT_PROFILE,
-      version: environment?.MOLTBOT_SERVICE_VERSION ?? env.MOLTBOT_SERVICE_VERSION,
+      profile: env.RAZROOM_PROFILE,
+      version: environment?.RAZROOM_SERVICE_VERSION ?? env.RAZROOM_SERVICE_VERSION,
     });
   const plist = buildLaunchAgentPlist({
     label,

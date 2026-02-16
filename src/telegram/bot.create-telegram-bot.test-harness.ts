@@ -12,7 +12,7 @@ type ReplyOpts =
   | undefined;
 
 const { sessionStorePath } = vi.hoisted(() => ({
-  sessionStorePath: `/tmp/moltbot-telegram-${Math.random().toString(16).slice(2)}.json`,
+  sessionStorePath: `/tmp/razroom-telegram-${Math.random().toString(16).slice(2)}.json`,
 }));
 
 const { loadWebMedia } = vi.hoisted((): { loadWebMedia: AnyMock } => ({
@@ -88,7 +88,7 @@ export const setMessageReactionSpy: AnyAsyncMock = vi.fn(async () => undefined);
 export const setMyCommandsSpy: AnyAsyncMock = vi.fn(async () => undefined);
 export const deleteMyCommandsSpy: AnyAsyncMock = vi.fn(async () => undefined);
 export const getMeSpy: AnyAsyncMock = vi.fn(async () => ({
-  username: "moltbot_bot",
+  username: "razroom_bot",
   has_topics_enabled: true,
 }));
 export const sendMessageSpy: AnyAsyncMock = vi.fn(async () => ({ message_id: 77 }));
@@ -200,7 +200,7 @@ export function makeTelegramMessageCtx(params: {
         ? {}
         : { message_thread_id: params.messageThreadId }),
     },
-    me: { username: "moltbot_bot" },
+    me: { username: "razroom_bot" },
     getFile: async () => ({ download: async () => new Uint8Array() }),
   };
 }
@@ -258,7 +258,7 @@ beforeEach(() => {
   deleteMyCommandsSpy.mockResolvedValue(undefined);
   getMeSpy.mockReset();
   getMeSpy.mockResolvedValue({
-    username: "moltbot_bot",
+    username: "razroom_bot",
     has_topics_enabled: true,
   });
   middlewareUseSpy.mockReset();

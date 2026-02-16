@@ -6,7 +6,7 @@
 set -euo pipefail
 
 # Configuration
-SUBSYSTEM="ai.moltbot"
+SUBSYSTEM="ai.razroom"
 DEFAULT_LEVEL="info"
 
 # Colors for output
@@ -48,17 +48,17 @@ SHOW_HELP=false
 # Function to show usage
 show_usage() {
     cat << EOF
-clawlog - MoltBot Logging Utility
+clawlog - Razroom Logging Utility
 
 USAGE:
     clawlog [OPTIONS]
 
 DESCRIPTION:
-    View MoltBot logs with full details (bypasses Apple's privacy redaction).
+    View Razroom logs with full details (bypasses Apple's privacy redaction).
     Requires sudo access configured for /usr/bin/log command.
 
 LOG FLOW ARCHITECTURE:
-    MoltBot logs flow through the macOS unified log (subsystem: ai.moltbot).
+    Razroom logs flow through the macOS unified log (subsystem: ai.razroom).
 
 LOG CATEGORIES (examples):
     • voicewake           - Voice wake detection/test harness

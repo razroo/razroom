@@ -1,22 +1,22 @@
 ---
-summary: "MoltBot is a multi-channel gateway for AI agents that runs on any OS."
+summary: "Razroom is a multi-channel gateway for AI agents that runs on any OS."
 read_when:
-  - Introducing MoltBot to newcomers
-title: "MoltBot"
+  - Introducing Razroom to newcomers
+title: "Razroom"
 ---
 
-# MoltBot 🦞
+# Razroom 🦞
 
 <p align="center">
     <img
-        src="/assets/moltbot-logo-text-dark.png"
-        alt="MoltBot"
+        src="/assets/razroom-logo-text-dark.png"
+        alt="Razroom"
         width="500"
         class="dark:hidden"
     />
     <img
-        src="/assets/moltbot-logo-text.png"
-        alt="MoltBot"
+        src="/assets/razroom-logo-text.png"
+        alt="Razroom"
         width="500"
         class="hidden dark:block"
     />
@@ -31,19 +31,19 @@ title: "MoltBot"
 
 <Columns>
   <Card title="Get Started" href="/start/getting-started" icon="rocket">
-    Install MoltBot and bring up the Gateway in minutes.
+    Install Razroom and bring up the Gateway in minutes.
   </Card>
   <Card title="Run the Wizard" href="/start/wizard" icon="sparkles">
-    Guided setup with `moltbot onboard` and pairing flows.
+    Guided setup with `razroom onboard` and pairing flows.
   </Card>
   <Card title="Open the Control UI" href="/web/control-ui" icon="layout-dashboard">
     Launch the browser dashboard for chat, config, and sessions.
   </Card>
 </Columns>
 
-## What is MoltBot?
+## What is Razroom?
 
-MoltBot is a **self-hosted gateway** that connects your favorite chat apps — WhatsApp, Telegram, Discord, iMessage, and more — to AI coding agents like Pi. You run a single Gateway process on your own machine (or a server), and it becomes the bridge between your messaging apps and an always-available AI assistant.
+Razroom is a **self-hosted gateway** that connects your favorite chat apps — WhatsApp, Telegram, Discord, iMessage, and more — to AI coding agents like Pi. You run a single Gateway process on your own machine (or a server), and it becomes the bridge between your messaging apps and an always-available AI assistant.
 
 **Who is it for?** Developers and power users who want a personal AI assistant they can message from anywhere — without giving up control of their data or relying on a hosted service.
 
@@ -96,20 +96,20 @@ The Gateway is the single source of truth for sessions, routing, and channel con
 ## Quick start
 
 <Steps>
-  <Step title="Install MoltBot">
+  <Step title="Install Razroom">
     ```bash
-    npm install -g moltbot@latest
+    npm install -g razroom@latest
     ```
   </Step>
   <Step title="Onboard and install the service">
     ```bash
-    moltbot onboard --install-daemon
+    razroom onboard --install-daemon
     ```
   </Step>
   <Step title="Pair WhatsApp and start the Gateway">
     ```bash
-    moltbot channels login
-    moltbot gateway --port 18789
+    razroom channels login
+    razroom gateway --port 18789
     ```
   </Step>
 </Steps>
@@ -124,14 +124,14 @@ Open the browser Control UI after the Gateway starts.
 - Remote access: [Web surfaces](/web) and [Tailscale](/gateway/tailscale)
 
 <p align="center">
-  <img src="whatsapp-moltbot.jpg" alt="MoltBot" width="420" />
+  <img src="whatsapp-razroom.jpg" alt="Razroom" width="420" />
 </p>
 
 ## Configuration (optional)
 
-Config lives at `~/.moltbot/moltbot.json`.
+Config lives at `~/.razroom/razroom.json`.
 
-- If you **do nothing**, MoltBot uses the bundled Pi binary in RPC mode with per-sender sessions.
+- If you **do nothing**, Razroom uses the bundled Pi binary in RPC mode with per-sender sessions.
 - If you want to lock it down, start with `channels.whatsapp.allowFrom` and (for groups) mention rules.
 
 Example:
@@ -144,7 +144,7 @@ Example:
       groups: { "*": { requireMention: true } },
     },
   },
-  messages: { groupChat: { mentionPatterns: ["@moltbot"] } },
+  messages: { groupChat: { mentionPatterns: ["@razroom"] } },
 }
 ```
 

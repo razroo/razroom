@@ -3,9 +3,9 @@ import { resolveStateDir } from "../config/paths.js";
 import { DEFAULT_AGENT_ID } from "../routing/session-key.js";
 import { resolveUserPath } from "../utils.js";
 
-export function resolveMoltBotAgentDir(): string {
+export function resolveRazroomAgentDir(): string {
   const override =
-    process.env.MOLTBOT_AGENT_DIR?.trim() || process.env.PI_CODING_AGENT_DIR?.trim();
+    process.env.RAZROOM_AGENT_DIR?.trim() || process.env.PI_CODING_AGENT_DIR?.trim();
   if (override) {
     return resolveUserPath(override);
   }
@@ -13,10 +13,10 @@ export function resolveMoltBotAgentDir(): string {
   return resolveUserPath(defaultAgentDir);
 }
 
-export function ensureMoltBotAgentEnv(): string {
-  const dir = resolveMoltBotAgentDir();
-  if (!process.env.MOLTBOT_AGENT_DIR) {
-    process.env.MOLTBOT_AGENT_DIR = dir;
+export function ensureRazroomAgentEnv(): string {
+  const dir = resolveRazroomAgentDir();
+  if (!process.env.RAZROOM_AGENT_DIR) {
+    process.env.RAZROOM_AGENT_DIR = dir;
   }
   if (!process.env.PI_CODING_AGENT_DIR) {
     process.env.PI_CODING_AGENT_DIR = dir;

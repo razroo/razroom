@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { DiscordAccountConfig } from "../config/types.js";
 import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "../routing/session-key.js";
 import { resolveDiscordToken } from "./token.js";
@@ -12,7 +12,7 @@ export type ResolvedDiscordAccount = {
   config: DiscordAccountConfig;
 };
 
-function listConfiguredAccountIds(cfg: MoltBotConfig): string[] {
+function listConfiguredAccountIds(cfg: RazroomConfig): string[] {
   const accounts = cfg.channels?.discord?.accounts;
   if (!accounts || typeof accounts !== "object") {
     return [];
@@ -20,7 +20,7 @@ function listConfiguredAccountIds(cfg: MoltBotConfig): string[] {
   return Object.keys(accounts).filter(Boolean);
 }
 
-export function listDiscordAccountIds(cfg: MoltBotConfig): string[] {
+export function listDiscordAccountIds(cfg: RazroomConfig): string[] {
   const ids = listConfiguredAccountIds(cfg);
   if (ids.length === 0) {
     return [DEFAULT_ACCOUNT_ID];
@@ -28,7 +28,7 @@ export function listDiscordAccountIds(cfg: MoltBotConfig): string[] {
   return ids.toSorted((a, b) => a.localeCompare(b));
 }
 
-export function resolveDefaultDiscordAccountId(cfg: MoltBotConfig): string {
+export function resolveDefaultDiscordAccountId(cfg: RazroomConfig): string {
   const ids = listDiscordAccountIds(cfg);
   if (ids.includes(DEFAULT_ACCOUNT_ID)) {
     return DEFAULT_ACCOUNT_ID;
@@ -37,7 +37,7 @@ export function resolveDefaultDiscordAccountId(cfg: MoltBotConfig): string {
 }
 
 function resolveAccountConfig(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   accountId: string,
 ): DiscordAccountConfig | undefined {
   const accounts = cfg.channels?.discord?.accounts;
@@ -47,7 +47,7 @@ function resolveAccountConfig(
   return accounts[accountId] as DiscordAccountConfig | undefined;
 }
 
-function mergeDiscordAccountConfig(cfg: MoltBotConfig, accountId: string): DiscordAccountConfig {
+function mergeDiscordAccountConfig(cfg: RazroomConfig, accountId: string): DiscordAccountConfig {
   const { accounts: _ignored, ...base } = (cfg.channels?.discord ?? {}) as DiscordAccountConfig & {
     accounts?: unknown;
   };
@@ -56,7 +56,7 @@ function mergeDiscordAccountConfig(cfg: MoltBotConfig, accountId: string): Disco
 }
 
 export function resolveDiscordAccount(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   accountId?: string | null;
 }): ResolvedDiscordAccount {
   const accountId = normalizeAccountId(params.accountId);
@@ -75,7 +75,7 @@ export function resolveDiscordAccount(params: {
   };
 }
 
-export function listEnabledDiscordAccounts(cfg: MoltBotConfig): ResolvedDiscordAccount[] {
+export function listEnabledDiscordAccounts(cfg: RazroomConfig): ResolvedDiscordAccount[] {
   return listDiscordAccountIds(cfg)
     .map((accountId) => resolveDiscordAccount({ cfg, accountId }))
     .filter((account) => account.enabled);

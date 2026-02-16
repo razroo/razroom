@@ -1,29 +1,29 @@
 type StateDirEnvSnapshot = {
-  moltbotStateDir: string | undefined;
-  moltbotStateDir: string | undefined;
+  razroomStateDir: string | undefined;
+  razroomStateDir: string | undefined;
 };
 
 export function snapshotStateDirEnv(): StateDirEnvSnapshot {
   return {
-    moltbotStateDir: process.env.MOLTBOT_STATE_DIR,
-    moltbotStateDir: process.env.MOLTBOT_STATE_DIR,
+    razroomStateDir: process.env.RAZROOM_STATE_DIR,
+    razroomStateDir: process.env.RAZROOM_STATE_DIR,
   };
 }
 
 export function restoreStateDirEnv(snapshot: StateDirEnvSnapshot): void {
-  if (snapshot.moltbotStateDir === undefined) {
-    delete process.env.MOLTBOT_STATE_DIR;
+  if (snapshot.razroomStateDir === undefined) {
+    delete process.env.RAZROOM_STATE_DIR;
   } else {
-    process.env.MOLTBOT_STATE_DIR = snapshot.moltbotStateDir;
+    process.env.RAZROOM_STATE_DIR = snapshot.razroomStateDir;
   }
-  if (snapshot.moltbotStateDir === undefined) {
-    delete process.env.MOLTBOT_STATE_DIR;
+  if (snapshot.razroomStateDir === undefined) {
+    delete process.env.RAZROOM_STATE_DIR;
   } else {
-    process.env.MOLTBOT_STATE_DIR = snapshot.moltbotStateDir;
+    process.env.RAZROOM_STATE_DIR = snapshot.razroomStateDir;
   }
 }
 
 export function setStateDirEnv(stateDir: string): void {
-  process.env.MOLTBOT_STATE_DIR = stateDir;
-  delete process.env.MOLTBOT_STATE_DIR;
+  process.env.RAZROOM_STATE_DIR = stateDir;
+  delete process.env.RAZROOM_STATE_DIR;
 }

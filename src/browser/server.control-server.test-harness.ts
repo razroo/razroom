@@ -113,10 +113,10 @@ export function getPwMocks(): Record<string, MockFn> {
   return pwMocks as unknown as Record<string, MockFn>;
 }
 
-const chromeUserDataDir = vi.hoisted(() => ({ dir: "/tmp/moltbot" }));
+const chromeUserDataDir = vi.hoisted(() => ({ dir: "/tmp/razroom" }));
 
 beforeAll(async () => {
-  chromeUserDataDir.dir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-chrome-user-data-"));
+  chromeUserDataDir.dir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-chrome-user-data-"));
 });
 
 afterAll(async () => {
@@ -157,9 +157,9 @@ vi.mock("../config/config.js", async (importOriginal) => {
         color: "#FF4500",
         attachOnly: state.cfgAttachOnly,
         headless: true,
-        defaultProfile: "moltbot",
+        defaultProfile: "razroom",
         profiles: {
-          moltbot: { cdpPort: state.testPort + 1, color: "#FF4500" },
+          razroom: { cdpPort: state.testPort + 1, color: "#FF4500" },
         },
       },
     }),
@@ -176,7 +176,7 @@ export function getLaunchCalls() {
 vi.mock("./chrome.js", () => ({
   isChromeCdpReady: vi.fn(async () => state.reachable),
   isChromeReachable: vi.fn(async () => state.reachable),
-  launchMoltBotChrome: vi.fn(async (_resolved: unknown, profile: { cdpPort: number }) => {
+  launchRazroomChrome: vi.fn(async (_resolved: unknown, profile: { cdpPort: number }) => {
     launchCalls.push({ port: profile.cdpPort });
     state.reachable = true;
     return {
@@ -188,8 +188,8 @@ vi.mock("./chrome.js", () => ({
       proc,
     };
   }),
-  resolveMoltBotUserDataDir: vi.fn(() => chromeUserDataDir.dir),
-  stopMoltBotChrome: vi.fn(async () => {
+  resolveRazroomUserDataDir: vi.fn(() => chromeUserDataDir.dir),
+  stopRazroomChrome: vi.fn(async () => {
     state.reachable = false;
   }),
 }));
@@ -281,14 +281,14 @@ export function installBrowserControlServerHooks() {
 
     state.testPort = await getFreePort();
     state.cdpBaseUrl = `http://127.0.0.1:${state.testPort + 1}`;
-    state.prevGatewayPort = process.env.MOLTBOT_GATEWAY_PORT;
-    process.env.MOLTBOT_GATEWAY_PORT = String(state.testPort - 2);
+    state.prevGatewayPort = process.env.RAZROOM_GATEWAY_PORT;
+    process.env.RAZROOM_GATEWAY_PORT = String(state.testPort - 2);
     // Avoid flaky auth coupling: some suites temporarily set gateway env auth
     // which would make the browser control server require auth.
-    state.prevGatewayToken = process.env.MOLTBOT_GATEWAY_TOKEN;
-    state.prevGatewayPassword = process.env.MOLTBOT_GATEWAY_PASSWORD;
-    delete process.env.MOLTBOT_GATEWAY_TOKEN;
-    delete process.env.MOLTBOT_GATEWAY_PASSWORD;
+    state.prevGatewayToken = process.env.RAZROOM_GATEWAY_TOKEN;
+    state.prevGatewayPassword = process.env.RAZROOM_GATEWAY_PASSWORD;
+    delete process.env.RAZROOM_GATEWAY_TOKEN;
+    delete process.env.RAZROOM_GATEWAY_PASSWORD;
 
     // Minimal CDP JSON endpoints used by the server.
     let putNewCalls = 0;
@@ -347,19 +347,19 @@ export function installBrowserControlServerHooks() {
     vi.unstubAllGlobals();
     vi.restoreAllMocks();
     if (state.prevGatewayPort === undefined) {
-      delete process.env.MOLTBOT_GATEWAY_PORT;
+      delete process.env.RAZROOM_GATEWAY_PORT;
     } else {
-      process.env.MOLTBOT_GATEWAY_PORT = state.prevGatewayPort;
+      process.env.RAZROOM_GATEWAY_PORT = state.prevGatewayPort;
     }
     if (state.prevGatewayToken === undefined) {
-      delete process.env.MOLTBOT_GATEWAY_TOKEN;
+      delete process.env.RAZROOM_GATEWAY_TOKEN;
     } else {
-      process.env.MOLTBOT_GATEWAY_TOKEN = state.prevGatewayToken;
+      process.env.RAZROOM_GATEWAY_TOKEN = state.prevGatewayToken;
     }
     if (state.prevGatewayPassword === undefined) {
-      delete process.env.MOLTBOT_GATEWAY_PASSWORD;
+      delete process.env.RAZROOM_GATEWAY_PASSWORD;
     } else {
-      process.env.MOLTBOT_GATEWAY_PASSWORD = state.prevGatewayPassword;
+      process.env.RAZROOM_GATEWAY_PASSWORD = state.prevGatewayPassword;
     }
     await stopBrowserControlServer();
   });

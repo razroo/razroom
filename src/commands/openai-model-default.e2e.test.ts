@@ -1,5 +1,5 @@
 import { describe, expect, it, mock, spyOn } from "bun:test";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { WizardPrompter } from "../wizard/prompts.js";
 import { applyDefaultModelChoice } from "./auth-choice.default-model.js";
 import {
@@ -42,8 +42,8 @@ describe("applyDefaultModelChoice", () => {
       setDefaultModel: false,
       defaultModel,
       // Simulate a provider function that does not explicitly add the entry.
-      applyProviderConfig: (config: MoltBotConfig) => config,
-      applyDefaultConfig: (config: MoltBotConfig) => config,
+      applyProviderConfig: (config: RazroomConfig) => config,
+      applyDefaultConfig: (config: RazroomConfig) => config,
       noteAgentModel,
       prompter: makePrompter(),
     });
@@ -59,8 +59,8 @@ describe("applyDefaultModelChoice", () => {
       config: {},
       setDefaultModel: false,
       defaultModel,
-      applyProviderConfig: (config: MoltBotConfig) => config,
-      applyDefaultConfig: (config: MoltBotConfig) => config,
+      applyProviderConfig: (config: RazroomConfig) => config,
+      applyDefaultConfig: (config: RazroomConfig) => config,
       noteAgentModel: async () => {},
       prompter: makePrompter(),
     });
@@ -75,7 +75,7 @@ describe("applyDefaultModelChoice", () => {
       config: {},
       setDefaultModel: true,
       defaultModel,
-      applyProviderConfig: (config: MoltBotConfig) => config,
+      applyProviderConfig: (config: RazroomConfig) => config,
       applyDefaultConfig: () => ({
         agents: {
           defaults: {
@@ -95,7 +95,7 @@ describe("applyDefaultModelChoice", () => {
 
 describe("applyGoogleGeminiModelDefault", () => {
   it("sets gemini default when model is unset", () => {
-    const cfg: MoltBotConfig = { agents: { defaults: {} } };
+    const cfg: RazroomConfig = { agents: { defaults: {} } };
     const applied = applyGoogleGeminiModelDefault(cfg);
     expect(applied.changed).toBe(true);
     expect(applied.next.agents?.defaults?.model).toEqual({
@@ -104,7 +104,7 @@ describe("applyGoogleGeminiModelDefault", () => {
   });
 
   it("overrides existing model", () => {
-    const cfg: MoltBotConfig = {
+    const cfg: RazroomConfig = {
       agents: { defaults: { model: "anthropic/claude-opus-4-5" } },
     };
     const applied = applyGoogleGeminiModelDefault(cfg);
@@ -115,7 +115,7 @@ describe("applyGoogleGeminiModelDefault", () => {
   });
 
   it("no-ops when already gemini default", () => {
-    const cfg: MoltBotConfig = {
+    const cfg: RazroomConfig = {
       agents: { defaults: { model: GOOGLE_GEMINI_DEFAULT_MODEL } },
     };
     const applied = applyGoogleGeminiModelDefault(cfg);
@@ -160,7 +160,7 @@ describe("applyOpenAIConfig", () => {
 
 describe("applyOpenAICodexModelDefault", () => {
   it("sets openai-codex default when model is unset", () => {
-    const cfg: MoltBotConfig = { agents: { defaults: {} } };
+    const cfg: RazroomConfig = { agents: { defaults: {} } };
     const applied = applyOpenAICodexModelDefault(cfg);
     expect(applied.changed).toBe(true);
     expect(applied.next.agents?.defaults?.model).toEqual({
@@ -169,7 +169,7 @@ describe("applyOpenAICodexModelDefault", () => {
   });
 
   it("sets openai-codex default when model is openai/*", () => {
-    const cfg: MoltBotConfig = {
+    const cfg: RazroomConfig = {
       agents: { defaults: { model: OPENAI_DEFAULT_MODEL } },
     };
     const applied = applyOpenAICodexModelDefault(cfg);
@@ -180,7 +180,7 @@ describe("applyOpenAICodexModelDefault", () => {
   });
 
   it("does not override openai-codex/*", () => {
-    const cfg: MoltBotConfig = {
+    const cfg: RazroomConfig = {
       agents: { defaults: { model: OPENAI_CODEX_DEFAULT_MODEL } },
     };
     const applied = applyOpenAICodexModelDefault(cfg);
@@ -189,7 +189,7 @@ describe("applyOpenAICodexModelDefault", () => {
   });
 
   it("does not override non-openai models", () => {
-    const cfg: MoltBotConfig = {
+    const cfg: RazroomConfig = {
       agents: { defaults: { model: "anthropic/claude-opus-4-5" } },
     };
     const applied = applyOpenAICodexModelDefault(cfg);
@@ -200,7 +200,7 @@ describe("applyOpenAICodexModelDefault", () => {
 
 describe("applyOpencodeZenModelDefault", () => {
   it("sets opencode default when model is unset", () => {
-    const cfg: MoltBotConfig = { agents: { defaults: {} } };
+    const cfg: RazroomConfig = { agents: { defaults: {} } };
     const applied = applyOpencodeZenModelDefault(cfg);
     expect(applied.changed).toBe(true);
     expect(applied.next.agents?.defaults?.model).toEqual({
@@ -211,7 +211,7 @@ describe("applyOpencodeZenModelDefault", () => {
   it("overrides existing model", () => {
     const cfg = {
       agents: { defaults: { model: "anthropic/claude-opus-4-5" } },
-    } as MoltBotConfig;
+    } as RazroomConfig;
     const applied = applyOpencodeZenModelDefault(cfg);
     expect(applied.changed).toBe(true);
     expect(applied.next.agents?.defaults?.model).toEqual({
@@ -222,7 +222,7 @@ describe("applyOpencodeZenModelDefault", () => {
   it("no-ops when already opencode-zen default", () => {
     const cfg = {
       agents: { defaults: { model: OPENCODE_ZEN_DEFAULT_MODEL } },
-    } as MoltBotConfig;
+    } as RazroomConfig;
     const applied = applyOpencodeZenModelDefault(cfg);
     expect(applied.changed).toBe(false);
     expect(applied.next).toEqual(cfg);
@@ -231,14 +231,14 @@ describe("applyOpencodeZenModelDefault", () => {
   it("no-ops when already legacy opencode-zen default", () => {
     const cfg = {
       agents: { defaults: { model: "opencode-zen/claude-opus-4-5" } },
-    } as MoltBotConfig;
+    } as RazroomConfig;
     const applied = applyOpencodeZenModelDefault(cfg);
     expect(applied.changed).toBe(false);
     expect(applied.next).toEqual(cfg);
   });
 
   it("preserves fallbacks when setting primary", () => {
-    const cfg: MoltBotConfig = {
+    const cfg: RazroomConfig = {
       agents: {
         defaults: {
           model: {

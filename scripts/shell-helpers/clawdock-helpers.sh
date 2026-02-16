@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# ClawDock - Docker helpers for MoltBot
-# Inspired by Simon Willison's "Running MoltBot in Docker"
-# https://til.simonwillison.net/llms/moltbot-docker
+# ClawDock - Docker helpers for Razroom
+# Inspired by Simon Willison's "Running Razroom in Docker"
+# https://til.simonwillison.net/llms/razroom-docker
 #
 # Installation:
-#   mkdir -p ~/.clawdock && curl -sL https://raw.githubusercontent.com/moltbot/moltbot/main/scripts/shell-helpers/clawdock-helpers.sh -o ~/.clawdock/clawdock-helpers.sh
+#   mkdir -p ~/.clawdock && curl -sL https://raw.githubusercontent.com/razroom/razroom/main/scripts/shell-helpers/clawdock-helpers.sh -o ~/.clawdock/clawdock-helpers.sh
 #   echo 'source ~/.clawdock/clawdock-helpers.sh' >> ~/.zshrc
 #
 # Usage:
@@ -38,14 +38,14 @@ _cmd() {
 # =============================================================================
 CLAWDOCK_CONFIG="${HOME}/.clawdock/config"
 
-# Common paths to check for MoltBot
+# Common paths to check for Razroom
 CLAWDOCK_COMMON_PATHS=(
-  "${HOME}/moltbot"
-  "${HOME}/workspace/moltbot"
-  "${HOME}/projects/moltbot"
-  "${HOME}/dev/moltbot"
-  "${HOME}/code/moltbot"
-  "${HOME}/src/moltbot"
+  "${HOME}/razroom"
+  "${HOME}/workspace/razroom"
+  "${HOME}/projects/razroom"
+  "${HOME}/dev/razroom"
+  "${HOME}/code/razroom"
+  "${HOME}/src/razroom"
 )
 
 _clawdock_filter_warnings() {
@@ -97,28 +97,28 @@ _clawdock_ensure_dir() {
 
   if [[ -n "$found_path" ]]; then
     echo ""
-    echo "🦞 Found MoltBot at: $found_path"
+    echo "🦞 Found Razroom at: $found_path"
     echo -n "   Use this location? [Y/n] "
     read -r response
     if [[ "$response" =~ ^[Nn] ]]; then
       echo ""
       echo "Set CLAWDOCK_DIR manually:"
-      echo "  export CLAWDOCK_DIR=/path/to/moltbot"
+      echo "  export CLAWDOCK_DIR=/path/to/razroom"
       return 1
     fi
     CLAWDOCK_DIR="$found_path"
   else
     echo ""
-    echo "❌ MoltBot not found in common locations."
+    echo "❌ Razroom not found in common locations."
     echo ""
     echo "Clone it first:"
     echo ""
-    echo "  git clone https://github.com/moltbot/moltbot.git ~/moltbot"
-    echo "  cd ~/moltbot && ./docker-setup.sh"
+    echo "  git clone https://github.com/razroom/razroom.git ~/razroom"
+    echo "  cd ~/razroom && ./docker-setup.sh"
     echo ""
     echo "Or set CLAWDOCK_DIR if it's elsewhere:"
     echo ""
-    echo "  export CLAWDOCK_DIR=/path/to/moltbot"
+    echo "  export CLAWDOCK_DIR=/path/to/razroom"
     echo ""
     return 1
   fi
@@ -145,7 +145,7 @@ _clawdock_read_env_token() {
     return 1
   fi
   local raw
-  raw=$(sed -n 's/^MOLTBOT_GATEWAY_TOKEN=//p' "${CLAWDOCK_DIR}/.env" | head -n 1)
+  raw=$(sed -n 's/^RAZROOM_GATEWAY_TOKEN=//p' "${CLAWDOCK_DIR}/.env" | head -n 1)
   if [[ -z "$raw" ]]; then
     return 1
   fi
@@ -154,7 +154,7 @@ _clawdock_read_env_token() {
 
 # Basic Operations
 clawdock-start() {
-  _clawdock_compose up -d moltbot-gateway
+  _clawdock_compose up -d razroom-gateway
 }
 
 clawdock-stop() {
@@ -162,11 +162,11 @@ clawdock-stop() {
 }
 
 clawdock-restart() {
-  _clawdock_compose restart moltbot-gateway
+  _clawdock_compose restart razroom-gateway
 }
 
 clawdock-logs() {
-  _clawdock_compose logs -f moltbot-gateway
+  _clawdock_compose logs -f razroom-gateway
 }
 
 clawdock-status() {
@@ -180,30 +180,30 @@ clawdock-cd() {
 }
 
 clawdock-config() {
-  cd ~/.moltbot
+  cd ~/.razroom
 }
 
 clawdock-workspace() {
-  cd ~/.moltbot/workspace
+  cd ~/.razroom/workspace
 }
 
 # Container Access
 clawdock-shell() {
-  _clawdock_compose exec moltbot-gateway \
-    bash -c 'echo "alias moltbot=\"./moltbot.mjs\"" > /tmp/.bashrc_moltbot && bash --rcfile /tmp/.bashrc_moltbot'
+  _clawdock_compose exec razroom-gateway \
+    bash -c 'echo "alias razroom=\"./razroom.mjs\"" > /tmp/.bashrc_razroom && bash --rcfile /tmp/.bashrc_razroom'
 }
 
 clawdock-exec() {
-  _clawdock_compose exec moltbot-gateway "$@"
+  _clawdock_compose exec razroom-gateway "$@"
 }
 
 clawdock-cli() {
-  _clawdock_compose run --rm moltbot-cli "$@"
+  _clawdock_compose run --rm razroom-cli "$@"
 }
 
 # Maintenance
 clawdock-rebuild() {
-  _clawdock_compose build moltbot-gateway
+  _clawdock_compose build razroom-gateway
 }
 
 clawdock-clean() {
@@ -220,7 +220,7 @@ clawdock-health() {
     echo "   Check: ${CLAWDOCK_DIR}/.env"
     return 1
   fi
-  _clawdock_compose exec -e "MOLTBOT_GATEWAY_TOKEN=$token" moltbot-gateway \
+  _clawdock_compose exec -e "RAZROOM_GATEWAY_TOKEN=$token" razroom-gateway \
     node dist/index.js health
 }
 
@@ -244,13 +244,13 @@ clawdock-fix-token() {
 
   echo "📝 Setting token: ${token:0:20}..."
 
-  _clawdock_compose exec -e "TOKEN=$token" moltbot-gateway \
-    bash -c './moltbot.mjs config set gateway.remote.token "$TOKEN" && ./moltbot.mjs config set gateway.auth.token "$TOKEN"' 2>&1 | _clawdock_filter_warnings
+  _clawdock_compose exec -e "TOKEN=$token" razroom-gateway \
+    bash -c './razroom.mjs config set gateway.remote.token "$TOKEN" && ./razroom.mjs config set gateway.auth.token "$TOKEN"' 2>&1 | _clawdock_filter_warnings
 
   echo "🔍 Verifying token was saved..."
   local saved_token
-  saved_token=$(_clawdock_compose exec moltbot-gateway \
-    bash -c "./moltbot.mjs config get gateway.remote.token 2>/dev/null" 2>&1 | _clawdock_filter_warnings | tr -d '\r\n' | head -c 64)
+  saved_token=$(_clawdock_compose exec razroom-gateway \
+    bash -c "./razroom.mjs config get gateway.remote.token 2>/dev/null" 2>&1 | _clawdock_filter_warnings | tr -d '\r\n' | head -c 64)
 
   if [[ "$saved_token" == "$token" ]]; then
     echo "✅ Token saved correctly!"
@@ -261,7 +261,7 @@ clawdock-fix-token() {
   fi
 
   echo "🔄 Restarting gateway..."
-  _clawdock_compose restart moltbot-gateway 2>&1 | _clawdock_filter_warnings
+  _clawdock_compose restart razroom-gateway 2>&1 | _clawdock_filter_warnings
 
   echo "⏳ Waiting for gateway to start..."
   sleep 5
@@ -276,7 +276,7 @@ clawdock-dashboard() {
 
   echo "🦞 Getting dashboard URL..."
   local output exit_status url
-  output=$(_clawdock_compose run --rm moltbot-cli dashboard --no-open 2>&1)
+  output=$(_clawdock_compose run --rm razroom-cli dashboard --no-open 2>&1)
   exit_status=$?
   url=$(printf "%s\n" "$output" | _clawdock_filter_warnings | grep -o 'http[s]\?://[^[:space:]]*' | head -n 1)
   if [[ $exit_status -ne 0 ]]; then
@@ -305,7 +305,7 @@ clawdock-devices() {
 
   echo "🔍 Checking device pairings..."
   local output exit_status
-  output=$(_clawdock_compose exec moltbot-gateway node dist/index.js devices list 2>&1)
+  output=$(_clawdock_compose exec razroom-gateway node dist/index.js devices list 2>&1)
   exit_status=$?
   printf "%s\n" "$output" | _clawdock_filter_warnings
   if [ $exit_status -ne 0 ]; then
@@ -314,7 +314,7 @@ clawdock-devices() {
     echo -e "   1. Verify token is set: $(_cmd clawdock-token)"
     echo "   2. Try manual config inside container:"
     echo -e "      $(_cmd clawdock-shell)"
-    echo -e "      $(_cmd 'moltbot config get gateway.remote.token')"
+    echo -e "      $(_cmd 'razroom config get gateway.remote.token')"
     return 1
   fi
 
@@ -341,7 +341,7 @@ clawdock-approve() {
   fi
 
   echo "✅ Approving device: $1"
-  _clawdock_compose exec moltbot-gateway \
+  _clawdock_compose exec razroom-gateway \
     node dist/index.js devices approve "$1" 2>&1 | _clawdock_filter_warnings
 
   echo ""
@@ -350,7 +350,7 @@ clawdock-approve() {
 
 # Show all available clawdock helper commands
 clawdock-help() {
-  echo -e "\n${_CLR_BOLD}${_CLR_CYAN}🦞 ClawDock - Docker Helpers for MoltBot${_CLR_RESET}\n"
+  echo -e "\n${_CLR_BOLD}${_CLR_CYAN}🦞 ClawDock - Docker Helpers for Razroom${_CLR_RESET}\n"
 
   echo -e "${_CLR_BOLD}${_CLR_MAGENTA}⚡ Basic Operations${_CLR_RESET}"
   echo -e "  $(_cmd clawdock-start)       ${_CLR_DIM}Start the gateway${_CLR_RESET}"
@@ -361,7 +361,7 @@ clawdock-help() {
   echo ""
 
   echo -e "${_CLR_BOLD}${_CLR_MAGENTA}🐚 Container Access${_CLR_RESET}"
-  echo -e "  $(_cmd clawdock-shell)       ${_CLR_DIM}Shell into container (moltbot alias ready)${_CLR_RESET}"
+  echo -e "  $(_cmd clawdock-shell)       ${_CLR_DIM}Shell into container (razroom alias ready)${_CLR_RESET}"
   echo -e "  $(_cmd clawdock-cli)         ${_CLR_DIM}Run CLI commands (e.g., clawdock-cli status)${_CLR_RESET}"
   echo -e "  $(_cmd clawdock-exec) ${_CLR_CYAN}<cmd>${_CLR_RESET}  ${_CLR_DIM}Execute command in gateway container${_CLR_RESET}"
   echo ""
@@ -384,8 +384,8 @@ clawdock-help() {
   echo -e "${_CLR_BOLD}${_CLR_MAGENTA}🛠️  Utilities${_CLR_RESET}"
   echo -e "  $(_cmd clawdock-health)      ${_CLR_DIM}Run health check${_CLR_RESET}"
   echo -e "  $(_cmd clawdock-token)       ${_CLR_DIM}Show gateway auth token${_CLR_RESET}"
-  echo -e "  $(_cmd clawdock-cd)          ${_CLR_DIM}Jump to moltbot project directory${_CLR_RESET}"
-  echo -e "  $(_cmd clawdock-config)      ${_CLR_DIM}Open config directory (~/.moltbot)${_CLR_RESET}"
+  echo -e "  $(_cmd clawdock-cd)          ${_CLR_DIM}Jump to razroom project directory${_CLR_RESET}"
+  echo -e "  $(_cmd clawdock-config)      ${_CLR_DIM}Open config directory (~/.razroom)${_CLR_RESET}"
   echo -e "  $(_cmd clawdock-workspace)   ${_CLR_DIM}Open workspace directory${_CLR_RESET}"
   echo ""
 
@@ -400,14 +400,14 @@ clawdock-help() {
 
   echo -e "${_CLR_BOLD}${_CLR_GREEN}💬 WhatsApp Setup${_CLR_RESET}"
   echo -e "  $(_cmd clawdock-shell)"
-  echo -e "    ${_CLR_BLUE}>${_CLR_RESET} $(_cmd 'moltbot channels login --channel whatsapp')"
-  echo -e "    ${_CLR_BLUE}>${_CLR_RESET} $(_cmd 'moltbot status')"
+  echo -e "    ${_CLR_BLUE}>${_CLR_RESET} $(_cmd 'razroom channels login --channel whatsapp')"
+  echo -e "    ${_CLR_BLUE}>${_CLR_RESET} $(_cmd 'razroom status')"
   echo ""
 
   echo -e "${_CLR_BOLD}${_CLR_CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${_CLR_RESET}"
   echo ""
 
   echo -e "${_CLR_CYAN}💡 All commands guide you through next steps!${_CLR_RESET}"
-  echo -e "${_CLR_BLUE}📚 Docs: ${_CLR_RESET}${_CLR_CYAN}https://docs.moltbot.ai${_CLR_RESET}"
+  echo -e "${_CLR_BLUE}📚 Docs: ${_CLR_RESET}${_CLR_CYAN}https://docs.razroom.ai${_CLR_RESET}"
   echo ""
 }

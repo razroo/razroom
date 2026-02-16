@@ -14,7 +14,7 @@ export type ExtraGatewayService = {
   label: string;
   detail: string;
   scope: "user" | "system";
-  marker?: "moltbot" | "moltbot" | "moltbot";
+  marker?: "razroom" | "razroom" | "razroom";
   legacy?: boolean;
 };
 
@@ -22,12 +22,12 @@ export type FindExtraGatewayServicesOptions = {
   deep?: boolean;
 };
 
-const EXTRA_MARKERS = ["moltbot", "moltbot", "moltbot"] as const;
+const EXTRA_MARKERS = ["razroom", "razroom", "razroom"] as const;
 
 export function renderGatewayServiceCleanupHints(
   env: Record<string, string | undefined> = process.env as Record<string, string | undefined>,
 ): string[] {
-  const profile = env.MOLTBOT_PROFILE;
+  const profile = env.RAZROOM_PROFILE;
   switch (process.platform) {
     case "darwin": {
       const label = resolveGatewayLaunchAgentLabel(profile);
@@ -71,8 +71,8 @@ function detectMarker(content: string): Marker | null {
 
 function hasGatewayServiceMarker(content: string): boolean {
   const lower = content.toLowerCase();
-  const markerKeys = ["moltbot_service_marker"];
-  const kindKeys = ["moltbot_service_kind"];
+  const markerKeys = ["razroom_service_marker"];
+  const kindKeys = ["razroom_service_kind"];
   const markerValues = [GATEWAY_SERVICE_MARKER.toLowerCase()];
   const hasMarkerKey = markerKeys.some((key) => lower.includes(key));
   const hasKindKey = kindKeys.some((key) => lower.includes(key));
@@ -85,7 +85,7 @@ function hasGatewayServiceMarker(content: string): boolean {
   );
 }
 
-function isMoltBotGatewayLaunchdService(label: string, contents: string): boolean {
+function isRazroomGatewayLaunchdService(label: string, contents: string): boolean {
   if (hasGatewayServiceMarker(contents)) {
     return true;
   }
@@ -93,26 +93,26 @@ function isMoltBotGatewayLaunchdService(label: string, contents: string): boolea
   if (!lowerContents.includes("gateway")) {
     return false;
   }
-  return label.startsWith("ai.moltbot.");
+  return label.startsWith("ai.razroom.");
 }
 
-function isMoltBotGatewaySystemdService(name: string, contents: string): boolean {
+function isRazroomGatewaySystemdService(name: string, contents: string): boolean {
   if (hasGatewayServiceMarker(contents)) {
     return true;
   }
-  if (!name.startsWith("moltbot-gateway")) {
+  if (!name.startsWith("razroom-gateway")) {
     return false;
   }
   return contents.toLowerCase().includes("gateway");
 }
 
-function isMoltBotGatewayTaskName(name: string): boolean {
+function isRazroomGatewayTaskName(name: string): boolean {
   const normalized = name.trim().toLowerCase();
   if (!normalized) {
     return false;
   }
   const defaultName = resolveGatewayWindowsTaskName().toLowerCase();
-  return normalized === defaultName || normalized.startsWith("moltbot gateway");
+  return normalized === defaultName || normalized.startsWith("razroom gateway");
 }
 
 function tryExtractPlistLabel(contents: string): string | null {
@@ -133,7 +133,7 @@ function isIgnoredSystemdName(name: string): boolean {
 
 function isLegacyLabel(label: string): boolean {
   const lower = label.toLowerCase();
-  return lower.includes("moltbot") || lower.includes("moltbot");
+  return lower.includes("razroom") || lower.includes("razroom");
 }
 
 async function scanLaunchdDir(params: {
@@ -175,7 +175,7 @@ async function scanLaunchdDir(params: {
         label,
         detail: `plist: ${fullPath}`,
         scope: params.scope,
-        marker: isLegacyLabel(label) ? "moltbot" : "moltbot",
+        marker: isLegacyLabel(label) ? "razroom" : "razroom",
         legacy: true,
       });
       continue;
@@ -183,7 +183,7 @@ async function scanLaunchdDir(params: {
     if (isIgnoredLaunchdLabel(label)) {
       continue;
     }
-    if (marker === "moltbot" && isMoltBotGatewayLaunchdService(label, contents)) {
+    if (marker === "razroom" && isRazroomGatewayLaunchdService(label, contents)) {
       continue;
     }
     results.push({
@@ -192,7 +192,7 @@ async function scanLaunchdDir(params: {
       detail: `plist: ${fullPath}`,
       scope: params.scope,
       marker,
-      legacy: marker !== "moltbot" || isLegacyLabel(label),
+      legacy: marker !== "razroom" || isLegacyLabel(label),
     });
   }
 
@@ -230,7 +230,7 @@ async function scanSystemdDir(params: {
     if (!marker) {
       continue;
     }
-    if (marker === "moltbot" && isMoltBotGatewaySystemdService(name, contents)) {
+    if (marker === "razroom" && isRazroomGatewaySystemdService(name, contents)) {
       continue;
     }
     results.push({
@@ -239,7 +239,7 @@ async function scanSystemdDir(params: {
       detail: `unit: ${fullPath}`,
       scope: params.scope,
       marker,
-      legacy: marker !== "moltbot",
+      legacy: marker !== "razroom",
     });
   }
 
@@ -383,7 +383,7 @@ export async function findExtraGatewayServices(
       if (!name) {
         continue;
       }
-      if (isMoltBotGatewayTaskName(name)) {
+      if (isRazroomGatewayTaskName(name)) {
         continue;
       }
       const lowerName = name.toLowerCase();
@@ -404,7 +404,7 @@ export async function findExtraGatewayServices(
         detail: task.taskToRun ? `task: ${name}, run: ${task.taskToRun}` : name,
         scope: "system",
         marker,
-        legacy: marker !== "moltbot",
+        legacy: marker !== "razroom",
       });
     }
     return results;

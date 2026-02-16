@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { RuntimeEnv } from "../runtime.js";
 import { resolveGatewayPort } from "../config/config.js";
 import {
@@ -21,10 +21,10 @@ import {
 type GatewayAuthChoice = "token" | "password" | "trusted-proxy";
 
 export async function promptGatewayConfig(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   runtime: RuntimeEnv,
 ): Promise<{
-  config: MoltBotConfig;
+  config: RazroomConfig;
   port: number;
   token?: string;
 }> {
@@ -188,12 +188,12 @@ export async function promptGatewayConfig(
   if (authMode === "trusted-proxy") {
     note(
       [
-        "Trusted proxy mode: MoltBot trusts user identity from a reverse proxy.",
+        "Trusted proxy mode: Razroom trusts user identity from a reverse proxy.",
         "The proxy must authenticate users and pass identity via headers.",
         "Only requests from specified proxy IPs will be trusted.",
         "",
         "Common use cases: Pomerium, Caddy + OAuth, Traefik + forward auth",
-        "Docs: https://docs.moltbot.ai/gateway/trusted-proxy-auth",
+        "Docs: https://docs.razroom.ai/gateway/trusted-proxy-auth",
       ].join("\n"),
       "Trusted Proxy Auth",
     );

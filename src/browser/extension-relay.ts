@@ -77,7 +77,7 @@ type ConnectedTarget = {
   targetInfo: TargetInfo;
 };
 
-const RELAY_AUTH_HEADER = "x-moltbot-relay-token";
+const RELAY_AUTH_HEADER = "x-razroom-relay-token";
 
 function headerValue(value: string | string[] | undefined): string | undefined {
   if (!value) {
@@ -262,9 +262,9 @@ export async function ensureChromeExtensionRelayServer(opts: {
       case "Browser.getVersion":
         return {
           protocolVersion: "1.3",
-          product: "Chrome/MoltBot-Extension-Relay",
+          product: "Chrome/Razroom-Extension-Relay",
           revision: "0",
-          userAgent: "MoltBot-Extension-Relay",
+          userAgent: "Razroom-Extension-Relay",
           jsVersion: "V8",
         };
       case "Browser.setDownloadBehavior":
@@ -368,7 +368,7 @@ export async function ensureChromeExtensionRelayServer(opts: {
       (req.method === "GET" || req.method === "PUT")
     ) {
       const payload: Record<string, unknown> = {
-        Browser: "MoltBot/extension-relay",
+        Browser: "Razroom/extension-relay",
         "Protocol-Version": "1.3",
       };
       // Only advertise the WS URL if a real extension is connected.

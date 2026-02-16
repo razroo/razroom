@@ -1,7 +1,7 @@
 ---
 summary: "How the installer scripts work (install.sh, install-cli.sh, install.ps1), flags, and automation"
 read_when:
-  - You want to understand `moltbot.ai/install.sh`
+  - You want to understand `razroom.ai/install.sh`
   - You want to automate installs (CI / headless)
   - You want to install from a GitHub checkout
 title: "Installer Internals"
@@ -9,51 +9,51 @@ title: "Installer Internals"
 
 # Installer internals
 
-MoltBot ships three installer scripts, served from `moltbot.ai`.
+Razroom ships three installer scripts, served from `razroom.ai`.
 
 | Script                             | Platform             | What it does                                                                                 |
 | ---------------------------------- | -------------------- | -------------------------------------------------------------------------------------------- |
-| [`install.sh`](#installsh)         | macOS / Linux / WSL  | Installs Node if needed, installs MoltBot via npm (default) or git, and can run onboarding. |
-| [`install-cli.sh`](#install-clish) | macOS / Linux / WSL  | Installs Node + MoltBot into a local prefix (`~/.moltbot`). No root required.              |
-| [`install.ps1`](#installps1)       | Windows (PowerShell) | Installs Node if needed, installs MoltBot via npm (default) or git, and can run onboarding. |
+| [`install.sh`](#installsh)         | macOS / Linux / WSL  | Installs Node if needed, installs Razroom via npm (default) or git, and can run onboarding. |
+| [`install-cli.sh`](#install-clish) | macOS / Linux / WSL  | Installs Node + Razroom into a local prefix (`~/.razroom`). No root required.              |
+| [`install.ps1`](#installps1)       | Windows (PowerShell) | Installs Node if needed, installs Razroom via npm (default) or git, and can run onboarding. |
 
 ## Quick commands
 
 <Tabs>
   <Tab title="install.sh">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://moltbot.ai/install.sh | bash
+    curl -fsSL --proto '=https' --tlsv1.2 https://razroom.ai/install.sh | bash
     ```
 
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://moltbot.ai/install.sh | bash -s -- --help
+    curl -fsSL --proto '=https' --tlsv1.2 https://razroom.ai/install.sh | bash -s -- --help
     ```
 
   </Tab>
   <Tab title="install-cli.sh">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://moltbot.ai/install-cli.sh | bash
+    curl -fsSL --proto '=https' --tlsv1.2 https://razroom.ai/install-cli.sh | bash
     ```
 
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://moltbot.ai/install-cli.sh | bash -s -- --help
+    curl -fsSL --proto '=https' --tlsv1.2 https://razroom.ai/install-cli.sh | bash -s -- --help
     ```
 
   </Tab>
   <Tab title="install.ps1">
     ```powershell
-    iwr -useb https://moltbot.ai/install.ps1 | iex
+    iwr -useb https://razroom.ai/install.ps1 | iex
     ```
 
     ```powershell
-    & ([scriptblock]::Create((iwr -useb https://moltbot.ai/install.ps1))) -Tag beta -NoOnboard -DryRun
+    & ([scriptblock]::Create((iwr -useb https://razroom.ai/install.ps1))) -Tag beta -NoOnboard -DryRun
     ```
 
   </Tab>
 </Tabs>
 
 <Note>
-If install succeeds but `moltbot` is not found in a new terminal, see [Node.js troubleshooting](/install/node#troubleshooting).
+If install succeeds but `razroom` is not found in a new terminal, see [Node.js troubleshooting](/install/node#troubleshooting).
 </Note>
 
 ---
@@ -76,12 +76,12 @@ Recommended for most interactive installs on macOS/Linux/WSL.
   <Step title="Ensure Git">
     Installs Git if missing.
   </Step>
-  <Step title="Install MoltBot">
+  <Step title="Install Razroom">
     - `npm` method (default): global npm install
-    - `git` method: clone/update repo, install deps with pnpm, build, then install wrapper at `~/.local/bin/moltbot`
+    - `git` method: clone/update repo, install deps with pnpm, build, then install wrapper at `~/.local/bin/razroom`
   </Step>
   <Step title="Post-install tasks">
-    - Runs `moltbot doctor --non-interactive` on upgrades and git installs (best effort)
+    - Runs `razroom doctor --non-interactive` on upgrades and git installs (best effort)
     - Attempts onboarding when appropriate (TTY available, onboarding not disabled, and bootstrap/config checks pass)
     - Defaults `SHARP_IGNORE_GLOBAL_LIBVIPS=1`
   </Step>
@@ -89,7 +89,7 @@ Recommended for most interactive installs on macOS/Linux/WSL.
 
 ### Source checkout detection
 
-If run inside an MoltBot checkout (`package.json` + `pnpm-workspace.yaml`), the script offers:
+If run inside an Razroom checkout (`package.json` + `pnpm-workspace.yaml`), the script offers:
 
 - use checkout (`git`), or
 - use global install (`npm`)
@@ -103,22 +103,22 @@ The script exits with code `2` for invalid method selection or invalid `--instal
 <Tabs>
   <Tab title="Default">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://moltbot.ai/install.sh | bash
+    curl -fsSL --proto '=https' --tlsv1.2 https://razroom.ai/install.sh | bash
     ```
   </Tab>
   <Tab title="Skip onboarding">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://moltbot.ai/install.sh | bash -s -- --no-onboard
+    curl -fsSL --proto '=https' --tlsv1.2 https://razroom.ai/install.sh | bash -s -- --no-onboard
     ```
   </Tab>
   <Tab title="Git install">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://moltbot.ai/install.sh | bash -s -- --install-method git
+    curl -fsSL --proto '=https' --tlsv1.2 https://razroom.ai/install.sh | bash -s -- --install-method git
     ```
   </Tab>
   <Tab title="Dry run">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://moltbot.ai/install.sh | bash -s -- --dry-run
+    curl -fsSL --proto '=https' --tlsv1.2 https://razroom.ai/install.sh | bash -s -- --dry-run
     ```
   </Tab>
 </Tabs>
@@ -133,7 +133,7 @@ The script exits with code `2` for invalid method selection or invalid `--instal
 | `--git`                         | Shortcut for git method. Alias: `--github`                 |
 | `--version <version\|dist-tag>` | npm version or dist-tag (default: `latest`)                |
 | `--beta`                        | Use beta dist-tag if available, else fallback to `latest`  |
-| `--git-dir <path>`              | Checkout directory (default: `~/moltbot`). Alias: `--dir` |
+| `--git-dir <path>`              | Checkout directory (default: `~/razroom`). Alias: `--dir` |
 | `--no-git-update`               | Skip `git pull` for existing checkout                      |
 | `--no-prompt`                   | Disable prompts                                            |
 | `--no-onboard`                  | Skip onboarding                                            |
@@ -148,16 +148,16 @@ The script exits with code `2` for invalid method selection or invalid `--instal
 
 | Variable                                    | Description                                   |
 | ------------------------------------------- | --------------------------------------------- |
-| `MOLTBOT_INSTALL_METHOD=git\|npm`          | Install method                                |
-| `MOLTBOT_VERSION=latest\|next\|<semver>`   | npm version or dist-tag                       |
-| `MOLTBOT_BETA=0\|1`                        | Use beta if available                         |
-| `MOLTBOT_GIT_DIR=<path>`                   | Checkout directory                            |
-| `MOLTBOT_GIT_UPDATE=0\|1`                  | Toggle git updates                            |
-| `MOLTBOT_NO_PROMPT=1`                      | Disable prompts                               |
-| `MOLTBOT_NO_ONBOARD=1`                     | Skip onboarding                               |
-| `MOLTBOT_DRY_RUN=1`                        | Dry run mode                                  |
-| `MOLTBOT_VERBOSE=1`                        | Debug mode                                    |
-| `MOLTBOT_NPM_LOGLEVEL=error\|warn\|notice` | npm log level                                 |
+| `RAZROOM_INSTALL_METHOD=git\|npm`          | Install method                                |
+| `RAZROOM_VERSION=latest\|next\|<semver>`   | npm version or dist-tag                       |
+| `RAZROOM_BETA=0\|1`                        | Use beta if available                         |
+| `RAZROOM_GIT_DIR=<path>`                   | Checkout directory                            |
+| `RAZROOM_GIT_UPDATE=0\|1`                  | Toggle git updates                            |
+| `RAZROOM_NO_PROMPT=1`                      | Disable prompts                               |
+| `RAZROOM_NO_ONBOARD=1`                     | Skip onboarding                               |
+| `RAZROOM_DRY_RUN=1`                        | Dry run mode                                  |
+| `RAZROOM_VERBOSE=1`                        | Debug mode                                    |
+| `RAZROOM_NPM_LOGLEVEL=error\|warn\|notice` | npm log level                                 |
 | `SHARP_IGNORE_GLOBAL_LIBVIPS=0\|1`          | Control sharp/libvips behavior (default: `1`) |
 
   </Accordion>
@@ -168,7 +168,7 @@ The script exits with code `2` for invalid method selection or invalid `--instal
 ## install-cli.sh
 
 <Info>
-Designed for environments where you want everything under a local prefix (default `~/.moltbot`) and no system Node dependency.
+Designed for environments where you want everything under a local prefix (default `~/.razroom`) and no system Node dependency.
 </Info>
 
 ### Flow (install-cli.sh)
@@ -180,8 +180,8 @@ Designed for environments where you want everything under a local prefix (defaul
   <Step title="Ensure Git">
     If Git is missing, attempts install via apt/dnf/yum on Linux or Homebrew on macOS.
   </Step>
-  <Step title="Install MoltBot under prefix">
-    Installs with npm using `--prefix <prefix>`, then writes wrapper to `<prefix>/bin/moltbot`.
+  <Step title="Install Razroom under prefix">
+    Installs with npm using `--prefix <prefix>`, then writes wrapper to `<prefix>/bin/razroom`.
   </Step>
 </Steps>
 
@@ -190,22 +190,22 @@ Designed for environments where you want everything under a local prefix (defaul
 <Tabs>
   <Tab title="Default">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://moltbot.ai/install-cli.sh | bash
+    curl -fsSL --proto '=https' --tlsv1.2 https://razroom.ai/install-cli.sh | bash
     ```
   </Tab>
   <Tab title="Custom prefix + version">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://moltbot.ai/install-cli.sh | bash -s -- --prefix /opt/moltbot --version latest
+    curl -fsSL --proto '=https' --tlsv1.2 https://razroom.ai/install-cli.sh | bash -s -- --prefix /opt/razroom --version latest
     ```
   </Tab>
   <Tab title="Automation JSON output">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://moltbot.ai/install-cli.sh | bash -s -- --json --prefix /opt/moltbot
+    curl -fsSL --proto '=https' --tlsv1.2 https://razroom.ai/install-cli.sh | bash -s -- --json --prefix /opt/razroom
     ```
   </Tab>
   <Tab title="Run onboarding">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://moltbot.ai/install-cli.sh | bash -s -- --onboard
+    curl -fsSL --proto '=https' --tlsv1.2 https://razroom.ai/install-cli.sh | bash -s -- --onboard
     ```
   </Tab>
 </Tabs>
@@ -215,11 +215,11 @@ Designed for environments where you want everything under a local prefix (defaul
 
 | Flag                   | Description                                                                     |
 | ---------------------- | ------------------------------------------------------------------------------- |
-| `--prefix <path>`      | Install prefix (default: `~/.moltbot`)                                         |
-| `--version <ver>`      | MoltBot version or dist-tag (default: `latest`)                                |
+| `--prefix <path>`      | Install prefix (default: `~/.razroom`)                                         |
+| `--version <ver>`      | Razroom version or dist-tag (default: `latest`)                                |
 | `--node-version <ver>` | Node version (default: `22.22.0`)                                               |
 | `--json`               | Emit NDJSON events                                                              |
-| `--onboard`            | Run `moltbot onboard` after install                                            |
+| `--onboard`            | Run `razroom onboard` after install                                            |
 | `--no-onboard`         | Skip onboarding (default)                                                       |
 | `--set-npm-prefix`     | On Linux, force npm prefix to `~/.npm-global` if current prefix is not writable |
 | `--help`               | Show usage (`-h`)                                                               |
@@ -230,12 +230,12 @@ Designed for environments where you want everything under a local prefix (defaul
 
 | Variable                                    | Description                                                                       |
 | ------------------------------------------- | --------------------------------------------------------------------------------- |
-| `MOLTBOT_PREFIX=<path>`                    | Install prefix                                                                    |
-| `MOLTBOT_VERSION=<ver>`                    | MoltBot version or dist-tag                                                      |
-| `MOLTBOT_NODE_VERSION=<ver>`               | Node version                                                                      |
-| `MOLTBOT_NO_ONBOARD=1`                     | Skip onboarding                                                                   |
-| `MOLTBOT_NPM_LOGLEVEL=error\|warn\|notice` | npm log level                                                                     |
-| `MOLTBOT_GIT_DIR=<path>`                   | Legacy cleanup lookup path (used when removing old `Peekaboo` submodule checkout) |
+| `RAZROOM_PREFIX=<path>`                    | Install prefix                                                                    |
+| `RAZROOM_VERSION=<ver>`                    | Razroom version or dist-tag                                                      |
+| `RAZROOM_NODE_VERSION=<ver>`               | Node version                                                                      |
+| `RAZROOM_NO_ONBOARD=1`                     | Skip onboarding                                                                   |
+| `RAZROOM_NPM_LOGLEVEL=error\|warn\|notice` | npm log level                                                                     |
+| `RAZROOM_GIT_DIR=<path>`                   | Legacy cleanup lookup path (used when removing old `Peekaboo` submodule checkout) |
 | `SHARP_IGNORE_GLOBAL_LIBVIPS=0\|1`          | Control sharp/libvips behavior (default: `1`)                                     |
 
   </Accordion>
@@ -254,12 +254,12 @@ Designed for environments where you want everything under a local prefix (defaul
   <Step title="Ensure Node.js 22+">
     If missing, attempts install via winget, then Chocolatey, then Scoop.
   </Step>
-  <Step title="Install MoltBot">
+  <Step title="Install Razroom">
     - `npm` method (default): global npm install using selected `-Tag`
-    - `git` method: clone/update repo, install/build with pnpm, and install wrapper at `%USERPROFILE%\.local\bin\moltbot.cmd`
+    - `git` method: clone/update repo, install/build with pnpm, and install wrapper at `%USERPROFILE%\.local\bin\razroom.cmd`
   </Step>
   <Step title="Post-install tasks">
-    Adds needed bin directory to user PATH when possible, then runs `moltbot doctor --non-interactive` on upgrades and git installs (best effort).
+    Adds needed bin directory to user PATH when possible, then runs `razroom doctor --non-interactive` on upgrades and git installs (best effort).
   </Step>
 </Steps>
 
@@ -268,29 +268,29 @@ Designed for environments where you want everything under a local prefix (defaul
 <Tabs>
   <Tab title="Default">
     ```powershell
-    iwr -useb https://moltbot.ai/install.ps1 | iex
+    iwr -useb https://razroom.ai/install.ps1 | iex
     ```
   </Tab>
   <Tab title="Git install">
     ```powershell
-    & ([scriptblock]::Create((iwr -useb https://moltbot.ai/install.ps1))) -InstallMethod git
+    & ([scriptblock]::Create((iwr -useb https://razroom.ai/install.ps1))) -InstallMethod git
     ```
   </Tab>
   <Tab title="Custom git directory">
     ```powershell
-    & ([scriptblock]::Create((iwr -useb https://moltbot.ai/install.ps1))) -InstallMethod git -GitDir "C:\moltbot"
+    & ([scriptblock]::Create((iwr -useb https://razroom.ai/install.ps1))) -InstallMethod git -GitDir "C:\razroom"
     ```
   </Tab>
   <Tab title="Dry run">
     ```powershell
-    & ([scriptblock]::Create((iwr -useb https://moltbot.ai/install.ps1))) -DryRun
+    & ([scriptblock]::Create((iwr -useb https://razroom.ai/install.ps1))) -DryRun
     ```
   </Tab>
   <Tab title="Debug trace">
     ```powershell
     # install.ps1 has no dedicated -Verbose flag yet.
     Set-PSDebug -Trace 1
-    & ([scriptblock]::Create((iwr -useb https://moltbot.ai/install.ps1))) -NoOnboard
+    & ([scriptblock]::Create((iwr -useb https://razroom.ai/install.ps1))) -NoOnboard
     Set-PSDebug -Trace 0
     ```
   </Tab>
@@ -303,7 +303,7 @@ Designed for environments where you want everything under a local prefix (defaul
 | ------------------------- | ------------------------------------------------------ |
 | `-InstallMethod npm\|git` | Install method (default: `npm`)                        |
 | `-Tag <tag>`              | npm dist-tag (default: `latest`)                       |
-| `-GitDir <path>`          | Checkout directory (default: `%USERPROFILE%\moltbot`) |
+| `-GitDir <path>`          | Checkout directory (default: `%USERPROFILE%\razroom`) |
 | `-NoOnboard`              | Skip onboarding                                        |
 | `-NoGitUpdate`            | Skip `git pull`                                        |
 | `-DryRun`                 | Print actions only                                     |
@@ -314,11 +314,11 @@ Designed for environments where you want everything under a local prefix (defaul
 
 | Variable                           | Description        |
 | ---------------------------------- | ------------------ |
-| `MOLTBOT_INSTALL_METHOD=git\|npm` | Install method     |
-| `MOLTBOT_GIT_DIR=<path>`          | Checkout directory |
-| `MOLTBOT_NO_ONBOARD=1`            | Skip onboarding    |
-| `MOLTBOT_GIT_UPDATE=0`            | Disable git pull   |
-| `MOLTBOT_DRY_RUN=1`               | Dry run mode       |
+| `RAZROOM_INSTALL_METHOD=git\|npm` | Install method     |
+| `RAZROOM_GIT_DIR=<path>`          | Checkout directory |
+| `RAZROOM_NO_ONBOARD=1`            | Skip onboarding    |
+| `RAZROOM_GIT_UPDATE=0`            | Disable git pull   |
+| `RAZROOM_DRY_RUN=1`               | Dry run mode       |
 
   </Accordion>
 </AccordionGroup>
@@ -336,23 +336,23 @@ Use non-interactive flags/env vars for predictable runs.
 <Tabs>
   <Tab title="install.sh (non-interactive npm)">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://moltbot.ai/install.sh | bash -s -- --no-prompt --no-onboard
+    curl -fsSL --proto '=https' --tlsv1.2 https://razroom.ai/install.sh | bash -s -- --no-prompt --no-onboard
     ```
   </Tab>
   <Tab title="install.sh (non-interactive git)">
     ```bash
-    MOLTBOT_INSTALL_METHOD=git MOLTBOT_NO_PROMPT=1 \
-      curl -fsSL --proto '=https' --tlsv1.2 https://moltbot.ai/install.sh | bash
+    RAZROOM_INSTALL_METHOD=git RAZROOM_NO_PROMPT=1 \
+      curl -fsSL --proto '=https' --tlsv1.2 https://razroom.ai/install.sh | bash
     ```
   </Tab>
   <Tab title="install-cli.sh (JSON)">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://moltbot.ai/install-cli.sh | bash -s -- --json --prefix /opt/moltbot
+    curl -fsSL --proto '=https' --tlsv1.2 https://razroom.ai/install-cli.sh | bash -s -- --json --prefix /opt/razroom
     ```
   </Tab>
   <Tab title="install.ps1 (skip onboarding)">
     ```powershell
-    & ([scriptblock]::Create((iwr -useb https://moltbot.ai/install.ps1))) -NoOnboard
+    & ([scriptblock]::Create((iwr -useb https://razroom.ai/install.ps1))) -NoOnboard
     ```
   </Tab>
 </Tabs>
@@ -374,7 +374,7 @@ Use non-interactive flags/env vars for predictable runs.
     The scripts default `SHARP_IGNORE_GLOBAL_LIBVIPS=1` to avoid sharp building against system libvips. To override:
 
     ```bash
-    SHARP_IGNORE_GLOBAL_LIBVIPS=0 curl -fsSL --proto '=https' --tlsv1.2 https://moltbot.ai/install.sh | bash
+    SHARP_IGNORE_GLOBAL_LIBVIPS=0 curl -fsSL --proto '=https' --tlsv1.2 https://razroom.ai/install.sh | bash
     ```
 
   </Accordion>
@@ -383,7 +383,7 @@ Use non-interactive flags/env vars for predictable runs.
     Install Git for Windows, reopen PowerShell, rerun installer.
   </Accordion>
 
-  <Accordion title='Windows: "moltbot is not recognized"'>
+  <Accordion title='Windows: "razroom is not recognized"'>
     Run `npm config get prefix`, append `\bin`, add that directory to user PATH, then reopen PowerShell.
   </Accordion>
 
@@ -393,13 +393,13 @@ Use non-interactive flags/env vars for predictable runs.
 
     ```powershell
     Set-PSDebug -Trace 1
-    & ([scriptblock]::Create((iwr -useb https://moltbot.ai/install.ps1))) -NoOnboard
+    & ([scriptblock]::Create((iwr -useb https://razroom.ai/install.ps1))) -NoOnboard
     Set-PSDebug -Trace 0
     ```
 
   </Accordion>
 
-  <Accordion title="moltbot not found after install">
+  <Accordion title="razroom not found after install">
     Usually a PATH issue. See [Node.js troubleshooting](/install/node#troubleshooting).
   </Accordion>
 </AccordionGroup>

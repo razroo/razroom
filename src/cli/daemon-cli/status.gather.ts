@@ -225,11 +225,11 @@ export async function gatherDaemonStatus(
         url: probeUrl,
         token:
           opts.rpc.token ||
-          mergedDaemonEnv.MOLTBOT_GATEWAY_TOKEN ||
+          mergedDaemonEnv.RAZROOM_GATEWAY_TOKEN ||
           daemonCfg.gateway?.auth?.token,
         password:
           opts.rpc.password ||
-          mergedDaemonEnv.MOLTBOT_GATEWAY_PASSWORD ||
+          mergedDaemonEnv.RAZROOM_GATEWAY_PASSWORD ||
           daemonCfg.gateway?.auth?.password,
         timeoutMs,
         json: opts.rpc.json,

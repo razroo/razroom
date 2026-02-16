@@ -4,7 +4,7 @@ import os from "node:os";
 import path from "node:path";
 import { PassThrough } from "node:stream";
 import { afterAll, beforeAll, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
-import type { MoltBotPluginApi, MoltBotPluginToolContext } from "../../../src/plugins/types.js";
+import type { RazroomPluginApi, RazroomPluginToolContext } from "../../../src/plugins/types.js";
 
 const spawnState = vi.hoisted(() => ({
   queue: [] as Array<{ stdout: string; stderr?: string; exitCode?: number }>,
@@ -17,7 +17,7 @@ mock("node:child_process", () => ({
 
 let createLobsterTool: typeof import("./lobster-tool.js").createLobsterTool;
 
-function fakeApi(overrides: Partial<MoltBotPluginApi> = {}): MoltBotPluginApi {
+function fakeApi(overrides: Partial<RazroomPluginApi> = {}): RazroomPluginApi {
   return {
     id: "lobster",
     name: "lobster",
@@ -43,7 +43,7 @@ function fakeApi(overrides: Partial<MoltBotPluginApi> = {}): MoltBotPluginApi {
   };
 }
 
-function fakeCtx(overrides: Partial<MoltBotPluginToolContext> = {}): MoltBotPluginToolContext {
+function fakeCtx(overrides: Partial<RazroomPluginToolContext> = {}): RazroomPluginToolContext {
   return {
     config: {},
     workspaceDir: "/tmp",
@@ -64,7 +64,7 @@ describe("lobster plugin tool", () => {
   beforeAll(async () => {
     ({ createLobsterTool } = await import("./lobster-tool.js"));
 
-    tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-lobster-plugin-"));
+    tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-lobster-plugin-"));
     lobsterBinPath = path.join(tempDir, process.platform === "win32" ? "lobster.cmd" : "lobster");
     await fs.writeFile(lobsterBinPath, "", { encoding: "utf8", mode: 0o755 });
   });
@@ -228,7 +228,7 @@ describe("lobster plugin tool", () => {
 
   it("can be gated off in sandboxed contexts", async () => {
     const api = fakeApi();
-    const factoryTool = (ctx: MoltBotPluginToolContext) => {
+    const factoryTool = (ctx: RazroomPluginToolContext) => {
       if (ctx.sandboxed) {
         return null;
       }

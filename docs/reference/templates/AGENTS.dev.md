@@ -5,7 +5,7 @@ read_when:
   - Updating the default dev agent identity
 ---
 
-# AGENTS.md - MoltBot Workspace
+# AGENTS.md - Razroom Workspace
 
 This folder is the assistant's working directory.
 

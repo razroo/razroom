@@ -1,6 +1,6 @@
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import type { MoltBotPluginApi } from "../plugins/types.js";
+import type { RazroomPluginApi } from "../plugins/types.js";
 import type { InternalHookHandler } from "./internal-hooks.js";
 import type { HookEntry } from "./types.js";
 import { shouldIncludeHook } from "./config.js";
@@ -13,19 +13,19 @@ export type PluginHookLoadResult = {
   errors: string[];
 };
 
-function resolveHookDir(api: MoltBotPluginApi, dir: string): string {
+function resolveHookDir(api: RazroomPluginApi, dir: string): string {
   if (path.isAbsolute(dir)) {
     return dir;
   }
   return path.resolve(path.dirname(api.source), dir);
 }
 
-function normalizePluginHookEntry(api: MoltBotPluginApi, entry: HookEntry): HookEntry {
+function normalizePluginHookEntry(api: RazroomPluginApi, entry: HookEntry): HookEntry {
   return {
     ...entry,
     hook: {
       ...entry.hook,
-      source: "moltbot-plugin",
+      source: "razroom-plugin",
       pluginId: api.id,
     },
     metadata: {
@@ -38,7 +38,7 @@ function normalizePluginHookEntry(api: MoltBotPluginApi, entry: HookEntry): Hook
 
 async function loadHookHandler(
   entry: HookEntry,
-  api: MoltBotPluginApi,
+  api: RazroomPluginApi,
 ): Promise<InternalHookHandler | null> {
   try {
     const url = pathToFileURL(entry.hook.handlerPath).href;
@@ -58,13 +58,13 @@ async function loadHookHandler(
 }
 
 export async function registerPluginHooksFromDir(
-  api: MoltBotPluginApi,
+  api: RazroomPluginApi,
   dir: string,
 ): Promise<PluginHookLoadResult> {
   const resolvedDir = resolveHookDir(api, dir);
   const hooks = loadHookEntriesFromDir({
     dir: resolvedDir,
-    source: "moltbot-plugin",
+    source: "razroom-plugin",
     pluginId: api.id,
   });
 

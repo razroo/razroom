@@ -1,9 +1,9 @@
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import { ensureModelAllowlistEntry } from "./model-allowlist.js";
 
 export const OPENAI_DEFAULT_MODEL = "openai/gpt-5.1-codex";
 
-export function applyOpenAIProviderConfig(cfg: MoltBotConfig): MoltBotConfig {
+export function applyOpenAIProviderConfig(cfg: RazroomConfig): RazroomConfig {
   const next = ensureModelAllowlistEntry({
     cfg,
     modelRef: OPENAI_DEFAULT_MODEL,
@@ -26,7 +26,7 @@ export function applyOpenAIProviderConfig(cfg: MoltBotConfig): MoltBotConfig {
   };
 }
 
-export function applyOpenAIConfig(cfg: MoltBotConfig): MoltBotConfig {
+export function applyOpenAIConfig(cfg: RazroomConfig): RazroomConfig {
   const next = applyOpenAIProviderConfig(cfg);
   return {
     ...next,

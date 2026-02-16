@@ -5,7 +5,7 @@ import {
   installModelsConfigTestHooks,
   withModelsTempHome as withTempHome,
 } from "./models-config.e2e-harness.js";
-import { ensureMoltBotModelsJson } from "./models-config.js";
+import { ensureRazroomModelsJson } from "./models-config.js";
 
 installModelsConfigTestHooks({ restoreFetch: true });
 
@@ -26,7 +26,7 @@ describe("models-config", () => {
 
       try {
         const agentDir = path.join(home, "agent-default-base-url");
-        await ensureMoltBotModelsJson({ models: { providers: {} } }, agentDir);
+        await ensureRazroomModelsJson({ models: { providers: {} } }, agentDir);
 
         const raw = await fs.readFile(path.join(agentDir, "models.json"), "utf8");
         const parsed = JSON.parse(raw) as {
@@ -65,7 +65,7 @@ describe("models-config", () => {
       globalThis.fetch = fetchMock as unknown as typeof fetch;
 
       try {
-        await ensureMoltBotModelsJson({ models: { providers: {} } });
+        await ensureRazroomModelsJson({ models: { providers: {} } });
 
         const [, opts] = fetchMock.mock.calls[0] as [string, { headers?: Record<string, string> }];
         expect(opts?.headers?.Authorization).toBe("Bearer copilot-token");

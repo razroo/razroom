@@ -30,7 +30,7 @@ function makePathEnv(binDir: string): NodeJS.ProcessEnv {
 }
 
 function makeTempDir() {
-  return fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-exec-approvals-"));
+  return fs.mkdtempSync(path.join(os.tmpdir(), "razroom-exec-approvals-"));
 }
 
 describe("exec approvals allowlist matching", () => {
@@ -556,7 +556,7 @@ describe("exec approvals wildcard agent", () => {
     const homedirSpy = spyOn(os, "homedir").mockReturnValue(dir);
 
     try {
-      const approvalsPath = path.join(dir, ".moltbot", "exec-approvals.json");
+      const approvalsPath = path.join(dir, ".razroom", "exec-approvals.json");
       fs.mkdirSync(path.dirname(approvalsPath), { recursive: true });
       fs.writeFileSync(
         approvalsPath,

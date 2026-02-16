@@ -1,6 +1,6 @@
 # Bundled Hooks
 
-This directory contains hooks that ship with MoltBot. These hooks are automatically discovered and can be enabled/disabled via CLI or configuration.
+This directory contains hooks that ship with Razroom. These hooks are automatically discovered and can be enabled/disabled via CLI or configuration.
 
 ## Available Hooks
 
@@ -10,12 +10,12 @@ Automatically saves session context to memory when you issue `/new`.
 
 **Events**: `command:new`
 **What it does**: Creates a dated memory file with LLM-generated slug based on conversation content.
-**Output**: `<workspace>/memory/YYYY-MM-DD-slug.md` (defaults to `~/.moltbot/workspace`)
+**Output**: `<workspace>/memory/YYYY-MM-DD-slug.md` (defaults to `~/.razroom/workspace`)
 
 **Enable**:
 
 ```bash
-moltbot hooks enable session-memory
+razroom hooks enable session-memory
 ```
 
 ### 📎 bootstrap-extra-files
@@ -29,7 +29,7 @@ Injects extra bootstrap files (for example monorepo `AGENTS.md`/`TOOLS.md`) duri
 **Enable**:
 
 ```bash
-moltbot hooks enable bootstrap-extra-files
+razroom hooks enable bootstrap-extra-files
 ```
 
 ### 📝 command-logger
@@ -38,12 +38,12 @@ Logs all command events to a centralized audit file.
 
 **Events**: `command` (all commands)
 **What it does**: Appends JSONL entries to command log file.
-**Output**: `~/.moltbot/logs/commands.log`
+**Output**: `~/.razroom/logs/commands.log`
 
 **Enable**:
 
 ```bash
-moltbot hooks enable command-logger
+razroom hooks enable command-logger
 ```
 
 ### 🚀 boot-md
@@ -57,7 +57,7 @@ Runs `BOOT.md` whenever the gateway starts (after channels start).
 **Enable**:
 
 ```bash
-moltbot hooks enable boot-md
+razroom hooks enable boot-md
 ```
 
 ## Hook Structure
@@ -81,9 +81,9 @@ session-memory/
 ---
 name: my-hook
 description: "Short description"
-homepage: https://docs.moltbot.ai/automation/hooks#my-hook
+homepage: https://docs.razroom.ai/automation/hooks#my-hook
 metadata:
-  { "moltbot": { "emoji": "🔗", "events": ["command:new"], "requires": { "bins": ["node"] } } }
+  { "razroom": { "emoji": "🔗", "events": ["command:new"], "requires": { "bins": ["node"] } } }
 ---
 # Hook Title
 
@@ -107,7 +107,7 @@ Documentation goes here...
 To create your own hooks, place them in:
 
 - **Workspace hooks**: `<workspace>/hooks/` (highest precedence)
-- **Managed hooks**: `~/.moltbot/hooks/` (shared across workspaces)
+- **Managed hooks**: `~/.razroom/hooks/` (shared across workspaces)
 
 Custom hooks follow the same structure as bundled hooks.
 
@@ -116,31 +116,31 @@ Custom hooks follow the same structure as bundled hooks.
 List all hooks:
 
 ```bash
-moltbot hooks list
+razroom hooks list
 ```
 
 Show hook details:
 
 ```bash
-moltbot hooks info session-memory
+razroom hooks info session-memory
 ```
 
 Check hook status:
 
 ```bash
-moltbot hooks check
+razroom hooks check
 ```
 
 Enable/disable:
 
 ```bash
-moltbot hooks enable session-memory
-moltbot hooks disable command-logger
+razroom hooks enable session-memory
+razroom hooks disable command-logger
 ```
 
 ## Configuration
 
-Hooks can be configured in `~/.moltbot/moltbot.json`:
+Hooks can be configured in `~/.razroom/razroom.json`:
 
 ```json
 {
@@ -213,11 +213,11 @@ export default myHandler;
 Test your hooks by:
 
 1. Place hook in workspace hooks directory
-2. Restart gateway: `pkill -9 -f 'moltbot.*gateway' && pnpm moltbot gateway`
-3. Enable the hook: `moltbot hooks enable my-hook`
+2. Restart gateway: `pkill -9 -f 'razroom.*gateway' && pnpm razroom gateway`
+3. Enable the hook: `razroom hooks enable my-hook`
 4. Trigger the event (e.g., send `/new` command)
 5. Check gateway logs for hook execution
 
 ## Documentation
 
-Full documentation: https://docs.moltbot.ai/automation/hooks
+Full documentation: https://docs.razroom.ai/automation/hooks

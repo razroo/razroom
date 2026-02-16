@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "moltbot/plugin-sdk";
+import type { PluginRuntime } from "razroom/plugin-sdk";
 import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import type { CoreConfig } from "./types.js";
 import { matrixPlugin } from "./channel.js";

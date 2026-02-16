@@ -1,4 +1,4 @@
-import type { DmPolicy } from "moltbot/plugin-sdk";
+import type { DmPolicy } from "razroom/plugin-sdk";
 import {
   addWildcardAllowFrom,
   formatDocsLink,
@@ -6,7 +6,7 @@ import {
   type ChannelOnboardingAdapter,
   type ChannelOnboardingDmPolicy,
   type WizardPrompter,
-} from "moltbot/plugin-sdk";
+} from "razroom/plugin-sdk";
 import type { CoreConfig } from "./types.js";
 import { listMatrixDirectoryGroupsLive } from "./directory-live.js";
 import { resolveMatrixAccount } from "./matrix/accounts.js";
@@ -337,7 +337,7 @@ export const matrixOnboardingAdapter: ChannelOnboardingAdapter = {
     const deviceName = String(
       await prompter.text({
         message: "Matrix device name (optional)",
-        initialValue: existing.deviceName ?? "MoltBot Gateway",
+        initialValue: existing.deviceName ?? "Razroom Gateway",
       }),
     ).trim();
 

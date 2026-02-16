@@ -1,4 +1,4 @@
-import type { ChannelAccountSnapshot, ChannelStatusIssue } from "moltbot/plugin-sdk";
+import type { ChannelAccountSnapshot, ChannelStatusIssue } from "razroom/plugin-sdk";
 
 type ZalouserAccountStatus = {
   accountId?: unknown;
@@ -68,7 +68,7 @@ export function collectZalouserStatusIssues(
           accountId,
           kind: "auth",
           message: "Not authenticated (no zca session).",
-          fix: "Run: moltbot channels login --channel zalouser",
+          fix: "Run: razroom channels login --channel zalouser",
         });
       }
       continue;

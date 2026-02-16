@@ -96,15 +96,15 @@ mock("@opentelemetry/semantic-conventions", () => ({
   },
 }));
 
-mock("moltbot/plugin-sdk", async () => {
-  const actual = await vi.importActual<typeof import("moltbot/plugin-sdk")>("moltbot/plugin-sdk");
+mock("razroom/plugin-sdk", async () => {
+  const actual = await vi.importActual<typeof import("razroom/plugin-sdk")>("razroom/plugin-sdk");
   return {
     ...actual,
     registerLogTransport: registerLogTransportMock,
   };
 });
 
-import { emitDiagnosticEvent } from "moltbot/plugin-sdk";
+import { emitDiagnosticEvent } from "razroom/plugin-sdk";
 import { createDiagnosticsOtelService } from "./service.js";
 
 describe("diagnostics-otel service", () => {
@@ -192,26 +192,26 @@ describe("diagnostics-otel service", () => {
       attempt: 2,
     });
 
-    expect(telemetryState.counters.get("moltbot.webhook.received")?.add).toHaveBeenCalled();
+    expect(telemetryState.counters.get("razroom.webhook.received")?.add).toHaveBeenCalled();
     expect(
-      telemetryState.histograms.get("moltbot.webhook.duration_ms")?.record,
+      telemetryState.histograms.get("razroom.webhook.duration_ms")?.record,
     ).toHaveBeenCalled();
-    expect(telemetryState.counters.get("moltbot.message.queued")?.add).toHaveBeenCalled();
-    expect(telemetryState.counters.get("moltbot.message.processed")?.add).toHaveBeenCalled();
+    expect(telemetryState.counters.get("razroom.message.queued")?.add).toHaveBeenCalled();
+    expect(telemetryState.counters.get("razroom.message.processed")?.add).toHaveBeenCalled();
     expect(
-      telemetryState.histograms.get("moltbot.message.duration_ms")?.record,
+      telemetryState.histograms.get("razroom.message.duration_ms")?.record,
     ).toHaveBeenCalled();
-    expect(telemetryState.histograms.get("moltbot.queue.wait_ms")?.record).toHaveBeenCalled();
-    expect(telemetryState.counters.get("moltbot.session.stuck")?.add).toHaveBeenCalled();
+    expect(telemetryState.histograms.get("razroom.queue.wait_ms")?.record).toHaveBeenCalled();
+    expect(telemetryState.counters.get("razroom.session.stuck")?.add).toHaveBeenCalled();
     expect(
-      telemetryState.histograms.get("moltbot.session.stuck_age_ms")?.record,
+      telemetryState.histograms.get("razroom.session.stuck_age_ms")?.record,
     ).toHaveBeenCalled();
-    expect(telemetryState.counters.get("moltbot.run.attempt")?.add).toHaveBeenCalled();
+    expect(telemetryState.counters.get("razroom.run.attempt")?.add).toHaveBeenCalled();
 
     const spanNames = telemetryState.tracer.startSpan.mock.calls.map((call) => call[0]);
-    expect(spanNames).toContain("moltbot.webhook.processed");
-    expect(spanNames).toContain("moltbot.message.processed");
-    expect(spanNames).toContain("moltbot.session.stuck");
+    expect(spanNames).toContain("razroom.webhook.processed");
+    expect(spanNames).toContain("razroom.message.processed");
+    expect(spanNames).toContain("razroom.session.stuck");
 
     expect(registerLogTransportMock).toHaveBeenCalledTimes(1);
     expect(registeredTransports).toHaveLength(1);

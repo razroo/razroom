@@ -1,7 +1,7 @@
 import path from "node:path";
-import { resolvePreferredMoltBotTmpDir } from "../infra/tmp-moltbot-dir.js";
+import { resolvePreferredRazroomTmpDir } from "../infra/tmp-razroom-dir.js";
 
-export const DEFAULT_BROWSER_TMP_DIR = resolvePreferredMoltBotTmpDir();
+export const DEFAULT_BROWSER_TMP_DIR = resolvePreferredRazroomTmpDir();
 export const DEFAULT_TRACE_DIR = DEFAULT_BROWSER_TMP_DIR;
 export const DEFAULT_DOWNLOAD_DIR = path.join(DEFAULT_BROWSER_TMP_DIR, "downloads");
 export const DEFAULT_UPLOAD_DIR = path.join(DEFAULT_BROWSER_TMP_DIR, "uploads");

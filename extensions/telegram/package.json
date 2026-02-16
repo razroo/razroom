@@ -1,13 +1,13 @@
 {
-  "name": "@moltbot/telegram",
+  "name": "@razroom/telegram",
   "version": "2026.2.15",
   "private": true,
-  "description": "MoltBot Telegram channel plugin",
+  "description": "Razroom Telegram channel plugin",
   "type": "module",
   "devDependencies": {
-    "moltbot": "workspace:*"
+    "razroom": "workspace:*"
   },
-  "moltbot": {
+  "razroom": {
     "extensions": [
       "./index.ts"
     ]

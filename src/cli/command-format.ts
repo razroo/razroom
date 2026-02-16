@@ -1,7 +1,7 @@
 import { replaceCliName, resolveCliName } from "./cli-name.js";
 import { normalizeProfileName } from "./profile-utils.js";
 
-const CLI_PREFIX_RE = /^(?:pnpm|npm|bunx|npx)\s+moltbot\b|^moltbot\b/;
+const CLI_PREFIX_RE = /^(?:pnpm|npm|bunx|npx)\s+razroom\b|^razroom\b/;
 const PROFILE_FLAG_RE = /(?:^|\s)--profile(?:\s|=|$)/;
 const DEV_FLAG_RE = /(?:^|\s)--dev(?:\s|$)/;
 
@@ -11,7 +11,7 @@ export function formatCliCommand(
 ): string {
   const cliName = resolveCliName();
   const normalizedCommand = replaceCliName(command, cliName);
-  const profile = normalizeProfileName(env.MOLTBOT_PROFILE);
+  const profile = normalizeProfileName(env.RAZROOM_PROFILE);
   if (!profile) {
     return normalizedCommand;
   }

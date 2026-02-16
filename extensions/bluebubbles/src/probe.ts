@@ -1,4 +1,4 @@
-import type { BaseProbeResult } from "moltbot/plugin-sdk";
+import type { BaseProbeResult } from "razroom/plugin-sdk";
 import { buildBlueBubblesApiUrl, blueBubblesFetchWithTimeout } from "./types.js";
 
 export type BlueBubblesProbe = BaseProbeResult & {

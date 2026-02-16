@@ -9,7 +9,7 @@ import {
 } from "./agent-limits.js";
 import { loadConfig } from "./config.js";
 import { withTempHome } from "./test-helpers.js";
-import { MoltBotSchema } from "./zod-schema.js";
+import { RazroomSchema } from "./zod-schema.js";
 
 describe("agent concurrency defaults", () => {
   it("resolves defaults when unset", () => {
@@ -44,7 +44,7 @@ describe("agent concurrency defaults", () => {
   });
 
   it("accepts subagent spawn depth and per-agent child limits", () => {
-    const parsed = MoltBotSchema.parse({
+    const parsed = RazroomSchema.parse({
       agents: {
         defaults: {
           subagents: {
@@ -61,10 +61,10 @@ describe("agent concurrency defaults", () => {
 
   it("injects defaults on load", async () => {
     await withTempHome(async (home) => {
-      const configDir = path.join(home, ".moltbot");
+      const configDir = path.join(home, ".razroom");
       await fs.mkdir(configDir, { recursive: true });
       await fs.writeFile(
-        path.join(configDir, "moltbot.json"),
+        path.join(configDir, "razroom.json"),
         JSON.stringify({}, null, 2),
         "utf-8",
       );

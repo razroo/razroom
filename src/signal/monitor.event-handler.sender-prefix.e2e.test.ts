@@ -41,7 +41,7 @@ describe("signal event handler sender prefix", () => {
         },
       },
       cfg: {
-        agents: { defaults: { model: "anthropic/claude-opus-4-5", workspace: "/tmp/moltbot" } },
+        agents: { defaults: { model: "anthropic/claude-opus-4-5", workspace: "/tmp/razroom" } },
         channels: { signal: {} },
       } as never,
       baseUrl: "http://localhost",

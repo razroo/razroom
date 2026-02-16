@@ -1,19 +1,19 @@
 services:
-  moltbot-gateway:
-    image: ${MOLTBOT_IMAGE:-moltbot:local}
+  razroom-gateway:
+    image: ${RAZROOM_IMAGE:-razroom:local}
     environment:
       HOME: /home/node
       TERM: xterm-256color
-      MOLTBOT_GATEWAY_TOKEN: ${MOLTBOT_GATEWAY_TOKEN}
+      RAZROOM_GATEWAY_TOKEN: ${RAZROOM_GATEWAY_TOKEN}
       CLAUDE_AI_SESSION_KEY: ${CLAUDE_AI_SESSION_KEY}
       CLAUDE_WEB_SESSION_KEY: ${CLAUDE_WEB_SESSION_KEY}
       CLAUDE_WEB_COOKIE: ${CLAUDE_WEB_COOKIE}
     volumes:
-      - ${MOLTBOT_CONFIG_DIR}:/home/node/.moltbot
-      - ${MOLTBOT_WORKSPACE_DIR}:/home/node/.moltbot/workspace
+      - ${RAZROOM_CONFIG_DIR}:/home/node/.razroom
+      - ${RAZROOM_WORKSPACE_DIR}:/home/node/.razroom/workspace
     ports:
-      - "${MOLTBOT_GATEWAY_PORT:-18789}:18789"
-      - "${MOLTBOT_BRIDGE_PORT:-18790}:18790"
+      - "${RAZROOM_GATEWAY_PORT:-18789}:18789"
+      - "${RAZROOM_BRIDGE_PORT:-18790}:18790"
     init: true
     restart: unless-stopped
     command:
@@ -22,24 +22,24 @@ services:
         "dist/index.js",
         "gateway",
         "--bind",
-        "${MOLTBOT_GATEWAY_BIND:-lan}",
+        "${RAZROOM_GATEWAY_BIND:-lan}",
         "--port",
         "18789",
       ]
 
-  moltbot-cli:
-    image: ${MOLTBOT_IMAGE:-moltbot:local}
+  razroom-cli:
+    image: ${RAZROOM_IMAGE:-razroom:local}
     environment:
       HOME: /home/node
       TERM: xterm-256color
-      MOLTBOT_GATEWAY_TOKEN: ${MOLTBOT_GATEWAY_TOKEN}
+      RAZROOM_GATEWAY_TOKEN: ${RAZROOM_GATEWAY_TOKEN}
       BROWSER: echo
       CLAUDE_AI_SESSION_KEY: ${CLAUDE_AI_SESSION_KEY}
       CLAUDE_WEB_SESSION_KEY: ${CLAUDE_WEB_SESSION_KEY}
       CLAUDE_WEB_COOKIE: ${CLAUDE_WEB_COOKIE}
     volumes:
-      - ${MOLTBOT_CONFIG_DIR}:/home/node/.moltbot
-      - ${MOLTBOT_WORKSPACE_DIR}:/home/node/.moltbot/workspace
+      - ${RAZROOM_CONFIG_DIR}:/home/node/.razroom
+      - ${RAZROOM_WORKSPACE_DIR}:/home/node/.razroom/workspace
     stdin_open: true
     tty: true
     init: true

@@ -27,10 +27,10 @@ export async function withTempHome<T>(fn: (home: string) => Promise<T>): Promise
     },
     {
       env: {
-        MOLTBOT_AGENT_DIR: (home) => path.join(home, ".moltbot", "agent"),
-        PI_CODING_AGENT_DIR: (home) => path.join(home, ".moltbot", "agent"),
+        RAZROOM_AGENT_DIR: (home) => path.join(home, ".razroom", "agent"),
+        PI_CODING_AGENT_DIR: (home) => path.join(home, ".razroom", "agent"),
       },
-      prefix: "moltbot-reply-",
+      prefix: "razroom-reply-",
     },
   );
 }
@@ -62,7 +62,7 @@ export function makeRestrictedElevatedDisabledConfig(home: string) {
     agents: {
       defaults: {
         model: "anthropic/claude-opus-4-5",
-        workspace: path.join(home, "moltbot"),
+        workspace: path.join(home, "razroom"),
       },
       list: [
         {

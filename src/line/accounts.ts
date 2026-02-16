@@ -1,5 +1,5 @@
 import fs from "node:fs";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type {
   LineConfig,
   LineAccountConfig,
@@ -97,7 +97,7 @@ function resolveSecret(params: {
 }
 
 export function resolveLineAccount(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   accountId?: string;
 }): ResolvedLineAccount {
   const { cfg, accountId = DEFAULT_ACCOUNT_ID } = params;
@@ -140,7 +140,7 @@ export function resolveLineAccount(params: {
   };
 }
 
-export function listLineAccountIds(cfg: MoltBotConfig): string[] {
+export function listLineAccountIds(cfg: RazroomConfig): string[] {
   const lineConfig = cfg.channels?.line as LineConfig | undefined;
   const accounts = lineConfig?.accounts;
   const ids = new Set<string>();
@@ -164,7 +164,7 @@ export function listLineAccountIds(cfg: MoltBotConfig): string[] {
   return Array.from(ids);
 }
 
-export function resolveDefaultLineAccountId(cfg: MoltBotConfig): string {
+export function resolveDefaultLineAccountId(cfg: RazroomConfig): string {
   const ids = listLineAccountIds(cfg);
   if (ids.includes(DEFAULT_ACCOUNT_ID)) {
     return DEFAULT_ACCOUNT_ID;

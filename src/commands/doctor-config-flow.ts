@@ -1,7 +1,7 @@
 import type { ZodIssue } from "zod";
 import fs from "node:fs/promises";
 import path from "node:path";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { DoctorOptions } from "./doctor-prompter.js";
 import {
   isNumericTelegramUserId,
@@ -9,7 +9,7 @@ import {
 } from "../channels/telegram/allow-from.js";
 import { formatCliCommand } from "../cli/command-format.js";
 import {
-  MoltBotSchema,
+  RazroomSchema,
   CONFIG_PATH,
   migrateLegacyConfig,
   readConfigFileSnapshot,
@@ -74,11 +74,11 @@ function resolvePathTarget(root: unknown, path: Array<string | number>): unknown
   return current;
 }
 
-function stripUnknownConfigKeys(config: MoltBotConfig): {
-  config: MoltBotConfig;
+function stripUnknownConfigKeys(config: RazroomConfig): {
+  config: RazroomConfig;
   removed: string[];
 } {
-  const parsed = MoltBotSchema.safeParse(config);
+  const parsed = RazroomSchema.safeParse(config);
   if (parsed.success) {
     return { config, removed: [] };
   }
@@ -110,7 +110,7 @@ function stripUnknownConfigKeys(config: MoltBotConfig): {
   return { config: next, removed };
 }
 
-function noteOpencodeProviderOverrides(cfg: MoltBotConfig) {
+function noteOpencodeProviderOverrides(cfg: RazroomConfig) {
   const providers = cfg.models?.providers;
   if (!providers) {
     return;
@@ -149,7 +149,7 @@ function noteOpencodeProviderOverrides(cfg: MoltBotConfig) {
 
 type TelegramAllowFromUsernameHit = { path: string; entry: string };
 
-function scanTelegramAllowFromUsernameEntries(cfg: MoltBotConfig): TelegramAllowFromUsernameHit[] {
+function scanTelegramAllowFromUsernameEntries(cfg: RazroomConfig): TelegramAllowFromUsernameHit[] {
   const hits: TelegramAllowFromUsernameHit[] = [];
   const telegram = cfg.channels?.telegram;
   if (!telegram) {
@@ -222,8 +222,8 @@ function scanTelegramAllowFromUsernameEntries(cfg: MoltBotConfig): TelegramAllow
   return hits;
 }
 
-async function maybeRepairTelegramAllowFromUsernames(cfg: MoltBotConfig): Promise<{
-  config: MoltBotConfig;
+async function maybeRepairTelegramAllowFromUsernames(cfg: RazroomConfig): Promise<{
+  config: RazroomConfig;
   changes: string[];
 }> {
   const hits = scanTelegramAllowFromUsernameEntries(cfg);
@@ -409,8 +409,8 @@ async function maybeMigrateLegacyConfig(): Promise<string[]> {
     return changes;
   }
 
-  const targetDir = path.join(home, ".moltbot");
-  const targetPath = path.join(targetDir, "moltbot.json");
+  const targetDir = path.join(home, ".razroom");
+  const targetPath = path.join(targetDir, "razroom.json");
   try {
     await fs.access(targetPath);
     return changes;
@@ -419,9 +419,9 @@ async function maybeMigrateLegacyConfig(): Promise<string[]> {
   }
 
   const legacyCandidates = [
-    path.join(home, ".moltbot", "moltbot.json"),
+    path.join(home, ".razroom", "razroom.json"),
     path.join(home, ".moldbot", "moldbot.json"),
-    path.join(home, ".moltbot", "moltbot.json"),
+    path.join(home, ".razroom", "razroom.json"),
   ];
 
   let legacyPath: string | null = null;
@@ -469,7 +469,7 @@ export async function loadAndMaybeMigrateDoctorConfig(params: {
 
   let snapshot = await readConfigFileSnapshot();
   const baseCfg = snapshot.config ?? {};
-  let cfg: MoltBotConfig = baseCfg;
+  let cfg: RazroomConfig = baseCfg;
   let candidate = structuredClone(baseCfg);
   let pendingChanges = false;
   let shouldWriteConfig = false;
@@ -503,7 +503,7 @@ export async function loadAndMaybeMigrateDoctorConfig(params: {
       }
     } else {
       fixHints.push(
-        `Run "${formatCliCommand("moltbot doctor --fix")}" to apply legacy migrations.`,
+        `Run "${formatCliCommand("razroom doctor --fix")}" to apply legacy migrations.`,
       );
     }
   }
@@ -516,7 +516,7 @@ export async function loadAndMaybeMigrateDoctorConfig(params: {
     if (shouldRepair) {
       cfg = normalized.config;
     } else {
-      fixHints.push(`Run "${formatCliCommand("moltbot doctor --fix")}" to apply these changes.`);
+      fixHints.push(`Run "${formatCliCommand("razroom doctor --fix")}" to apply these changes.`);
     }
   }
 
@@ -528,7 +528,7 @@ export async function loadAndMaybeMigrateDoctorConfig(params: {
     if (shouldRepair) {
       cfg = autoEnable.config;
     } else {
-      fixHints.push(`Run "${formatCliCommand("moltbot doctor --fix")}" to apply these changes.`);
+      fixHints.push(`Run "${formatCliCommand("razroom doctor --fix")}" to apply these changes.`);
     }
   }
 
@@ -546,7 +546,7 @@ export async function loadAndMaybeMigrateDoctorConfig(params: {
       note(
         [
           `- Telegram allowFrom contains ${hits.length} non-numeric entries (e.g. ${hits[0]?.entry ?? "@"}); Telegram authorization requires numeric sender IDs.`,
-          `- Run "${formatCliCommand("moltbot doctor --fix")}" to auto-resolve @username entries to numeric IDs (requires a Telegram bot token).`,
+          `- Run "${formatCliCommand("razroom doctor --fix")}" to auto-resolve @username entries to numeric IDs (requires a Telegram bot token).`,
         ].join("\n"),
         "Doctor warnings",
       );
@@ -563,7 +563,7 @@ export async function loadAndMaybeMigrateDoctorConfig(params: {
       note(lines, "Doctor changes");
     } else {
       note(lines, "Unknown config keys");
-      fixHints.push('Run "moltbot doctor --fix" to remove these keys.');
+      fixHints.push('Run "razroom doctor --fix" to remove these keys.');
     }
   }
 

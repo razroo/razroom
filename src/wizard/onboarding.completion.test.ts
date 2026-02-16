@@ -9,12 +9,12 @@ describe("setupOnboardingShellCompletion", () => {
     };
 
     const deps = {
-      resolveCliName: () => "moltbot",
+      resolveCliName: () => "razroom",
       checkShellCompletionStatus: mock(async () => ({
         shell: "zsh",
         profileInstalled: false,
         cacheExists: false,
-        cachePath: "/tmp/moltbot.zsh",
+        cachePath: "/tmp/razroom.zsh",
         usesSlowPattern: false,
       })),
       ensureCompletionCacheExists: mock(async () => true),
@@ -24,8 +24,8 @@ describe("setupOnboardingShellCompletion", () => {
     await setupOnboardingShellCompletion({ flow: "quickstart", prompter, deps });
 
     expect(prompter.confirm).not.toHaveBeenCalled();
-    expect(deps.ensureCompletionCacheExists).toHaveBeenCalledWith("moltbot");
-    expect(deps.installCompletion).toHaveBeenCalledWith("zsh", true, "moltbot");
+    expect(deps.ensureCompletionCacheExists).toHaveBeenCalledWith("razroom");
+    expect(deps.installCompletion).toHaveBeenCalledWith("zsh", true, "razroom");
     expect(prompter.note).toHaveBeenCalled();
   });
 
@@ -36,12 +36,12 @@ describe("setupOnboardingShellCompletion", () => {
     };
 
     const deps = {
-      resolveCliName: () => "moltbot",
+      resolveCliName: () => "razroom",
       checkShellCompletionStatus: mock(async () => ({
         shell: "zsh",
         profileInstalled: false,
         cacheExists: false,
-        cachePath: "/tmp/moltbot.zsh",
+        cachePath: "/tmp/razroom.zsh",
         usesSlowPattern: false,
       })),
       ensureCompletionCacheExists: mock(async () => true),

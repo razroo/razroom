@@ -38,7 +38,7 @@ title: "Retry Policy"
 
 ## Configuration
 
-Set retry policy per provider in `~/.moltbot/moltbot.json`:
+Set retry policy per provider in `~/.razroom/razroom.json`:
 
 ```json5
 {

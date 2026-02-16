@@ -2,11 +2,11 @@ import { describe, expect, it } from "bun:test";
 import { matchesMentionWithExplicit } from "./mentions.js";
 
 describe("matchesMentionWithExplicit", () => {
-  const mentionRegexes = [/\bmoltbot\b/i];
+  const mentionRegexes = [/\brazroom\b/i];
 
   it("checks mentionPatterns even when explicit mention is available", () => {
     const result = matchesMentionWithExplicit({
-      text: "@moltbot hello",
+      text: "@razroom hello",
       mentionRegexes,
       explicit: {
         hasAnyMention: true,
@@ -45,7 +45,7 @@ describe("matchesMentionWithExplicit", () => {
 
   it("falls back to regex matching when explicit mention cannot be resolved", () => {
     const result = matchesMentionWithExplicit({
-      text: "moltbot please",
+      text: "razroom please",
       mentionRegexes,
       explicit: {
         hasAnyMention: true,

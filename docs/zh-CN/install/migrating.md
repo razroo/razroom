@@ -1,8 +1,8 @@
 ---
 read_when:
-  - 你正在将 MoltBot 迁移到新的笔记本电脑/服务器
+  - 你正在将 Razroom 迁移到新的笔记本电脑/服务器
   - 你想保留会话、认证和渠道登录（WhatsApp 等）
-summary: 将 MoltBot 安装从一台机器迁移到另一台
+summary: 将 Razroom 安装从一台机器迁移到另一台
 title: 迁移指南
 x-i18n:
   generated_at: "2026-02-03T07:49:55Z"
@@ -13,14 +13,14 @@ x-i18n:
   workflow: 15
 ---
 
-# 将 MoltBot 迁移到新机器
+# 将 Razroom 迁移到新机器
 
-本指南将 MoltBot Gateway 网关从一台机器迁移到另一台，**无需重新进行新手引导**。
+本指南将 Razroom Gateway 网关从一台机器迁移到另一台，**无需重新进行新手引导**。
 
 迁移在概念上很简单：
 
-- 复制**状态目录**（`$MOLTBOT_STATE_DIR`，默认：`~/.moltbot/`）— 这包括配置、认证、会话和渠道状态。
-- 复制你的**工作区**（默认 `~/.moltbot/workspace/`）— 这包括你的智能体文件（记忆、提示等）。
+- 复制**状态目录**（`$RAZROOM_STATE_DIR`，默认：`~/.razroom/`）— 这包括配置、认证、会话和渠道状态。
+- 复制你的**工作区**（默认 `~/.razroom/workspace/`）— 这包括你的智能体文件（记忆、提示等）。
 
 但在**配置文件**、**权限**和**部分复制**方面有常见的陷阱。
 
@@ -30,26 +30,26 @@ x-i18n:
 
 大多数安装使用默认值：
 
-- **状态目录：** `~/.moltbot/`
+- **状态目录：** `~/.razroom/`
 
 但如果你使用以下方式，可能会不同：
 
-- `--profile <name>`（通常变成 `~/.moltbot-<profile>/`）
-- `MOLTBOT_STATE_DIR=/some/path`
+- `--profile <name>`（通常变成 `~/.razroom-<profile>/`）
+- `RAZROOM_STATE_DIR=/some/path`
 
 如果你不确定，在**旧**机器上运行：
 
 ```bash
-moltbot status
+razroom status
 ```
 
-在输出中查找 `MOLTBOT_STATE_DIR` / profile 的提及。如果你运行多个 Gateway 网关，对每个配置文件重复此操作。
+在输出中查找 `RAZROOM_STATE_DIR` / profile 的提及。如果你运行多个 Gateway 网关，对每个配置文件重复此操作。
 
 ### 2）确定你的工作区
 
 常见默认值：
 
-- `~/.moltbot/workspace/`（推荐的工作区）
+- `~/.razroom/workspace/`（推荐的工作区）
 - 你创建的自定义文件夹
 
 你的工作区是 `MEMORY.md`、`USER.md` 和 `memory/*.md` 等文件所在的位置。
@@ -58,7 +58,7 @@ moltbot status
 
 如果你复制**两者**——状态目录和工作区，你将保留：
 
-- Gateway 网关配置（`moltbot.json`）
+- Gateway 网关配置（`razroom.json`）
 - 认证配置文件 / API 密钥 / OAuth 令牌
 - 会话历史 + 智能体状态
 - 渠道状态（例如 WhatsApp 登录/会话）
@@ -70,7 +70,7 @@ moltbot status
 - 凭证
 - 渠道登录
 
-这些存储在 `$MOLTBOT_STATE_DIR` 下。
+这些存储在 `$RAZROOM_STATE_DIR` 下。
 
 ## 迁移步骤（推荐）
 
@@ -79,7 +79,7 @@ moltbot status
 在**旧**机器上，首先停止 Gateway 网关，这样文件不会在复制过程中发生变化：
 
 ```bash
-moltbot gateway stop
+razroom gateway stop
 ```
 
 （可选但推荐）归档状态目录和工作区：
@@ -87,27 +87,27 @@ moltbot gateway stop
 ```bash
 # 如果你使用配置文件或自定义位置，请调整路径
 cd ~
-tar -czf moltbot-state.tgz .moltbot
+tar -czf razroom-state.tgz .razroom
 
-tar -czf moltbot-workspace.tgz .moltbot/workspace
+tar -czf razroom-workspace.tgz .razroom/workspace
 ```
 
-如果你有多个配置文件/状态目录（例如 `~/.moltbot-main`、`~/.moltbot-work`），分别归档每个。
+如果你有多个配置文件/状态目录（例如 `~/.razroom-main`、`~/.razroom-work`），分别归档每个。
 
-### 步骤 1 — 在新机器上安装 MoltBot
+### 步骤 1 — 在新机器上安装 Razroom
 
 在**新**机器上，安装 CLI（如果需要还有 Node）：
 
 - 参见：[安装](/install)
 
-在这个阶段，如果新手引导创建了一个新的 `~/.moltbot/` 也没关系 — 你将在下一步覆盖它。
+在这个阶段，如果新手引导创建了一个新的 `~/.razroom/` 也没关系 — 你将在下一步覆盖它。
 
 ### 步骤 2 — 将状态目录 + 工作区复制到新机器
 
 复制**两者**：
 
-- `$MOLTBOT_STATE_DIR`（默认 `~/.moltbot/`）
-- 你的工作区（默认 `~/.moltbot/workspace/`）
+- `$RAZROOM_STATE_DIR`（默认 `~/.razroom/`）
+- 你的工作区（默认 `~/.razroom/workspace/`）
 
 常见方法：
 
@@ -117,7 +117,7 @@ tar -czf moltbot-workspace.tgz .moltbot/workspace
 
 复制后，确保：
 
-- 包含了隐藏目录（例如 `.moltbot/`）
+- 包含了隐藏目录（例如 `.razroom/`）
 - 文件所有权对于运行 Gateway 网关的用户是正确的
 
 ### 步骤 3 — 运行 Doctor（迁移 + 服务修复）
@@ -125,7 +125,7 @@ tar -czf moltbot-workspace.tgz .moltbot/workspace
 在**新**机器上：
 
 ```bash
-moltbot doctor
+razroom doctor
 ```
 
 Doctor 是"安全可靠"的命令。它修复服务、应用配置迁移，并警告不匹配问题。
@@ -133,15 +133,15 @@ Doctor 是"安全可靠"的命令。它修复服务、应用配置迁移，并�
 然后：
 
 ```bash
-moltbot gateway restart
-moltbot status
+razroom gateway restart
+razroom status
 ```
 
 ## 常见陷阱（以及如何避免）
 
 ### 陷阱：配置文件/状态目录不匹配
 
-如果你在旧 Gateway 网关上使用了配置文件（或 `MOLTBOT_STATE_DIR`），而新 Gateway 网关使用了不同的配置，你会看到如下症状：
+如果你在旧 Gateway 网关上使用了配置文件（或 `RAZROOM_STATE_DIR`），而新 Gateway 网关使用了不同的配置，你会看到如下症状：
 
 - 配置更改不生效
 - 渠道丢失/已登出
@@ -150,17 +150,17 @@ moltbot status
 修复：使用你迁移的**相同**配置文件/状态目录运行 Gateway 网关/服务，然后重新运行：
 
 ```bash
-moltbot doctor
+razroom doctor
 ```
 
-### 陷阱：只复制 `moltbot.json`
+### 陷阱：只复制 `razroom.json`
 
-`moltbot.json` 是不够的。许多提供商在以下位置存储状态：
+`razroom.json` 是不够的。许多提供商在以下位置存储状态：
 
-- `$MOLTBOT_STATE_DIR/credentials/`
-- `$MOLTBOT_STATE_DIR/agents/<agentId>/...`
+- `$RAZROOM_STATE_DIR/credentials/`
+- `$RAZROOM_STATE_DIR/agents/<agentId>/...`
 
-始终迁移整个 `$MOLTBOT_STATE_DIR` 文件夹。
+始终迁移整个 `$RAZROOM_STATE_DIR` 文件夹。
 
 ### 陷阱：权限/所有权
 
@@ -177,7 +177,7 @@ moltbot doctor
 
 ### 陷阱：备份中的密钥
 
-`$MOLTBOT_STATE_DIR` 包含密钥（API 密钥、OAuth 令牌、WhatsApp 凭证）。将备份视为生产密钥：
+`$RAZROOM_STATE_DIR` 包含密钥（API 密钥、OAuth 令牌、WhatsApp 凭证）。将备份视为生产密钥：
 
 - 加密存储
 - 避免通过不安全的渠道共享
@@ -187,7 +187,7 @@ moltbot doctor
 
 在新机器上，确认：
 
-- `moltbot status` 显示 Gateway 网关正在运行
+- `razroom status` 显示 Gateway 网关正在运行
 - 你的渠道仍然连接（例如 WhatsApp 不需要重新配对）
 - 仪表板打开并显示现有会话
 - 你的工作区文件（记忆、配置）存在
@@ -196,4 +196,4 @@ moltbot doctor
 
 - [Doctor](/gateway/doctor)
 - [Gateway 网关故障排除](/gateway/troubleshooting)
-- [MoltBot 在哪里存储数据？](/help/faq#where-does-moltbot-store-its-data)
+- [Razroom 在哪里存储数据？](/help/faq#where-does-razroom-store-its-data)

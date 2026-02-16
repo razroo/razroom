@@ -1,6 +1,6 @@
-import type { RuntimeEnv, ReplyPayload, MoltBotConfig } from "moltbot/plugin-sdk";
+import type { RuntimeEnv, ReplyPayload, RazroomConfig } from "razroom/plugin-sdk";
 import { format } from "node:util";
-import { createReplyPrefixOptions } from "moltbot/plugin-sdk";
+import { createReplyPrefixOptions } from "razroom/plugin-sdk";
 import { getTlonRuntime } from "../runtime.js";
 import { normalizeShip, parseChannelNest } from "../targets.js";
 import { resolveTlonAccount } from "../types.js";
@@ -64,7 +64,7 @@ type UrbitUpdate = {
 };
 
 function resolveChannelAuthorization(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   channelNest: string,
 ): { mode: "restricted" | "open"; allowedShips: string[] } {
   const tlonConfig = cfg.channels?.tlon as

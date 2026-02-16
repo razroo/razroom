@@ -1,10 +1,10 @@
 import { describe, expect, it } from "bun:test";
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 import type { TemplateContext } from "../templating.js";
 import { buildThreadingToolContext } from "./agent-runner-utils.js";
 
 describe("buildThreadingToolContext", () => {
-  const cfg = {} as MoltBotConfig;
+  const cfg = {} as RazroomConfig;
 
   it("uses conversation id for WhatsApp", () => {
     const sessionCtx = {
@@ -96,7 +96,7 @@ describe("buildThreadingToolContext", () => {
 
     const result = buildThreadingToolContext({
       sessionCtx,
-      config: { channels: { slack: { replyToMode: "all" } } } as MoltBotConfig,
+      config: { channels: { slack: { replyToMode: "all" } } } as RazroomConfig,
       hasRepliedRef: undefined,
     });
 

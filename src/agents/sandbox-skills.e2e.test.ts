@@ -2,11 +2,11 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import { resolveSandboxContext } from "./sandbox.js";
 
 mock("./sandbox/docker.js", () => ({
-  ensureSandboxContainer: mock(async () => "moltbot-sbx-test"),
+  ensureSandboxContainer: mock(async () => "razroom-sbx-test"),
 }));
 
 mock("./sandbox/browser.js", () => ({
@@ -54,19 +54,19 @@ describe("sandbox skill mirroring", () => {
   });
 
   const runContext = async (workspaceAccess: "none" | "ro") => {
-    const bundledDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-bundled-skills-"));
+    const bundledDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-bundled-skills-"));
     await fs.mkdir(bundledDir, { recursive: true });
 
-    process.env.MOLTBOT_BUNDLED_SKILLS_DIR = bundledDir;
+    process.env.RAZROOM_BUNDLED_SKILLS_DIR = bundledDir;
 
-    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-workspace-"));
+    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-workspace-"));
     await writeSkill({
       dir: path.join(workspaceDir, "skills", "demo-skill"),
       name: "demo-skill",
       description: "Demo skill",
     });
 
-    const cfg: MoltBotConfig = {
+    const cfg: RazroomConfig = {
       agents: {
         defaults: {
           sandbox: {

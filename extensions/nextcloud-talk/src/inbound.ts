@@ -2,9 +2,9 @@ import {
   createReplyPrefixOptions,
   logInboundDrop,
   resolveControlCommandGate,
-  type MoltBotConfig,
+  type RazroomConfig,
   type RuntimeEnv,
-} from "moltbot/plugin-sdk";
+} from "razroom/plugin-sdk";
 import type { ResolvedNextcloudTalkAccount } from "./accounts.js";
 import type { CoreConfig, GroupPolicy, NextcloudTalkInboundMessage } from "./types.js";
 import {
@@ -119,7 +119,7 @@ export async function handleNextcloudTalkInbound(params: {
   const effectiveGroupAllowFrom = [...baseGroupAllowFrom, ...storeAllowList].filter(Boolean);
 
   const allowTextCommands = core.channel.commands.shouldHandleTextCommands({
-    cfg: config as MoltBotConfig,
+    cfg: config as RazroomConfig,
     surface: CHANNEL_ID,
   });
   const useAccessGroups =
@@ -128,7 +128,7 @@ export async function handleNextcloudTalkInbound(params: {
     allowFrom: isGroup ? effectiveGroupAllowFrom : effectiveAllowFrom,
     senderId,
   }).allowed;
-  const hasControlCommand = core.channel.text.hasControlCommand(rawBody, config as MoltBotConfig);
+  const hasControlCommand = core.channel.text.hasControlCommand(rawBody, config as RazroomConfig);
   const commandGate = resolveControlCommandGate({
     useAccessGroups,
     authorizers: [
@@ -205,7 +205,7 @@ export async function handleNextcloudTalkInbound(params: {
     return;
   }
 
-  const mentionRegexes = core.channel.mentions.buildMentionRegexes(config as MoltBotConfig);
+  const mentionRegexes = core.channel.mentions.buildMentionRegexes(config as RazroomConfig);
   const wasMentioned = mentionRegexes.length
     ? core.channel.mentions.matchesMentionPatterns(rawBody, mentionRegexes)
     : false;
@@ -229,7 +229,7 @@ export async function handleNextcloudTalkInbound(params: {
   }
 
   const route = core.channel.routing.resolveAgentRoute({
-    cfg: config as MoltBotConfig,
+    cfg: config as RazroomConfig,
     channel: CHANNEL_ID,
     accountId: account.accountId,
     peer: {
@@ -245,7 +245,7 @@ export async function handleNextcloudTalkInbound(params: {
       agentId: route.agentId,
     },
   );
-  const envelopeOptions = core.channel.reply.resolveEnvelopeFormatOptions(config as MoltBotConfig);
+  const envelopeOptions = core.channel.reply.resolveEnvelopeFormatOptions(config as RazroomConfig);
   const previousTimestamp = core.channel.session.readSessionUpdatedAt({
     storePath,
     sessionKey: route.sessionKey,
@@ -296,7 +296,7 @@ export async function handleNextcloudTalkInbound(params: {
   });
 
   const { onModelSelected, ...prefixOptions } = createReplyPrefixOptions({
-    cfg: config as MoltBotConfig,
+    cfg: config as RazroomConfig,
     agentId: route.agentId,
     channel: CHANNEL_ID,
     accountId: account.accountId,
@@ -304,7 +304,7 @@ export async function handleNextcloudTalkInbound(params: {
 
   await core.channel.reply.dispatchReplyWithBufferedBlockDispatcher({
     ctx: ctxPayload,
-    cfg: config as MoltBotConfig,
+    cfg: config as RazroomConfig,
     dispatcherOptions: {
       ...prefixOptions,
       deliver: async (payload) => {

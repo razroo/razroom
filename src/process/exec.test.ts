@@ -13,10 +13,10 @@ describe("runCommandWithTimeout", () => {
 
   it("passes env overrides to child", async () => {
     const result = await runCommandWithTimeout(
-      [process.execPath, "-e", 'process.stdout.write(process.env.MOLTBOT_TEST_ENV ?? "")'],
+      [process.execPath, "-e", 'process.stdout.write(process.env.RAZROOM_TEST_ENV ?? "")'],
       {
         timeoutMs: 5_000,
-        env: { MOLTBOT_TEST_ENV: "ok" },
+        env: { RAZROOM_TEST_ENV: "ok" },
       },
     );
 
@@ -25,18 +25,18 @@ describe("runCommandWithTimeout", () => {
   });
 
   it("merges custom env with process.env", async () => {
-    const previous = process.env.MOLTBOT_BASE_ENV;
-    process.env.MOLTBOT_BASE_ENV = "base";
+    const previous = process.env.RAZROOM_BASE_ENV;
+    process.env.RAZROOM_BASE_ENV = "base";
     try {
       const result = await runCommandWithTimeout(
         [
           process.execPath,
           "-e",
-          'process.stdout.write((process.env.MOLTBOT_BASE_ENV ?? "") + "|" + (process.env.MOLTBOT_TEST_ENV ?? ""))',
+          'process.stdout.write((process.env.RAZROOM_BASE_ENV ?? "") + "|" + (process.env.RAZROOM_TEST_ENV ?? ""))',
         ],
         {
           timeoutMs: 5_000,
-          env: { MOLTBOT_TEST_ENV: "ok" },
+          env: { RAZROOM_TEST_ENV: "ok" },
         },
       );
 
@@ -44,9 +44,9 @@ describe("runCommandWithTimeout", () => {
       expect(result.stdout).toBe("base|ok");
     } finally {
       if (previous === undefined) {
-        delete process.env.MOLTBOT_BASE_ENV;
+        delete process.env.RAZROOM_BASE_ENV;
       } else {
-        process.env.MOLTBOT_BASE_ENV = previous;
+        process.env.RAZROOM_BASE_ENV = previous;
       }
     }
   });

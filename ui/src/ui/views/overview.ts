@@ -50,13 +50,13 @@ export function renderOverview(props: OverviewProps) {
         <div class="muted" style="margin-top: 8px">
           This gateway requires auth. Add a token or password, then click Connect.
           <div style="margin-top: 6px">
-            <span class="mono">moltbot dashboard --no-open</span> → open the Control UI<br />
-            <span class="mono">moltbot doctor --generate-gateway-token</span> → set token
+            <span class="mono">razroom dashboard --no-open</span> → open the Control UI<br />
+            <span class="mono">razroom doctor --generate-gateway-token</span> → set token
           </div>
           <div style="margin-top: 6px">
             <a
               class="session-link"
-              href="https://docs.moltbot.ai/web/dashboard"
+              href="https://docs.razroom.ai/web/dashboard"
               target="_blank"
               rel="noreferrer"
               title="Control UI auth docs (opens in new tab)"
@@ -72,7 +72,7 @@ export function renderOverview(props: OverviewProps) {
         <div style="margin-top: 6px">
           <a
             class="session-link"
-            href="https://docs.moltbot.ai/web/dashboard"
+            href="https://docs.razroom.ai/web/dashboard"
             target="_blank"
             rel="noreferrer"
             title="Control UI auth docs (opens in new tab)"
@@ -105,7 +105,7 @@ export function renderOverview(props: OverviewProps) {
         <div style="margin-top: 6px">
           <a
             class="session-link"
-            href="https://docs.moltbot.ai/gateway/tailscale"
+            href="https://docs.razroom.ai/gateway/tailscale"
             target="_blank"
             rel="noreferrer"
             title="Tailscale Serve docs (opens in new tab)"
@@ -114,7 +114,7 @@ export function renderOverview(props: OverviewProps) {
           <span class="muted"> · </span>
           <a
             class="session-link"
-            href="https://docs.moltbot.ai/web/control-ui#insecure-http"
+            href="https://docs.razroom.ai/web/control-ui#insecure-http"
             target="_blank"
             rel="noreferrer"
             title="Insecure HTTP docs (opens in new tab)"
@@ -154,7 +154,7 @@ export function renderOverview(props: OverviewProps) {
                       const v = (e.target as HTMLInputElement).value;
                       props.onSettingsChange({ ...props.settings, token: v });
                     }}
-                    placeholder="MOLTBOT_GATEWAY_TOKEN"
+                    placeholder="RAZROOM_GATEWAY_TOKEN"
                   />
                 </label>
                 <label class="field">

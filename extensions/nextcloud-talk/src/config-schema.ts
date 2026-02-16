@@ -6,7 +6,7 @@ import {
   MarkdownConfigSchema,
   ToolPolicySchema,
   requireOpenAllowFrom,
-} from "moltbot/plugin-sdk";
+} from "razroom/plugin-sdk";
 import { z } from "zod";
 
 export const NextcloudTalkRoomSchema = z

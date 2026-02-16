@@ -1,5 +1,5 @@
 ---
-summary: "Optional Docker-based setup and onboarding for MoltBot"
+summary: "Optional Docker-based setup and onboarding for Razroom"
 read_when:
   - You want a containerized gateway instead of local installs
   - You are validating the Docker flow
@@ -12,13 +12,13 @@ Docker is **optional**. Use it only if you want a containerized gateway or to va
 
 ## Is Docker right for me?
 
-- **Yes**: you want an isolated, throwaway gateway environment or to run MoltBot on a host without local installs.
+- **Yes**: you want an isolated, throwaway gateway environment or to run Razroom on a host without local installs.
 - **No**: you’re running on your own machine and just want the fastest dev loop. Use the normal install flow instead.
 - **Sandboxing note**: agent sandboxing uses Docker too, but it does **not** require the full gateway to run in Docker. See [Sandboxing](/gateway/sandboxing).
 
 This guide covers:
 
-- Containerized Gateway (full MoltBot in Docker)
+- Containerized Gateway (full Razroom in Docker)
 - Per-session Agent Sandbox (host gateway + Docker-isolated agent tools)
 
 Sandboxing details: [Sandboxing](/gateway/sandboxing)
@@ -48,20 +48,20 @@ This script:
 
 Optional env vars:
 
-- `MOLTBOT_DOCKER_APT_PACKAGES` — install extra apt packages during build
-- `MOLTBOT_EXTRA_MOUNTS` — add extra host bind mounts
-- `MOLTBOT_HOME_VOLUME` — persist `/home/node` in a named volume
+- `RAZROOM_DOCKER_APT_PACKAGES` — install extra apt packages during build
+- `RAZROOM_EXTRA_MOUNTS` — add extra host bind mounts
+- `RAZROOM_HOME_VOLUME` — persist `/home/node` in a named volume
 
 After it finishes:
 
 - Open `http://127.0.0.1:18789/` in your browser.
 - Paste the token into the Control UI (Settings → token).
-- Need the URL again? Run `docker compose run --rm moltbot-cli dashboard --no-open`.
+- Need the URL again? Run `docker compose run --rm razroom-cli dashboard --no-open`.
 
 It writes config/workspace on the host:
 
-- `~/.moltbot/`
-- `~/.moltbot/workspace`
+- `~/.razroom/`
+- `~/.razroom/workspace`
 
 Running on a VPS? See [Hetzner (Docker VPS)](/install/hetzner).
 
@@ -70,7 +70,7 @@ Running on a VPS? See [Hetzner (Docker VPS)](/install/hetzner).
 For easier day-to-day Docker management, install `ClawDock`:
 
 ```bash
-mkdir -p ~/.clawdock && curl -sL https://raw.githubusercontent.com/moltbot/moltbot/main/scripts/shell-helpers/clawdock-helpers.sh -o ~/.clawdock/clawdock-helpers.sh
+mkdir -p ~/.clawdock && curl -sL https://raw.githubusercontent.com/razroom/razroom/main/scripts/shell-helpers/clawdock-helpers.sh -o ~/.clawdock/clawdock-helpers.sh
 ```
 
 **Add to your shell config (zsh):**
@@ -81,18 +81,18 @@ echo 'source ~/.clawdock/clawdock-helpers.sh' >> ~/.zshrc && source ~/.zshrc
 
 Then use `clawdock-start`, `clawdock-stop`, `clawdock-dashboard`, etc. Run `clawdock-help` for all commands.
 
-See [`ClawDock` Helper README](https://github.com/moltbot/moltbot/blob/main/scripts/shell-helpers/README.md) for details.
+See [`ClawDock` Helper README](https://github.com/razroom/razroom/blob/main/scripts/shell-helpers/README.md) for details.
 
 ### Manual flow (compose)
 
 ```bash
-docker build -t moltbot:local -f Dockerfile .
-docker compose run --rm moltbot-cli onboard
-docker compose up -d moltbot-gateway
+docker build -t razroom:local -f Dockerfile .
+docker compose run --rm razroom-cli onboard
+docker compose up -d razroom-gateway
 ```
 
 Note: run `docker compose ...` from the repo root. If you enabled
-`MOLTBOT_EXTRA_MOUNTS` or `MOLTBOT_HOME_VOLUME`, the setup script writes
+`RAZROOM_EXTRA_MOUNTS` or `RAZROOM_HOME_VOLUME`, the setup script writes
 `docker-compose.extra.yml`; include it when running Compose elsewhere:
 
 ```bash
@@ -105,9 +105,9 @@ If you see “unauthorized” or “disconnected (1008): pairing required”, fe
 fresh dashboard link and approve the browser device:
 
 ```bash
-docker compose run --rm moltbot-cli dashboard --no-open
-docker compose run --rm moltbot-cli devices list
-docker compose run --rm moltbot-cli devices approve <requestId>
+docker compose run --rm razroom-cli dashboard --no-open
+docker compose run --rm razroom-cli devices list
+docker compose run --rm razroom-cli devices approve <requestId>
 ```
 
 More detail: [Dashboard](/web/dashboard), [Devices](/cli/devices).
@@ -115,71 +115,71 @@ More detail: [Dashboard](/web/dashboard), [Devices](/cli/devices).
 ### Extra mounts (optional)
 
 If you want to mount additional host directories into the containers, set
-`MOLTBOT_EXTRA_MOUNTS` before running `docker-setup.sh`. This accepts a
+`RAZROOM_EXTRA_MOUNTS` before running `docker-setup.sh`. This accepts a
 comma-separated list of Docker bind mounts and applies them to both
-`moltbot-gateway` and `moltbot-cli` by generating `docker-compose.extra.yml`.
+`razroom-gateway` and `razroom-cli` by generating `docker-compose.extra.yml`.
 
 Example:
 
 ```bash
-export MOLTBOT_EXTRA_MOUNTS="$HOME/.codex:/home/node/.codex:ro,$HOME/github:/home/node/github:rw"
+export RAZROOM_EXTRA_MOUNTS="$HOME/.codex:/home/node/.codex:ro,$HOME/github:/home/node/github:rw"
 ./docker-setup.sh
 ```
 
 Notes:
 
 - Paths must be shared with Docker Desktop on macOS/Windows.
-- If you edit `MOLTBOT_EXTRA_MOUNTS`, rerun `docker-setup.sh` to regenerate the
+- If you edit `RAZROOM_EXTRA_MOUNTS`, rerun `docker-setup.sh` to regenerate the
   extra compose file.
 - `docker-compose.extra.yml` is generated. Don’t hand-edit it.
 
 ### Persist the entire container home (optional)
 
 If you want `/home/node` to persist across container recreation, set a named
-volume via `MOLTBOT_HOME_VOLUME`. This creates a Docker volume and mounts it at
+volume via `RAZROOM_HOME_VOLUME`. This creates a Docker volume and mounts it at
 `/home/node`, while keeping the standard config/workspace bind mounts. Use a
 named volume here (not a bind path); for bind mounts, use
-`MOLTBOT_EXTRA_MOUNTS`.
+`RAZROOM_EXTRA_MOUNTS`.
 
 Example:
 
 ```bash
-export MOLTBOT_HOME_VOLUME="moltbot_home"
+export RAZROOM_HOME_VOLUME="razroom_home"
 ./docker-setup.sh
 ```
 
 You can combine this with extra mounts:
 
 ```bash
-export MOLTBOT_HOME_VOLUME="moltbot_home"
-export MOLTBOT_EXTRA_MOUNTS="$HOME/.codex:/home/node/.codex:ro,$HOME/github:/home/node/github:rw"
+export RAZROOM_HOME_VOLUME="razroom_home"
+export RAZROOM_EXTRA_MOUNTS="$HOME/.codex:/home/node/.codex:ro,$HOME/github:/home/node/github:rw"
 ./docker-setup.sh
 ```
 
 Notes:
 
-- If you change `MOLTBOT_HOME_VOLUME`, rerun `docker-setup.sh` to regenerate the
+- If you change `RAZROOM_HOME_VOLUME`, rerun `docker-setup.sh` to regenerate the
   extra compose file.
 - The named volume persists until removed with `docker volume rm <name>`.
 
 ### Install extra apt packages (optional)
 
 If you need system packages inside the image (for example, build tools or media
-libraries), set `MOLTBOT_DOCKER_APT_PACKAGES` before running `docker-setup.sh`.
+libraries), set `RAZROOM_DOCKER_APT_PACKAGES` before running `docker-setup.sh`.
 This installs the packages during the image build, so they persist even if the
 container is deleted.
 
 Example:
 
 ```bash
-export MOLTBOT_DOCKER_APT_PACKAGES="ffmpeg build-essential"
+export RAZROOM_DOCKER_APT_PACKAGES="ffmpeg build-essential"
 ./docker-setup.sh
 ```
 
 Notes:
 
 - This accepts a space-separated list of apt package names.
-- If you change `MOLTBOT_DOCKER_APT_PACKAGES`, rerun `docker-setup.sh` to rebuild
+- If you change `RAZROOM_DOCKER_APT_PACKAGES`, rerun `docker-setup.sh` to rebuild
   the image.
 
 ### Power-user / full-featured container (opt-in)
@@ -196,43 +196,43 @@ If you want a more full-featured container, use these opt-in knobs:
 1. **Persist `/home/node`** so browser downloads and tool caches survive:
 
 ```bash
-export MOLTBOT_HOME_VOLUME="moltbot_home"
+export RAZROOM_HOME_VOLUME="razroom_home"
 ./docker-setup.sh
 ```
 
 2. **Bake system deps into the image** (repeatable + persistent):
 
 ```bash
-export MOLTBOT_DOCKER_APT_PACKAGES="git curl jq"
+export RAZROOM_DOCKER_APT_PACKAGES="git curl jq"
 ./docker-setup.sh
 ```
 
 3. **Install Playwright browsers without `npx`** (avoids npm override conflicts):
 
 ```bash
-docker compose run --rm moltbot-cli \
+docker compose run --rm razroom-cli \
   node /app/node_modules/playwright-core/cli.js install chromium
 ```
 
 If you need Playwright to install system deps, rebuild the image with
-`MOLTBOT_DOCKER_APT_PACKAGES` instead of using `--with-deps` at runtime.
+`RAZROOM_DOCKER_APT_PACKAGES` instead of using `--with-deps` at runtime.
 
 4. **Persist Playwright browser downloads**:
 
 - Set `PLAYWRIGHT_BROWSERS_PATH=/home/node/.cache/ms-playwright` in
   `docker-compose.yml`.
-- Ensure `/home/node` persists via `MOLTBOT_HOME_VOLUME`, or mount
-  `/home/node/.cache/ms-playwright` via `MOLTBOT_EXTRA_MOUNTS`.
+- Ensure `/home/node` persists via `RAZROOM_HOME_VOLUME`, or mount
+  `/home/node/.cache/ms-playwright` via `RAZROOM_EXTRA_MOUNTS`.
 
 ### Permissions + EACCES
 
 The image runs as `node` (uid 1000). If you see permission errors on
-`/home/node/.moltbot`, make sure your host bind mounts are owned by uid 1000.
+`/home/node/.razroom`, make sure your host bind mounts are owned by uid 1000.
 
 Example (Linux host):
 
 ```bash
-sudo chown -R 1000:1000 /path/to/moltbot-config /path/to/moltbot-workspace
+sudo chown -R 1000:1000 /path/to/razroom-config /path/to/razroom-workspace
 ```
 
 If you choose to run as root for convenience, you accept the security tradeoff.
@@ -277,19 +277,19 @@ Use the CLI container to configure channels, then restart the gateway if needed.
 WhatsApp (QR):
 
 ```bash
-docker compose run --rm moltbot-cli channels login
+docker compose run --rm razroom-cli channels login
 ```
 
 Telegram (bot token):
 
 ```bash
-docker compose run --rm moltbot-cli channels add --channel telegram --token "<token>"
+docker compose run --rm razroom-cli channels add --channel telegram --token "<token>"
 ```
 
 Discord (bot token):
 
 ```bash
-docker compose run --rm moltbot-cli channels add --channel discord --token "<token>"
+docker compose run --rm razroom-cli channels add --channel discord --token "<token>"
 ```
 
 Docs: [WhatsApp](/channels/whatsapp), [Telegram](/channels/telegram), [Discord](/channels/discord)
@@ -304,7 +304,7 @@ URL you land on and paste it back into the wizard to finish auth.
 ### Health check
 
 ```bash
-docker compose exec moltbot-gateway node dist/index.js health --token "$MOLTBOT_GATEWAY_TOKEN"
+docker compose exec razroom-gateway node dist/index.js health --token "$RAZROOM_GATEWAY_TOKEN"
 ```
 
 ### E2E smoke test (Docker)
@@ -323,7 +323,7 @@ pnpm test:docker:qr
 
 - Gateway bind defaults to `lan` for container use.
 - Dockerfile CMD uses `--allow-unconfigured`; mounted config with `gateway.mode` not `local` will still start. Override CMD to enforce the guard.
-- The gateway container is the source of truth for sessions (`~/.moltbot/agents/<agentId>/sessions/`).
+- The gateway container is the source of truth for sessions (`~/.razroom/agents/<agentId>/sessions/`).
 
 ## Agent Sandbox (host gateway + Docker tools)
 
@@ -359,9 +359,9 @@ precedence, and troubleshooting.
 
 ### Default behavior
 
-- Image: `moltbot-sandbox:bookworm-slim`
+- Image: `razroom-sandbox:bookworm-slim`
 - One container per agent
-- Agent workspace access: `workspaceAccess: "none"` (default) uses `~/.moltbot/sandboxes`
+- Agent workspace access: `workspaceAccess: "none"` (default) uses `~/.razroom/sandboxes`
   - `"ro"` keeps the sandbox workspace at `/workspace` and mounts the agent workspace read-only at `/agent` (disables `write`/`edit`/`apply_patch`)
   - `"rw"` mounts the agent workspace read/write at `/workspace`
 - Auto-prune: idle > 24h OR age > 7d
@@ -376,9 +376,9 @@ If you plan to install packages in `setupCommand`, note:
 - Default `docker.network` is `"none"` (no egress).
 - `readOnlyRoot: true` blocks package installs.
 - `user` must be root for `apt-get` (omit `user` or set `user: "0:0"`).
-  MoltBot auto-recreates containers when `setupCommand` (or docker config) changes
+  Razroom auto-recreates containers when `setupCommand` (or docker config) changes
   unless the container was **recently used** (within ~5 minutes). Hot containers
-  log a warning with the exact `moltbot sandbox recreate ...` command.
+  log a warning with the exact `razroom sandbox recreate ...` command.
 
 ```json5
 {
@@ -388,9 +388,9 @@ If you plan to install packages in `setupCommand`, note:
         mode: "non-main", // off | non-main | all
         scope: "agent", // session | agent | shared (agent is default)
         workspaceAccess: "none", // none | ro | rw
-        workspaceRoot: "~/.moltbot/sandboxes",
+        workspaceRoot: "~/.razroom/sandboxes",
         docker: {
-          image: "moltbot-sandbox:bookworm-slim",
+          image: "razroom-sandbox:bookworm-slim",
           workdir: "/workspace",
           readOnlyRoot: true,
           tmpfs: ["/tmp", "/var/tmp", "/run"],
@@ -408,7 +408,7 @@ If you plan to install packages in `setupCommand`, note:
             nproc: 256,
           },
           seccompProfile: "/path/to/seccomp.json",
-          apparmorProfile: "moltbot-sandbox",
+          apparmorProfile: "razroom-sandbox",
           dns: ["1.1.1.1", "8.8.8.8"],
           extraHosts: ["internal.service:10.0.0.5"],
         },
@@ -454,7 +454,7 @@ Multi-agent: override `agents.defaults.sandbox.{docker,browser,prune}.*` per age
 scripts/sandbox-setup.sh
 ```
 
-This builds `moltbot-sandbox:bookworm-slim` using `Dockerfile.sandbox`.
+This builds `razroom-sandbox:bookworm-slim` using `Dockerfile.sandbox`.
 
 ### Sandbox common image (optional)
 
@@ -464,13 +464,13 @@ If you want a sandbox image with common build tooling (Node, Go, Rust, etc.), bu
 scripts/sandbox-common-setup.sh
 ```
 
-This builds `moltbot-sandbox-common:bookworm-slim`. To use it:
+This builds `razroom-sandbox-common:bookworm-slim`. To use it:
 
 ```json5
 {
   agents: {
     defaults: {
-      sandbox: { docker: { image: "moltbot-sandbox-common:bookworm-slim" } },
+      sandbox: { docker: { image: "razroom-sandbox-common:bookworm-slim" } },
     },
   },
 }
@@ -484,7 +484,7 @@ To run the browser tool inside the sandbox, build the browser image:
 scripts/sandbox-browser-setup.sh
 ```
 
-This builds `moltbot-sandbox-browser:bookworm-slim` using
+This builds `razroom-sandbox-browser:bookworm-slim` using
 `Dockerfile.sandbox-browser`. The container runs Chromium with CDP enabled and
 an optional noVNC observer (headful via Xvfb).
 
@@ -514,7 +514,7 @@ Custom browser image:
 {
   agents: {
     defaults: {
-      sandbox: { browser: { image: "my-moltbot-browser" } },
+      sandbox: { browser: { image: "my-razroom-browser" } },
     },
   },
 }
@@ -534,14 +534,14 @@ Prune rules (`agents.defaults.sandbox.prune`) apply to browser containers too.
 Build your own image and point config to it:
 
 ```bash
-docker build -t my-moltbot-sbx -f Dockerfile.sandbox .
+docker build -t my-razroom-sbx -f Dockerfile.sandbox .
 ```
 
 ```json5
 {
   agents: {
     defaults: {
-      sandbox: { docker: { image: "my-moltbot-sbx" } },
+      sandbox: { docker: { image: "my-razroom-sbx" } },
     },
   },
 }
@@ -575,11 +575,11 @@ Example:
 
 ## Troubleshooting
 
-- Image missing: build with [`scripts/sandbox-setup.sh`](https://github.com/moltbot/moltbot/blob/main/scripts/sandbox-setup.sh) or set `agents.defaults.sandbox.docker.image`.
+- Image missing: build with [`scripts/sandbox-setup.sh`](https://github.com/razroom/razroom/blob/main/scripts/sandbox-setup.sh) or set `agents.defaults.sandbox.docker.image`.
 - Container not running: it will auto-create per session on demand.
 - Permission errors in sandbox: set `docker.user` to a UID:GID that matches your
   mounted workspace ownership (or chown the workspace folder).
-- Custom tools not found: MoltBot runs commands with `sh -lc` (login shell), which
+- Custom tools not found: Razroom runs commands with `sh -lc` (login shell), which
   sources `/etc/profile` and may reset PATH. Set `docker.env.PATH` to prepend your
   custom tool paths (e.g., `/custom/bin:/usr/local/share/npm-global/bin`), or add
   a script under `/etc/profile.d/` in your Dockerfile.

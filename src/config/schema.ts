@@ -2,11 +2,11 @@ import type { ConfigUiHint, ConfigUiHints } from "./schema.hints.js";
 import { CHANNEL_IDS } from "../channels/registry.js";
 import { VERSION } from "../version.js";
 import { applySensitiveHints, buildBaseHints, mapSensitivePaths } from "./schema.hints.js";
-import { MoltBotSchema } from "./zod-schema.js";
+import { RazroomSchema } from "./zod-schema.js";
 
 export type { ConfigUiHint, ConfigUiHints } from "./schema.hints.js";
 
-export type ConfigSchema = ReturnType<typeof MoltBotSchema.toJSONSchema>;
+export type ConfigSchema = ReturnType<typeof RazroomSchema.toJSONSchema>;
 
 type JsonSchemaNode = Record<string, unknown>;
 
@@ -322,12 +322,12 @@ function buildBaseConfigSchema(): ConfigSchemaResponse {
   if (cachedBase) {
     return cachedBase;
   }
-  const schema = MoltBotSchema.toJSONSchema({
+  const schema = RazroomSchema.toJSONSchema({
     target: "draft-07",
     unrepresentable: "any",
   });
-  schema.title = "MoltBotConfig";
-  const hints = mapSensitivePaths(MoltBotSchema, "", buildBaseHints());
+  schema.title = "RazroomConfig";
+  const hints = mapSensitivePaths(RazroomSchema, "", buildBaseHints());
   const next = {
     schema: stripChannelSchema(schema),
     uiHints: hints,

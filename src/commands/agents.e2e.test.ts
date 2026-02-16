@@ -1,7 +1,7 @@
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "bun:test";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import { resolveStateDir } from "../config/paths.js";
 import {
   applyAgentBindings,
@@ -12,7 +12,7 @@ import {
 
 describe("agents helpers", () => {
   it("buildAgentSummaries includes default + configured agents", () => {
-    const cfg: MoltBotConfig = {
+    const cfg: RazroomConfig = {
       agents: {
         defaults: {
           workspace: "/main-ws",
@@ -60,7 +60,7 @@ describe("agents helpers", () => {
   });
 
   it("applyAgentConfig merges updates", () => {
-    const cfg: MoltBotConfig = {
+    const cfg: RazroomConfig = {
       agents: {
         list: [{ id: "work", workspace: "/old-ws", model: "anthropic/claude" }],
       },
@@ -81,7 +81,7 @@ describe("agents helpers", () => {
   });
 
   it("applyAgentBindings skips duplicates and reports conflicts", () => {
-    const cfg: MoltBotConfig = {
+    const cfg: RazroomConfig = {
       bindings: [
         {
           agentId: "main",
@@ -112,7 +112,7 @@ describe("agents helpers", () => {
   });
 
   it("pruneAgentConfig removes agent, bindings, and allowlist entries", () => {
-    const cfg: MoltBotConfig = {
+    const cfg: RazroomConfig = {
       agents: {
         list: [
           { id: "work", default: true, workspace: "/work-ws" },

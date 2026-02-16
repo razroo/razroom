@@ -1,13 +1,13 @@
 {
-  "name": "@moltbot/google-antigravity-auth",
+  "name": "@razroom/google-antigravity-auth",
   "version": "2026.2.15",
   "private": true,
-  "description": "MoltBot Google Antigravity OAuth provider plugin",
+  "description": "Razroom Google Antigravity OAuth provider plugin",
   "type": "module",
   "devDependencies": {
-    "moltbot": "workspace:*"
+    "razroom": "workspace:*"
   },
-  "moltbot": {
+  "razroom": {
     "extensions": [
       "./index.ts"
     ]

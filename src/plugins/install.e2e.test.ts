@@ -14,7 +14,7 @@ mock("../process/exec.js", () => ({
 const tempDirs: string[] = [];
 
 function makeTempDir() {
-  const dir = path.join(os.tmpdir(), `moltbot-plugin-install-${randomUUID()}`);
+  const dir = path.join(os.tmpdir(), `razroom-plugin-install-${randomUUID()}`);
   fs.mkdirSync(dir, { recursive: true });
   tempDirs.push(dir);
   return dir;
@@ -57,7 +57,7 @@ beforeEach(() => {
 });
 
 describe("installPluginFromArchive", () => {
-  it("installs into ~/.moltbot/extensions and uses unscoped id", async () => {
+  it("installs into ~/.razroom/extensions and uses unscoped id", async () => {
     const stateDir = makeTempDir();
     const workDir = makeTempDir();
     const pkgDir = path.join(workDir, "package");
@@ -65,9 +65,9 @@ describe("installPluginFromArchive", () => {
     fs.writeFileSync(
       path.join(pkgDir, "package.json"),
       JSON.stringify({
-        name: "@moltbot/voice-call",
+        name: "@razroom/voice-call",
         version: "0.0.1",
-        moltbot: { extensions: ["./dist/index.js"] },
+        razroom: { extensions: ["./dist/index.js"] },
       }),
       "utf-8",
     );
@@ -103,9 +103,9 @@ describe("installPluginFromArchive", () => {
     fs.writeFileSync(
       path.join(pkgDir, "package.json"),
       JSON.stringify({
-        name: "@moltbot/voice-call",
+        name: "@razroom/voice-call",
         version: "0.0.1",
-        moltbot: { extensions: ["./dist/index.js"] },
+        razroom: { extensions: ["./dist/index.js"] },
       }),
       "utf-8",
     );
@@ -145,9 +145,9 @@ describe("installPluginFromArchive", () => {
     zip.file(
       "package/package.json",
       JSON.stringify({
-        name: "@moltbot/zipper",
+        name: "@razroom/zipper",
         version: "0.0.1",
-        moltbot: { extensions: ["./dist/index.js"] },
+        razroom: { extensions: ["./dist/index.js"] },
       }),
     );
     zip.file("package/dist/index.js", "export {};");
@@ -179,9 +179,9 @@ describe("installPluginFromArchive", () => {
     fs.writeFileSync(
       path.join(pkgDir, "package.json"),
       JSON.stringify({
-        name: "@moltbot/voice-call",
+        name: "@razroom/voice-call",
         version: "0.0.1",
-        moltbot: { extensions: ["./dist/index.js"] },
+        razroom: { extensions: ["./dist/index.js"] },
       }),
       "utf-8",
     );
@@ -197,9 +197,9 @@ describe("installPluginFromArchive", () => {
       fs.writeFileSync(
         path.join(pkgDir, "package.json"),
         JSON.stringify({
-          name: "@moltbot/voice-call",
+          name: "@razroom/voice-call",
           version: "0.0.2",
-          moltbot: { extensions: ["./dist/index.js"] },
+          razroom: { extensions: ["./dist/index.js"] },
         }),
         "utf-8",
       );
@@ -243,7 +243,7 @@ describe("installPluginFromArchive", () => {
       JSON.stringify({
         name: "@evil/..",
         version: "0.0.1",
-        moltbot: { extensions: ["./dist/index.js"] },
+        razroom: { extensions: ["./dist/index.js"] },
       }),
       "utf-8",
     );
@@ -279,7 +279,7 @@ describe("installPluginFromArchive", () => {
       JSON.stringify({
         name: "@evil/.",
         version: "0.0.1",
-        moltbot: { extensions: ["./dist/index.js"] },
+        razroom: { extensions: ["./dist/index.js"] },
       }),
       "utf-8",
     );
@@ -305,14 +305,14 @@ describe("installPluginFromArchive", () => {
     expect(result.error).toContain("reserved path segment");
   });
 
-  it("rejects packages without moltbot.extensions", async () => {
+  it("rejects packages without razroom.extensions", async () => {
     const stateDir = makeTempDir();
     const workDir = makeTempDir();
     const pkgDir = path.join(workDir, "package");
     fs.mkdirSync(pkgDir, { recursive: true });
     fs.writeFileSync(
       path.join(pkgDir, "package.json"),
-      JSON.stringify({ name: "@moltbot/nope", version: "0.0.1" }),
+      JSON.stringify({ name: "@razroom/nope", version: "0.0.1" }),
       "utf-8",
     );
 
@@ -332,7 +332,7 @@ describe("installPluginFromArchive", () => {
     if (result.ok) {
       return;
     }
-    expect(result.error).toContain("moltbot.extensions");
+    expect(result.error).toContain("razroom.extensions");
   });
 
   it("warns when plugin contains dangerous code patterns", async () => {
@@ -345,7 +345,7 @@ describe("installPluginFromArchive", () => {
       JSON.stringify({
         name: "dangerous-plugin",
         version: "1.0.0",
-        moltbot: { extensions: ["index.js"] },
+        razroom: { extensions: ["index.js"] },
       }),
     );
     fs.writeFileSync(
@@ -382,7 +382,7 @@ describe("installPluginFromArchive", () => {
       JSON.stringify({
         name: "hidden-entry-plugin",
         version: "1.0.0",
-        moltbot: { extensions: [".hidden/index.js"] },
+        razroom: { extensions: [".hidden/index.js"] },
       }),
     );
     fs.writeFileSync(
@@ -423,7 +423,7 @@ describe("installPluginFromArchive", () => {
       JSON.stringify({
         name: "scan-fail-plugin",
         version: "1.0.0",
-        moltbot: { extensions: ["index.js"] },
+        razroom: { extensions: ["index.js"] },
       }),
     );
     fs.writeFileSync(path.join(pluginDir, "index.js"), "export {};");
@@ -457,9 +457,9 @@ describe("installPluginFromDir", () => {
     fs.writeFileSync(
       path.join(pluginDir, "package.json"),
       JSON.stringify({
-        name: "@moltbot/test-plugin",
+        name: "@razroom/test-plugin",
         version: "0.0.1",
-        moltbot: { extensions: ["./dist/index.js"] },
+        razroom: { extensions: ["./dist/index.js"] },
         dependencies: { "left-pad": "1.3.0" },
       }),
       "utf-8",
@@ -501,9 +501,9 @@ describe("installPluginFromNpmSpec", () => {
     fs.writeFileSync(
       path.join(pkgDir, "package.json"),
       JSON.stringify({
-        name: "@moltbot/voice-call",
+        name: "@razroom/voice-call",
         version: "0.0.1",
-        moltbot: { extensions: ["./dist/index.js"] },
+        razroom: { extensions: ["./dist/index.js"] },
       }),
       "utf-8",
     );
@@ -528,7 +528,7 @@ describe("installPluginFromNpmSpec", () => {
 
     const { installPluginFromNpmSpec } = await import("./install.js");
     const result = await installPluginFromNpmSpec({
-      spec: "@moltbot/voice-call@0.0.1",
+      spec: "@razroom/voice-call@0.0.1",
       extensionsDir,
       logger: { info: () => {}, warn: () => {} },
     });
@@ -543,7 +543,7 @@ describe("installPluginFromNpmSpec", () => {
       throw new Error("expected npm pack call");
     }
     const [argv, options] = packCall;
-    expect(argv).toEqual(["npm", "pack", "@moltbot/voice-call@0.0.1", "--ignore-scripts"]);
+    expect(argv).toEqual(["npm", "pack", "@razroom/voice-call@0.0.1", "--ignore-scripts"]);
     expect(options?.env).toMatchObject({ NPM_CONFIG_IGNORE_SCRIPTS: "true" });
 
     expect(packTmpDir).not.toBe("");

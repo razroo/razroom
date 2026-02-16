@@ -3,7 +3,7 @@ import {
   findLegacyGatewayServices,
   note,
   readConfigFileSnapshot,
-  resolveMoltBotPackageRoot,
+  resolveRazroomPackageRoot,
   runCommandWithTimeout,
   runGatewayUpdate,
   serviceInstall,
@@ -16,7 +16,7 @@ import {
 describe("doctor command", () => {
   it("migrates routing.allowFrom to channels.whatsapp.allowFrom", { timeout: 60_000 }, async () => {
     readConfigFileSnapshot.mockResolvedValue({
-      path: "/tmp/moltbot.json",
+      path: "/tmp/razroom.json",
       exists: true,
       raw: "{}",
       parsed: { routing: { allowFrom: ["+15555550123"] } },
@@ -60,7 +60,7 @@ describe("doctor command", () => {
 
   it("skips legacy gateway services migration", { timeout: 60_000 }, async () => {
     readConfigFileSnapshot.mockResolvedValue({
-      path: "/tmp/moltbot.json",
+      path: "/tmp/razroom.json",
       exists: true,
       raw: "{}",
       parsed: {},
@@ -73,7 +73,7 @@ describe("doctor command", () => {
     findLegacyGatewayServices.mockResolvedValueOnce([
       {
         platform: "darwin",
-        label: "com.steipete.moltbot.gateway",
+        label: "com.steipete.razroom.gateway",
         detail: "loaded",
       },
     ]);
@@ -94,10 +94,10 @@ describe("doctor command", () => {
   });
 
   it("offers to update first for git checkouts", async () => {
-    delete process.env.MOLTBOT_UPDATE_IN_PROGRESS;
+    delete process.env.RAZROOM_UPDATE_IN_PROGRESS;
 
-    const root = "/tmp/moltbot";
-    resolveMoltBotPackageRoot.mockResolvedValueOnce(root);
+    const root = "/tmp/razroom";
+    resolveRazroomPackageRoot.mockResolvedValueOnce(root);
     runCommandWithTimeout.mockResolvedValueOnce({
       stdout: `${root}\n`,
       stderr: "",
@@ -114,7 +114,7 @@ describe("doctor command", () => {
     });
 
     readConfigFileSnapshot.mockResolvedValue({
-      path: "/tmp/moltbot.json",
+      path: "/tmp/razroom.json",
       exists: true,
       raw: "{}",
       parsed: {},

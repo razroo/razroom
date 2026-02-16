@@ -1,12 +1,12 @@
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 
 export type PluginEnableResult = {
-  config: MoltBotConfig;
+  config: RazroomConfig;
   enabled: boolean;
   reason?: string;
 };
 
-function ensureAllowlisted(cfg: MoltBotConfig, pluginId: string): MoltBotConfig {
+function ensureAllowlisted(cfg: RazroomConfig, pluginId: string): RazroomConfig {
   const allow = cfg.plugins?.allow;
   if (!Array.isArray(allow) || allow.includes(pluginId)) {
     return cfg;
@@ -20,7 +20,7 @@ function ensureAllowlisted(cfg: MoltBotConfig, pluginId: string): MoltBotConfig 
   };
 }
 
-export function enablePluginInConfig(cfg: MoltBotConfig, pluginId: string): PluginEnableResult {
+export function enablePluginInConfig(cfg: RazroomConfig, pluginId: string): PluginEnableResult {
   if (cfg.plugins?.enabled === false) {
     return { config: cfg, enabled: false, reason: "plugins disabled" };
   }
@@ -35,7 +35,7 @@ export function enablePluginInConfig(cfg: MoltBotConfig, pluginId: string): Plug
       enabled: true,
     },
   };
-  let next: MoltBotConfig = {
+  let next: RazroomConfig = {
     ...cfg,
     plugins: {
       ...cfg.plugins,

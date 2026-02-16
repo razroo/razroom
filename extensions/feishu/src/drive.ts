@@ -1,5 +1,5 @@
 import type * as Lark from "@larksuiteoapi/node-sdk";
-import type { MoltBotPluginApi } from "moltbot/plugin-sdk";
+import type { RazroomPluginApi } from "razroom/plugin-sdk";
 import { listEnabledFeishuAccounts } from "./accounts.js";
 import { createFeishuClient } from "./client.js";
 import { FeishuDriveSchema, type FeishuDriveParams } from "./drive-schema.js";
@@ -168,7 +168,7 @@ async function deleteFile(client: Lark.Client, fileToken: string, type: string) 
 
 // ============ Tool Registration ============
 
-export function registerFeishuDriveTools(api: MoltBotPluginApi) {
+export function registerFeishuDriveTools(api: RazroomPluginApi) {
   if (!api.config) {
     api.logger.debug?.("feishu_drive: No config available, skipping drive tools");
     return;

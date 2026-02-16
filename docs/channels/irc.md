@@ -1,14 +1,14 @@
 ---
 title: IRC
-description: Connect MoltBot to IRC channels and direct messages.
+description: Connect Razroom to IRC channels and direct messages.
 ---
 
-Use IRC when you want MoltBot in classic channels (`#room`) and direct messages.
+Use IRC when you want Razroom in classic channels (`#room`) and direct messages.
 IRC ships as an extension plugin, but it is configured in the main config under `channels.irc`.
 
 ## Quick start
 
-1. Enable IRC config in `~/.moltbot/moltbot.json`.
+1. Enable IRC config in `~/.razroom/razroom.json`.
 2. Set at least:
 
 ```json
@@ -19,8 +19,8 @@ IRC ships as an extension plugin, but it is configured in the main config under 
       "host": "irc.libera.chat",
       "port": 6697,
       "tls": true,
-      "nick": "moltbot-bot",
-      "channels": ["#moltbot"]
+      "nick": "razroom-bot",
+      "channels": ["#razroom"]
     }
   }
 }
@@ -29,7 +29,7 @@ IRC ships as an extension plugin, but it is configured in the main config under 
 3. Start/restart gateway:
 
 ```bash
-moltbot gateway run
+razroom gateway run
 ```
 
 ## Security defaults
@@ -83,7 +83,7 @@ Example (allow anyone in `#tuirc-dev` to talk to the bot):
 
 ## Reply triggering (mentions)
 
-Even if a channel is allowed (via `groupPolicy` + `groups`) and the sender is allowed, MoltBot defaults to **mention-gating** in group contexts.
+Even if a channel is allowed (via `groupPolicy` + `groups`) and the sender is allowed, Razroom defaults to **mention-gating** in group contexts.
 
 That means you may see logs like `drop channel … (missing-mention)` unless the message includes a mention pattern that matches the bot.
 

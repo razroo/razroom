@@ -768,8 +768,8 @@ class MemoryManagerSyncOps {
     try {
       if (needsFullReindex) {
         if (
-          process.env.MOLTBOT_TEST_FAST === "1" &&
-          process.env.MOLTBOT_TEST_MEMORY_UNSAFE_REINDEX === "1"
+          process.env.RAZROOM_TEST_FAST === "1" &&
+          process.env.RAZROOM_TEST_MEMORY_UNSAFE_REINDEX === "1"
         ) {
           await this.runUnsafeReindex({
             reason: params?.reason,

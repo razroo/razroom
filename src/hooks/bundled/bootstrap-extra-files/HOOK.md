@@ -1,15 +1,15 @@
 ---
 name: bootstrap-extra-files
 description: "Inject additional workspace bootstrap files via glob/path patterns"
-homepage: https://docs.moltbot.ai/automation/hooks#bootstrap-extra-files
+homepage: https://docs.razroom.ai/automation/hooks#bootstrap-extra-files
 metadata:
   {
-    "moltbot":
+    "razroom":
       {
         "emoji": "📎",
         "events": ["agent:bootstrap"],
         "requires": { "config": ["workspace.dir"] },
-        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with MoltBot" }],
+        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with Razroom" }],
       },
   }
 ---

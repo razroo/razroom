@@ -1,4 +1,4 @@
-import type { RuntimeEnv } from "moltbot/plugin-sdk";
+import type { RuntimeEnv } from "razroom/plugin-sdk";
 import { formatChangesDate } from "./utils.js";
 
 export async function fetchGroupChanges(

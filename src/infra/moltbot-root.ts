@@ -3,7 +3,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-const CORE_PACKAGE_NAMES = new Set(["moltbot"]);
+const CORE_PACKAGE_NAMES = new Set(["razroom"]);
 
 async function readPackageName(dir: string): Promise<string | null> {
   try {
@@ -82,7 +82,7 @@ function candidateDirsFromArgv1(argv1: string): string[] {
   return candidates;
 }
 
-export async function resolveMoltBotPackageRoot(opts: {
+export async function resolveRazroomPackageRoot(opts: {
   cwd?: string;
   argv1?: string;
   moduleUrl?: string;
@@ -109,7 +109,7 @@ export async function resolveMoltBotPackageRoot(opts: {
   return null;
 }
 
-export function resolveMoltBotPackageRootSync(opts: {
+export function resolveRazroomPackageRootSync(opts: {
   cwd?: string;
   argv1?: string;
   moduleUrl?: string;

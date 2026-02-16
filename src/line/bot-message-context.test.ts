@@ -3,14 +3,14 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { ResolvedLineAccount } from "./types.js";
 import { buildLineMessageContext, buildLinePostbackContext } from "./bot-message-context.js";
 
 describe("buildLineMessageContext", () => {
   let tmpDir: string;
   let storePath: string;
-  let cfg: MoltBotConfig;
+  let cfg: RazroomConfig;
   const account: ResolvedLineAccount = {
     accountId: "default",
     enabled: true,
@@ -21,7 +21,7 @@ describe("buildLineMessageContext", () => {
   };
 
   beforeEach(async () => {
-    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-line-context-"));
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-line-context-"));
     storePath = path.join(tmpDir, "sessions.json");
     cfg = { session: { store: storePath } };
   });

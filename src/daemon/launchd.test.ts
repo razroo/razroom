@@ -90,9 +90,9 @@ describe("launchd runtime parsing", () => {
 
 describe("launchctl list detection", () => {
   it("detects the resolved label in launchctl list", async () => {
-    state.listOutput = "123 0 ai.moltbot.gateway\n";
+    state.listOutput = "123 0 ai.razroom.gateway\n";
     const listed = await isLaunchAgentListed({
-      env: { HOME: "/Users/test", MOLTBOT_PROFILE: "default" },
+      env: { HOME: "/Users/test", RAZROOM_PROFILE: "default" },
     });
     expect(listed).toBe(true);
   });
@@ -100,7 +100,7 @@ describe("launchctl list detection", () => {
   it("returns false when the label is missing", async () => {
     state.listOutput = "123 0 com.other.service\n";
     const listed = await isLaunchAgentListed({
-      env: { HOME: "/Users/test", MOLTBOT_PROFILE: "default" },
+      env: { HOME: "/Users/test", RAZROOM_PROFILE: "default" },
     });
     expect(listed).toBe(false);
   });
@@ -110,13 +110,13 @@ describe("launchd bootstrap repair", () => {
   it("bootstraps and kickstarts the resolved label", async () => {
     const env: Record<string, string | undefined> = {
       HOME: "/Users/test",
-      MOLTBOT_PROFILE: "default",
+      RAZROOM_PROFILE: "default",
     };
     const repair = await repairLaunchAgentBootstrap({ env });
     expect(repair.ok).toBe(true);
 
     const domain = typeof process.getuid === "function" ? `gui/${process.getuid()}` : "gui/501";
-    const label = "ai.moltbot.gateway";
+    const label = "ai.razroom.gateway";
     const plistPath = resolveLaunchAgentPlistPath(env);
 
     expect(state.launchctlCalls).toContainEqual(["bootstrap", domain, plistPath]);
@@ -128,7 +128,7 @@ describe("launchd install", () => {
   it("enables service before bootstrap (clears persisted disabled state)", async () => {
     const env: Record<string, string | undefined> = {
       HOME: "/Users/test",
-      MOLTBOT_PROFILE: "default",
+      RAZROOM_PROFILE: "default",
     };
     await installLaunchAgent({
       env,
@@ -137,7 +137,7 @@ describe("launchd install", () => {
     });
 
     const domain = typeof process.getuid === "function" ? `gui/${process.getuid()}` : "gui/501";
-    const label = "ai.moltbot.gateway";
+    const label = "ai.razroom.gateway";
     const plistPath = resolveLaunchAgentPlistPath(env);
     const serviceId = `${domain}/${label}`;
 
@@ -154,77 +154,77 @@ describe("launchd install", () => {
 });
 
 describe("resolveLaunchAgentPlistPath", () => {
-  it("uses default label when MOLTBOT_PROFILE is default", () => {
-    const env = { HOME: "/Users/test", MOLTBOT_PROFILE: "default" };
+  it("uses default label when RAZROOM_PROFILE is default", () => {
+    const env = { HOME: "/Users/test", RAZROOM_PROFILE: "default" };
     expect(resolveLaunchAgentPlistPath(env)).toBe(
-      "/Users/test/Library/LaunchAgents/ai.moltbot.gateway.plist",
+      "/Users/test/Library/LaunchAgents/ai.razroom.gateway.plist",
     );
   });
 
-  it("uses default label when MOLTBOT_PROFILE is unset", () => {
+  it("uses default label when RAZROOM_PROFILE is unset", () => {
     const env = { HOME: "/Users/test" };
     expect(resolveLaunchAgentPlistPath(env)).toBe(
-      "/Users/test/Library/LaunchAgents/ai.moltbot.gateway.plist",
+      "/Users/test/Library/LaunchAgents/ai.razroom.gateway.plist",
     );
   });
 
-  it("uses profile-specific label when MOLTBOT_PROFILE is set to a custom value", () => {
-    const env = { HOME: "/Users/test", MOLTBOT_PROFILE: "jbphoenix" };
+  it("uses profile-specific label when RAZROOM_PROFILE is set to a custom value", () => {
+    const env = { HOME: "/Users/test", RAZROOM_PROFILE: "jbphoenix" };
     expect(resolveLaunchAgentPlistPath(env)).toBe(
-      "/Users/test/Library/LaunchAgents/ai.moltbot.jbphoenix.plist",
+      "/Users/test/Library/LaunchAgents/ai.razroom.jbphoenix.plist",
     );
   });
 
-  it("prefers MOLTBOT_LAUNCHD_LABEL over MOLTBOT_PROFILE", () => {
+  it("prefers RAZROOM_LAUNCHD_LABEL over RAZROOM_PROFILE", () => {
     const env = {
       HOME: "/Users/test",
-      MOLTBOT_PROFILE: "jbphoenix",
-      MOLTBOT_LAUNCHD_LABEL: "com.custom.label",
+      RAZROOM_PROFILE: "jbphoenix",
+      RAZROOM_LAUNCHD_LABEL: "com.custom.label",
     };
     expect(resolveLaunchAgentPlistPath(env)).toBe(
       "/Users/test/Library/LaunchAgents/com.custom.label.plist",
     );
   });
 
-  it("trims whitespace from MOLTBOT_LAUNCHD_LABEL", () => {
+  it("trims whitespace from RAZROOM_LAUNCHD_LABEL", () => {
     const env = {
       HOME: "/Users/test",
-      MOLTBOT_LAUNCHD_LABEL: "  com.custom.label  ",
+      RAZROOM_LAUNCHD_LABEL: "  com.custom.label  ",
     };
     expect(resolveLaunchAgentPlistPath(env)).toBe(
       "/Users/test/Library/LaunchAgents/com.custom.label.plist",
     );
   });
 
-  it("ignores empty MOLTBOT_LAUNCHD_LABEL and falls back to profile", () => {
+  it("ignores empty RAZROOM_LAUNCHD_LABEL and falls back to profile", () => {
     const env = {
       HOME: "/Users/test",
-      MOLTBOT_PROFILE: "myprofile",
-      MOLTBOT_LAUNCHD_LABEL: "   ",
+      RAZROOM_PROFILE: "myprofile",
+      RAZROOM_LAUNCHD_LABEL: "   ",
     };
     expect(resolveLaunchAgentPlistPath(env)).toBe(
-      "/Users/test/Library/LaunchAgents/ai.moltbot.myprofile.plist",
+      "/Users/test/Library/LaunchAgents/ai.razroom.myprofile.plist",
     );
   });
 
   it("handles case-insensitive 'Default' profile", () => {
-    const env = { HOME: "/Users/test", MOLTBOT_PROFILE: "Default" };
+    const env = { HOME: "/Users/test", RAZROOM_PROFILE: "Default" };
     expect(resolveLaunchAgentPlistPath(env)).toBe(
-      "/Users/test/Library/LaunchAgents/ai.moltbot.gateway.plist",
+      "/Users/test/Library/LaunchAgents/ai.razroom.gateway.plist",
     );
   });
 
   it("handles case-insensitive 'DEFAULT' profile", () => {
-    const env = { HOME: "/Users/test", MOLTBOT_PROFILE: "DEFAULT" };
+    const env = { HOME: "/Users/test", RAZROOM_PROFILE: "DEFAULT" };
     expect(resolveLaunchAgentPlistPath(env)).toBe(
-      "/Users/test/Library/LaunchAgents/ai.moltbot.gateway.plist",
+      "/Users/test/Library/LaunchAgents/ai.razroom.gateway.plist",
     );
   });
 
-  it("trims whitespace from MOLTBOT_PROFILE", () => {
-    const env = { HOME: "/Users/test", MOLTBOT_PROFILE: "  myprofile  " };
+  it("trims whitespace from RAZROOM_PROFILE", () => {
+    const env = { HOME: "/Users/test", RAZROOM_PROFILE: "  myprofile  " };
     expect(resolveLaunchAgentPlistPath(env)).toBe(
-      "/Users/test/Library/LaunchAgents/ai.moltbot.myprofile.plist",
+      "/Users/test/Library/LaunchAgents/ai.razroom.myprofile.plist",
     );
   });
 });

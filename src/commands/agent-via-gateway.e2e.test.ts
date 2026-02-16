@@ -11,7 +11,7 @@ mock("./agent.js", () => ({
   agentCommand: mock(),
 }));
 
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { RuntimeEnv } from "../runtime.js";
 import * as configModule from "../config/config.js";
 import { callGateway } from "../gateway/call.js";
@@ -26,7 +26,7 @@ const runtime: RuntimeEnv = {
 
 const configSpy = spyOn(configModule, "loadConfig");
 
-function mockConfig(storePath: string, overrides?: Partial<MoltBotConfig>) {
+function mockConfig(storePath: string, overrides?: Partial<RazroomConfig>) {
   configSpy.mockReturnValue({
     agents: {
       defaults: {
@@ -49,7 +49,7 @@ beforeEach(() => {
 
 describe("agentCliCommand", () => {
   it("uses a timer-safe max gateway timeout when --timeout is 0", async () => {
-    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-agent-cli-"));
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "razroom-agent-cli-"));
     const store = path.join(dir, "sessions.json");
     mockConfig(store);
 
@@ -74,7 +74,7 @@ describe("agentCliCommand", () => {
   });
 
   it("uses gateway by default", async () => {
-    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-agent-cli-"));
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "razroom-agent-cli-"));
     const store = path.join(dir, "sessions.json");
     mockConfig(store);
 
@@ -99,7 +99,7 @@ describe("agentCliCommand", () => {
   });
 
   it("falls back to embedded agent when gateway fails", async () => {
-    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-agent-cli-"));
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "razroom-agent-cli-"));
     const store = path.join(dir, "sessions.json");
     mockConfig(store);
 
@@ -121,7 +121,7 @@ describe("agentCliCommand", () => {
   });
 
   it("skips gateway when --local is set", async () => {
-    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-agent-cli-"));
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "razroom-agent-cli-"));
     const store = path.join(dir, "sessions.json");
     mockConfig(store);
 

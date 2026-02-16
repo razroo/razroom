@@ -25,12 +25,12 @@ export function serveAcpGateway(opts: AcpServerOptions = {}): Promise<void> {
   const token =
     opts.gatewayToken ??
     (isRemoteMode ? remote?.token?.trim() : undefined) ??
-    process.env.MOLTBOT_GATEWAY_TOKEN ??
+    process.env.RAZROOM_GATEWAY_TOKEN ??
     auth.token;
   const password =
     opts.gatewayPassword ??
     (isRemoteMode ? remote?.password?.trim() : undefined) ??
-    process.env.MOLTBOT_GATEWAY_PASSWORD ??
+    process.env.RAZROOM_GATEWAY_PASSWORD ??
     auth.password;
 
   let agent: AcpGatewayAgent | null = null;
@@ -147,7 +147,7 @@ function parseArgs(args: string[]): AcpServerOptions {
 }
 
 function printHelp(): void {
-  console.log(`Usage: moltbot acp [options]
+  console.log(`Usage: razroom acp [options]
 
 Gateway-backed ACP server for IDE integration.
 

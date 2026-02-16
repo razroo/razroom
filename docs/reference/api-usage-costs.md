@@ -10,7 +10,7 @@ title: "API Usage and Costs"
 # API usage & costs
 
 This doc lists **features that can invoke API keys** and where their costs show up. It focuses on
-MoltBot features that can generate provider usage or paid API calls.
+Razroom features that can generate provider usage or paid API calls.
 
 ## Where costs show up (chat + CLI)
 
@@ -26,14 +26,14 @@ MoltBot features that can generate provider usage or paid API calls.
 
 **CLI usage windows (provider quotas)**
 
-- `moltbot status --usage` and `moltbot channels list` show provider **usage windows**
+- `razroom status --usage` and `razroom channels list` show provider **usage windows**
   (quota snapshots, not per-message costs).
 
 See [Token use & costs](/reference/token-use) for details and examples.
 
 ## How keys are discovered
 
-MoltBot can pick up credentials from:
+Razroom can pick up credentials from:
 
 - **Auth profiles** (per-agent, stored in `auth-profiles.json`).
 - **Environment variables** (e.g. `OPENAI_API_KEY`, `BRAVE_API_KEY`, `FIRECRAWL_API_KEY`).
@@ -103,8 +103,8 @@ See [Web tools](/tools/web).
 Some status commands call **provider usage endpoints** to display quota windows or auth health.
 These are typically low-volume calls but still hit provider APIs:
 
-- `moltbot status --usage`
-- `moltbot models status --json`
+- `razroom status --usage`
+- `razroom models status --json`
 
 See [Models CLI](/cli/models).
 
@@ -117,7 +117,7 @@ See [Session management + compaction](/reference/session-management-compaction).
 
 ### 8) Model scan / probe
 
-`moltbot models scan` can probe OpenRouter models and uses `OPENROUTER_API_KEY` when
+`razroom models scan` can probe OpenRouter models and uses `OPENROUTER_API_KEY` when
 probing is enabled.
 
 See [Models CLI](/cli/models).

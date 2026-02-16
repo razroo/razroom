@@ -32,16 +32,16 @@ import {
 
 const authProfilePathFor = (agentDir: string) => path.join(agentDir, "auth-profiles.json");
 const requireAgentDir = () => {
-  const agentDir = process.env.MOLTBOT_AGENT_DIR;
+  const agentDir = process.env.RAZROOM_AGENT_DIR;
   if (!agentDir) {
-    throw new Error("MOLTBOT_AGENT_DIR not set");
+    throw new Error("RAZROOM_AGENT_DIR not set");
   }
   return agentDir;
 };
 
 describe("writeOAuthCredentials", () => {
-  const previousStateDir = process.env.MOLTBOT_STATE_DIR;
-  const previousAgentDir = process.env.MOLTBOT_AGENT_DIR;
+  const previousStateDir = process.env.RAZROOM_STATE_DIR;
+  const previousAgentDir = process.env.RAZROOM_AGENT_DIR;
   const previousPiAgentDir = process.env.PI_CODING_AGENT_DIR;
   let tempStateDir: string | null = null;
 
@@ -51,28 +51,28 @@ describe("writeOAuthCredentials", () => {
       tempStateDir = null;
     }
     if (previousStateDir === undefined) {
-      delete process.env.MOLTBOT_STATE_DIR;
+      delete process.env.RAZROOM_STATE_DIR;
     } else {
-      process.env.MOLTBOT_STATE_DIR = previousStateDir;
+      process.env.RAZROOM_STATE_DIR = previousStateDir;
     }
     if (previousAgentDir === undefined) {
-      delete process.env.MOLTBOT_AGENT_DIR;
+      delete process.env.RAZROOM_AGENT_DIR;
     } else {
-      process.env.MOLTBOT_AGENT_DIR = previousAgentDir;
+      process.env.RAZROOM_AGENT_DIR = previousAgentDir;
     }
     if (previousPiAgentDir === undefined) {
       delete process.env.PI_CODING_AGENT_DIR;
     } else {
       process.env.PI_CODING_AGENT_DIR = previousPiAgentDir;
     }
-    delete process.env.MOLTBOT_OAUTH_DIR;
+    delete process.env.RAZROOM_OAUTH_DIR;
   });
 
-  it("writes auth-profiles.json under MOLTBOT_AGENT_DIR when set", async () => {
-    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-oauth-"));
-    process.env.MOLTBOT_STATE_DIR = tempStateDir;
-    process.env.MOLTBOT_AGENT_DIR = path.join(tempStateDir, "agent");
-    process.env.PI_CODING_AGENT_DIR = process.env.MOLTBOT_AGENT_DIR;
+  it("writes auth-profiles.json under RAZROOM_AGENT_DIR when set", async () => {
+    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-oauth-"));
+    process.env.RAZROOM_STATE_DIR = tempStateDir;
+    process.env.RAZROOM_AGENT_DIR = path.join(tempStateDir, "agent");
+    process.env.PI_CODING_AGENT_DIR = process.env.RAZROOM_AGENT_DIR;
 
     const creds = {
       refresh: "refresh-token",
@@ -100,8 +100,8 @@ describe("writeOAuthCredentials", () => {
 });
 
 describe("setMinimaxApiKey", () => {
-  const previousStateDir = process.env.MOLTBOT_STATE_DIR;
-  const previousAgentDir = process.env.MOLTBOT_AGENT_DIR;
+  const previousStateDir = process.env.RAZROOM_STATE_DIR;
+  const previousAgentDir = process.env.RAZROOM_AGENT_DIR;
   const previousPiAgentDir = process.env.PI_CODING_AGENT_DIR;
   let tempStateDir: string | null = null;
 
@@ -111,14 +111,14 @@ describe("setMinimaxApiKey", () => {
       tempStateDir = null;
     }
     if (previousStateDir === undefined) {
-      delete process.env.MOLTBOT_STATE_DIR;
+      delete process.env.RAZROOM_STATE_DIR;
     } else {
-      process.env.MOLTBOT_STATE_DIR = previousStateDir;
+      process.env.RAZROOM_STATE_DIR = previousStateDir;
     }
     if (previousAgentDir === undefined) {
-      delete process.env.MOLTBOT_AGENT_DIR;
+      delete process.env.RAZROOM_AGENT_DIR;
     } else {
-      process.env.MOLTBOT_AGENT_DIR = previousAgentDir;
+      process.env.RAZROOM_AGENT_DIR = previousAgentDir;
     }
     if (previousPiAgentDir === undefined) {
       delete process.env.PI_CODING_AGENT_DIR;
@@ -127,11 +127,11 @@ describe("setMinimaxApiKey", () => {
     }
   });
 
-  it("writes to MOLTBOT_AGENT_DIR when set", async () => {
-    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-minimax-"));
-    process.env.MOLTBOT_STATE_DIR = tempStateDir;
-    process.env.MOLTBOT_AGENT_DIR = path.join(tempStateDir, "custom-agent");
-    process.env.PI_CODING_AGENT_DIR = process.env.MOLTBOT_AGENT_DIR;
+  it("writes to RAZROOM_AGENT_DIR when set", async () => {
+    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-minimax-"));
+    process.env.RAZROOM_STATE_DIR = tempStateDir;
+    process.env.RAZROOM_AGENT_DIR = path.join(tempStateDir, "custom-agent");
+    process.env.PI_CODING_AGENT_DIR = process.env.RAZROOM_AGENT_DIR;
 
     await setMinimaxApiKey("sk-minimax-test");
 

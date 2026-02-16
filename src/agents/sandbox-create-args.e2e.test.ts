@@ -4,8 +4,8 @@ import { buildSandboxCreateArgs, type SandboxDockerConfig } from "./sandbox.js";
 describe("buildSandboxCreateArgs", () => {
   it("includes hardening and resource flags", () => {
     const cfg: SandboxDockerConfig = {
-      image: "moltbot-sandbox:bookworm-slim",
-      containerPrefix: "moltbot-sbx-",
+      image: "razroom-sandbox:bookworm-slim",
+      containerPrefix: "razroom-sbx-",
       workdir: "/workspace",
       readOnlyRoot: true,
       tmpfs: ["/tmp"],
@@ -23,32 +23,32 @@ describe("buildSandboxCreateArgs", () => {
         core: "0",
       },
       seccompProfile: "/tmp/seccomp.json",
-      apparmorProfile: "moltbot-sandbox",
+      apparmorProfile: "razroom-sandbox",
       dns: ["1.1.1.1"],
       extraHosts: ["internal.service:10.0.0.5"],
     };
 
     const args = buildSandboxCreateArgs({
-      name: "moltbot-sbx-test",
+      name: "razroom-sbx-test",
       cfg,
       scopeKey: "main",
       createdAtMs: 1700000000000,
-      labels: { "moltbot.sandboxBrowser": "1" },
+      labels: { "razroom.sandboxBrowser": "1" },
     });
 
     expect(args).toEqual(
       expect.arrayContaining([
         "create",
         "--name",
-        "moltbot-sbx-test",
+        "razroom-sbx-test",
         "--label",
-        "moltbot.sandbox=1",
+        "razroom.sandbox=1",
         "--label",
-        "moltbot.sessionKey=main",
+        "razroom.sessionKey=main",
         "--label",
-        "moltbot.createdAtMs=1700000000000",
+        "razroom.createdAtMs=1700000000000",
         "--label",
-        "moltbot.sandboxBrowser=1",
+        "razroom.sandboxBrowser=1",
         "--read-only",
         "--tmpfs",
         "/tmp",
@@ -63,7 +63,7 @@ describe("buildSandboxCreateArgs", () => {
         "--security-opt",
         "seccomp=/tmp/seccomp.json",
         "--security-opt",
-        "apparmor=moltbot-sandbox",
+        "apparmor=razroom-sandbox",
         "--dns",
         "1.1.1.1",
         "--add-host",
@@ -96,8 +96,8 @@ describe("buildSandboxCreateArgs", () => {
 
   it("emits -v flags for custom binds", () => {
     const cfg: SandboxDockerConfig = {
-      image: "moltbot-sandbox:bookworm-slim",
-      containerPrefix: "moltbot-sbx-",
+      image: "razroom-sandbox:bookworm-slim",
+      containerPrefix: "razroom-sbx-",
       workdir: "/workspace",
       readOnlyRoot: false,
       tmpfs: [],
@@ -107,7 +107,7 @@ describe("buildSandboxCreateArgs", () => {
     };
 
     const args = buildSandboxCreateArgs({
-      name: "moltbot-sbx-binds",
+      name: "razroom-sbx-binds",
       cfg,
       scopeKey: "main",
       createdAtMs: 1700000000000,
@@ -129,8 +129,8 @@ describe("buildSandboxCreateArgs", () => {
 
   it("omits -v flags when binds is empty or undefined", () => {
     const cfg: SandboxDockerConfig = {
-      image: "moltbot-sandbox:bookworm-slim",
-      containerPrefix: "moltbot-sbx-",
+      image: "razroom-sandbox:bookworm-slim",
+      containerPrefix: "razroom-sbx-",
       workdir: "/workspace",
       readOnlyRoot: false,
       tmpfs: [],
@@ -140,7 +140,7 @@ describe("buildSandboxCreateArgs", () => {
     };
 
     const args = buildSandboxCreateArgs({
-      name: "moltbot-sbx-no-binds",
+      name: "razroom-sbx-no-binds",
       cfg,
       scopeKey: "main",
       createdAtMs: 1700000000000,

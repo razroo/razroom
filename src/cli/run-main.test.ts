@@ -42,12 +42,12 @@ describe("rewriteUpdateFlagArgv", () => {
 
 describe("shouldRegisterPrimarySubcommand", () => {
   it("skips eager primary registration for help/version invocations", () => {
-    expect(shouldRegisterPrimarySubcommand(["node", "moltbot", "status", "--help"])).toBe(false);
-    expect(shouldRegisterPrimarySubcommand(["node", "moltbot", "-V"])).toBe(false);
+    expect(shouldRegisterPrimarySubcommand(["node", "razroom", "status", "--help"])).toBe(false);
+    expect(shouldRegisterPrimarySubcommand(["node", "razroom", "-V"])).toBe(false);
   });
 
   it("keeps eager primary registration for regular command runs", () => {
-    expect(shouldRegisterPrimarySubcommand(["node", "moltbot", "status"])).toBe(true);
+    expect(shouldRegisterPrimarySubcommand(["node", "razroom", "status"])).toBe(true);
   });
 });
 
@@ -55,7 +55,7 @@ describe("shouldSkipPluginCommandRegistration", () => {
   it("skips plugin registration for root help/version", () => {
     expect(
       shouldSkipPluginCommandRegistration({
-        argv: ["node", "moltbot", "--help"],
+        argv: ["node", "razroom", "--help"],
         primary: null,
         hasBuiltinPrimary: false,
       }),
@@ -65,7 +65,7 @@ describe("shouldSkipPluginCommandRegistration", () => {
   it("skips plugin registration for builtin subcommand help", () => {
     expect(
       shouldSkipPluginCommandRegistration({
-        argv: ["node", "moltbot", "config", "--help"],
+        argv: ["node", "razroom", "config", "--help"],
         primary: "config",
         hasBuiltinPrimary: true,
       }),
@@ -75,7 +75,7 @@ describe("shouldSkipPluginCommandRegistration", () => {
   it("skips plugin registration for builtin command runs", () => {
     expect(
       shouldSkipPluginCommandRegistration({
-        argv: ["node", "moltbot", "sessions", "--json"],
+        argv: ["node", "razroom", "sessions", "--json"],
         primary: "sessions",
         hasBuiltinPrimary: true,
       }),
@@ -85,7 +85,7 @@ describe("shouldSkipPluginCommandRegistration", () => {
   it("keeps plugin registration for non-builtin help", () => {
     expect(
       shouldSkipPluginCommandRegistration({
-        argv: ["node", "moltbot", "voicecall", "--help"],
+        argv: ["node", "razroom", "voicecall", "--help"],
         primary: "voicecall",
         hasBuiltinPrimary: false,
       }),
@@ -95,7 +95,7 @@ describe("shouldSkipPluginCommandRegistration", () => {
   it("keeps plugin registration for non-builtin command runs", () => {
     expect(
       shouldSkipPluginCommandRegistration({
-        argv: ["node", "moltbot", "voicecall", "status"],
+        argv: ["node", "razroom", "voicecall", "status"],
         primary: "voicecall",
         hasBuiltinPrimary: false,
       }),
@@ -105,19 +105,19 @@ describe("shouldSkipPluginCommandRegistration", () => {
 
 describe("shouldEnsureCliPath", () => {
   it("skips path bootstrap for help/version invocations", () => {
-    expect(shouldEnsureCliPath(["node", "moltbot", "--help"])).toBe(false);
-    expect(shouldEnsureCliPath(["node", "moltbot", "-V"])).toBe(false);
+    expect(shouldEnsureCliPath(["node", "razroom", "--help"])).toBe(false);
+    expect(shouldEnsureCliPath(["node", "razroom", "-V"])).toBe(false);
   });
 
   it("skips path bootstrap for read-only fast paths", () => {
-    expect(shouldEnsureCliPath(["node", "moltbot", "status"])).toBe(false);
-    expect(shouldEnsureCliPath(["node", "moltbot", "sessions", "--json"])).toBe(false);
-    expect(shouldEnsureCliPath(["node", "moltbot", "config", "get", "update"])).toBe(false);
-    expect(shouldEnsureCliPath(["node", "moltbot", "models", "status", "--json"])).toBe(false);
+    expect(shouldEnsureCliPath(["node", "razroom", "status"])).toBe(false);
+    expect(shouldEnsureCliPath(["node", "razroom", "sessions", "--json"])).toBe(false);
+    expect(shouldEnsureCliPath(["node", "razroom", "config", "get", "update"])).toBe(false);
+    expect(shouldEnsureCliPath(["node", "razroom", "models", "status", "--json"])).toBe(false);
   });
 
   it("keeps path bootstrap for mutating or unknown commands", () => {
-    expect(shouldEnsureCliPath(["node", "moltbot", "message", "send"])).toBe(true);
-    expect(shouldEnsureCliPath(["node", "moltbot", "voicecall", "status"])).toBe(true);
+    expect(shouldEnsureCliPath(["node", "razroom", "message", "send"])).toBe(true);
+    expect(shouldEnsureCliPath(["node", "razroom", "voicecall", "status"])).toBe(true);
   });
 });

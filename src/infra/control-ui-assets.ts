@@ -3,7 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { runCommandWithTimeout } from "../process/exec.js";
 import { defaultRuntime, type RuntimeEnv } from "../runtime.js";
-import { resolveMoltBotPackageRoot, resolveMoltBotPackageRootSync } from "./moltbot-root.js";
+import { resolveRazroomPackageRoot, resolveRazroomPackageRootSync } from "./razroom-root.js";
 
 const CONTROL_UI_DIST_PATH_SEGMENTS = ["dist", "control-ui", "index.html"] as const;
 
@@ -86,12 +86,12 @@ export async function resolveControlUiDistIndexPath(
     return path.join(distDir, "control-ui", "index.html");
   }
 
-  const packageRoot = await resolveMoltBotPackageRoot({ argv1: normalized, moduleUrl });
+  const packageRoot = await resolveRazroomPackageRoot({ argv1: normalized, moduleUrl });
   if (packageRoot) {
     return path.join(packageRoot, "dist", "control-ui", "index.html");
   }
 
-  // Fallback: traverse up and find package.json with name "moltbot" + dist/control-ui/index.html
+  // Fallback: traverse up and find package.json with name "razroom" + dist/control-ui/index.html
   // This handles global installs where path-based resolution might fail.
   let dir = path.dirname(normalized);
   for (let i = 0; i < 8; i++) {
@@ -101,7 +101,7 @@ export async function resolveControlUiDistIndexPath(
       try {
         const raw = fs.readFileSync(pkgJsonPath, "utf-8");
         const parsed = JSON.parse(raw) as { name?: unknown };
-        if (parsed.name === "moltbot") {
+        if (parsed.name === "razroom") {
           return indexPath;
         }
       } catch {
@@ -163,7 +163,7 @@ export function resolveControlUiRootSync(opts: ControlUiRootResolveOptions = {})
       return null;
     }
   })();
-  const packageRoot = resolveMoltBotPackageRootSync({
+  const packageRoot = resolveRazroomPackageRootSync({
     argv1,
     moduleUrl: opts.moduleUrl,
     cwd,
@@ -180,7 +180,7 @@ export function resolveControlUiRootSync(opts: ControlUiRootResolveOptions = {})
     addCandidate(candidates, path.join(moduleDir, "../../dist/control-ui"));
   }
   if (argv1Dir) {
-    // moltbot.mjs or dist/<bundle>.js
+    // razroom.mjs or dist/<bundle>.js
     addCandidate(candidates, path.join(argv1Dir, "dist", "control-ui"));
     addCandidate(candidates, path.join(argv1Dir, "control-ui"));
   }

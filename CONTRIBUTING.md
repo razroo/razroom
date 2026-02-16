@@ -1,12 +1,12 @@
-# Contributing to MoltBot
+# Contributing to Razroom
 
 Welcome to the lobster tank! 🦞
 
 ## Quick Links
 
-- **GitHub:** https://github.com/moltbot/moltbot
+- **GitHub:** https://github.com/razroom/razroom
 - **Discord:** https://discord.gg/qkhbAGHRBT
-- **X/Twitter:** [@steipete](https://x.com/steipete) / [@moltbot](https://x.com/moltbot)
+- **X/Twitter:** [@steipete](https://x.com/steipete) / [@razroom](https://x.com/razroom)
 
 ## Maintainers
 
@@ -34,12 +34,12 @@ Welcome to the lobster tank! 🦞
 ## How to Contribute
 
 1. **Bugs & small fixes** → Open a PR!
-2. **New features / architecture** → Start a [GitHub Discussion](https://github.com/moltbot/moltbot/discussions) or ask in Discord first
+2. **New features / architecture** → Start a [GitHub Discussion](https://github.com/razroom/razroom/discussions) or ask in Discord first
 3. **Questions** → Discord #setup-help
 
 ## Before You PR
 
-- Test locally with your MoltBot instance
+- Test locally with your Razroom instance
 - Run tests: `pnpm build && pnpm check && pnpm test`
 - Ensure CI checks pass
 - Keep PRs focused (one thing per PR)
@@ -79,21 +79,21 @@ We are currently prioritizing:
 
 - **Stability**: Fixing edge cases in channel connections (WhatsApp/Telegram).
 - **UX**: Improving the onboarding wizard and error messages.
-- **Skills**: For skill contributions, head to [ClawHub](https://clawhub.ai/) — the community hub for MoltBot skills.
+- **Skills**: For skill contributions, head to [ClawHub](https://clawhub.ai/) — the community hub for Razroom skills.
 - **Performance**: Optimizing token usage and compaction logic.
 
-Check the [GitHub Issues](https://github.com/moltbot/moltbot/issues) for "good first issue" labels!
+Check the [GitHub Issues](https://github.com/razroom/razroom/issues) for "good first issue" labels!
 
 ## Report a Vulnerability
 
 We take security reports seriously. Report vulnerabilities directly to the repository where the issue lives:
 
-- **Core CLI and gateway** — [moltbot/moltbot](https://github.com/moltbot/moltbot)
-- **macOS desktop app** — [moltbot/moltbot](https://github.com/moltbot/moltbot) (apps/macos)
-- **ClawHub** — [moltbot/clawhub](https://github.com/moltbot/clawhub)
-- **Trust and threat model** — [moltbot/trust](https://github.com/moltbot/trust)
+- **Core CLI and gateway** — [razroom/razroom](https://github.com/razroom/razroom)
+- **macOS desktop app** — [razroom/razroom](https://github.com/razroom/razroom) (apps/macos)
+- **ClawHub** — [razroom/clawhub](https://github.com/razroom/clawhub)
+- **Trust and threat model** — [razroom/trust](https://github.com/razroom/trust)
 
-For issues that don't fit a specific repo, or if you're unsure, email **security@moltbot.ai** and we'll route it.
+For issues that don't fit a specific repo, or if you're unsure, email **security@razroom.ai** and we'll route it.
 
 ### Required in Reports
 

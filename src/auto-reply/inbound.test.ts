@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it, mock, spyOn } from "bun:test";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { GroupKeyResolution } from "../config/sessions.js";
 import { createInboundDebouncer } from "./inbound-debounce.js";
 import { resolveGroupRequireMention } from "./reply/groups.js";
@@ -260,9 +260,9 @@ describe("createInboundDebouncer", () => {
 
 describe("initSessionState BodyStripped", () => {
   it("prefers BodyForAgent over Body for group chats", async () => {
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-sender-meta-"));
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-sender-meta-"));
     const storePath = path.join(root, "sessions.json");
-    const cfg = { session: { store: storePath } } as MoltBotConfig;
+    const cfg = { session: { store: storePath } } as RazroomConfig;
 
     const result = await initSessionState({
       ctx: {
@@ -282,9 +282,9 @@ describe("initSessionState BodyStripped", () => {
   });
 
   it("prefers BodyForAgent over Body for direct chats", async () => {
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-sender-meta-direct-"));
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-sender-meta-direct-"));
     const storePath = path.join(root, "sessions.json");
-    const cfg = { session: { store: storePath } } as MoltBotConfig;
+    const cfg = { session: { store: storePath } } as RazroomConfig;
 
     const result = await initSessionState({
       ctx: {
@@ -307,22 +307,22 @@ describe("mention helpers", () => {
   it("builds regexes and skips invalid patterns", () => {
     const regexes = buildMentionRegexes({
       messages: {
-        groupChat: { mentionPatterns: ["\\bmoltbot\\b", "(invalid"] },
+        groupChat: { mentionPatterns: ["\\brazroom\\b", "(invalid"] },
       },
     });
     expect(regexes).toHaveLength(1);
-    expect(regexes[0]?.test("moltbot")).toBe(true);
+    expect(regexes[0]?.test("razroom")).toBe(true);
   });
 
   it("normalizes zero-width characters", () => {
-    expect(normalizeMentionText("open\u200bclaw")).toBe("moltbot");
+    expect(normalizeMentionText("open\u200bclaw")).toBe("razroom");
   });
 
   it("matches patterns case-insensitively", () => {
     const regexes = buildMentionRegexes({
-      messages: { groupChat: { mentionPatterns: ["\\bmoltbot\\b"] } },
+      messages: { groupChat: { mentionPatterns: ["\\brazroom\\b"] } },
     });
-    expect(matchesMentionPatterns("MOLTBOT: hi", regexes)).toBe(true);
+    expect(matchesMentionPatterns("RAZROOM: hi", regexes)).toBe(true);
   });
 
   it("uses per-agent mention patterns when configured", () => {
@@ -349,7 +349,7 @@ describe("mention helpers", () => {
 
 describe("resolveGroupRequireMention", () => {
   it("respects Discord guild/channel requireMention settings", () => {
-    const cfg: MoltBotConfig = {
+    const cfg: RazroomConfig = {
       channels: {
         discord: {
           guilds: {
@@ -379,7 +379,7 @@ describe("resolveGroupRequireMention", () => {
   });
 
   it("respects Slack channel requireMention settings", () => {
-    const cfg: MoltBotConfig = {
+    const cfg: RazroomConfig = {
       channels: {
         slack: {
           channels: {

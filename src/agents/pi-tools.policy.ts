@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { AnyAgentTool } from "./pi-tools.types.js";
 import type { SandboxToolPolicy } from "./sandbox.js";
 import { getChannelDock } from "../channels/dock.js";
@@ -80,7 +80,7 @@ function resolveSubagentDenyList(depth: number, maxSpawnDepth: number): string[]
   return [...SUBAGENT_TOOL_DENY_ALWAYS];
 }
 
-export function resolveSubagentToolPolicy(cfg?: MoltBotConfig, depth?: number): SandboxToolPolicy {
+export function resolveSubagentToolPolicy(cfg?: RazroomConfig, depth?: number): SandboxToolPolicy {
   const configured = cfg?.tools?.subagents?.tools;
   const maxSpawnDepth = cfg?.agents?.defaults?.subagents?.maxSpawnDepth ?? 1;
   const effectiveDepth = typeof depth === "number" && depth >= 0 ? depth : 1;
@@ -213,7 +213,7 @@ function resolveProviderToolPolicy(params: {
 }
 
 export function resolveEffectiveToolPolicy(params: {
-  config?: MoltBotConfig;
+  config?: RazroomConfig;
   sessionKey?: string;
   modelProvider?: string;
   modelId?: string;
@@ -258,7 +258,7 @@ export function resolveEffectiveToolPolicy(params: {
 }
 
 export function resolveGroupToolPolicy(params: {
-  config?: MoltBotConfig;
+  config?: RazroomConfig;
   sessionKey?: string;
   spawnedBy?: string | null;
   messageProvider?: string;

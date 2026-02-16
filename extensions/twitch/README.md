@@ -1,17 +1,17 @@
-# @moltbot/twitch
+# @razroom/twitch
 
-Twitch channel plugin for MoltBot.
+Twitch channel plugin for Razroom.
 
 ## Install (local checkout)
 
 ```bash
-moltbot plugins install ./extensions/twitch
+razroom plugins install ./extensions/twitch
 ```
 
 ## Install (npm)
 
 ```bash
-moltbot plugins install @moltbot/twitch
+razroom plugins install @razroom/twitch
 ```
 
 Onboarding: select Twitch and confirm the install prompt to fetch the plugin automatically.
@@ -27,7 +27,7 @@ Minimal config (simplified single-account):
   channels: {
     twitch: {
       enabled: true,
-      username: "moltbot",
+      username: "razroom",
       accessToken: "oauth:abc123...", // OAuth Access Token (add oauth: prefix)
       clientId: "xyz789...", // Client ID from Token Generator
       channel: "vevisk", // Channel to join (required)
@@ -52,13 +52,13 @@ Multi-account config (advanced):
       enabled: true,
       accounts: {
         default: {
-          username: "moltbot",
+          username: "razroom",
           accessToken: "oauth:abc123...",
           clientId: "xyz789...",
           channel: "vevisk",
         },
         channel2: {
-          username: "moltbot",
+          username: "razroom",
           accessToken: "oauth:def456...",
           clientId: "uvw012...",
           channel: "secondchannel",
@@ -80,7 +80,7 @@ Multi-account config (advanced):
 
 ## Full documentation
 
-See https://docs.moltbot.ai/channels/twitch for:
+See https://docs.razroom.ai/channels/twitch for:
 
 - Token refresh setup
 - Access control patterns

@@ -22,17 +22,17 @@ x-i18n:
 
 - **工作区**（文件、AGENTS.md/SOUL.md/USER.md、本地笔记、人设规则）。
 - **状态目录**（`agentDir`）用于认证配置文件、模型注册表和每智能体配置。
-- **会话存储**（聊天历史 + 路由状态）位于 `~/.moltbot/agents/<agentId>/sessions` 下。
+- **会话存储**（聊天历史 + 路由状态）位于 `~/.razroom/agents/<agentId>/sessions` 下。
 
 认证配置文件是**每智能体独立的**。每个智能体从自己的位置读取：
 
 ```
-~/.moltbot/agents/<agentId>/agent/auth-profiles.json
+~/.razroom/agents/<agentId>/agent/auth-profiles.json
 ```
 
 主智能体凭证**不会**自动共享。切勿在智能体之间重用 `agentDir`（这会导致认证/会话冲突）。如果你想共享凭证，请将 `auth-profiles.json` 复制到另一个智能体的 `agentDir`。
 
-Skills 通过每个工作区的 `skills/` 文件夹实现每智能体独立，共享的 Skills 可从 `~/.moltbot/skills` 获取。参见 [Skills：每智能体 vs 共享](/tools/skills#per-agent-vs-shared-skills)。
+Skills 通过每个工作区的 `skills/` 文件夹实现每智能体独立，共享的 Skills 可从 `~/.razroom/skills` 获取。参见 [Skills：每智能体 vs 共享](/tools/skills#per-agent-vs-shared-skills)。
 
 Gateway 网关可以托管**一个智能体**（默认）或**多个智能体**并行。
 
@@ -40,27 +40,27 @@ Gateway 网关可以托管**一个智能体**（默认）或**多个智能体**�
 
 ## 路径（快速映射）
 
-- 配置：`~/.moltbot/moltbot.json`（或 `MOLTBOT_CONFIG_PATH`）
-- 状态目录：`~/.moltbot`（或 `MOLTBOT_STATE_DIR`）
-- 工作区：`~/.moltbot/workspace`（或 `~/.moltbot/workspace-<agentId>`）
-- 智能体目录：`~/.moltbot/agents/<agentId>/agent`（或 `agents.list[].agentDir`）
-- 会话：`~/.moltbot/agents/<agentId>/sessions`
+- 配置：`~/.razroom/razroom.json`（或 `RAZROOM_CONFIG_PATH`）
+- 状态目录：`~/.razroom`（或 `RAZROOM_STATE_DIR`）
+- 工作区：`~/.razroom/workspace`（或 `~/.razroom/workspace-<agentId>`）
+- 智能体目录：`~/.razroom/agents/<agentId>/agent`（或 `agents.list[].agentDir`）
+- 会话：`~/.razroom/agents/<agentId>/sessions`
 
 ### 单智能体模式（默认）
 
-如果你什么都不做，MoltBot 运行单个智能体：
+如果你什么都不做，Razroom 运行单个智能体：
 
 - `agentId` 默认为 **`main`**。
 - 会话键为 `agent:main:<mainKey>`。
-- 工作区默认为 `~/.moltbot/workspace`（或当设置了 `MOLTBOT_PROFILE` 时为 `~/.moltbot/workspace-<profile>`）。
-- 状态默认为 `~/.moltbot/agents/main/agent`。
+- 工作区默认为 `~/.razroom/workspace`（或当设置了 `RAZROOM_PROFILE` 时为 `~/.razroom/workspace-<profile>`）。
+- 状态默认为 `~/.razroom/agents/main/agent`。
 
 ## 智能体助手
 
 使用智能体向导添加新的隔离智能体：
 
 ```bash
-moltbot agents add work
+razroom agents add work
 ```
 
 然后添加 `bindings`（或让向导完成）来路由入站消息。
@@ -68,7 +68,7 @@ moltbot agents add work
 验证：
 
 ```bash
-moltbot agents list --bindings
+razroom agents list --bindings
 ```
 
 ## 多个智能体 = 多个人、多种人格
@@ -93,8 +93,8 @@ moltbot agents list --bindings
 {
   agents: {
     list: [
-      { id: "alex", workspace: "~/.moltbot/workspace-alex" },
-      { id: "mia", workspace: "~/.moltbot/workspace-mia" },
+      { id: "alex", workspace: "~/.razroom/workspace-alex" },
+      { id: "mia", workspace: "~/.razroom/workspace-mia" },
     ],
   },
   bindings: [
@@ -139,7 +139,7 @@ moltbot agents list --bindings
 
 ## 示例：两个 WhatsApp → 两个智能体
 
-`~/.moltbot/moltbot.json`（JSON5）：
+`~/.razroom/razroom.json`（JSON5）：
 
 ```js
 {
@@ -149,14 +149,14 @@ moltbot agents list --bindings
         id: "home",
         default: true,
         name: "Home",
-        workspace: "~/.moltbot/workspace-home",
-        agentDir: "~/.moltbot/agents/home/agent",
+        workspace: "~/.razroom/workspace-home",
+        agentDir: "~/.razroom/agents/home/agent",
       },
       {
         id: "work",
         name: "Work",
-        workspace: "~/.moltbot/workspace-work",
-        agentDir: "~/.moltbot/agents/work/agent",
+        workspace: "~/.razroom/workspace-work",
+        agentDir: "~/.razroom/agents/work/agent",
       },
     ],
   },
@@ -189,12 +189,12 @@ moltbot agents list --bindings
     whatsapp: {
       accounts: {
         personal: {
-          // 可选覆盖。默认：~/.moltbot/credentials/whatsapp/personal
-          // authDir: "~/.moltbot/credentials/whatsapp/personal",
+          // 可选覆盖。默认：~/.razroom/credentials/whatsapp/personal
+          // authDir: "~/.razroom/credentials/whatsapp/personal",
         },
         biz: {
-          // 可选覆盖。默认：~/.moltbot/credentials/whatsapp/biz
-          // authDir: "~/.moltbot/credentials/whatsapp/biz",
+          // 可选覆盖。默认：~/.razroom/credentials/whatsapp/biz
+          // authDir: "~/.razroom/credentials/whatsapp/biz",
         },
       },
     },
@@ -213,13 +213,13 @@ moltbot agents list --bindings
       {
         id: "chat",
         name: "Everyday",
-        workspace: "~/.moltbot/workspace-chat",
+        workspace: "~/.razroom/workspace-chat",
         model: "anthropic/claude-sonnet-4-5",
       },
       {
         id: "opus",
         name: "Deep Work",
-        workspace: "~/.moltbot/workspace-opus",
+        workspace: "~/.razroom/workspace-opus",
         model: "anthropic/claude-opus-4-5",
       },
     ],
@@ -247,13 +247,13 @@ moltbot agents list --bindings
       {
         id: "chat",
         name: "Everyday",
-        workspace: "~/.moltbot/workspace-chat",
+        workspace: "~/.razroom/workspace-chat",
         model: "anthropic/claude-sonnet-4-5",
       },
       {
         id: "opus",
         name: "Deep Work",
-        workspace: "~/.moltbot/workspace-opus",
+        workspace: "~/.razroom/workspace-opus",
         model: "anthropic/claude-opus-4-5",
       },
     ],
@@ -278,7 +278,7 @@ moltbot agents list --bindings
       {
         id: "family",
         name: "Family",
-        workspace: "~/.moltbot/workspace-family",
+        workspace: "~/.razroom/workspace-family",
         identity: { name: "Family Bot" },
         groupChat: {
           mentionPatterns: ["@family", "@familybot", "@Family Bot"],
@@ -329,7 +329,7 @@ moltbot agents list --bindings
     list: [
       {
         id: "personal",
-        workspace: "~/.moltbot/workspace-personal",
+        workspace: "~/.razroom/workspace-personal",
         sandbox: {
           mode: "off",  // 个人智能体无沙箱
         },
@@ -337,7 +337,7 @@ moltbot agents list --bindings
       },
       {
         id: "family",
-        workspace: "~/.moltbot/workspace-family",
+        workspace: "~/.razroom/workspace-family",
         sandbox: {
           mode: "all",     // 始终沙箱隔离
           scope: "agent",  // 每智能体一个容器

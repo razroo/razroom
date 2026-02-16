@@ -1,13 +1,13 @@
 {
-  "name": "@moltbot/mattermost",
+  "name": "@razroom/mattermost",
   "version": "2026.2.15",
   "private": true,
-  "description": "MoltBot Mattermost channel plugin",
+  "description": "Razroom Mattermost channel plugin",
   "type": "module",
   "devDependencies": {
-    "moltbot": "workspace:*"
+    "razroom": "workspace:*"
   },
-  "moltbot": {
+  "razroom": {
     "extensions": [
       "./index.ts"
     ],
@@ -21,7 +21,7 @@
       "order": 65
     },
     "install": {
-      "npmSpec": "@moltbot/mattermost",
+      "npmSpec": "@razroom/mattermost",
       "localPath": "extensions/mattermost",
       "defaultChoice": "npm"
     }

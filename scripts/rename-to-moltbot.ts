@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 /**
- * Rename all "moltbot" references to "moltbot" throughout the repository
- * Handles: moltbot -> moltbot, MoltBot -> MoltBot, MOLTBOT -> MOLTBOT
+ * Rename all "razroom" references to "razroom" throughout the repository
+ * Handles: razroom -> razroom, Razroom -> Razroom, RAZROOM -> RAZROOM
  */
 
 import { readdirSync, readFileSync, writeFileSync, statSync, renameSync } from "fs";
@@ -34,7 +34,7 @@ const PROCESSABLE_EXTENSIONS = [
 const SKIP_DIRS = ["node_modules", ".git", "dist", ".next", ".turbo"];
 
 /**
- * Rename all moltbot references in file content
+ * Rename all razroom references in file content
  */
 function renameInFileContent(filePath: string): boolean {
   try {
@@ -43,19 +43,19 @@ function renameInFileContent(filePath: string): boolean {
     let replacements = 0;
 
     // Replace all variations
-    // Case 1: MOLTBOT -> MOLTBOT
-    const upperCount = (content.match(/MOLTBOT/g) || []).length;
-    content = content.replace(/MOLTBOT/g, "MOLTBOT");
+    // Case 1: RAZROOM -> RAZROOM
+    const upperCount = (content.match(/RAZROOM/g) || []).length;
+    content = content.replace(/RAZROOM/g, "RAZROOM");
     replacements += upperCount;
 
-    // Case 2: MoltBot -> MoltBot
-    const titleCount = (content.match(/MoltBot/g) || []).length;
-    content = content.replace(/MoltBot/g, "MoltBot");
+    // Case 2: Razroom -> Razroom
+    const titleCount = (content.match(/Razroom/g) || []).length;
+    content = content.replace(/Razroom/g, "Razroom");
     replacements += titleCount;
 
-    // Case 3: moltbot -> moltbot (must come last to not affect the above)
-    const lowerCount = (content.match(/moltbot/g) || []).length;
-    content = content.replace(/moltbot/g, "moltbot");
+    // Case 3: razroom -> razroom (must come last to not affect the above)
+    const lowerCount = (content.match(/razroom/g) || []).length;
+    content = content.replace(/razroom/g, "razroom");
     replacements += lowerCount;
 
     // Only write if content changed
@@ -74,17 +74,17 @@ function renameInFileContent(filePath: string): boolean {
 }
 
 /**
- * Rename file if it contains moltbot in its name
+ * Rename file if it contains razroom in its name
  */
 function renameFile(filePath: string): string | null {
   const dir = dirname(filePath);
   const filename = basename(filePath);
 
-  if (filename.toLowerCase().includes("moltbot")) {
+  if (filename.toLowerCase().includes("razroom")) {
     const newFilename = filename
-      .replace(/moltbot/g, "moltbot")
-      .replace(/MoltBot/g, "MoltBot")
-      .replace(/MOLTBOT/g, "MOLTBOT");
+      .replace(/razroom/g, "razroom")
+      .replace(/Razroom/g, "Razroom")
+      .replace(/RAZROOM/g, "RAZROOM");
 
     const newPath = join(dir, newFilename);
 
@@ -165,7 +165,7 @@ function processDirectory(dirPath: string): void {
  */
 function renameImportantFiles(): void {
   const renames = [
-    { from: "moltbot.mjs", to: "moltbot.mjs" },
+    { from: "razroom.mjs", to: "razroom.mjs" },
   ];
 
   for (const { from, to } of renames) {
@@ -183,7 +183,7 @@ function renameImportantFiles(): void {
  * Main function
  */
 async function main() {
-  console.log("🔄 Renaming all 'moltbot' references to 'moltbot'...\n");
+  console.log("🔄 Renaming all 'razroom' references to 'razroom'...\n");
 
   const startTime = performance.now();
 
@@ -214,8 +214,8 @@ async function main() {
   console.log("\n📝 Next steps:");
   console.log("   1. Review changes: git diff");
   console.log("   2. Test build: bun run build");
-  console.log("   3. Test CLI: bun moltbot.mjs --version");
-  console.log("   4. Commit changes: git add . && git commit -m 'Rename moltbot to moltbot'");
+  console.log("   3. Test CLI: bun razroom.mjs --version");
+  console.log("   4. Commit changes: git add . && git commit -m 'Rename razroom to razroom'");
 }
 
 main();

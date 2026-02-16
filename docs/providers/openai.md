@@ -1,7 +1,7 @@
 ---
-summary: "Use OpenAI via API keys or Codex subscription in MoltBot"
+summary: "Use OpenAI via API keys or Codex subscription in Razroom"
 read_when:
-  - You want to use OpenAI models in MoltBot
+  - You want to use OpenAI models in Razroom
   - You want Codex subscription auth instead of API keys
 title: "OpenAI"
 ---
@@ -19,9 +19,9 @@ Get your API key from the OpenAI dashboard.
 ### CLI setup
 
 ```bash
-moltbot onboard --auth-choice openai-api-key
+razroom onboard --auth-choice openai-api-key
 # or non-interactive
-moltbot onboard --openai-api-key "$OPENAI_API_KEY"
+razroom onboard --openai-api-key "$OPENAI_API_KEY"
 ```
 
 ### Config snippet
@@ -42,10 +42,10 @@ Codex cloud requires ChatGPT sign-in, while the Codex CLI supports ChatGPT or AP
 
 ```bash
 # Run Codex OAuth in the wizard
-moltbot onboard --auth-choice openai-codex
+razroom onboard --auth-choice openai-codex
 
 # Or run OAuth directly
-moltbot models auth login --provider openai-codex
+razroom models auth login --provider openai-codex
 ```
 
 ### Config snippet (Codex subscription)

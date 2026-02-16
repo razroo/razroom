@@ -1,5 +1,5 @@
 import { describe, expect, it, mock, spyOn } from "bun:test";
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 import { handleWhatsAppAction } from "./whatsapp-actions.js";
 
 const sendReactionWhatsApp = mock(async () => undefined);
@@ -12,7 +12,7 @@ mock("../../web/outbound.js", () => ({
 
 const enabledConfig = {
   channels: { whatsapp: { actions: { reactions: true } } },
-} as MoltBotConfig;
+} as RazroomConfig;
 
 describe("handleWhatsAppAction", () => {
   it("adds reactions", async () => {
@@ -94,7 +94,7 @@ describe("handleWhatsAppAction", () => {
   it("respects reaction gating", async () => {
     const cfg = {
       channels: { whatsapp: { actions: { reactions: false } } },
-    } as MoltBotConfig;
+    } as RazroomConfig;
     await expect(
       handleWhatsAppAction(
         {

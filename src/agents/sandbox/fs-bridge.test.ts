@@ -17,11 +17,11 @@ function createSandbox(overrides?: Partial<SandboxContext>): SandboxContext {
     workspaceDir: "/tmp/workspace",
     agentWorkspaceDir: "/tmp/workspace",
     workspaceAccess: "rw",
-    containerName: "moltbot-sbx-test",
+    containerName: "razroom-sbx-test",
     containerWorkdir: "/workspace",
     docker: {
-      image: "moltbot-sandbox:bookworm-slim",
-      containerPrefix: "moltbot-sbx-",
+      image: "razroom-sandbox:bookworm-slim",
+      containerPrefix: "razroom-sbx-",
       network: "none",
       user: "1000:1000",
       workdir: "/workspace",
@@ -102,7 +102,7 @@ describe("sandbox fs bridge shell compatibility", () => {
 
     const args = mockedExecDockerRaw.mock.calls.at(-1)?.[0] ?? [];
     expect(args).toEqual(
-      expect.arrayContaining(["moltbot-sbx-test", "sh", "-c", 'set -eu; cat -- "$1"']),
+      expect.arrayContaining(["razroom-sbx-test", "sh", "-c", 'set -eu; cat -- "$1"']),
     );
     expect(args.at(-1)).toBe("/workspace-two/README.md");
   });

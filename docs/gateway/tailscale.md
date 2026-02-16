@@ -8,29 +8,29 @@ title: "Tailscale"
 
 # Tailscale (Gateway dashboard)
 
-MoltBot can auto-configure Tailscale **Serve** (tailnet) or **Funnel** (public) for the
+Razroom can auto-configure Tailscale **Serve** (tailnet) or **Funnel** (public) for the
 Gateway dashboard and WebSocket port. This keeps the Gateway bound to loopback while
 Tailscale provides HTTPS, routing, and (for Serve) identity headers.
 
 ## Modes
 
 - `serve`: Tailnet-only Serve via `tailscale serve`. The gateway stays on `127.0.0.1`.
-- `funnel`: Public HTTPS via `tailscale funnel`. MoltBot requires a shared password.
+- `funnel`: Public HTTPS via `tailscale funnel`. Razroom requires a shared password.
 - `off`: Default (no Tailscale automation).
 
 ## Auth
 
 Set `gateway.auth.mode` to control the handshake:
 
-- `token` (default when `MOLTBOT_GATEWAY_TOKEN` is set)
-- `password` (shared secret via `MOLTBOT_GATEWAY_PASSWORD` or config)
+- `token` (default when `RAZROOM_GATEWAY_TOKEN` is set)
+- `password` (shared secret via `RAZROOM_GATEWAY_PASSWORD` or config)
 
 When `tailscale.mode = "serve"` and `gateway.auth.allowTailscale` is `true`,
 valid Serve proxy requests can authenticate via Tailscale identity headers
-(`tailscale-user-login`) without supplying a token/password. MoltBot verifies
+(`tailscale-user-login`) without supplying a token/password. Razroom verifies
 the identity by resolving the `x-forwarded-for` address via the local Tailscale
 daemon (`tailscale whois`) and matching it to the header before accepting it.
-MoltBot only treats a request as Serve when it arrives from loopback with
+Razroom only treats a request as Serve when it arrives from loopback with
 Tailscale’s `x-forwarded-for`, `x-forwarded-proto`, and `x-forwarded-host`
 headers.
 To require explicit credentials, set `gateway.auth.allowTailscale: false` or
@@ -83,20 +83,20 @@ Note: loopback (`http://127.0.0.1:18789`) will **not** work in this mode.
 }
 ```
 
-Prefer `MOLTBOT_GATEWAY_PASSWORD` over committing a password to disk.
+Prefer `RAZROOM_GATEWAY_PASSWORD` over committing a password to disk.
 
 ## CLI examples
 
 ```bash
-moltbot gateway --tailscale serve
-moltbot gateway --tailscale funnel --auth password
+razroom gateway --tailscale serve
+razroom gateway --tailscale funnel --auth password
 ```
 
 ## Notes
 
 - Tailscale Serve/Funnel requires the `tailscale` CLI to be installed and logged in.
 - `tailscale.mode: "funnel"` refuses to start unless auth mode is `password` to avoid public exposure.
-- Set `gateway.tailscale.resetOnExit` if you want MoltBot to undo `tailscale serve`
+- Set `gateway.tailscale.resetOnExit` if you want Razroom to undo `tailscale serve`
   or `tailscale funnel` configuration on shutdown.
 - `gateway.bind: "tailnet"` is a direct Tailnet bind (no HTTPS, no Serve/Funnel).
 - `gateway.bind: "auto"` prefers loopback; use `tailnet` if you want Tailnet-only.

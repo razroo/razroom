@@ -29,7 +29,7 @@ describe("buildWorkspaceSkillsPrompt — .agents/skills/ directories", () => {
   let fakeHome: string;
 
   beforeEach(async () => {
-    fakeHome = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-home-"));
+    fakeHome = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-home-"));
     spyOn(os, "homedir").mockReturnValue(fakeHome);
   });
 
@@ -38,7 +38,7 @@ describe("buildWorkspaceSkillsPrompt — .agents/skills/ directories", () => {
   });
 
   it("loads project .agents/skills/ above managed and below workspace", async () => {
-    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-"));
+    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-"));
     const managedDir = path.join(workspaceDir, ".managed");
     const bundledDir = path.join(workspaceDir, ".bundled");
 
@@ -77,7 +77,7 @@ describe("buildWorkspaceSkillsPrompt — .agents/skills/ directories", () => {
   });
 
   it("loads personal ~/.agents/skills/ above managed and below project .agents/skills/", async () => {
-    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-"));
+    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-"));
     const managedDir = path.join(workspaceDir, ".managed");
     const bundledDir = path.join(workspaceDir, ".bundled");
 
@@ -116,7 +116,7 @@ describe("buildWorkspaceSkillsPrompt — .agents/skills/ directories", () => {
   });
 
   it("loads unique skills from all .agents/skills/ sources alongside others", async () => {
-    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-"));
+    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-"));
     const managedDir = path.join(workspaceDir, ".managed");
     const bundledDir = path.join(workspaceDir, ".bundled");
 

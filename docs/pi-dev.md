@@ -4,7 +4,7 @@ title: "Pi Development Workflow"
 
 # Pi Development Workflow
 
-This guide summarizes a sane workflow for working on the pi integration in MoltBot.
+This guide summarizes a sane workflow for working on the pi integration in Razroom.
 
 ## Type Checking and Linting
 
@@ -43,7 +43,7 @@ Recommended flow:
 - Run the gateway in dev mode:
   - `pnpm gateway:dev`
 - Trigger the agent directly:
-  - `pnpm moltbot agent --message "Hello" --thinking low`
+  - `pnpm razroom agent --message "Hello" --thinking low`
 - Use the TUI for interactive debugging:
   - `pnpm tui`
 
@@ -51,11 +51,11 @@ For tool call behavior, prompt for a `read` or `exec` action so you can see tool
 
 ## Clean Slate Reset
 
-State lives under the MoltBot state directory. Default is `~/.moltbot`. If `MOLTBOT_STATE_DIR` is set, use that directory instead.
+State lives under the Razroom state directory. Default is `~/.razroom`. If `RAZROOM_STATE_DIR` is set, use that directory instead.
 
 To reset everything:
 
-- `moltbot.json` for config
+- `razroom.json` for config
 - `credentials/` for auth profiles and tokens
 - `agents/<agentId>/sessions/` for agent session history
 - `agents/<agentId>/sessions.json` for the session index
@@ -66,5 +66,5 @@ If you only want to reset sessions, delete `agents/<agentId>/sessions/` and `age
 
 ## References
 
-- [https://docs.moltbot.ai/testing](https://docs.moltbot.ai/testing)
-- [https://docs.moltbot.ai/start/getting-started](https://docs.moltbot.ai/start/getting-started)
+- [https://docs.razroom.ai/testing](https://docs.razroom.ai/testing)
+- [https://docs.razroom.ai/start/getting-started](https://docs.razroom.ai/start/getting-started)

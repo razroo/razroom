@@ -24,18 +24,18 @@ let fixtureRoot = "";
 let caseId = 0;
 
 type StateEnvSnapshot = {
-  MOLTBOT_STATE_DIR: string | undefined;
+  RAZROOM_STATE_DIR: string | undefined;
 };
 
 function snapshotStateEnv(): StateEnvSnapshot {
-  return { MOLTBOT_STATE_DIR: process.env.MOLTBOT_STATE_DIR };
+  return { RAZROOM_STATE_DIR: process.env.RAZROOM_STATE_DIR };
 }
 
 function restoreStateEnv(snapshot: StateEnvSnapshot) {
-  if (snapshot.MOLTBOT_STATE_DIR === undefined) {
-    delete process.env.MOLTBOT_STATE_DIR;
+  if (snapshot.RAZROOM_STATE_DIR === undefined) {
+    delete process.env.RAZROOM_STATE_DIR;
   } else {
-    process.env.MOLTBOT_STATE_DIR = snapshot.MOLTBOT_STATE_DIR;
+    process.env.RAZROOM_STATE_DIR = snapshot.RAZROOM_STATE_DIR;
   }
 }
 
@@ -43,7 +43,7 @@ async function withTempStateDir<T>(fn: (stateDir: string) => Promise<T>): Promis
   const stateDir = path.join(fixtureRoot, `case-${++caseId}`);
   await fs.mkdir(stateDir, { recursive: true });
   const envSnapshot = snapshotStateEnv();
-  process.env.MOLTBOT_STATE_DIR = stateDir;
+  process.env.RAZROOM_STATE_DIR = stateDir;
   try {
     return await fn(stateDir);
   } finally {
@@ -76,7 +76,7 @@ describe("runReplyAgent typing (heartbeat)", () => {
   installRunReplyAgentTypingHeartbeatTestHooks();
 
   beforeAll(async () => {
-    fixtureRoot = await fs.mkdtemp(path.join(tmpdir(), "moltbot-typing-heartbeat-"));
+    fixtureRoot = await fs.mkdtemp(path.join(tmpdir(), "razroom-typing-heartbeat-"));
   });
 
   afterAll(async () => {
@@ -86,7 +86,7 @@ describe("runReplyAgent typing (heartbeat)", () => {
   });
 
   beforeEach(() => {
-    vi.stubEnv("MOLTBOT_TEST_FAST", "1");
+    vi.stubEnv("RAZROOM_TEST_FAST", "1");
   });
 
   it("signals typing for normal runs", async () => {

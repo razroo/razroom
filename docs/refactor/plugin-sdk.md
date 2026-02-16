@@ -34,13 +34,13 @@ Contents (examples):
 
 Delivery:
 
-- Publish as `moltbot/plugin-sdk` (or export from core under `moltbot/plugin-sdk`).
+- Publish as `razroom/plugin-sdk` (or export from core under `razroom/plugin-sdk`).
 - Semver with explicit stability guarantees.
 
 ### 2) Plugin Runtime (execution surface, injected)
 
 Scope: everything that touches core runtime behavior.
-Accessed via `MoltBotPluginApi.runtime` so plugins never import `src/**`.
+Accessed via `RazroomPluginApi.runtime` so plugins never import `src/**`.
 
 Proposed surface (minimal but complete):
 
@@ -49,8 +49,8 @@ export type PluginRuntime = {
   channel: {
     text: {
       chunkMarkdownText(text: string, limit: number): string[];
-      resolveTextChunkLimit(cfg: MoltBotConfig, channel: string, accountId?: string): number;
-      hasControlCommand(text: string, cfg: MoltBotConfig): boolean;
+      resolveTextChunkLimit(cfg: RazroomConfig, channel: string, accountId?: string): number;
+      hasControlCommand(text: string, cfg: RazroomConfig): boolean;
     };
     reply: {
       dispatchReplyWithBufferedBlockDispatcher(params: {
@@ -94,12 +94,12 @@ export type PluginRuntime = {
       ): Promise<{ path: string; contentType?: string }>;
     };
     mentions: {
-      buildMentionRegexes(cfg: MoltBotConfig, agentId?: string): RegExp[];
+      buildMentionRegexes(cfg: RazroomConfig, agentId?: string): RegExp[];
       matchesMentionPatterns(text: string, regexes: RegExp[]): boolean;
     };
     groups: {
       resolveGroupPolicy(
-        cfg: MoltBotConfig,
+        cfg: RazroomConfig,
         channel: string,
         accountId: string,
         groupId: string,
@@ -110,7 +110,7 @@ export type PluginRuntime = {
         defaultConfig?: unknown;
       };
       resolveRequireMention(
-        cfg: MoltBotConfig,
+        cfg: RazroomConfig,
         channel: string,
         accountId: string,
         groupId: string,
@@ -125,7 +125,7 @@ export type PluginRuntime = {
         onFlush: (entries: T[]) => Promise<void>;
         onError?: (err: unknown) => void;
       }): { push: (v: T) => void; flush: () => Promise<void> };
-      resolveInboundDebounceMs(cfg: MoltBotConfig, channel: string): number;
+      resolveInboundDebounceMs(cfg: RazroomConfig, channel: string): number;
     };
     commands: {
       resolveCommandAuthorizedFromAuthorizers(params: {
@@ -139,7 +139,7 @@ export type PluginRuntime = {
     getChildLogger(name: string): PluginLogger;
   };
   state: {
-    resolveStateDir(cfg: MoltBotConfig): string;
+    resolveStateDir(cfg: RazroomConfig): string;
   };
 };
 ```
@@ -154,8 +154,8 @@ Notes:
 
 ### Phase 0: scaffolding
 
-- Introduce `moltbot/plugin-sdk`.
-- Add `api.runtime` to `MoltBotPluginApi` with the surface above.
+- Introduce `razroom/plugin-sdk`.
+- Add `api.runtime` to `RazroomPluginApi` with the surface above.
 - Maintain existing imports during a transition window (deprecation warnings).
 
 ### Phase 1: bridge cleanup (low risk)
@@ -189,7 +189,7 @@ Notes:
 
 - SDK: semver, published, documented changes.
 - Runtime: versioned per core release. Add `api.runtime.version`.
-- Plugins declare a required runtime range (e.g., `moltbotRuntime: ">=2026.2.0"`).
+- Plugins declare a required runtime range (e.g., `razroomRuntime: ">=2026.2.0"`).
 
 ## Testing strategy
 

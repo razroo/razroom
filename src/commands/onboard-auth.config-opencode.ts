@@ -1,7 +1,7 @@
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import { OPENCODE_ZEN_DEFAULT_MODEL_REF } from "../agents/opencode-zen-models.js";
 
-export function applyOpencodeZenProviderConfig(cfg: MoltBotConfig): MoltBotConfig {
+export function applyOpencodeZenProviderConfig(cfg: RazroomConfig): RazroomConfig {
   // Use the built-in opencode provider from pi-ai; only seed the allowlist alias.
   const models = { ...cfg.agents?.defaults?.models };
   models[OPENCODE_ZEN_DEFAULT_MODEL_REF] = {
@@ -21,7 +21,7 @@ export function applyOpencodeZenProviderConfig(cfg: MoltBotConfig): MoltBotConfi
   };
 }
 
-export function applyOpencodeZenConfig(cfg: MoltBotConfig): MoltBotConfig {
+export function applyOpencodeZenConfig(cfg: RazroomConfig): RazroomConfig {
   const next = applyOpencodeZenProviderConfig(cfg);
   return {
     ...next,

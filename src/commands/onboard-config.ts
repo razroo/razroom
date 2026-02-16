@@ -1,9 +1,9 @@
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 
 export function applyOnboardingLocalWorkspaceConfig(
-  baseConfig: MoltBotConfig,
+  baseConfig: RazroomConfig,
   workspaceDir: string,
-): MoltBotConfig {
+): RazroomConfig {
   return {
     ...baseConfig,
     agents: {

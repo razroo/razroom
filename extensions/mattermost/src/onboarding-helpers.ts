@@ -1,1 +1,1 @@
-export { promptAccountId } from "moltbot/plugin-sdk";
+export { promptAccountId } from "razroom/plugin-sdk";

@@ -1,7 +1,7 @@
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 
 export function resolveChannelAccountConfigBasePath(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   channelKey: string;
   accountId: string;
 }): string {

@@ -5,7 +5,7 @@ import {
   type RuntimeEnv,
   type HistoryEntry,
   installRequestBodyLimitGuard,
-} from "moltbot/plugin-sdk";
+} from "razroom/plugin-sdk";
 import type { ResolvedFeishuAccount } from "./types.js";
 import { resolveFeishuAccount, listEnabledFeishuAccounts } from "./accounts.js";
 import { handleFeishuMessage, type FeishuMessageEvent, type FeishuBotAddedEvent } from "./bot.js";

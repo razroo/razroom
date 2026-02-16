@@ -1,6 +1,6 @@
-import type { MoltBotConfig } from "./types.js";
+import type { RazroomConfig } from "./types.js";
 
-export function collectConfigEnvVars(cfg?: MoltBotConfig): Record<string, string> {
+export function collectConfigEnvVars(cfg?: RazroomConfig): Record<string, string> {
   const envConfig = cfg?.env;
   if (!envConfig) {
     return {};
@@ -31,7 +31,7 @@ export function collectConfigEnvVars(cfg?: MoltBotConfig): Record<string, string
 }
 
 export function applyConfigEnvVars(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   env: NodeJS.ProcessEnv = process.env,
 ): void {
   const entries = collectConfigEnvVars(cfg);

@@ -1,13 +1,13 @@
 {
-  "name": "@moltbot/copilot-proxy",
+  "name": "@razroom/copilot-proxy",
   "version": "2026.2.15",
   "private": true,
-  "description": "MoltBot Copilot Proxy provider plugin",
+  "description": "Razroom Copilot Proxy provider plugin",
   "type": "module",
   "devDependencies": {
-    "moltbot": "workspace:*"
+    "razroom": "workspace:*"
   },
-  "moltbot": {
+  "razroom": {
     "extensions": [
       "./index.ts"
     ]

@@ -1,6 +1,6 @@
 import crypto from "node:crypto";
 import type { MsgContext } from "../../auto-reply/templating.js";
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 import { listAgentIds } from "../../agents/agent-scope.js";
 import {
   normalizeThinkLevel,
@@ -40,7 +40,7 @@ type SessionKeyResolution = {
 };
 
 export function resolveSessionKeyForRequest(opts: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   to?: string;
   sessionId?: string;
   sessionKey?: string;
@@ -108,7 +108,7 @@ export function resolveSessionKeyForRequest(opts: {
 }
 
 export function resolveSession(opts: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   to?: string;
   sessionId?: string;
   sessionKey?: string;

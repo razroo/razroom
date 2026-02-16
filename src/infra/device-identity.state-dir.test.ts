@@ -20,8 +20,8 @@ describe("device identity state dir defaults", () => {
     restoreStateDirEnv(envSnapshot);
   });
 
-  it("writes the default identity file under MOLTBOT_STATE_DIR", async () => {
-    const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-identity-state-"));
+  it("writes the default identity file under RAZROOM_STATE_DIR", async () => {
+    const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-identity-state-"));
     const stateDir = path.join(tempRoot, "state");
     setStateDirEnv(stateDir);
     const identity = loadOrCreateDeviceIdentity();

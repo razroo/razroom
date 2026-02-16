@@ -86,9 +86,9 @@ async function removeMacApp(runtime: RuntimeEnv, dryRun?: boolean) {
   if (process.platform !== "darwin") {
     return;
   }
-  await removePath("/Applications/MoltBot.app", runtime, {
+  await removePath("/Applications/Razroom.app", runtime, {
     dryRun,
-    label: "/Applications/MoltBot.app",
+    label: "/Applications/Razroom.app",
   });
 }
 
@@ -115,12 +115,12 @@ export async function uninstallCommand(runtime: RuntimeEnv, opts: UninstallOptio
           label: "Gateway service",
           hint: "launchd / systemd / schtasks",
         },
-        { value: "state", label: "State + config", hint: "~/.moltbot" },
+        { value: "state", label: "State + config", hint: "~/.razroom" },
         { value: "workspace", label: "Workspace", hint: "agent files" },
         {
           value: "app",
           label: "macOS app",
-          hint: "/Applications/MoltBot.app",
+          hint: "/Applications/Razroom.app",
         },
       ],
       initialValues: ["service", "state", "workspace"],

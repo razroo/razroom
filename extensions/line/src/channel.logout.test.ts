@@ -1,4 +1,4 @@
-import type { MoltBotConfig, PluginRuntime } from "moltbot/plugin-sdk";
+import type { RazroomConfig, PluginRuntime } from "razroom/plugin-sdk";
 import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import { linePlugin } from "./channel.js";
 import { setLineRuntime } from "./runtime.js";
@@ -13,7 +13,7 @@ type LineRuntimeMocks = {
 function createRuntime(): { runtime: PluginRuntime; mocks: LineRuntimeMocks } {
   const writeConfigFile = mock(async () => {});
   const resolveLineAccount = mock(
-    ({ cfg, accountId }: { cfg: MoltBotConfig; accountId?: string }) => {
+    ({ cfg, accountId }: { cfg: RazroomConfig; accountId?: string }) => {
       const lineConfig = (cfg.channels?.line ?? {}) as {
         tokenFile?: string;
         secretFile?: string;
@@ -51,7 +51,7 @@ describe("linePlugin gateway.logoutAccount", () => {
     const { runtime, mocks } = createRuntime();
     setLineRuntime(runtime);
 
-    const cfg: MoltBotConfig = {
+    const cfg: RazroomConfig = {
       channels: {
         line: {
           tokenFile: "/tmp/token",
@@ -74,7 +74,7 @@ describe("linePlugin gateway.logoutAccount", () => {
     const { runtime, mocks } = createRuntime();
     setLineRuntime(runtime);
 
-    const cfg: MoltBotConfig = {
+    const cfg: RazroomConfig = {
       channels: {
         line: {
           accounts: {

@@ -18,7 +18,7 @@ export type { UpdateCommandOptions, UpdateStatusOptions, UpdateWizardOptions };
 export function registerUpdateCli(program: Command) {
   const update = program
     .command("update")
-    .description("Update MoltBot to the latest version")
+    .description("Update Razroom to the latest version")
     .option("--json", "Output result as JSON", false)
     .option("--no-restart", "Skip restarting the gateway service after a successful update")
     .option("--channel <stable|beta|dev>", "Persist update channel (git + npm)")
@@ -27,15 +27,15 @@ export function registerUpdateCli(program: Command) {
     .option("--yes", "Skip confirmation prompts (non-interactive)", false)
     .addHelpText("after", () => {
       const examples = [
-        ["moltbot update", "Update a source checkout (git)"],
-        ["moltbot update --channel beta", "Switch to beta channel (git + npm)"],
-        ["moltbot update --channel dev", "Switch to dev channel (git + npm)"],
-        ["moltbot update --tag beta", "One-off update to a dist-tag or version"],
-        ["moltbot update --no-restart", "Update without restarting the service"],
-        ["moltbot update --json", "Output result as JSON"],
-        ["moltbot update --yes", "Non-interactive (accept downgrade prompts)"],
-        ["moltbot update wizard", "Interactive update wizard"],
-        ["moltbot --update", "Shorthand for moltbot update"],
+        ["razroom update", "Update a source checkout (git)"],
+        ["razroom update --channel beta", "Switch to beta channel (git + npm)"],
+        ["razroom update --channel dev", "Switch to dev channel (git + npm)"],
+        ["razroom update --tag beta", "One-off update to a dist-tag or version"],
+        ["razroom update --no-restart", "Update without restarting the service"],
+        ["razroom update --json", "Output result as JSON"],
+        ["razroom update --yes", "Non-interactive (accept downgrade prompts)"],
+        ["razroom update wizard", "Interactive update wizard"],
+        ["razroom --update", "Shorthand for razroom update"],
       ] as const;
       const fmtExamples = examples
         .map(([cmd, desc]) => `  ${theme.command(cmd)} ${theme.muted(`# ${desc}`)}`)
@@ -47,7 +47,7 @@ ${theme.heading("What this does:")}
 
 ${theme.heading("Switch channels:")}
   - Use --channel stable|beta|dev to persist the update channel in config
-  - Run moltbot update status to see the active channel and source
+  - Run razroom update status to see the active channel and source
   - Use --tag <dist-tag|version> for a one-off npm update without persisting
 
 ${theme.heading("Non-interactive:")}
@@ -63,7 +63,7 @@ ${theme.heading("Notes:")}
   - Downgrades require confirmation (can break configuration)
   - Skips update if the working directory has uncommitted changes
 
-${theme.muted("Docs:")} ${formatDocsLink("/cli/update", "docs.moltbot.ai/cli/update")}`;
+${theme.muted("Docs:")} ${formatDocsLink("/cli/update", "docs.razroom.ai/cli/update")}`;
     })
     .action(async (opts) => {
       try {
@@ -87,7 +87,7 @@ ${theme.muted("Docs:")} ${formatDocsLink("/cli/update", "docs.moltbot.ai/cli/upd
     .option("--timeout <seconds>", "Timeout for each update step in seconds (default: 1200)")
     .addHelpText(
       "after",
-      `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/update", "docs.moltbot.ai/cli/update")}\n`,
+      `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/update", "docs.razroom.ai/cli/update")}\n`,
     )
     .action(async (opts) => {
       try {
@@ -109,14 +109,14 @@ ${theme.muted("Docs:")} ${formatDocsLink("/cli/update", "docs.moltbot.ai/cli/upd
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["moltbot update status", "Show channel + version status."],
-          ["moltbot update status --json", "JSON output."],
-          ["moltbot update status --timeout 10", "Custom timeout."],
+          ["razroom update status", "Show channel + version status."],
+          ["razroom update status --json", "JSON output."],
+          ["razroom update status --timeout 10", "Custom timeout."],
         ])}\n\n${theme.heading("Notes:")}\n${theme.muted(
           "- Shows current update channel (stable/beta/dev) and source",
         )}\n${theme.muted("- Includes git tag/branch/SHA for source checkouts")}\n\n${theme.muted(
           "Docs:",
-        )} ${formatDocsLink("/cli/update", "docs.moltbot.ai/cli/update")}`,
+        )} ${formatDocsLink("/cli/update", "docs.razroom.ai/cli/update")}`,
     )
     .action(async (opts) => {
       try {

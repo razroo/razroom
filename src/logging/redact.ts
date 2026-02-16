@@ -1,5 +1,5 @@
 import { createRequire } from "node:module";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 
 const requireConfig = createRequire(import.meta.url);
 
@@ -106,10 +106,10 @@ function redactText(text: string, patterns: RegExp[]): string {
 }
 
 function resolveConfigRedaction(): RedactOptions {
-  let cfg: MoltBotConfig["logging"] | undefined;
+  let cfg: RazroomConfig["logging"] | undefined;
   try {
     const loaded = requireConfig("../config/config.js") as {
-      loadConfig?: () => MoltBotConfig;
+      loadConfig?: () => RazroomConfig;
     };
     cfg = loaded.loadConfig?.().logging;
   } catch {

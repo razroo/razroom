@@ -1,7 +1,7 @@
 ---
-summary: "MoltBot capabilities across channels, routing, media, and UX."
+summary: "Razroom capabilities across channels, routing, media, and UX."
 read_when:
-  - You want a full list of what MoltBot supports
+  - You want a full list of what Razroom supports
 title: "Features"
 ---
 

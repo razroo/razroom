@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 import type { CommandHandler } from "./commands-types.js";
 import { callGateway, randomIdempotencyKey } from "../../gateway/call.js";
 import { logVerbose } from "../../globals.js";
@@ -38,7 +38,7 @@ function isIOSNode(node: NodeSummary): boolean {
   );
 }
 
-async function loadNodes(cfg: MoltBotConfig): Promise<NodeSummary[]> {
+async function loadNodes(cfg: RazroomConfig): Promise<NodeSummary[]> {
   try {
     const res = await callGateway<{ nodes?: NodeSummary[] }>({
       method: "node.list",

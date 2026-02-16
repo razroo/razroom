@@ -1,8 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
-import { resolveMoltBotPackageRoot } from "../infra/moltbot-root.js";
+import { resolveRazroomPackageRoot } from "../infra/razroom-root.js";
 
-export async function resolveMoltBotDocsPath(params: {
+export async function resolveRazroomDocsPath(params: {
   workspaceDir?: string;
   argv1?: string;
   cwd?: string;
@@ -16,7 +16,7 @@ export async function resolveMoltBotDocsPath(params: {
     }
   }
 
-  const packageRoot = await resolveMoltBotPackageRoot({
+  const packageRoot = await resolveRazroomPackageRoot({
     cwd: params.cwd,
     argv1: params.argv1,
     moduleUrl: params.moduleUrl,

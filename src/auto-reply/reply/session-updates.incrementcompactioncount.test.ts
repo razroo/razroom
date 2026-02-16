@@ -20,7 +20,7 @@ async function seedSessionStore(params: {
 
 describe("incrementCompactionCount", () => {
   it("increments compaction count", async () => {
-    const tmp = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-compact-"));
+    const tmp = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-compact-"));
     const storePath = path.join(tmp, "sessions.json");
     const sessionKey = "main";
     const entry = { sessionId: "s1", updatedAt: Date.now(), compactionCount: 2 } as SessionEntry;
@@ -40,7 +40,7 @@ describe("incrementCompactionCount", () => {
   });
 
   it("updates totalTokens when tokensAfter is provided", async () => {
-    const tmp = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-compact-"));
+    const tmp = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-compact-"));
     const storePath = path.join(tmp, "sessions.json");
     const sessionKey = "main";
     const entry = {
@@ -71,7 +71,7 @@ describe("incrementCompactionCount", () => {
   });
 
   it("does not update totalTokens when tokensAfter is not provided", async () => {
-    const tmp = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-compact-"));
+    const tmp = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-compact-"));
     const storePath = path.join(tmp, "sessions.json");
     const sessionKey = "main";
     const entry = {

@@ -15,9 +15,9 @@ import { appendCdpPath, createTargetViaCdp, normalizeCdpWsUrl } from "./cdp.js";
 import {
   isChromeCdpReady,
   isChromeReachable,
-  launchMoltBotChrome,
-  resolveMoltBotUserDataDir,
-  stopMoltBotChrome,
+  launchRazroomChrome,
+  resolveRazroomUserDataDir,
+  stopRazroomChrome,
 } from "./chrome.js";
 import { resolveProfile } from "./config.js";
 import {
@@ -287,7 +287,7 @@ function createProfileContext(
       }
       // Relay server is up, but no attached tab yet. Prompt user to attach.
       throw new Error(
-        `Chrome extension relay is running, but no tab is connected. Click the MoltBot Chrome extension icon on a tab to attach it (profile "${profile.name}").`,
+        `Chrome extension relay is running, but no tab is connected. Click the Razroom Chrome extension icon on a tab to attach it (profile "${profile.name}").`,
       );
     }
 
@@ -305,7 +305,7 @@ function createProfileContext(
             : `Browser attachOnly is enabled and profile "${profile.name}" is not running.`,
         );
       }
-      const launched = await launchMoltBotChrome(current.resolved, profile);
+      const launched = await launchRazroomChrome(current.resolved, profile);
       attachRunning(launched);
       return;
     }
@@ -318,7 +318,7 @@ function createProfileContext(
     // HTTP responds but WebSocket fails - port in use by something else
     if (!profileState.running) {
       throw new Error(
-        `Port ${profile.cdpPort} is in use for profile "${profile.name}" but not by moltbot. ` +
+        `Port ${profile.cdpPort} is in use for profile "${profile.name}" but not by razroom. ` +
           `Run action=reset-profile profile=${profile.name} to kill the process.`,
       );
     }
@@ -338,10 +338,10 @@ function createProfileContext(
       );
     }
 
-    await stopMoltBotChrome(profileState.running);
+    await stopRazroomChrome(profileState.running);
     setProfileRunning(null);
 
-    const relaunched = await launchMoltBotChrome(current.resolved, profile);
+    const relaunched = await launchRazroomChrome(current.resolved, profile);
     attachRunning(relaunched);
 
     if (!(await isReachable(600))) {
@@ -359,7 +359,7 @@ function createProfileContext(
       if (profile.driver === "extension") {
         throw new Error(
           `tab not found (no attached Chrome tabs for profile "${profile.name}"). ` +
-            "Click the MoltBot Browser Relay toolbar icon on the tab you want to control (badge ON).",
+            "Click the Razroom Browser Relay toolbar icon on the tab you want to control (badge ON).",
         );
       }
       await openTab("about:blank");
@@ -480,7 +480,7 @@ function createProfileContext(
     if (!profileState.running) {
       return { stopped: false };
     }
-    await stopMoltBotChrome(profileState.running);
+    await stopRazroomChrome(profileState.running);
     setProfileRunning(null);
     return { stopped: true };
   };
@@ -495,7 +495,7 @@ function createProfileContext(
         `reset-profile is only supported for local profiles (profile "${profile.name}" is remote).`,
       );
     }
-    const userDataDir = resolveMoltBotUserDataDir(profile.name);
+    const userDataDir = resolveRazroomUserDataDir(profile.name);
     const profileState = getProfileState();
 
     const httpReachable = await isHttpReachable(300);

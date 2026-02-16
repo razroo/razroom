@@ -4,8 +4,8 @@ import path from "node:path";
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import type { UpdateCheckResult } from "./update-check.js";
 
-mock("./moltbot-root.js", () => ({
-  resolveMoltBotPackageRoot: mock(),
+mock("./razroom-root.js", () => ({
+  resolveRazroomPackageRoot: mock(),
 }));
 
 mock("./update-check.js", async () => {
@@ -45,14 +45,14 @@ describe("update-startup", () => {
   let hadNodeEnv = false;
   let hadVitest = false;
 
-  let resolveMoltBotPackageRoot: (typeof import("./moltbot-root.js"))["resolveMoltBotPackageRoot"];
+  let resolveRazroomPackageRoot: (typeof import("./razroom-root.js"))["resolveRazroomPackageRoot"];
   let checkUpdateStatus: (typeof import("./update-check.js"))["checkUpdateStatus"];
   let resolveNpmChannelTag: (typeof import("./update-check.js"))["resolveNpmChannelTag"];
   let runGatewayUpdateCheck: (typeof import("./update-startup.js"))["runGatewayUpdateCheck"];
   let loaded = false;
 
   beforeAll(async () => {
-    suiteRoot = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-update-check-suite-"));
+    suiteRoot = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-update-check-suite-"));
   });
 
   beforeEach(async () => {
@@ -60,9 +60,9 @@ describe("update-startup", () => {
     vi.setSystemTime(new Date("2026-01-17T10:00:00Z"));
     tempDir = path.join(suiteRoot, `case-${++suiteCase}`);
     await fs.mkdir(tempDir);
-    hadStateDir = Object.prototype.hasOwnProperty.call(process.env, "MOLTBOT_STATE_DIR");
-    prevStateDir = process.env.MOLTBOT_STATE_DIR;
-    process.env.MOLTBOT_STATE_DIR = tempDir;
+    hadStateDir = Object.prototype.hasOwnProperty.call(process.env, "RAZROOM_STATE_DIR");
+    prevStateDir = process.env.RAZROOM_STATE_DIR;
+    process.env.RAZROOM_STATE_DIR = tempDir;
 
     hadNodeEnv = Object.prototype.hasOwnProperty.call(process.env, "NODE_ENV");
     prevNodeEnv = process.env.NODE_ENV;
@@ -75,7 +75,7 @@ describe("update-startup", () => {
 
     // Perf: load mocked modules once (after timers/env are set up).
     if (!loaded) {
-      ({ resolveMoltBotPackageRoot } = await import("./moltbot-root.js"));
+      ({ resolveRazroomPackageRoot } = await import("./razroom-root.js"));
       ({ checkUpdateStatus, resolveNpmChannelTag } = await import("./update-check.js"));
       ({ runGatewayUpdateCheck } = await import("./update-startup.js"));
       loaded = true;
@@ -85,9 +85,9 @@ describe("update-startup", () => {
   afterEach(async () => {
     // TODO: Restore real timers;
     if (hadStateDir) {
-      process.env.MOLTBOT_STATE_DIR = prevStateDir;
+      process.env.RAZROOM_STATE_DIR = prevStateDir;
     } else {
-      delete process.env.MOLTBOT_STATE_DIR;
+      delete process.env.RAZROOM_STATE_DIR;
     }
     if (hadNodeEnv) {
       process.env.NODE_ENV = prevNodeEnv;
@@ -110,9 +110,9 @@ describe("update-startup", () => {
   });
 
   it("logs update hint for npm installs when newer tag exists", async () => {
-    vi.mocked(resolveMoltBotPackageRoot).mockResolvedValue("/opt/moltbot");
+    vi.mocked(resolveRazroomPackageRoot).mockResolvedValue("/opt/razroom");
     vi.mocked(checkUpdateStatus).mockResolvedValue({
-      root: "/opt/moltbot",
+      root: "/opt/razroom",
       installKind: "package",
       packageManager: "npm",
     } satisfies UpdateCheckResult);
@@ -140,9 +140,9 @@ describe("update-startup", () => {
   });
 
   it("uses latest when beta tag is older than release", async () => {
-    vi.mocked(resolveMoltBotPackageRoot).mockResolvedValue("/opt/moltbot");
+    vi.mocked(resolveRazroomPackageRoot).mockResolvedValue("/opt/razroom");
     vi.mocked(checkUpdateStatus).mockResolvedValue({
-      root: "/opt/moltbot",
+      root: "/opt/razroom",
       installKind: "package",
       packageManager: "npm",
     } satisfies UpdateCheckResult);

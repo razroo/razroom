@@ -1,7 +1,7 @@
 ---
-summary: "Use Venice AI privacy-focused models in MoltBot"
+summary: "Use Venice AI privacy-focused models in Razroom"
 read_when:
-  - You want privacy-focused inference in MoltBot
+  - You want privacy-focused inference in Razroom
   - You want Venice AI setup guidance
 title: "Venice AI"
 ---
@@ -12,7 +12,7 @@ title: "Venice AI"
 
 Venice AI provides privacy-focused AI inference with support for uncensored models and access to major proprietary models through their anonymized proxy. All inference is private by default—no training on your data, no logging.
 
-## Why Venice in MoltBot
+## Why Venice in Razroom
 
 - **Private inference** for open-source models (no logging).
 - **Uncensored models** when you need them.
@@ -47,7 +47,7 @@ Venice offers two privacy levels — understanding this is key to choosing your 
 2. Go to **Settings → API Keys → Create new key**
 3. Copy your API key (format: `vapi_xxxxxxxxxxxx`)
 
-### 2. Configure MoltBot
+### 2. Configure Razroom
 
 **Option A: Environment Variable**
 
@@ -58,7 +58,7 @@ export VENICE_API_KEY="vapi_xxxxxxxxxxxx"
 **Option B: Interactive Setup (Recommended)**
 
 ```bash
-moltbot onboard --auth-choice venice-api-key
+razroom onboard --auth-choice venice-api-key
 ```
 
 This will:
@@ -71,7 +71,7 @@ This will:
 **Option C: Non-interactive**
 
 ```bash
-moltbot onboard --non-interactive \
+razroom onboard --non-interactive \
   --auth-choice venice-api-key \
   --venice-api-key "vapi_xxxxxxxxxxxx"
 ```
@@ -79,12 +79,12 @@ moltbot onboard --non-interactive \
 ### 3. Verify Setup
 
 ```bash
-moltbot chat --model venice/llama-3.3-70b "Hello, are you working?"
+razroom chat --model venice/llama-3.3-70b "Hello, are you working?"
 ```
 
 ## Model Selection
 
-After setup, MoltBot shows all available Venice models. Pick based on your needs:
+After setup, Razroom shows all available Venice models. Pick based on your needs:
 
 - **Default (our pick)**: `venice/llama-3.3-70b` for private, balanced performance.
 - **Best overall quality**: `venice/claude-opus-45` for hard jobs (Opus remains the strongest).
@@ -94,19 +94,19 @@ After setup, MoltBot shows all available Venice models. Pick based on your needs
 Change your default model anytime:
 
 ```bash
-moltbot models set venice/claude-opus-45
-moltbot models set venice/llama-3.3-70b
+razroom models set venice/claude-opus-45
+razroom models set venice/llama-3.3-70b
 ```
 
 List all available models:
 
 ```bash
-moltbot models list | grep venice
+razroom models list | grep venice
 ```
 
-## Configure via `moltbot configure`
+## Configure via `razroom configure`
 
-1. Run `moltbot configure`
+1. Run `razroom configure`
 2. Select **Model/auth**
 3. Choose **Venice AI**
 
@@ -162,7 +162,7 @@ moltbot models list | grep venice
 
 ## Model Discovery
 
-MoltBot automatically discovers models from the Venice API when `VENICE_API_KEY` is set. If the API is unreachable, it falls back to a static catalog.
+Razroom automatically discovers models from the Venice API when `VENICE_API_KEY` is set. If the API is unreachable, it falls back to a static catalog.
 
 The `/models` endpoint is public (no auth needed for listing), but inference requires a valid API key.
 
@@ -195,19 +195,19 @@ Venice uses a credit-based system. Check [venice.ai/pricing](https://venice.ai/p
 
 ```bash
 # Use default private model
-moltbot chat --model venice/llama-3.3-70b
+razroom chat --model venice/llama-3.3-70b
 
 # Use Claude via Venice (anonymized)
-moltbot chat --model venice/claude-opus-45
+razroom chat --model venice/claude-opus-45
 
 # Use uncensored model
-moltbot chat --model venice/venice-uncensored
+razroom chat --model venice/venice-uncensored
 
 # Use vision model with image
-moltbot chat --model venice/qwen3-vl-235b-a22b
+razroom chat --model venice/qwen3-vl-235b-a22b
 
 # Use coding model
-moltbot chat --model venice/qwen3-coder-480b-a35b-instruct
+razroom chat --model venice/qwen3-coder-480b-a35b-instruct
 ```
 
 ## Troubleshooting
@@ -216,14 +216,14 @@ moltbot chat --model venice/qwen3-coder-480b-a35b-instruct
 
 ```bash
 echo $VENICE_API_KEY
-moltbot models list | grep venice
+razroom models list | grep venice
 ```
 
 Ensure the key starts with `vapi_`.
 
 ### Model not available
 
-The Venice model catalog updates dynamically. Run `moltbot models list` to see currently available models. Some models may be temporarily offline.
+The Venice model catalog updates dynamically. Run `razroom models list` to see currently available models. Some models may be temporarily offline.
 
 ### Connection issues
 

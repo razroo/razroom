@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { SignalAccountConfig } from "../config/types.js";
 import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "../routing/session-key.js";
 
@@ -11,7 +11,7 @@ export type ResolvedSignalAccount = {
   config: SignalAccountConfig;
 };
 
-function listConfiguredAccountIds(cfg: MoltBotConfig): string[] {
+function listConfiguredAccountIds(cfg: RazroomConfig): string[] {
   const accounts = cfg.channels?.signal?.accounts;
   if (!accounts || typeof accounts !== "object") {
     return [];
@@ -19,7 +19,7 @@ function listConfiguredAccountIds(cfg: MoltBotConfig): string[] {
   return Object.keys(accounts).filter(Boolean);
 }
 
-export function listSignalAccountIds(cfg: MoltBotConfig): string[] {
+export function listSignalAccountIds(cfg: RazroomConfig): string[] {
   const ids = listConfiguredAccountIds(cfg);
   if (ids.length === 0) {
     return [DEFAULT_ACCOUNT_ID];
@@ -27,7 +27,7 @@ export function listSignalAccountIds(cfg: MoltBotConfig): string[] {
   return ids.toSorted((a, b) => a.localeCompare(b));
 }
 
-export function resolveDefaultSignalAccountId(cfg: MoltBotConfig): string {
+export function resolveDefaultSignalAccountId(cfg: RazroomConfig): string {
   const ids = listSignalAccountIds(cfg);
   if (ids.includes(DEFAULT_ACCOUNT_ID)) {
     return DEFAULT_ACCOUNT_ID;
@@ -36,7 +36,7 @@ export function resolveDefaultSignalAccountId(cfg: MoltBotConfig): string {
 }
 
 function resolveAccountConfig(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   accountId: string,
 ): SignalAccountConfig | undefined {
   const accounts = cfg.channels?.signal?.accounts;
@@ -46,7 +46,7 @@ function resolveAccountConfig(
   return accounts[accountId] as SignalAccountConfig | undefined;
 }
 
-function mergeSignalAccountConfig(cfg: MoltBotConfig, accountId: string): SignalAccountConfig {
+function mergeSignalAccountConfig(cfg: RazroomConfig, accountId: string): SignalAccountConfig {
   const { accounts: _ignored, ...base } = (cfg.channels?.signal ?? {}) as SignalAccountConfig & {
     accounts?: unknown;
   };
@@ -55,7 +55,7 @@ function mergeSignalAccountConfig(cfg: MoltBotConfig, accountId: string): Signal
 }
 
 export function resolveSignalAccount(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   accountId?: string | null;
 }): ResolvedSignalAccount {
   const accountId = normalizeAccountId(params.accountId);
@@ -84,7 +84,7 @@ export function resolveSignalAccount(params: {
   };
 }
 
-export function listEnabledSignalAccounts(cfg: MoltBotConfig): ResolvedSignalAccount[] {
+export function listEnabledSignalAccounts(cfg: RazroomConfig): ResolvedSignalAccount[] {
   return listSignalAccountIds(cfg)
     .map((accountId) => resolveSignalAccount({ cfg, accountId }))
     .filter((account) => account.enabled);

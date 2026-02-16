@@ -1,56 +1,56 @@
 ---
-summary: "CLI reference for `moltbot devices` (device pairing + token rotation/revocation)"
+summary: "CLI reference for `razroom devices` (device pairing + token rotation/revocation)"
 read_when:
   - You are approving device pairing requests
   - You need to rotate or revoke device tokens
 title: "devices"
 ---
 
-# `moltbot devices`
+# `razroom devices`
 
 Manage device pairing requests and device-scoped tokens.
 
 ## Commands
 
-### `moltbot devices list`
+### `razroom devices list`
 
 List pending pairing requests and paired devices.
 
 ```
-moltbot devices list
-moltbot devices list --json
+razroom devices list
+razroom devices list --json
 ```
 
-### `moltbot devices approve <requestId>`
+### `razroom devices approve <requestId>`
 
 Approve a pending device pairing request.
 
 ```
-moltbot devices approve <requestId>
+razroom devices approve <requestId>
 ```
 
-### `moltbot devices reject <requestId>`
+### `razroom devices reject <requestId>`
 
 Reject a pending device pairing request.
 
 ```
-moltbot devices reject <requestId>
+razroom devices reject <requestId>
 ```
 
-### `moltbot devices rotate --device <id> --role <role> [--scope <scope...>]`
+### `razroom devices rotate --device <id> --role <role> [--scope <scope...>]`
 
 Rotate a device token for a specific role (optionally updating scopes).
 
 ```
-moltbot devices rotate --device <deviceId> --role operator --scope operator.read --scope operator.write
+razroom devices rotate --device <deviceId> --role operator --scope operator.read --scope operator.write
 ```
 
-### `moltbot devices revoke --device <id> --role <role>`
+### `razroom devices revoke --device <id> --role <role>`
 
 Revoke a device token for a specific role.
 
 ```
-moltbot devices revoke --device <deviceId> --role node
+razroom devices revoke --device <deviceId> --role node
 ```
 
 ## Common options

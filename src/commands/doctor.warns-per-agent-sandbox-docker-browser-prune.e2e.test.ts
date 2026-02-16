@@ -7,7 +7,7 @@ import { note, readConfigFileSnapshot } from "./doctor.e2e-harness.js";
 describe("doctor command", () => {
   it("warns when per-agent sandbox docker/browser/prune overrides are ignored under shared scope", async () => {
     readConfigFileSnapshot.mockResolvedValue({
-      path: "/tmp/moltbot.json",
+      path: "/tmp/razroom.json",
       exists: true,
       raw: "{}",
       parsed: {},
@@ -23,7 +23,7 @@ describe("doctor command", () => {
           list: [
             {
               id: "work",
-              workspace: "~/moltbot-work",
+              workspace: "~/razroom-work",
               sandbox: {
                 mode: "all",
                 scope: "shared",
@@ -66,13 +66,13 @@ describe("doctor command", () => {
 
   it("does not warn when only the active workspace is present", async () => {
     readConfigFileSnapshot.mockResolvedValue({
-      path: "/tmp/moltbot.json",
+      path: "/tmp/razroom.json",
       exists: true,
       raw: "{}",
       parsed: {},
       valid: true,
       config: {
-        agents: { defaults: { workspace: "/Users/steipete/moltbot" } },
+        agents: { defaults: { workspace: "/Users/steipete/razroom" } },
       },
       issues: [],
       legacyIssues: [],
@@ -81,11 +81,11 @@ describe("doctor command", () => {
     note.mockClear();
     const homedirSpy = spyOn(os, "homedir").mockReturnValue("/Users/steipete");
     const realExists = fs.existsSync;
-    const legacyPath = path.join("/Users/steipete", "moltbot");
+    const legacyPath = path.join("/Users/steipete", "razroom");
     const legacyAgentsPath = path.join(legacyPath, "AGENTS.md");
     const existsSpy = spyOn(fs, "existsSync").mockImplementation((value) => {
       if (
-        value === "/Users/steipete/moltbot" ||
+        value === "/Users/steipete/razroom" ||
         value === legacyPath ||
         value === legacyAgentsPath
       ) {

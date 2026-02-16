@@ -1,7 +1,7 @@
 /**
  * OpenResponses HTTP Handler
  *
- * Implements the OpenResponses `/v1/responses` endpoint for MoltBot Gateway.
+ * Implements the OpenResponses `/v1/responses` endpoint for Razroom Gateway.
  *
  * @see https://www.open-responses.com/
  */
@@ -582,7 +582,7 @@ export async function handleOpenResponsesHttpRequest(
               .map((p) => (typeof p.text === "string" ? p.text : ""))
               .filter(Boolean)
               .join("\n\n")
-          : "No response from MoltBot.";
+          : "No response from Razroom.";
 
       const response = createResponseResource({
         id: responseId,
@@ -749,7 +749,7 @@ export async function handleOpenResponsesHttpRequest(
     if (evt.stream === "lifecycle") {
       const phase = evt.data?.phase;
       if (phase === "end" || phase === "error") {
-        const finalText = accumulatedText || "No response from MoltBot.";
+        const finalText = accumulatedText || "No response from Razroom.";
         const finalStatus = phase === "error" ? "failed" : "completed";
         requestFinalize(finalStatus, finalText);
       }
@@ -870,7 +870,7 @@ export async function handleOpenResponsesHttpRequest(
                 .map((p) => (typeof p.text === "string" ? p.text : ""))
                 .filter(Boolean)
                 .join("\n\n")
-            : "No response from MoltBot.";
+            : "No response from Razroom.";
 
         accumulatedText = content;
         sawAssistantDelta = true;

@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 
 const note = vi.hoisted(() => mock());
 const resolveDefaultAgentId = vi.hoisted(() => mock(() => "agent-default"));
@@ -27,7 +27,7 @@ mock("../agents/model-auth.js", () => ({
 import { noteMemorySearchHealth } from "./doctor-memory-search.js";
 
 describe("noteMemorySearchHealth", () => {
-  const cfg = {} as MoltBotConfig;
+  const cfg = {} as RazroomConfig;
 
   beforeEach(() => {
     note.mockReset();

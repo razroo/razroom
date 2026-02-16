@@ -1,4 +1,4 @@
-import { buildChannelKeyCandidates, resolveChannelEntryMatch } from "moltbot/plugin-sdk";
+import { buildChannelKeyCandidates, resolveChannelEntryMatch } from "razroom/plugin-sdk";
 import type { MatrixRoomConfig } from "../../types.js";
 
 export type MatrixRoomConfigResolved = {

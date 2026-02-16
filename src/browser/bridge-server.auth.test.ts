@@ -1,8 +1,8 @@
 import { afterEach, describe, expect, it } from "bun:test";
 import { startBrowserBridgeServer, stopBrowserBridgeServer } from "./bridge-server.js";
 import {
-  DEFAULT_MOLTBOT_BROWSER_COLOR,
-  DEFAULT_MOLTBOT_BROWSER_PROFILE_NAME,
+  DEFAULT_RAZROOM_BROWSER_COLOR,
+  DEFAULT_RAZROOM_BROWSER_PROFILE_NAME,
 } from "./constants.js";
 
 function buildResolvedConfig() {
@@ -15,16 +15,16 @@ function buildResolvedConfig() {
     cdpIsLoopback: true,
     remoteCdpTimeoutMs: 1500,
     remoteCdpHandshakeTimeoutMs: 3000,
-    color: DEFAULT_MOLTBOT_BROWSER_COLOR,
+    color: DEFAULT_RAZROOM_BROWSER_COLOR,
     executablePath: undefined,
     headless: true,
     noSandbox: false,
     attachOnly: true,
-    defaultProfile: DEFAULT_MOLTBOT_BROWSER_PROFILE_NAME,
+    defaultProfile: DEFAULT_RAZROOM_BROWSER_PROFILE_NAME,
     profiles: {
-      [DEFAULT_MOLTBOT_BROWSER_PROFILE_NAME]: {
+      [DEFAULT_RAZROOM_BROWSER_PROFILE_NAME]: {
         cdpPort: 1,
-        color: DEFAULT_MOLTBOT_BROWSER_COLOR,
+        color: DEFAULT_RAZROOM_BROWSER_COLOR,
       },
     },
   } as const;
@@ -58,7 +58,7 @@ describe("startBrowserBridgeServer auth", () => {
     expect(authed.status).toBe(200);
   });
 
-  it("accepts x-moltbot-password when authPassword is set", async () => {
+  it("accepts x-razroom-password when authPassword is set", async () => {
     const bridge = await startBrowserBridgeServer({
       resolved: buildResolvedConfig(),
       authPassword: "secret-password",
@@ -69,7 +69,7 @@ describe("startBrowserBridgeServer auth", () => {
     expect(unauth.status).toBe(401);
 
     const authed = await fetch(`${bridge.baseUrl}/`, {
-      headers: { "x-moltbot-password": "secret-password" },
+      headers: { "x-razroom-password": "secret-password" },
     });
     expect(authed.status).toBe(200);
   });

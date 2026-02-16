@@ -6,7 +6,7 @@ describe("buildInboundUserContextPrefix", () => {
   it("omits conversation label block for direct chats", () => {
     const text = buildInboundUserContextPrefix({
       ChatType: "direct",
-      ConversationLabel: "moltbot-tui",
+      ConversationLabel: "razroom-tui",
     } as TemplateContext);
 
     expect(text).toBe("");

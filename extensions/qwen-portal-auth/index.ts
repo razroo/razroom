@@ -1,8 +1,8 @@
 import {
   emptyPluginConfigSchema,
-  type MoltBotPluginApi,
+  type RazroomPluginApi,
   type ProviderAuthContext,
-} from "moltbot/plugin-sdk";
+} from "razroom/plugin-sdk";
 import { loginQwenPortalOAuth } from "./oauth.js";
 
 const PROVIDER_ID = "qwen-portal";
@@ -40,7 +40,7 @@ const qwenPortalPlugin = {
   name: "Qwen OAuth",
   description: "OAuth flow for Qwen (free-tier) models",
   configSchema: emptyPluginConfigSchema(),
-  register(api: MoltBotPluginApi) {
+  register(api: RazroomPluginApi) {
     api.registerProvider({
       id: PROVIDER_ID,
       label: PROVIDER_LABEL,

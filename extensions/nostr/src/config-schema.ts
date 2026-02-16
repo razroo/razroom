@@ -1,4 +1,4 @@
-import { MarkdownConfigSchema, buildChannelConfigSchema } from "moltbot/plugin-sdk";
+import { MarkdownConfigSchema, buildChannelConfigSchema } from "razroom/plugin-sdk";
 import { z } from "zod";
 
 const allowFromEntry = z.union([z.string(), z.number()]);

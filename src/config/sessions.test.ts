@@ -26,7 +26,7 @@ describe("sessions", () => {
   };
 
   beforeAll(async () => {
-    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-sessions-suite-"));
+    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-sessions-suite-"));
   });
 
   afterAll(async () => {
@@ -72,11 +72,11 @@ describe("sessions", () => {
       buildGroupDisplayName({
         provider: "discord",
         groupChannel: "#general",
-        space: "friends-of-moltbot",
+        space: "friends-of-razroom",
         id: "123",
         key: "discord:group:123",
       }),
-    ).toBe("discord:friends-of-moltbot#general");
+    ).toBe("discord:friends-of-razroom#general");
   });
 
   it("collapses direct chats to main by default", () => {
@@ -419,17 +419,17 @@ describe("sessions", () => {
     expect(entry.lastProvider).toBeUndefined();
   });
 
-  it("derives session transcripts dir from MOLTBOT_STATE_DIR", () => {
+  it("derives session transcripts dir from RAZROOM_STATE_DIR", () => {
     const dir = resolveSessionTranscriptsDir(
-      { MOLTBOT_STATE_DIR: "/custom/state" } as NodeJS.ProcessEnv,
+      { RAZROOM_STATE_DIR: "/custom/state" } as NodeJS.ProcessEnv,
       () => "/home/ignored",
     );
     expect(dir).toBe(path.join(path.resolve("/custom/state"), "agents", "main", "sessions"));
   });
 
   it("includes topic ids in session transcript filenames", () => {
-    const prev = process.env.MOLTBOT_STATE_DIR;
-    process.env.MOLTBOT_STATE_DIR = "/custom/state";
+    const prev = process.env.RAZROOM_STATE_DIR;
+    process.env.RAZROOM_STATE_DIR = "/custom/state";
     try {
       const sessionFile = resolveSessionTranscriptPath("sess-1", "main", 123);
       expect(sessionFile).toBe(
@@ -443,16 +443,16 @@ describe("sessions", () => {
       );
     } finally {
       if (prev === undefined) {
-        delete process.env.MOLTBOT_STATE_DIR;
+        delete process.env.RAZROOM_STATE_DIR;
       } else {
-        process.env.MOLTBOT_STATE_DIR = prev;
+        process.env.RAZROOM_STATE_DIR = prev;
       }
     }
   });
 
   it("uses agent id when resolving session file fallback paths", () => {
-    const prev = process.env.MOLTBOT_STATE_DIR;
-    process.env.MOLTBOT_STATE_DIR = "/custom/state";
+    const prev = process.env.RAZROOM_STATE_DIR;
+    process.env.RAZROOM_STATE_DIR = "/custom/state";
     try {
       const sessionFile = resolveSessionFilePath("sess-2", undefined, {
         agentId: "codex",
@@ -462,9 +462,9 @@ describe("sessions", () => {
       );
     } finally {
       if (prev === undefined) {
-        delete process.env.MOLTBOT_STATE_DIR;
+        delete process.env.RAZROOM_STATE_DIR;
       } else {
-        process.env.MOLTBOT_STATE_DIR = prev;
+        process.env.RAZROOM_STATE_DIR = prev;
       }
     }
   });

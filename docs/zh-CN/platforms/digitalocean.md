@@ -1,8 +1,8 @@
 ---
 read_when:
-  - 在 DigitalOcean 上设置 MoltBot
-  - 寻找便宜的 VPS 托管来运行 MoltBot
-summary: 在 DigitalOcean 上运行 MoltBot（简单的付费 VPS 选项）
+  - 在 DigitalOcean 上设置 Razroom
+  - 寻找便宜的 VPS 托管来运行 Razroom
+summary: 在 DigitalOcean 上运行 Razroom（简单的付费 VPS 选项）
 title: DigitalOcean
 x-i18n:
   generated_at: "2026-02-03T07:51:55Z"
@@ -13,11 +13,11 @@ x-i18n:
   workflow: 15
 ---
 
-# 在 DigitalOcean 上运行 MoltBot
+# 在 DigitalOcean 上运行 Razroom
 
 ## 目标
 
-以 **$6/月**（或使用预留定价 $4/月）在 DigitalOcean 上运行持久的 MoltBot Gateway 网关。
+以 **$6/月**（或使用预留定价 $4/月）在 DigitalOcean 上运行持久的 Razroom Gateway 网关。
 
 如果你想要 $0/月的选项且不介意 ARM + 特定提供商的设置，请参阅 [Oracle Cloud 指南](/platforms/oracle)。
 
@@ -63,7 +63,7 @@ x-i18n:
 ssh root@YOUR_DROPLET_IP
 ```
 
-## 3) 安装 MoltBot
+## 3) 安装 Razroom
 
 ```bash
 # Update system
@@ -73,17 +73,17 @@ apt update && apt upgrade -y
 curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
 apt install -y nodejs
 
-# Install MoltBot
-curl -fsSL https://moltbot.ai/install.sh | bash
+# Install Razroom
+curl -fsSL https://razroom.ai/install.sh | bash
 
 # Verify
-moltbot --version
+razroom --version
 ```
 
 ## 4) 运行新手引导
 
 ```bash
-moltbot onboard --install-daemon
+razroom onboard --install-daemon
 ```
 
 向导将引导你完成：
@@ -97,13 +97,13 @@ moltbot onboard --install-daemon
 
 ```bash
 # Check status
-moltbot status
+razroom status
 
 # Check service
-systemctl --user status moltbot-gateway.service
+systemctl --user status razroom-gateway.service
 
 # View logs
-journalctl --user -u moltbot-gateway.service -f
+journalctl --user -u razroom-gateway.service -f
 ```
 
 ## 6) 访问控制面板
@@ -127,8 +127,8 @@ curl -fsSL https://tailscale.com/install.sh | sh
 tailscale up
 
 # Configure Gateway to use Tailscale Serve
-moltbot config set gateway.tailscale.mode serve
-moltbot gateway restart
+razroom config set gateway.tailscale.mode serve
+razroom gateway restart
 ```
 
 打开：`https://<magicdns>/`
@@ -141,8 +141,8 @@ moltbot gateway restart
 **选项 C：Tailnet 绑定（不使用 Serve）**
 
 ```bash
-moltbot config set gateway.bind tailnet
-moltbot gateway restart
+razroom config set gateway.bind tailnet
+razroom gateway restart
 ```
 
 打开：`http://<tailscale-ip>:18789`（需要令牌）。
@@ -152,14 +152,14 @@ moltbot gateway restart
 ### Telegram
 
 ```bash
-moltbot pairing list telegram
-moltbot pairing approve telegram <CODE>
+razroom pairing list telegram
+razroom pairing approve telegram <CODE>
 ```
 
 ### WhatsApp
 
 ```bash
-moltbot channels login whatsapp
+razroom channels login whatsapp
 # Scan QR code
 ```
 
@@ -201,13 +201,13 @@ htop
 
 所有状态存储在：
 
-- `~/.moltbot/` — 配置、凭证、会话数据
-- `~/.moltbot/workspace/` — 工作区（SOUL.md、记忆等）
+- `~/.razroom/` — 配置、凭证、会话数据
+- `~/.razroom/workspace/` — 工作区（SOUL.md、记忆等）
 
 这些在重启后保留。定期备份：
 
 ```bash
-tar -czvf moltbot-backup.tar.gz ~/.moltbot ~/.moltbot/workspace
+tar -czvf razroom-backup.tar.gz ~/.razroom ~/.razroom/workspace
 ```
 
 ---
@@ -237,9 +237,9 @@ Oracle Cloud 提供 **Always Free** ARM 实例，比这里任何付费选项都�
 ### Gateway 网关无法启动
 
 ```bash
-moltbot gateway status
-moltbot doctor --non-interactive
-journalctl -u moltbot --no-pager -n 50
+razroom gateway status
+razroom doctor --non-interactive
+journalctl -u razroom --no-pager -n 50
 ```
 
 ### 端口已被使用

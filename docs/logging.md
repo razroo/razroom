@@ -9,7 +9,7 @@ title: "Logging"
 
 # Logging
 
-MoltBot logs in two places:
+Razroom logs in two places:
 
 - **File logs** (JSON lines) written by the Gateway.
 - **Console output** shown in terminals and the Control UI.
@@ -21,16 +21,16 @@ levels and formats.
 
 By default, the Gateway writes a rolling log file under:
 
-`/tmp/moltbot/moltbot-YYYY-MM-DD.log`
+`/tmp/razroom/razroom-YYYY-MM-DD.log`
 
 The date uses the gateway host's local timezone.
 
-You can override this in `~/.moltbot/moltbot.json`:
+You can override this in `~/.razroom/razroom.json`:
 
 ```json
 {
   "logging": {
-    "file": "/path/to/moltbot.log"
+    "file": "/path/to/razroom.log"
   }
 }
 ```
@@ -42,7 +42,7 @@ You can override this in `~/.moltbot/moltbot.json`:
 Use the CLI to tail the gateway log file via RPC:
 
 ```bash
-moltbot logs --follow
+razroom logs --follow
 ```
 
 Output modes:
@@ -63,7 +63,7 @@ In JSON mode, the CLI emits `type`-tagged objects:
 If the Gateway is unreachable, the CLI prints a short hint to run:
 
 ```bash
-moltbot doctor
+razroom doctor
 ```
 
 ### Control UI (web)
@@ -76,7 +76,7 @@ See [/web/control-ui](/web/control-ui) for how to open it.
 To filter channel activity (WhatsApp/Telegram/etc), use:
 
 ```bash
-moltbot channels logs --channel whatsapp
+razroom channels logs --channel whatsapp
 ```
 
 ## Log formats
@@ -98,13 +98,13 @@ Console formatting is controlled by `logging.consoleStyle`.
 
 ## Configuring logging
 
-All logging configuration lives under `logging` in `~/.moltbot/moltbot.json`.
+All logging configuration lives under `logging` in `~/.razroom/razroom.json`.
 
 ```json
 {
   "logging": {
     "level": "info",
-    "file": "/tmp/moltbot/moltbot-YYYY-MM-DD.log",
+    "file": "/tmp/razroom/razroom-YYYY-MM-DD.log",
     "consoleLevel": "info",
     "consoleStyle": "pretty",
     "redactSensitive": "tools",
@@ -150,7 +150,7 @@ diagnostics + the exporter plugin are enabled.
 
 - **OpenTelemetry (OTel)**: the data model + SDKs for traces, metrics, and logs.
 - **OTLP**: the wire protocol used to export OTel data to a collector/backend.
-- MoltBot exports via **OTLP/HTTP (protobuf)** today.
+- Razroom exports via **OTLP/HTTP (protobuf)** today.
 
 ### Signals exported
 
@@ -210,7 +210,7 @@ Flags are case-insensitive and support wildcards (e.g. `telegram.*` or `*`).
 Env override (one-off):
 
 ```
-MOLTBOT_DIAGNOSTICS=telegram.http,telegram.payload
+RAZROOM_DIAGNOSTICS=telegram.http,telegram.payload
 ```
 
 Notes:
@@ -240,7 +240,7 @@ works with any OpenTelemetry collector/backend that accepts OTLP/HTTP.
       "enabled": true,
       "endpoint": "http://otel-collector:4318",
       "protocol": "http/protobuf",
-      "serviceName": "moltbot-gateway",
+      "serviceName": "razroom-gateway",
       "traces": true,
       "metrics": true,
       "logs": true,
@@ -253,7 +253,7 @@ works with any OpenTelemetry collector/backend that accepts OTLP/HTTP.
 
 Notes:
 
-- You can also enable the plugin with `moltbot plugins enable diagnostics-otel`.
+- You can also enable the plugin with `razroom plugins enable diagnostics-otel`.
 - `protocol` currently supports `http/protobuf` only. `grpc` is ignored.
 - Metrics include token usage, cost, context size, run duration, and message-flow
   counters/histograms (webhooks, queueing, session state, queue depth/wait).
@@ -267,60 +267,60 @@ Notes:
 
 Model usage:
 
-- `moltbot.tokens` (counter, attrs: `moltbot.token`, `moltbot.channel`,
-  `moltbot.provider`, `moltbot.model`)
-- `moltbot.cost.usd` (counter, attrs: `moltbot.channel`, `moltbot.provider`,
-  `moltbot.model`)
-- `moltbot.run.duration_ms` (histogram, attrs: `moltbot.channel`,
-  `moltbot.provider`, `moltbot.model`)
-- `moltbot.context.tokens` (histogram, attrs: `moltbot.context`,
-  `moltbot.channel`, `moltbot.provider`, `moltbot.model`)
+- `razroom.tokens` (counter, attrs: `razroom.token`, `razroom.channel`,
+  `razroom.provider`, `razroom.model`)
+- `razroom.cost.usd` (counter, attrs: `razroom.channel`, `razroom.provider`,
+  `razroom.model`)
+- `razroom.run.duration_ms` (histogram, attrs: `razroom.channel`,
+  `razroom.provider`, `razroom.model`)
+- `razroom.context.tokens` (histogram, attrs: `razroom.context`,
+  `razroom.channel`, `razroom.provider`, `razroom.model`)
 
 Message flow:
 
-- `moltbot.webhook.received` (counter, attrs: `moltbot.channel`,
-  `moltbot.webhook`)
-- `moltbot.webhook.error` (counter, attrs: `moltbot.channel`,
-  `moltbot.webhook`)
-- `moltbot.webhook.duration_ms` (histogram, attrs: `moltbot.channel`,
-  `moltbot.webhook`)
-- `moltbot.message.queued` (counter, attrs: `moltbot.channel`,
-  `moltbot.source`)
-- `moltbot.message.processed` (counter, attrs: `moltbot.channel`,
-  `moltbot.outcome`)
-- `moltbot.message.duration_ms` (histogram, attrs: `moltbot.channel`,
-  `moltbot.outcome`)
+- `razroom.webhook.received` (counter, attrs: `razroom.channel`,
+  `razroom.webhook`)
+- `razroom.webhook.error` (counter, attrs: `razroom.channel`,
+  `razroom.webhook`)
+- `razroom.webhook.duration_ms` (histogram, attrs: `razroom.channel`,
+  `razroom.webhook`)
+- `razroom.message.queued` (counter, attrs: `razroom.channel`,
+  `razroom.source`)
+- `razroom.message.processed` (counter, attrs: `razroom.channel`,
+  `razroom.outcome`)
+- `razroom.message.duration_ms` (histogram, attrs: `razroom.channel`,
+  `razroom.outcome`)
 
 Queues + sessions:
 
-- `moltbot.queue.lane.enqueue` (counter, attrs: `moltbot.lane`)
-- `moltbot.queue.lane.dequeue` (counter, attrs: `moltbot.lane`)
-- `moltbot.queue.depth` (histogram, attrs: `moltbot.lane` or
-  `moltbot.channel=heartbeat`)
-- `moltbot.queue.wait_ms` (histogram, attrs: `moltbot.lane`)
-- `moltbot.session.state` (counter, attrs: `moltbot.state`, `moltbot.reason`)
-- `moltbot.session.stuck` (counter, attrs: `moltbot.state`)
-- `moltbot.session.stuck_age_ms` (histogram, attrs: `moltbot.state`)
-- `moltbot.run.attempt` (counter, attrs: `moltbot.attempt`)
+- `razroom.queue.lane.enqueue` (counter, attrs: `razroom.lane`)
+- `razroom.queue.lane.dequeue` (counter, attrs: `razroom.lane`)
+- `razroom.queue.depth` (histogram, attrs: `razroom.lane` or
+  `razroom.channel=heartbeat`)
+- `razroom.queue.wait_ms` (histogram, attrs: `razroom.lane`)
+- `razroom.session.state` (counter, attrs: `razroom.state`, `razroom.reason`)
+- `razroom.session.stuck` (counter, attrs: `razroom.state`)
+- `razroom.session.stuck_age_ms` (histogram, attrs: `razroom.state`)
+- `razroom.run.attempt` (counter, attrs: `razroom.attempt`)
 
 ### Exported spans (names + key attributes)
 
-- `moltbot.model.usage`
-  - `moltbot.channel`, `moltbot.provider`, `moltbot.model`
-  - `moltbot.sessionKey`, `moltbot.sessionId`
-  - `moltbot.tokens.*` (input/output/cache_read/cache_write/total)
-- `moltbot.webhook.processed`
-  - `moltbot.channel`, `moltbot.webhook`, `moltbot.chatId`
-- `moltbot.webhook.error`
-  - `moltbot.channel`, `moltbot.webhook`, `moltbot.chatId`,
-    `moltbot.error`
-- `moltbot.message.processed`
-  - `moltbot.channel`, `moltbot.outcome`, `moltbot.chatId`,
-    `moltbot.messageId`, `moltbot.sessionKey`, `moltbot.sessionId`,
-    `moltbot.reason`
-- `moltbot.session.stuck`
-  - `moltbot.state`, `moltbot.ageMs`, `moltbot.queueDepth`,
-    `moltbot.sessionKey`, `moltbot.sessionId`
+- `razroom.model.usage`
+  - `razroom.channel`, `razroom.provider`, `razroom.model`
+  - `razroom.sessionKey`, `razroom.sessionId`
+  - `razroom.tokens.*` (input/output/cache_read/cache_write/total)
+- `razroom.webhook.processed`
+  - `razroom.channel`, `razroom.webhook`, `razroom.chatId`
+- `razroom.webhook.error`
+  - `razroom.channel`, `razroom.webhook`, `razroom.chatId`,
+    `razroom.error`
+- `razroom.message.processed`
+  - `razroom.channel`, `razroom.outcome`, `razroom.chatId`,
+    `razroom.messageId`, `razroom.sessionKey`, `razroom.sessionId`,
+    `razroom.reason`
+- `razroom.session.stuck`
+  - `razroom.state`, `razroom.ageMs`, `razroom.queueDepth`,
+    `razroom.sessionKey`, `razroom.sessionId`
 
 ### Sampling + flushing
 
@@ -344,7 +344,7 @@ Queues + sessions:
 
 ## Troubleshooting tips
 
-- **Gateway not reachable?** Run `moltbot doctor` first.
+- **Gateway not reachable?** Run `razroom doctor` first.
 - **Logs empty?** Check that the Gateway is running and writing to the file path
   in `logging.file`.
 - **Need more detail?** Set `logging.level` to `debug` or `trace` and retry.

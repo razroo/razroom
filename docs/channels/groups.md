@@ -7,19 +7,19 @@ title: "Groups"
 
 # Groups
 
-MoltBot treats group chats consistently across surfaces: WhatsApp, Telegram, Discord, Slack, Signal, iMessage, Microsoft Teams.
+Razroom treats group chats consistently across surfaces: WhatsApp, Telegram, Discord, Slack, Signal, iMessage, Microsoft Teams.
 
 ## Beginner intro (2 minutes)
 
-MoltBot “lives” on your own messaging accounts. There is no separate WhatsApp bot user.
-If **you** are in a group, MoltBot can see that group and respond there.
+Razroom “lives” on your own messaging accounts. There is no separate WhatsApp bot user.
+If **you** are in a group, Razroom can see that group and respond there.
 
 Default behavior:
 
 - Groups are restricted (`groupPolicy: "allowlist"`).
 - Replies require a mention unless you explicitly disable mention gating.
 
-Translation: allowlisted senders can trigger MoltBot by mentioning it.
+Translation: allowlisted senders can trigger Razroom by mentioning it.
 
 > TL;DR
 >
@@ -230,7 +230,7 @@ Replying to a bot message counts as an implicit mention (when the channel suppor
       {
         id: "main",
         groupChat: {
-          mentionPatterns: ["@moltbot", "moltbot", "\\+15555550123"],
+          mentionPatterns: ["@razroom", "razroom", "\\+15555550123"],
           historyLimit: 50,
         },
       },

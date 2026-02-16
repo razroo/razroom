@@ -1,4 +1,4 @@
-import type { AgentElevatedAllowFromConfig, MoltBotConfig } from "../../config/config.js";
+import type { AgentElevatedAllowFromConfig, RazroomConfig } from "../../config/config.js";
 import type { MsgContext } from "../templating.js";
 import { resolveAgentConfig } from "../../agents/agent-scope.js";
 import { getChannelDock } from "../../channels/dock.js";
@@ -132,7 +132,7 @@ function isApprovedElevatedSender(params: {
 }
 
 export function resolveElevatedPermissions(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   agentId: string;
   ctx: MsgContext;
   provider: string;

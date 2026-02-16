@@ -1,6 +1,6 @@
 import type { ChildProcess } from "node:child_process";
-import type { MoltBotConfig, MarkdownTableMode, RuntimeEnv } from "moltbot/plugin-sdk";
-import { createReplyPrefixOptions, mergeAllowlist, summarizeMapping } from "moltbot/plugin-sdk";
+import type { RazroomConfig, MarkdownTableMode, RuntimeEnv } from "razroom/plugin-sdk";
+import { createReplyPrefixOptions, mergeAllowlist, summarizeMapping } from "razroom/plugin-sdk";
 import type { ResolvedZalouserAccount, ZcaFriend, ZcaGroup, ZcaMessage } from "./types.js";
 import { getZalouserRuntime } from "./runtime.js";
 import { sendMessageZalouser } from "./send.js";
@@ -8,7 +8,7 @@ import { parseJsonOutput, runZca, runZcaStreaming } from "./zca.js";
 
 export type ZalouserMonitorOptions = {
   account: ResolvedZalouserAccount;
-  config: MoltBotConfig;
+  config: RazroomConfig;
   runtime: RuntimeEnv;
   abortSignal: AbortSignal;
   statusSink?: (patch: { lastInboundAt?: number; lastOutboundAt?: number }) => void;
@@ -156,7 +156,7 @@ function startZcaListener(
 async function processMessage(
   message: ZcaMessage,
   account: ResolvedZalouserAccount,
-  config: MoltBotConfig,
+  config: RazroomConfig,
   core: ZalouserCoreRuntime,
   runtime: RuntimeEnv,
   statusSink?: (patch: { lastInboundAt?: number; lastOutboundAt?: number }) => void,
@@ -382,7 +382,7 @@ async function deliverZalouserReply(params: {
   isGroup: boolean;
   runtime: RuntimeEnv;
   core: ZalouserCoreRuntime;
-  config: MoltBotConfig;
+  config: RazroomConfig;
   accountId?: string;
   statusSink?: (patch: { lastInboundAt?: number; lastOutboundAt?: number }) => void;
   tableMode?: MarkdownTableMode;

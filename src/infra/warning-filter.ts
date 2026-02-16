@@ -1,4 +1,4 @@
-const warningFilterKey = Symbol.for("moltbot.warning-filter");
+const warningFilterKey = Symbol.for("razroom.warning-filter");
 
 export type ProcessWarning = {
   code?: string;

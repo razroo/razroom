@@ -1,15 +1,15 @@
 {
-  "name": "@moltbot/zalo",
+  "name": "@razroom/zalo",
   "version": "2026.2.15",
-  "description": "MoltBot Zalo channel plugin",
+  "description": "Razroom Zalo channel plugin",
   "type": "module",
   "dependencies": {
     "undici": "7.22.0"
   },
   "devDependencies": {
-    "moltbot": "workspace:*"
+    "razroom": "workspace:*"
   },
-  "moltbot": {
+  "razroom": {
     "extensions": [
       "./index.ts"
     ],
@@ -27,7 +27,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@moltbot/zalo",
+      "npmSpec": "@razroom/zalo",
       "localPath": "extensions/zalo",
       "defaultChoice": "npm"
     }

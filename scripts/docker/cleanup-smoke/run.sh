@@ -3,33 +3,33 @@ set -euo pipefail
 
 cd /repo
 
-export MOLTBOT_STATE_DIR="/tmp/moltbot-test"
-export MOLTBOT_CONFIG_PATH="${MOLTBOT_STATE_DIR}/moltbot.json"
+export RAZROOM_STATE_DIR="/tmp/razroom-test"
+export RAZROOM_CONFIG_PATH="${RAZROOM_STATE_DIR}/razroom.json"
 
 echo "==> Build"
 pnpm build
 
 echo "==> Seed state"
-mkdir -p "${MOLTBOT_STATE_DIR}/credentials"
-mkdir -p "${MOLTBOT_STATE_DIR}/agents/main/sessions"
-echo '{}' >"${MOLTBOT_CONFIG_PATH}"
-echo 'creds' >"${MOLTBOT_STATE_DIR}/credentials/marker.txt"
-echo 'session' >"${MOLTBOT_STATE_DIR}/agents/main/sessions/sessions.json"
+mkdir -p "${RAZROOM_STATE_DIR}/credentials"
+mkdir -p "${RAZROOM_STATE_DIR}/agents/main/sessions"
+echo '{}' >"${RAZROOM_CONFIG_PATH}"
+echo 'creds' >"${RAZROOM_STATE_DIR}/credentials/marker.txt"
+echo 'session' >"${RAZROOM_STATE_DIR}/agents/main/sessions/sessions.json"
 
 echo "==> Reset (config+creds+sessions)"
-pnpm moltbot reset --scope config+creds+sessions --yes --non-interactive
+pnpm razroom reset --scope config+creds+sessions --yes --non-interactive
 
-test ! -f "${MOLTBOT_CONFIG_PATH}"
-test ! -d "${MOLTBOT_STATE_DIR}/credentials"
-test ! -d "${MOLTBOT_STATE_DIR}/agents/main/sessions"
+test ! -f "${RAZROOM_CONFIG_PATH}"
+test ! -d "${RAZROOM_STATE_DIR}/credentials"
+test ! -d "${RAZROOM_STATE_DIR}/agents/main/sessions"
 
 echo "==> Recreate minimal config"
-mkdir -p "${MOLTBOT_STATE_DIR}/credentials"
-echo '{}' >"${MOLTBOT_CONFIG_PATH}"
+mkdir -p "${RAZROOM_STATE_DIR}/credentials"
+echo '{}' >"${RAZROOM_CONFIG_PATH}"
 
 echo "==> Uninstall (state only)"
-pnpm moltbot uninstall --state --yes --non-interactive
+pnpm razroom uninstall --state --yes --non-interactive
 
-test ! -d "${MOLTBOT_STATE_DIR}"
+test ! -d "${RAZROOM_STATE_DIR}"
 
 echo "OK"

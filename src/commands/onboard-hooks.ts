@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { RuntimeEnv } from "../runtime.js";
 import type { WizardPrompter } from "../wizard/prompts.js";
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../agents/agent-scope.js";
@@ -6,16 +6,16 @@ import { formatCliCommand } from "../cli/command-format.js";
 import { buildWorkspaceHookStatus } from "../hooks/hooks-status.js";
 
 export async function setupInternalHooks(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   runtime: RuntimeEnv,
   prompter: WizardPrompter,
-): Promise<MoltBotConfig> {
+): Promise<RazroomConfig> {
   await prompter.note(
     [
       "Hooks let you automate actions when agent commands are issued.",
       "Example: Save session context to memory when you issue /new.",
       "",
-      "Learn more: https://docs.moltbot.ai/automation/hooks",
+      "Learn more: https://docs.razroom.ai/automation/hooks",
     ].join("\n"),
     "Hooks",
   );
@@ -58,7 +58,7 @@ export async function setupInternalHooks(
     entries[name] = { enabled: true };
   }
 
-  const next: MoltBotConfig = {
+  const next: RazroomConfig = {
     ...cfg,
     hooks: {
       ...cfg.hooks,
@@ -74,9 +74,9 @@ export async function setupInternalHooks(
       `Enabled ${selected.length} hook${selected.length > 1 ? "s" : ""}: ${selected.join(", ")}`,
       "",
       "You can manage hooks later with:",
-      `  ${formatCliCommand("moltbot hooks list")}`,
-      `  ${formatCliCommand("moltbot hooks enable <name>")}`,
-      `  ${formatCliCommand("moltbot hooks disable <name>")}`,
+      `  ${formatCliCommand("razroom hooks list")}`,
+      `  ${formatCliCommand("razroom hooks enable <name>")}`,
+      `  ${formatCliCommand("razroom hooks disable <name>")}`,
     ].join("\n"),
     "Hooks Configured",
   );

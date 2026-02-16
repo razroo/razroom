@@ -1,6 +1,6 @@
 import type { Skill } from "@mariozechner/pi-coding-agent";
 import type {
-  MoltBotSkillMetadata,
+  RazroomSkillMetadata,
   ParsedSkillFrontmatter,
   SkillEntry,
   SkillInstallSpec,
@@ -11,7 +11,7 @@ import {
   getFrontmatterString,
   normalizeStringList,
   parseFrontmatterBool,
-  resolveMoltBotManifestBlock,
+  resolveRazroomManifestBlock,
 } from "../../shared/frontmatter.js";
 
 export function parseFrontmatter(content: string): ParsedSkillFrontmatter {
@@ -76,10 +76,10 @@ function parseInstallSpec(input: unknown): SkillInstallSpec | undefined {
   return spec;
 }
 
-export function resolveMoltBotMetadata(
+export function resolveRazroomMetadata(
   frontmatter: ParsedSkillFrontmatter,
-): MoltBotSkillMetadata | undefined {
-  const metadataObj = resolveMoltBotManifestBlock({ frontmatter });
+): RazroomSkillMetadata | undefined {
+  const metadataObj = resolveRazroomManifestBlock({ frontmatter });
   if (!metadataObj) {
     return undefined;
   }

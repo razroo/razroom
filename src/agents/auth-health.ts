@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import {
   type AuthProfileCredential,
   type AuthProfileStore,
@@ -84,7 +84,7 @@ function buildProfileHealth(params: {
   profileId: string;
   credential: AuthProfileCredential;
   store: AuthProfileStore;
-  cfg?: MoltBotConfig;
+  cfg?: RazroomConfig;
   now: number;
   warnAfterMs: number;
 }): AuthProfileHealth {
@@ -155,7 +155,7 @@ function buildProfileHealth(params: {
 
 export function buildAuthHealthSummary(params: {
   store: AuthProfileStore;
-  cfg?: MoltBotConfig;
+  cfg?: RazroomConfig;
   warnAfterMs?: number;
   providers?: string[];
 }): AuthHealthSummary {

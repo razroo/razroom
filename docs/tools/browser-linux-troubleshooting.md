@@ -1,5 +1,5 @@
 ---
-summary: "Fix Chrome/Brave/Edge/Chromium CDP startup issues for MoltBot browser control on Linux"
+summary: "Fix Chrome/Brave/Edge/Chromium CDP startup issues for Razroom browser control on Linux"
 read_when: "Browser control fails on Linux, especially with snap Chromium"
 title: "Browser Troubleshooting"
 ---
@@ -8,15 +8,15 @@ title: "Browser Troubleshooting"
 
 ## Problem: "Failed to start Chrome CDP on port 18800"
 
-MoltBot's browser control server fails to launch Chrome/Brave/Edge/Chromium with the error:
+Razroom's browser control server fails to launch Chrome/Brave/Edge/Chromium with the error:
 
 ```
-{"error":"Error: Failed to start Chrome CDP on port 18800 for profile \"moltbot\"."}
+{"error":"Error: Failed to start Chrome CDP on port 18800 for profile \"razroom\"."}
 ```
 
 ### Root Cause
 
-On Ubuntu (and many Linux distros), the default Chromium installation is a **snap package**. Snap's AppArmor confinement interferes with how MoltBot spawns and monitors the browser process.
+On Ubuntu (and many Linux distros), the default Chromium installation is a **snap package**. Snap's AppArmor confinement interferes with how Razroom spawns and monitors the browser process.
 
 The `apt install chromium` command installs a stub package that redirects to snap:
 
@@ -37,7 +37,7 @@ sudo dpkg -i google-chrome-stable_current_amd64.deb
 sudo apt --fix-broken install -y  # if there are dependency errors
 ```
 
-Then update your MoltBot config (`~/.moltbot/moltbot.json`):
+Then update your Razroom config (`~/.razroom/razroom.json`):
 
 ```json
 {
@@ -52,7 +52,7 @@ Then update your MoltBot config (`~/.moltbot/moltbot.json`):
 
 ### Solution 2: Use Snap Chromium with Attach-Only Mode
 
-If you must use snap Chromium, configure MoltBot to attach to a manually-started browser:
+If you must use snap Chromium, configure Razroom to attach to a manually-started browser:
 
 1. Update config:
 
@@ -72,20 +72,20 @@ If you must use snap Chromium, configure MoltBot to attach to a manually-started
 ```bash
 chromium-browser --headless --no-sandbox --disable-gpu \
   --remote-debugging-port=18800 \
-  --user-data-dir=$HOME/.moltbot/browser/moltbot/user-data \
+  --user-data-dir=$HOME/.razroom/browser/razroom/user-data \
   about:blank &
 ```
 
 3. Optionally create a systemd user service to auto-start Chrome:
 
 ```ini
-# ~/.config/systemd/user/moltbot-browser.service
+# ~/.config/systemd/user/razroom-browser.service
 [Unit]
-Description=MoltBot Browser (Chrome CDP)
+Description=Razroom Browser (Chrome CDP)
 After=network.target
 
 [Service]
-ExecStart=/snap/bin/chromium --headless --no-sandbox --disable-gpu --remote-debugging-port=18800 --user-data-dir=%h/.moltbot/browser/moltbot/user-data about:blank
+ExecStart=/snap/bin/chromium --headless --no-sandbox --disable-gpu --remote-debugging-port=18800 --user-data-dir=%h/.razroom/browser/razroom/user-data about:blank
 Restart=on-failure
 RestartSec=5
 
@@ -93,7 +93,7 @@ RestartSec=5
 WantedBy=default.target
 ```
 
-Enable with: `systemctl --user enable --now moltbot-browser.service`
+Enable with: `systemctl --user enable --now razroom-browser.service`
 
 ### Verifying the Browser Works
 
@@ -123,17 +123,17 @@ curl -s http://127.0.0.1:18791/tabs
 
 ### Problem: "Chrome extension relay is running, but no tab is connected"
 
-You’re using the `chrome` profile (extension relay). It expects the MoltBot
+You’re using the `chrome` profile (extension relay). It expects the Razroom
 browser extension to be attached to a live tab.
 
 Fix options:
 
-1. **Use the managed browser:** `moltbot browser start --browser-profile moltbot`
-   (or set `browser.defaultProfile: "moltbot"`).
+1. **Use the managed browser:** `razroom browser start --browser-profile razroom`
+   (or set `browser.defaultProfile: "razroom"`).
 2. **Use the extension relay:** install the extension, open a tab, and click the
-   MoltBot extension icon to attach it.
+   Razroom extension icon to attach it.
 
 Notes:
 
 - The `chrome` profile uses your **system default Chromium browser** when possible.
-- Local `moltbot` profiles auto-assign `cdpPort`/`cdpUrl`; only set those for remote CDP.
+- Local `razroom` profiles auto-assign `cdpPort`/`cdpUrl`; only set those for remote CDP.

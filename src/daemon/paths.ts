@@ -31,12 +31,12 @@ export function resolveUserPathWithHome(input: string, home?: string): string {
 }
 
 export function resolveGatewayStateDir(env: Record<string, string | undefined>): string {
-  const override = env.MOLTBOT_STATE_DIR?.trim();
+  const override = env.RAZROOM_STATE_DIR?.trim();
   if (override) {
     const home = override.startsWith("~") ? resolveHomeDir(env) : undefined;
     return resolveUserPathWithHome(override, home);
   }
   const home = resolveHomeDir(env);
-  const suffix = resolveGatewayProfileSuffix(env.MOLTBOT_PROFILE);
-  return path.join(home, `.moltbot${suffix}`);
+  const suffix = resolveGatewayProfileSuffix(env.RAZROOM_PROFILE);
+  return path.join(home, `.razroom${suffix}`);
 }

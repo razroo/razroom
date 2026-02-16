@@ -6,7 +6,7 @@ import {
   installModelsConfigTestHooks,
   withModelsTempHome as withTempHome,
 } from "./models-config.e2e-harness.js";
-import { ensureMoltBotModelsJson } from "./models-config.js";
+import { ensureRazroomModelsJson } from "./models-config.js";
 
 installModelsConfigTestHooks({ restoreFetch: true });
 
@@ -23,9 +23,9 @@ describe("models-config", () => {
       globalThis.fetch = fetchMock as unknown as typeof fetch;
 
       try {
-        await ensureMoltBotModelsJson({ models: { providers: {} } });
+        await ensureRazroomModelsJson({ models: { providers: {} } });
 
-        const agentDir = path.join(process.env.HOME ?? "", ".moltbot", "agents", "main", "agent");
+        const agentDir = path.join(process.env.HOME ?? "", ".razroom", "agents", "main", "agent");
         const raw = await fs.readFile(path.join(agentDir, "models.json"), "utf8");
         const parsed = JSON.parse(raw) as {
           providers: Record<string, { baseUrl?: string }>;
@@ -82,7 +82,7 @@ describe("models-config", () => {
           ),
         );
 
-        await ensureMoltBotModelsJson({ models: { providers: {} } }, agentDir);
+        await ensureRazroomModelsJson({ models: { providers: {} } }, agentDir);
 
         const raw = await fs.readFile(path.join(agentDir, "models.json"), "utf8");
         const parsed = JSON.parse(raw) as {

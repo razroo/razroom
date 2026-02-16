@@ -1,6 +1,6 @@
 import path from "node:path";
 import type { RuntimeEnv } from "../../runtime.js";
-import { resolveMoltBotAgentDir } from "../../agents/agent-paths.js";
+import { resolveRazroomAgentDir } from "../../agents/agent-paths.js";
 import {
   resolveAgentDir,
   resolveAgentModelFallbacksOverride,
@@ -74,7 +74,7 @@ export async function modelsStatusCommand(
   }
   const cfg = loadConfig();
   const agentId = resolveKnownAgentId({ cfg, rawAgentId: opts.agent });
-  const agentDir = agentId ? resolveAgentDir(cfg, agentId) : resolveMoltBotAgentDir();
+  const agentDir = agentId ? resolveAgentDir(cfg, agentId) : resolveRazroomAgentDir();
   const agentModelPrimary = agentId ? resolveAgentModelPrimary(cfg, agentId) : undefined;
   const agentFallbacksOverride = agentId
     ? resolveAgentModelFallbacksOverride(cfg, agentId)
@@ -542,8 +542,8 @@ export async function modelsStatusCommand(
     for (const provider of missingProvidersInUse) {
       const hint =
         provider === "anthropic"
-          ? `Run \`claude setup-token\`, then \`${formatCliCommand("moltbot models auth setup-token")}\` or \`${formatCliCommand("moltbot configure")}\`.`
-          : `Run \`${formatCliCommand("moltbot configure")}\` or set an API key env var.`;
+          ? `Run \`claude setup-token\`, then \`${formatCliCommand("razroom models auth setup-token")}\` or \`${formatCliCommand("razroom configure")}\`.`
+          : `Run \`${formatCliCommand("razroom configure")}\` or set an API key env var.`;
       runtime.log(`- ${theme.heading(provider)} ${hint}`);
     }
   }

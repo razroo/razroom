@@ -1,7 +1,7 @@
 ---
 title: Lobster
-summary: "Typed workflow runtime for MoltBot with resumable approval gates."
-description: Typed workflow runtime for MoltBot — composable pipelines with approval gates.
+summary: "Typed workflow runtime for Razroom with resumable approval gates."
+description: Typed workflow runtime for Razroom — composable pipelines with approval gates.
 read_when:
   - You want deterministic multi-step workflows with explicit approvals
   - You need to resume a workflow without re-running earlier steps
@@ -9,7 +9,7 @@ read_when:
 
 # Lobster
 
-Lobster is a workflow shell that lets MoltBot run multi-step tool sequences as a single, deterministic operation with explicit approval checkpoints.
+Lobster is a workflow shell that lets Razroom run multi-step tool sequences as a single, deterministic operation with explicit approval checkpoints.
 
 ## Hook
 
@@ -19,7 +19,7 @@ Your assistant can build the tools that manage itself. Ask for a workflow, and 3
 
 Today, complex workflows require many back-and-forth tool calls. Each call costs tokens, and the LLM has to orchestrate every step. Lobster moves that orchestration into a typed runtime:
 
-- **One call instead of many**: MoltBot runs one Lobster tool call and gets a structured result.
+- **One call instead of many**: Razroom runs one Lobster tool call and gets a structured result.
 - **Approvals built in**: Side effects (send email, post comment) halt the workflow until explicitly approved.
 - **Resumable**: Halted workflows return a token; approve and resume without re-running everything.
 
@@ -35,7 +35,7 @@ Lobster is intentionally small. The goal is not "a new language," it's a predict
 
 ## How it works
 
-MoltBot launches the local `lobster` CLI in **tool mode** and parses a JSON envelope from stdout.
+Razroom launches the local `lobster` CLI in **tool mode** and parses a JSON envelope from stdout.
 If the pipeline pauses for approval, the tool returns a `resumeToken` so you can continue later.
 
 ## Pattern: small CLI + JSON pipes + approvals
@@ -72,7 +72,7 @@ Example: map input items into tool calls:
 
 ```bash
 gog.gmail.search --query 'newer_than:1d' \
-  | moltbot.invoke --tool message --action send --each --item-key message --args-json '{"provider":"telegram","to":"..."}'
+  | razroom.invoke --tool message --action send --each --item-key message --args-json '{"provider":"telegram","to":"..."}'
 ```
 
 ## JSON-only LLM steps (llm-task)
@@ -104,7 +104,7 @@ Enable the tool:
 Use it in a pipeline:
 
 ```lobster
-moltbot.invoke --tool llm-task --action json --args-json '{
+razroom.invoke --tool llm-task --action json --args-json '{
   "prompt": "Given the input email, return intent and draft.",
   "input": { "subject": "Hello", "body": "Can you help?" },
   "schema": {
@@ -123,7 +123,7 @@ See [LLM Task](/tools/llm-task) for details and configuration options.
 
 ## Workflow files (.lobster)
 
-Lobster can run YAML/JSON workflow files with `name`, `args`, `steps`, `env`, `condition`, and `approval` fields. In MoltBot tool calls, set `pipeline` to the file path.
+Lobster can run YAML/JSON workflow files with `name`, `args`, `steps`, `env`, `condition`, and `approval` fields. In Razroom tool calls, set `pipeline` to the file path.
 
 ```yaml
 name: inbox-triage
@@ -153,7 +153,7 @@ Notes:
 
 ## Install Lobster
 
-Install the Lobster CLI on the **same host** that runs the MoltBot Gateway (see the [Lobster repo](https://github.com/moltbot/lobster)), and ensure `lobster` is on `PATH`.
+Install the Lobster CLI on the **same host** that runs the Razroom Gateway (see the [Lobster repo](https://github.com/razroom/lobster)), and ensure `lobster` is on `PATH`.
 If you want to use a custom binary location, pass an **absolute** `lobsterPath` in the tool call.
 
 ## Enable the tool
@@ -190,7 +190,7 @@ Or per-agent:
 Avoid using `tools.allow: ["lobster"]` unless you intend to run in restrictive allowlist mode.
 
 Note: allowlists are opt-in for optional plugins. If your allowlist only names
-plugin tools (like `lobster`), MoltBot keeps core tools enabled. To restrict core
+plugin tools (like `lobster`), Razroom keeps core tools enabled. To restrict core
 tools, include the core tools or groups you want in the allowlist too.
 
 ## Example: Email triage
@@ -199,12 +199,12 @@ Without Lobster:
 
 ```
 User: "Check my email and draft replies"
-→ moltbot calls gmail.list
+→ razroom calls gmail.list
 → LLM summarizes
 → User: "draft replies to #2 and #5"
 → LLM drafts
 → User: "send #2"
-→ moltbot calls gmail.send
+→ razroom calls gmail.send
 (repeat daily, no memory of what was triaged)
 ```
 
@@ -318,7 +318,7 @@ OpenProse pairs well with Lobster: use `/prose` to orchestrate multi-agent prep,
 ## Safety
 
 - **Local subprocess only** — no network calls from the plugin itself.
-- **No secrets** — Lobster doesn't manage OAuth; it calls MoltBot tools that do.
+- **No secrets** — Lobster doesn't manage OAuth; it calls Razroom tools that do.
 - **Sandbox-aware** — disabled when the tool context is sandboxed.
 - **Hardened** — `lobsterPath` must be absolute if specified; timeouts and output caps enforced.
 

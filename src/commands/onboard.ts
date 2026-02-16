@@ -40,8 +40,8 @@ export async function onboardCommand(opts: OnboardOptions, runtime: RuntimeEnv =
     runtime.error(
       [
         "Non-interactive onboarding requires explicit risk acknowledgement.",
-        "Read: https://docs.moltbot.ai/security",
-        `Re-run with: ${formatCliCommand("moltbot onboard --non-interactive --accept-risk ...")}`,
+        "Read: https://docs.razroom.ai/security",
+        `Re-run with: ${formatCliCommand("razroom onboard --non-interactive --accept-risk ...")}`,
       ].join("\n"),
     );
     runtime.exit(1);
@@ -59,10 +59,10 @@ export async function onboardCommand(opts: OnboardOptions, runtime: RuntimeEnv =
   if (process.platform === "win32") {
     runtime.log(
       [
-        "Windows detected — MoltBot runs great on WSL2!",
+        "Windows detected — Razroom runs great on WSL2!",
         "Native Windows might be trickier.",
         "Quick setup: wsl --install (one command, one reboot)",
-        "Guide: https://docs.moltbot.ai/windows",
+        "Guide: https://docs.razroom.ai/windows",
       ].join("\n"),
     );
   }

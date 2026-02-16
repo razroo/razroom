@@ -4,7 +4,7 @@ import {
   GroupPolicySchema,
   MarkdownConfigSchema,
   requireOpenAllowFrom,
-} from "moltbot/plugin-sdk";
+} from "razroom/plugin-sdk";
 import { z } from "zod";
 
 const MattermostAccountSchemaBase = z

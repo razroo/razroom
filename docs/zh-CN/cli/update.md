@@ -2,7 +2,7 @@
 read_when:
   - 你想安全地更新源码检出
   - 你需要了解 `--update` 简写行为
-summary: "`moltbot update` 的 CLI 参考（相对安全的源码更新 + Gateway 网关自动重启）"
+summary: "`razroom update` 的 CLI 参考（相对安全的源码更新 + Gateway 网关自动重启）"
 title: update
 x-i18n:
   generated_at: "2026-02-03T07:45:34Z"
@@ -13,24 +13,24 @@ x-i18n:
   workflow: 15
 ---
 
-# `moltbot update`
+# `razroom update`
 
-安全更新 MoltBot 并在 stable/beta/dev 渠道之间切换。
+安全更新 Razroom 并在 stable/beta/dev 渠道之间切换。
 
 如果你通过 **npm/pnpm** 安装（全局安装，无 git 元数据），更新通过 [更新](/install/updating) 中的包管理器流程进行。
 
 ## 用法
 
 ```bash
-moltbot update
-moltbot update status
-moltbot update wizard
-moltbot update --channel beta
-moltbot update --channel dev
-moltbot update --tag beta
-moltbot update --no-restart
-moltbot update --json
-moltbot --update
+razroom update
+razroom update status
+razroom update wizard
+razroom update --channel beta
+razroom update --channel dev
+razroom update --tag beta
+razroom update --no-restart
+razroom update --json
+razroom --update
 ```
 
 ## 选项
@@ -48,9 +48,9 @@ moltbot --update
 显示当前更新渠道 + git 标签/分支/SHA（对于源码检出），以及更新可用性。
 
 ```bash
-moltbot update status
-moltbot update status --json
-moltbot update status --timeout 10
+razroom update status
+razroom update status --json
+razroom update status --timeout 10
 ```
 
 选项：
@@ -64,9 +64,9 @@ moltbot update status --timeout 10
 
 ## 工作原理
 
-当你显式切换渠道（`--channel ...`）时，MoltBot 也会保持安装方式一致：
+当你显式切换渠道（`--channel ...`）时，Razroom 也会保持安装方式一致：
 
-- `dev` → 确保存在 git 检出（默认：`~/moltbot`，可通过 `MOLTBOT_GIT_DIR` 覆盖），更新它，并从该检出安装全局 CLI。
+- `dev` → 确保存在 git 检出（默认：`~/razroom`，可通过 `RAZROOM_GIT_DIR` 覆盖），更新它，并从该检出安装全局 CLI。
 - `stable`/`beta` → 使用匹配的 dist-tag 从 npm 安装。
 
 ## Git 检出流程
@@ -86,16 +86,16 @@ moltbot update status --timeout 10
 5. Rebase 到所选提交（仅 dev）。
 6. 安装依赖（优先使用 pnpm；npm 作为备选）。
 7. 构建 + 构建控制界面。
-8. 运行 `moltbot doctor` 作为最终的"安全更新"检查。
+8. 运行 `razroom doctor` 作为最终的"安全更新"检查。
 9. 将插件同步到当前渠道（dev 使用捆绑的扩展；stable/beta 使用 npm）并更新 npm 安装的插件。
 
 ## `--update` 简写
 
-`moltbot --update` 会重写为 `moltbot update`（便于 shell 和启动脚本使用）。
+`razroom --update` 会重写为 `razroom update`（便于 shell 和启动脚本使用）。
 
 ## 另请参阅
 
-- `moltbot doctor`（在 git 检出上会提供先运行更新的选项）
+- `razroom doctor`（在 git 检出上会提供先运行更新的选项）
 - [开发渠道](/install/development-channels)
 - [更新](/install/updating)
 - [CLI 参考](/cli)

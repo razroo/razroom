@@ -3,13 +3,13 @@ summary: "Pairing overview: approve who can DM you + which nodes can join"
 read_when:
   - Setting up DM access control
   - Pairing a new iOS/Android node
-  - Reviewing MoltBot security posture
+  - Reviewing Razroom security posture
 title: "Pairing"
 ---
 
 # Pairing
 
-“Pairing” is MoltBot’s explicit **owner approval** step.
+“Pairing” is Razroom’s explicit **owner approval** step.
 It is used in two places:
 
 1. **DM pairing** (who is allowed to talk to the bot)
@@ -32,15 +32,15 @@ Pairing codes:
 ### Approve a sender
 
 ```bash
-moltbot pairing list telegram
-moltbot pairing approve telegram <CODE>
+razroom pairing list telegram
+razroom pairing approve telegram <CODE>
 ```
 
 Supported channels: `telegram`, `whatsapp`, `signal`, `imessage`, `discord`, `slack`, `feishu`.
 
 ### Where the state lives
 
-Stored under `~/.moltbot/credentials/`:
+Stored under `~/.razroom/credentials/`:
 
 - Pending requests: `<channel>-pairing.json`
 - Approved allowlist store: `<channel>-allowFrom.json`
@@ -58,7 +58,7 @@ If you use the `device-pair` plugin, you can do first-time device pairing entire
 
 1. In Telegram, message your bot: `/pair`
 2. The bot replies with two messages: an instruction message and a separate **setup code** message (easy to copy/paste in Telegram).
-3. On your phone, open the MoltBot iOS app → Settings → Gateway.
+3. On your phone, open the Razroom iOS app → Settings → Gateway.
 4. Paste the setup code and connect.
 5. Back in Telegram: `/pair approve`
 
@@ -72,21 +72,21 @@ Treat the setup code like a password while it is valid.
 ### Approve a node device
 
 ```bash
-moltbot devices list
-moltbot devices approve <requestId>
-moltbot devices reject <requestId>
+razroom devices list
+razroom devices approve <requestId>
+razroom devices reject <requestId>
 ```
 
 ### Node pairing state storage
 
-Stored under `~/.moltbot/devices/`:
+Stored under `~/.razroom/devices/`:
 
 - `pending.json` (short-lived; pending requests expire)
 - `paired.json` (paired devices + tokens)
 
 ### Notes
 
-- The legacy `node.pair.*` API (CLI: `moltbot nodes pending/approve`) is a
+- The legacy `node.pair.*` API (CLI: `razroom nodes pending/approve`) is a
   separate gateway-owned pairing store. WS nodes still require device pairing.
 
 ## Related docs

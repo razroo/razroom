@@ -15,7 +15,7 @@ describe("web auto-reply monitor logging", () => {
 
   it("emits heartbeat logs with connection metadata", async () => {
     // TODO: Implement fake timers for Bun;
-    const logPath = `/tmp/moltbot-heartbeat-${crypto.randomUUID()}.log`;
+    const logPath = `/tmp/razroom-heartbeat-${crypto.randomUUID()}.log`;
     setLoggerOverride({ level: "trace", file: logPath });
 
     const runtime = {
@@ -57,7 +57,7 @@ describe("web auto-reply monitor logging", () => {
   });
 
   it("logs outbound replies to file", async () => {
-    const logPath = `/tmp/moltbot-log-test-${crypto.randomUUID()}.log`;
+    const logPath = `/tmp/razroom-log-test-${crypto.randomUUID()}.log`;
     setLoggerOverride({ level: "trace", file: logPath });
 
     let capturedOnMessage:

@@ -1,15 +1,15 @@
-# MoltBot Security & Trust
+# Razroom Security & Trust
 
-**Live:** [trust.moltbot.ai](https://trust.moltbot.ai)
+**Live:** [trust.razroom.ai](https://trust.razroom.ai)
 
 ## Documents
 
-- [Threat Model](./THREAT-MODEL-ATLAS.md) - MITRE ATLAS-based threat model for the MoltBot ecosystem
+- [Threat Model](./THREAT-MODEL-ATLAS.md) - MITRE ATLAS-based threat model for the Razroom ecosystem
 - [Contributing to the Threat Model](./CONTRIBUTING-THREAT-MODEL.md) - How to add threats, mitigations, and attack chains
 
 ## Reporting Vulnerabilities
 
-See the [Trust page](https://trust.moltbot.ai) for full reporting instructions covering all repos.
+See the [Trust page](https://trust.razroom.ai) for full reporting instructions covering all repos.
 
 ## Contact
 

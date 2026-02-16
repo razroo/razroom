@@ -1,8 +1,8 @@
 import { describe, expect, it } from "bun:test";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import { isWithinActiveHours } from "./heartbeat-active-hours.js";
 
-function cfgWithUserTimezone(userTimezone = "UTC"): MoltBotConfig {
+function cfgWithUserTimezone(userTimezone = "UTC"): RazroomConfig {
   return {
     agents: {
       defaults: {

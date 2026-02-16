@@ -16,9 +16,9 @@ import {
   type ChannelMessageActionAdapter,
   type ChannelPlugin,
   type ChannelStatusIssue,
-  type MoltBotConfig,
-} from "moltbot/plugin-sdk";
-import { GoogleChatConfigSchema } from "moltbot/plugin-sdk";
+  type RazroomConfig,
+} from "razroom/plugin-sdk";
+import { GoogleChatConfigSchema } from "razroom/plugin-sdk";
 import {
   listGoogleChatAccountIds,
   resolveDefaultGoogleChatAccountId,
@@ -348,7 +348,7 @@ export const googlechatPlugin: ChannelPlugin<ResolvedGoogleChatAccount> = {
               ...configPatch,
             },
           },
-        } as MoltBotConfig;
+        } as RazroomConfig;
       }
       return {
         ...next,
@@ -367,7 +367,7 @@ export const googlechatPlugin: ChannelPlugin<ResolvedGoogleChatAccount> = {
             },
           },
         },
-      } as MoltBotConfig;
+      } as RazroomConfig;
     },
   },
   outbound: {

@@ -6,7 +6,7 @@ describe("prepareSlackMessage sender prefix", () => {
   it("prefixes channel bodies with sender label", async () => {
     const ctx = {
       cfg: {
-        agents: { defaults: { model: "anthropic/claude-opus-4-5", workspace: "/tmp/moltbot" } },
+        agents: { defaults: { model: "anthropic/claude-opus-4-5", workspace: "/tmp/razroom" } },
         channels: { slack: {} },
       },
       accountId: "default",
@@ -39,7 +39,7 @@ describe("prepareSlackMessage sender prefix", () => {
       replyToMode: "off",
       threadHistoryScope: "channel",
       threadInheritParent: false,
-      slashCommand: { command: "/moltbot", enabled: true },
+      slashCommand: { command: "/razroom", enabled: true },
       textLimit: 2000,
       ackReactionScope: "off",
       mediaMaxBytes: 1000,
@@ -80,7 +80,7 @@ describe("prepareSlackMessage sender prefix", () => {
   it("detects /new as control command when prefixed with Slack mention", async () => {
     const ctx = {
       cfg: {
-        agents: { defaults: { model: "anthropic/claude-opus-4-5", workspace: "/tmp/moltbot" } },
+        agents: { defaults: { model: "anthropic/claude-opus-4-5", workspace: "/tmp/razroom" } },
         channels: { slack: { dm: { enabled: true, policy: "open", allowFrom: ["*"] } } },
       },
       accountId: "default",
@@ -115,7 +115,7 @@ describe("prepareSlackMessage sender prefix", () => {
       threadInheritParent: false,
       slashCommand: {
         enabled: false,
-        name: "moltbot",
+        name: "razroom",
         sessionPrefix: "slack:slash",
         ephemeral: true,
       },

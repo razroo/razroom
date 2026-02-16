@@ -123,7 +123,7 @@ mock("../config/config.js", () => ({
 }));
 
 mock("../commands/onboard-helpers.js", () => ({
-  DEFAULT_WORKSPACE: "/tmp/moltbot-workspace",
+  DEFAULT_WORKSPACE: "/tmp/razroom-workspace",
   applyWizardMetadata: (cfg: unknown) => cfg,
   summarizeExistingConfig: () => "summary",
   handleReset: async () => {},
@@ -220,7 +220,7 @@ describe("runOnboardingWizard", () => {
   let suiteCase = 0;
 
   beforeAll(async () => {
-    suiteRoot = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-onboard-suite-"));
+    suiteRoot = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-onboard-suite-"));
   });
 
   afterAll(async () => {
@@ -237,7 +237,7 @@ describe("runOnboardingWizard", () => {
 
   it("exits when config is invalid", async () => {
     readConfigFileSnapshot.mockResolvedValueOnce({
-      path: "/tmp/.moltbot/moltbot.json",
+      path: "/tmp/.razroom/razroom.json",
       exists: true,
       raw: "{}",
       parsed: {},

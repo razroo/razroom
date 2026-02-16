@@ -14,18 +14,18 @@ x-i18n:
 
 # 群组
 
-MoltBot 在各平台上统一处理群聊：WhatsApp、Telegram、Discord、Slack、Signal、iMessage、Microsoft Teams。
+Razroom 在各平台上统一处理群聊：WhatsApp、Telegram、Discord、Slack、Signal、iMessage、Microsoft Teams。
 
 ## 新手入门（2 分钟）
 
-MoltBot"运行"在你自己的消息账户上。没有单独的 WhatsApp 机器人用户。如果**你**在一个群组中，MoltBot 就可以看到该群组并在其中回复。
+Razroom"运行"在你自己的消息账户上。没有单独的 WhatsApp 机器人用户。如果**你**在一个群组中，Razroom 就可以看到该群组并在其中回复。
 
 默认行为：
 
 - 群组受限（`groupPolicy: "allowlist"`）。
 - 除非你明确禁用提及限制，否则回复需要 @ 提及。
 
-解释：允许列表中的发送者可以通过提及来触发 MoltBot。
+解释：允许列表中的发送者可以通过提及来触发 Razroom。
 
 > 简而言之
 >
@@ -235,7 +235,7 @@ requireMention? 是 -> 被提及? 否 -> 仅存储为上下文
       {
         id: "main",
         groupChat: {
-          mentionPatterns: ["@moltbot", "moltbot", "\\+15555550123"],
+          mentionPatterns: ["@razroom", "razroom", "\\+15555550123"],
           historyLimit: 50,
         },
       },

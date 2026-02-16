@@ -2,18 +2,18 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "bun:test";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import { buildSystemPromptParams } from "./system-prompt-params.js";
 
 async function makeTempDir(label: string): Promise<string> {
-  return fs.mkdtemp(path.join(os.tmpdir(), `moltbot-${label}-`));
+  return fs.mkdtemp(path.join(os.tmpdir(), `razroom-${label}-`));
 }
 
 async function makeRepoRoot(root: string): Promise<void> {
   await fs.mkdir(path.join(root, ".git"), { recursive: true });
 }
 
-function buildParams(params: { config?: MoltBotConfig; workspaceDir?: string; cwd?: string }) {
+function buildParams(params: { config?: RazroomConfig; workspaceDir?: string; cwd?: string }) {
   return buildSystemPromptParams({
     config: params.config,
     workspaceDir: params.workspaceDir,
@@ -61,7 +61,7 @@ describe("buildSystemPromptParams repo root", () => {
     await fs.mkdir(workspaceDir, { recursive: true });
     await makeRepoRoot(workspaceDir);
 
-    const config: MoltBotConfig = {
+    const config: RazroomConfig = {
       agents: {
         defaults: {
           repoRoot,
@@ -81,7 +81,7 @@ describe("buildSystemPromptParams repo root", () => {
     await fs.mkdir(workspaceDir, { recursive: true });
     await makeRepoRoot(repoRoot);
 
-    const config: MoltBotConfig = {
+    const config: RazroomConfig = {
       agents: {
         defaults: {
           repoRoot: path.join(temp, "missing"),

@@ -1,4 +1,4 @@
-import type { ChannelDirectoryEntry } from "moltbot/plugin-sdk";
+import type { ChannelDirectoryEntry } from "razroom/plugin-sdk";
 import { resolveMatrixAuth } from "./matrix/client.js";
 
 type MatrixUserResult = {

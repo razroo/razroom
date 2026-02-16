@@ -23,7 +23,7 @@ const LEGACY_STATE_DIRS: string[] = [];
 
 function resolveDefaultDbPath(): string {
   const home = homedir();
-  const preferred = join(home, ".moltbot", "memory", "lancedb");
+  const preferred = join(home, ".razroom", "memory", "lancedb");
   try {
     if (fs.existsSync(preferred)) {
       return preferred;
@@ -140,7 +140,7 @@ export const memoryConfigSchema = {
     },
     dbPath: {
       label: "Database Path",
-      placeholder: "~/.moltbot/memory/lancedb",
+      placeholder: "~/.razroom/memory/lancedb",
       advanced: true,
     },
     autoCapture: {

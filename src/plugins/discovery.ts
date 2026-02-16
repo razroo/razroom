@@ -5,7 +5,7 @@ import { resolveConfigDir, resolveUserPath } from "../utils.js";
 import { resolveBundledPluginsDir } from "./bundled-dir.js";
 import {
   getPackageManifestMetadata,
-  type MoltBotPackageManifest,
+  type RazroomPackageManifest,
   type PackageManifest,
 } from "./manifest.js";
 
@@ -21,7 +21,7 @@ export type PluginCandidate = {
   packageVersion?: string;
   packageDescription?: string;
   packageDir?: string;
-  packageManifest?: MoltBotPackageManifest;
+  packageManifest?: RazroomPackageManifest;
 };
 
 export type PluginDiscoveryResult = {
@@ -70,7 +70,7 @@ function deriveIdHint(params: {
   }
 
   // Prefer the unscoped name so config keys stay stable even when the npm
-  // package is scoped (example: @moltbot/voice-call -> voice-call).
+  // package is scoped (example: @razroom/voice-call -> voice-call).
   const unscoped = rawPackageName.includes("/")
     ? (rawPackageName.split("/").pop() ?? rawPackageName)
     : rawPackageName;
@@ -298,7 +298,7 @@ function discoverFromPath(params: {
   }
 }
 
-export function discoverMoltBotPlugins(params: {
+export function discoverRazroomPlugins(params: {
   workspaceDir?: string;
   extraPaths?: string[];
 }): PluginDiscoveryResult {
@@ -327,7 +327,7 @@ export function discoverMoltBotPlugins(params: {
   }
   if (workspaceDir) {
     const workspaceRoot = resolveUserPath(workspaceDir);
-    const workspaceExtDirs = [path.join(workspaceRoot, ".moltbot", "extensions")];
+    const workspaceExtDirs = [path.join(workspaceRoot, ".razroom", "extensions")];
     for (const dir of workspaceExtDirs) {
       discoverInDirectory({
         dir,

@@ -2,7 +2,7 @@
 
 Stop typing `docker-compose` commands. Just type `clawdock-start`.
 
-Inspired by Simon Willison's [Running MoltBot in Docker](https://til.simonwillison.net/llms/moltbot-docker).
+Inspired by Simon Willison's [Running Razroom in Docker](https://til.simonwillison.net/llms/razroom-docker).
 
 - [Quickstart](#quickstart)
 - [Available Commands](#available-commands)
@@ -25,7 +25,7 @@ Inspired by Simon Willison's [Running MoltBot in Docker](https://til.simonwillis
 **Install:**
 
 ```bash
-mkdir -p ~/.clawdock && curl -sL https://raw.githubusercontent.com/moltbot/moltbot/main/scripts/shell-helpers/clawdock-helpers.sh -o ~/.clawdock/clawdock-helpers.sh
+mkdir -p ~/.clawdock && curl -sL https://raw.githubusercontent.com/razroom/razroom/main/scripts/shell-helpers/clawdock-helpers.sh -o ~/.clawdock/clawdock-helpers.sh
 ```
 
 ```bash
@@ -38,9 +38,9 @@ echo 'source ~/.clawdock/clawdock-helpers.sh' >> ~/.zshrc && source ~/.zshrc
 clawdock-help
 ```
 
-On first command, ClawDock auto-detects your MoltBot directory:
+On first command, ClawDock auto-detects your Razroom directory:
 
-- Checks common paths (`~/moltbot`, `~/workspace/moltbot`, etc.)
+- Checks common paths (`~/razroom`, `~/workspace/razroom`, etc.)
 - If found, asks you to confirm
 - Saves to `~/.clawdock/config`
 
@@ -87,7 +87,7 @@ clawdock-approve <request-id>
 | Command                   | Description                                    |
 | ------------------------- | ---------------------------------------------- |
 | `clawdock-shell`          | Interactive shell inside the gateway container |
-| `clawdock-cli <command>`  | Run MoltBot CLI commands                      |
+| `clawdock-cli <command>`  | Run Razroom CLI commands                      |
 | `clawdock-exec <command>` | Execute arbitrary commands in the container    |
 
 ### Web UI & Devices
@@ -117,8 +117,8 @@ clawdock-approve <request-id>
 | -------------------- | ----------------------------------------- |
 | `clawdock-health`    | Run gateway health check                  |
 | `clawdock-token`     | Display the gateway authentication token  |
-| `clawdock-cd`        | Jump to the MoltBot project directory    |
-| `clawdock-config`    | Open the MoltBot config directory        |
+| `clawdock-cd`        | Jump to the Razroom project directory    |
+| `clawdock-config`    | Open the Razroom config directory        |
 | `clawdock-workspace` | Open the workspace directory              |
 | `clawdock-help`      | Show all available commands with examples |
 
@@ -155,7 +155,7 @@ clawdock-shell
 **Inside the container, login to WhatsApp:**
 
 ```bash
-moltbot channels login --channel whatsapp --verbose
+razroom channels login --channel whatsapp --verbose
 ```
 
 Scan the QR code with WhatsApp on your phone.
@@ -163,7 +163,7 @@ Scan the QR code with WhatsApp on your phone.
 **Verify connection:**
 
 ```bash
-moltbot status
+razroom status
 ```
 
 ### Troubleshooting Device Pairing
@@ -193,7 +193,7 @@ clawdock-fix-token
 This will:
 
 1. Read the token from your `.env` file
-2. Configure it in the MoltBot config
+2. Configure it in the Razroom config
 3. Restart the gateway
 4. Verify the configuration
 
@@ -209,7 +209,7 @@ docker ps
 
 - Docker and Docker Compose installed
 - Bash or Zsh shell
-- MoltBot project (from `docker-setup.sh`)
+- Razroom project (from `docker-setup.sh`)
 
 ## Development
 

@@ -2,7 +2,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it, mock, spyOn } from "bun:test";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import {
   autoMigrateLegacyStateDir,
   autoMigrateLegacyState,
@@ -15,7 +15,7 @@ import {
 let tempRoot: string | null = null;
 
 async function makeTempRoot() {
-  const root = await fs.promises.mkdtemp(path.join(os.tmpdir(), "moltbot-doctor-"));
+  const root = await fs.promises.mkdtemp(path.join(os.tmpdir(), "razroom-doctor-"));
   tempRoot = root;
   return root;
 }
@@ -38,7 +38,7 @@ function writeJson5(filePath: string, value: unknown) {
 describe("doctor legacy state migrations", () => {
   it("migrates legacy sessions into agents/<id>/sessions", async () => {
     const root = await makeTempRoot();
-    const cfg: MoltBotConfig = {};
+    const cfg: RazroomConfig = {};
     const legacySessionsDir = path.join(root, "sessions");
     fs.mkdirSync(legacySessionsDir, { recursive: true });
 
@@ -54,7 +54,7 @@ describe("doctor legacy state migrations", () => {
 
     const detected = await detectLegacyStateMigrations({
       cfg,
-      env: { MOLTBOT_STATE_DIR: root } as NodeJS.ProcessEnv,
+      env: { RAZROOM_STATE_DIR: root } as NodeJS.ProcessEnv,
     });
     const result = await runLegacyStateMigrations({
       detected,
@@ -82,7 +82,7 @@ describe("doctor legacy state migrations", () => {
 
   it("migrates legacy agent dir with conflict fallback", async () => {
     const root = await makeTempRoot();
-    const cfg: MoltBotConfig = {};
+    const cfg: RazroomConfig = {};
 
     const legacyAgentDir = path.join(root, "agent");
     fs.mkdirSync(legacyAgentDir, { recursive: true });
@@ -95,7 +95,7 @@ describe("doctor legacy state migrations", () => {
 
     const detected = await detectLegacyStateMigrations({
       cfg,
-      env: { MOLTBOT_STATE_DIR: root } as NodeJS.ProcessEnv,
+      env: { RAZROOM_STATE_DIR: root } as NodeJS.ProcessEnv,
     });
     await runLegacyStateMigrations({ detected, now: () => 123 });
 
@@ -106,7 +106,7 @@ describe("doctor legacy state migrations", () => {
 
   it("auto-migrates legacy agent dir on startup", async () => {
     const root = await makeTempRoot();
-    const cfg: MoltBotConfig = {};
+    const cfg: RazroomConfig = {};
 
     const legacyAgentDir = path.join(root, "agent");
     fs.mkdirSync(legacyAgentDir, { recursive: true });
@@ -116,7 +116,7 @@ describe("doctor legacy state migrations", () => {
 
     const result = await autoMigrateLegacyState({
       cfg,
-      env: { MOLTBOT_STATE_DIR: root } as NodeJS.ProcessEnv,
+      env: { RAZROOM_STATE_DIR: root } as NodeJS.ProcessEnv,
       log,
     });
 
@@ -128,7 +128,7 @@ describe("doctor legacy state migrations", () => {
 
   it("auto-migrates legacy sessions on startup", async () => {
     const root = await makeTempRoot();
-    const cfg: MoltBotConfig = {};
+    const cfg: RazroomConfig = {};
 
     const legacySessionsDir = path.join(root, "sessions");
     fs.mkdirSync(legacySessionsDir, { recursive: true });
@@ -141,7 +141,7 @@ describe("doctor legacy state migrations", () => {
 
     const result = await autoMigrateLegacyState({
       cfg,
-      env: { MOLTBOT_STATE_DIR: root } as NodeJS.ProcessEnv,
+      env: { RAZROOM_STATE_DIR: root } as NodeJS.ProcessEnv,
       log,
       now: () => 123,
     });
@@ -157,7 +157,7 @@ describe("doctor legacy state migrations", () => {
 
   it("migrates legacy WhatsApp auth files without touching oauth.json", async () => {
     const root = await makeTempRoot();
-    const cfg: MoltBotConfig = {};
+    const cfg: RazroomConfig = {};
 
     const oauthDir = path.join(root, "credentials");
     fs.mkdirSync(oauthDir, { recursive: true });
@@ -167,7 +167,7 @@ describe("doctor legacy state migrations", () => {
 
     const detected = await detectLegacyStateMigrations({
       cfg,
-      env: { MOLTBOT_STATE_DIR: root } as NodeJS.ProcessEnv,
+      env: { RAZROOM_STATE_DIR: root } as NodeJS.ProcessEnv,
     });
     await runLegacyStateMigrations({ detected, now: () => 123 });
 
@@ -180,10 +180,10 @@ describe("doctor legacy state migrations", () => {
 
   it("no-ops when nothing detected", async () => {
     const root = await makeTempRoot();
-    const cfg: MoltBotConfig = {};
+    const cfg: RazroomConfig = {};
     const detected = await detectLegacyStateMigrations({
       cfg,
-      env: { MOLTBOT_STATE_DIR: root } as NodeJS.ProcessEnv,
+      env: { RAZROOM_STATE_DIR: root } as NodeJS.ProcessEnv,
     });
     const result = await runLegacyStateMigrations({ detected });
     expect(result.changes).toEqual([]);
@@ -191,7 +191,7 @@ describe("doctor legacy state migrations", () => {
 
   it("routes legacy state to the default agent entry", async () => {
     const root = await makeTempRoot();
-    const cfg: MoltBotConfig = {
+    const cfg: RazroomConfig = {
       agents: { list: [{ id: "alpha", default: true }] },
     };
     const legacySessionsDir = path.join(root, "sessions");
@@ -202,7 +202,7 @@ describe("doctor legacy state migrations", () => {
 
     const detected = await detectLegacyStateMigrations({
       cfg,
-      env: { MOLTBOT_STATE_DIR: root } as NodeJS.ProcessEnv,
+      env: { RAZROOM_STATE_DIR: root } as NodeJS.ProcessEnv,
     });
     await runLegacyStateMigrations({ detected, now: () => 123 });
 
@@ -215,7 +215,7 @@ describe("doctor legacy state migrations", () => {
 
   it("honors session.mainKey when seeding the direct-chat bucket", async () => {
     const root = await makeTempRoot();
-    const cfg: MoltBotConfig = { session: { mainKey: "work" } };
+    const cfg: RazroomConfig = { session: { mainKey: "work" } };
     const legacySessionsDir = path.join(root, "sessions");
     fs.mkdirSync(legacySessionsDir, { recursive: true });
     writeJson5(path.join(legacySessionsDir, "sessions.json"), {
@@ -225,7 +225,7 @@ describe("doctor legacy state migrations", () => {
 
     const detected = await detectLegacyStateMigrations({
       cfg,
-      env: { MOLTBOT_STATE_DIR: root } as NodeJS.ProcessEnv,
+      env: { RAZROOM_STATE_DIR: root } as NodeJS.ProcessEnv,
     });
     await runLegacyStateMigrations({ detected, now: () => 123 });
 
@@ -239,7 +239,7 @@ describe("doctor legacy state migrations", () => {
 
   it("canonicalizes legacy main keys inside the target sessions store", async () => {
     const root = await makeTempRoot();
-    const cfg: MoltBotConfig = {};
+    const cfg: RazroomConfig = {};
     const targetDir = path.join(root, "agents", "main", "sessions");
     writeJson5(path.join(targetDir, "sessions.json"), {
       main: { sessionId: "legacy", updatedAt: 10 },
@@ -248,7 +248,7 @@ describe("doctor legacy state migrations", () => {
 
     const detected = await detectLegacyStateMigrations({
       cfg,
-      env: { MOLTBOT_STATE_DIR: root } as NodeJS.ProcessEnv,
+      env: { RAZROOM_STATE_DIR: root } as NodeJS.ProcessEnv,
     });
     await runLegacyStateMigrations({ detected, now: () => 123 });
 
@@ -261,7 +261,7 @@ describe("doctor legacy state migrations", () => {
 
   it("prefers the newest entry when collapsing main aliases", async () => {
     const root = await makeTempRoot();
-    const cfg: MoltBotConfig = { session: { mainKey: "work" } };
+    const cfg: RazroomConfig = { session: { mainKey: "work" } };
     const targetDir = path.join(root, "agents", "main", "sessions");
     writeJson5(path.join(targetDir, "sessions.json"), {
       "agent:main:main": { sessionId: "legacy", updatedAt: 50 },
@@ -270,7 +270,7 @@ describe("doctor legacy state migrations", () => {
 
     const detected = await detectLegacyStateMigrations({
       cfg,
-      env: { MOLTBOT_STATE_DIR: root } as NodeJS.ProcessEnv,
+      env: { RAZROOM_STATE_DIR: root } as NodeJS.ProcessEnv,
     });
     await runLegacyStateMigrations({ detected, now: () => 123 });
 
@@ -283,7 +283,7 @@ describe("doctor legacy state migrations", () => {
 
   it("lowercases agent session keys during canonicalization", async () => {
     const root = await makeTempRoot();
-    const cfg: MoltBotConfig = {};
+    const cfg: RazroomConfig = {};
     const targetDir = path.join(root, "agents", "main", "sessions");
     writeJson5(path.join(targetDir, "sessions.json"), {
       "agent:main:slack:channel:C123": { sessionId: "legacy", updatedAt: 10 },
@@ -291,7 +291,7 @@ describe("doctor legacy state migrations", () => {
 
     const detected = await detectLegacyStateMigrations({
       cfg,
-      env: { MOLTBOT_STATE_DIR: root } as NodeJS.ProcessEnv,
+      env: { RAZROOM_STATE_DIR: root } as NodeJS.ProcessEnv,
     });
     await runLegacyStateMigrations({ detected, now: () => 123 });
 
@@ -304,7 +304,7 @@ describe("doctor legacy state migrations", () => {
 
   it("auto-migrates when only target sessions contain legacy keys", async () => {
     const root = await makeTempRoot();
-    const cfg: MoltBotConfig = {};
+    const cfg: RazroomConfig = {};
     const targetDir = path.join(root, "agents", "main", "sessions");
     writeJson5(path.join(targetDir, "sessions.json"), {
       main: { sessionId: "legacy", updatedAt: 10 },
@@ -314,7 +314,7 @@ describe("doctor legacy state migrations", () => {
 
     const result = await autoMigrateLegacyState({
       cfg,
-      env: { MOLTBOT_STATE_DIR: root } as NodeJS.ProcessEnv,
+      env: { RAZROOM_STATE_DIR: root } as NodeJS.ProcessEnv,
       log,
     });
 
@@ -341,11 +341,11 @@ describe("doctor legacy state migrations", () => {
 
   it("skips state dir migration when env override is set", async () => {
     const root = await makeTempRoot();
-    const legacyDir = path.join(root, ".moltbot");
+    const legacyDir = path.join(root, ".razroom");
     fs.mkdirSync(legacyDir, { recursive: true });
 
     const result = await autoMigrateLegacyStateDir({
-      env: { MOLTBOT_STATE_DIR: "/custom/state" } as NodeJS.ProcessEnv,
+      env: { RAZROOM_STATE_DIR: "/custom/state" } as NodeJS.ProcessEnv,
       homedir: () => root,
     });
 
@@ -355,8 +355,8 @@ describe("doctor legacy state migrations", () => {
 
   it("does not warn when legacy state dir is an already-migrated symlink mirror", async () => {
     const root = await makeTempRoot();
-    const targetDir = path.join(root, ".moltbot");
-    const legacyDir = path.join(root, ".moltbot");
+    const targetDir = path.join(root, ".razroom");
+    const legacyDir = path.join(root, ".razroom");
     fs.mkdirSync(path.join(targetDir, "sessions"), { recursive: true });
     fs.mkdirSync(path.join(targetDir, "agent"), { recursive: true });
     fs.mkdirSync(legacyDir, { recursive: true });
@@ -376,8 +376,8 @@ describe("doctor legacy state migrations", () => {
 
   it("warns when legacy state dir is empty and target already exists", async () => {
     const root = await makeTempRoot();
-    const targetDir = path.join(root, ".moltbot");
-    const legacyDir = path.join(root, ".moltbot");
+    const targetDir = path.join(root, ".razroom");
+    const legacyDir = path.join(root, ".razroom");
     fs.mkdirSync(targetDir, { recursive: true });
     fs.mkdirSync(legacyDir, { recursive: true });
 
@@ -394,8 +394,8 @@ describe("doctor legacy state migrations", () => {
 
   it("warns when legacy state dir contains non-symlink entries and target already exists", async () => {
     const root = await makeTempRoot();
-    const targetDir = path.join(root, ".moltbot");
-    const legacyDir = path.join(root, ".moltbot");
+    const targetDir = path.join(root, ".razroom");
+    const legacyDir = path.join(root, ".razroom");
     fs.mkdirSync(targetDir, { recursive: true });
     fs.mkdirSync(legacyDir, { recursive: true });
     fs.writeFileSync(path.join(legacyDir, "sessions.json"), "{}", "utf-8");
@@ -413,8 +413,8 @@ describe("doctor legacy state migrations", () => {
 
   it("does not warn when legacy state dir contains nested symlink mirrors", async () => {
     const root = await makeTempRoot();
-    const targetDir = path.join(root, ".moltbot");
-    const legacyDir = path.join(root, ".moltbot");
+    const targetDir = path.join(root, ".razroom");
+    const legacyDir = path.join(root, ".razroom");
     fs.mkdirSync(path.join(targetDir, "agents", "main"), { recursive: true });
     fs.mkdirSync(legacyDir, { recursive: true });
     fs.mkdirSync(path.join(legacyDir, "agents"), { recursive: true });
@@ -437,8 +437,8 @@ describe("doctor legacy state migrations", () => {
 
   it("warns when legacy state dir symlink points outside the target tree", async () => {
     const root = await makeTempRoot();
-    const targetDir = path.join(root, ".moltbot");
-    const legacyDir = path.join(root, ".moltbot");
+    const targetDir = path.join(root, ".razroom");
+    const legacyDir = path.join(root, ".razroom");
     const outsideDir = path.join(root, ".outside-state");
     fs.mkdirSync(path.join(targetDir, "sessions"), { recursive: true });
     fs.mkdirSync(legacyDir, { recursive: true });
@@ -460,8 +460,8 @@ describe("doctor legacy state migrations", () => {
 
   it("warns when legacy state dir contains a broken symlink target", async () => {
     const root = await makeTempRoot();
-    const targetDir = path.join(root, ".moltbot");
-    const legacyDir = path.join(root, ".moltbot");
+    const targetDir = path.join(root, ".razroom");
+    const legacyDir = path.join(root, ".razroom");
     fs.mkdirSync(path.join(targetDir, "sessions"), { recursive: true });
     fs.mkdirSync(legacyDir, { recursive: true });
 
@@ -483,8 +483,8 @@ describe("doctor legacy state migrations", () => {
 
   it("warns when legacy symlink escapes target tree through second-hop symlink", async () => {
     const root = await makeTempRoot();
-    const targetDir = path.join(root, ".moltbot");
-    const legacyDir = path.join(root, ".moltbot");
+    const targetDir = path.join(root, ".razroom");
+    const legacyDir = path.join(root, ".razroom");
     const outsideDir = path.join(root, ".outside-state");
     fs.mkdirSync(targetDir, { recursive: true });
     fs.mkdirSync(legacyDir, { recursive: true });

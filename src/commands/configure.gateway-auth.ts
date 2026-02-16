@@ -1,4 +1,4 @@
-import type { MoltBotConfig, GatewayAuthConfig } from "../config/config.js";
+import type { RazroomConfig, GatewayAuthConfig } from "../config/config.js";
 import type { RuntimeEnv } from "../runtime.js";
 import type { WizardPrompter } from "../wizard/prompts.js";
 import { ensureAuthProfileStore } from "../agents/auth-profiles.js";
@@ -71,10 +71,10 @@ export function buildGatewayAuthConfig(params: {
 }
 
 export async function promptAuthConfig(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   runtime: RuntimeEnv,
   prompter: WizardPrompter,
-): Promise<MoltBotConfig> {
+): Promise<RazroomConfig> {
   const authChoice = await promptAuthChoiceGrouped({
     prompter,
     store: ensureAuthProfileStore(undefined, {

@@ -1,5 +1,5 @@
-import type { LookupFn, SsrFPolicy } from "moltbot/plugin-sdk";
-import { fetchWithSsrFGuard } from "moltbot/plugin-sdk";
+import type { LookupFn, SsrFPolicy } from "razroom/plugin-sdk";
+import { fetchWithSsrFGuard } from "razroom/plugin-sdk";
 import { validateUrbitBaseUrl } from "./base-url.js";
 import { UrbitUrlError } from "./errors.js";
 

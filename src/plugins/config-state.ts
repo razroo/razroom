@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { PluginRecord } from "./registry.js";
 import { defaultSlotIdForKey } from "./slots.js";
 
@@ -61,7 +61,7 @@ const normalizePluginEntries = (entries: unknown): NormalizedPluginsConfig["entr
 };
 
 export const normalizePluginsConfig = (
-  config?: MoltBotConfig["plugins"],
+  config?: RazroomConfig["plugins"],
 ): NormalizedPluginsConfig => {
   const memorySlot = normalizeSlotValue(config?.slots?.memory);
   return {
@@ -76,13 +76,13 @@ export const normalizePluginsConfig = (
   };
 };
 
-const hasExplicitMemorySlot = (plugins?: MoltBotConfig["plugins"]) =>
+const hasExplicitMemorySlot = (plugins?: RazroomConfig["plugins"]) =>
   Boolean(plugins?.slots && Object.prototype.hasOwnProperty.call(plugins.slots, "memory"));
 
-const hasExplicitMemoryEntry = (plugins?: MoltBotConfig["plugins"]) =>
+const hasExplicitMemoryEntry = (plugins?: RazroomConfig["plugins"]) =>
   Boolean(plugins?.entries && Object.prototype.hasOwnProperty.call(plugins.entries, "memory-core"));
 
-const hasExplicitPluginConfig = (plugins?: MoltBotConfig["plugins"]) => {
+const hasExplicitPluginConfig = (plugins?: RazroomConfig["plugins"]) => {
   if (!plugins) {
     return false;
   }
@@ -108,9 +108,9 @@ const hasExplicitPluginConfig = (plugins?: MoltBotConfig["plugins"]) => {
 };
 
 export function applyTestPluginDefaults(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   env: NodeJS.ProcessEnv = process.env,
-): MoltBotConfig {
+): RazroomConfig {
   if (!env.VITEST) {
     return cfg;
   }
@@ -146,7 +146,7 @@ export function applyTestPluginDefaults(
 }
 
 export function isTestDefaultMemorySlotDisabled(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   env: NodeJS.ProcessEnv = process.env,
 ): boolean {
   if (!env.VITEST) {

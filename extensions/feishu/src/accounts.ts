@@ -1,5 +1,5 @@
-import type { ClawdbotConfig } from "moltbot/plugin-sdk";
-import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "moltbot/plugin-sdk/account-id";
+import type { ClawdbotConfig } from "razroom/plugin-sdk";
+import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "razroom/plugin-sdk/account-id";
 import type {
   FeishuConfig,
   FeishuAccountConfig,

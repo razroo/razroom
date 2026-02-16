@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import type { ChannelOutboundAdapter, ChannelPlugin } from "../../channels/plugins/types.js";
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 import type { PluginRegistry } from "../../plugins/registry.js";
 import { discordOutbound } from "../../channels/plugins/outbound/discord.js";
 import { imessageOutbound } from "../../channels/plugins/outbound/imessage.js";
@@ -168,8 +168,8 @@ describe("routeReply", () => {
   it("applies responsePrefix when routing", async () => {
     mocks.sendMessageSlack.mockClear();
     const cfg = {
-      messages: { responsePrefix: "[moltbot]" },
-    } as unknown as MoltBotConfig;
+      messages: { responsePrefix: "[razroom]" },
+    } as unknown as RazroomConfig;
     await routeReply({
       payload: { text: "hi" },
       channel: "slack",
@@ -178,7 +178,7 @@ describe("routeReply", () => {
     });
     expect(mocks.sendMessageSlack).toHaveBeenCalledWith(
       "channel:C123",
-      "[moltbot] hi",
+      "[razroom] hi",
       expect.any(Object),
     );
   });
@@ -195,7 +195,7 @@ describe("routeReply", () => {
         ],
       },
       messages: {},
-    } as unknown as MoltBotConfig;
+    } as unknown as RazroomConfig;
     await routeReply({
       payload: { text: "hi" },
       channel: "slack",
@@ -342,7 +342,7 @@ describe("routeReply", () => {
           enabled: true,
         },
       },
-    } as unknown as MoltBotConfig;
+    } as unknown as RazroomConfig;
     await routeReply({
       payload: { text: "hi" },
       channel: "msteams",

@@ -1,5 +1,5 @@
 ---
-summary: "Menu bar icon states and animations for MoltBot on macOS"
+summary: "Menu bar icon states and animations for Razroom on macOS"
 read_when:
   - Changing menu bar icon behavior
 title: "Menu Bar Icon"

@@ -1,12 +1,12 @@
 {
-  "name": "@moltbot/nextcloud-talk",
+  "name": "@razroom/nextcloud-talk",
   "version": "2026.2.15",
-  "description": "MoltBot Nextcloud Talk channel plugin",
+  "description": "Razroom Nextcloud Talk channel plugin",
   "type": "module",
   "devDependencies": {
-    "moltbot": "workspace:*"
+    "razroom": "workspace:*"
   },
-  "moltbot": {
+  "razroom": {
     "extensions": [
       "./index.ts"
     ],
@@ -25,7 +25,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@moltbot/nextcloud-talk",
+      "npmSpec": "@razroom/nextcloud-talk",
       "localPath": "extensions/nextcloud-talk",
       "defaultChoice": "npm"
     }

@@ -1,4 +1,4 @@
-import type { GatewayRequestHandlerOptions, MoltBotPluginApi } from "moltbot/plugin-sdk";
+import type { GatewayRequestHandlerOptions, RazroomPluginApi } from "razroom/plugin-sdk";
 import { Type } from "@sinclair/typebox";
 import type { CoreConfig } from "./src/core-bridge.js";
 import { registerVoiceCallCli } from "./src/cli.js";
@@ -145,7 +145,7 @@ const voiceCallPlugin = {
   name: "Voice Call",
   description: "Voice-call plugin with Telnyx/Twilio/Plivo providers",
   configSchema: voiceCallConfigSchema,
-  register(api: MoltBotPluginApi) {
+  register(api: RazroomPluginApi) {
     const config = resolveVoiceCallConfig(voiceCallConfigSchema.parse(api.pluginConfig));
     const validation = validateProviderConfig(config);
 

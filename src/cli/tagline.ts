@@ -1,4 +1,4 @@
-const DEFAULT_TAGLINE = "All your chats, one MoltBot.";
+const DEFAULT_TAGLINE = "All your chats, one Razroom.";
 
 const HOLIDAY_TAGLINES = {
   newYear:
@@ -253,7 +253,7 @@ export function activeTaglines(options: TaglineOptions = {}): string[] {
 
 export function pickTagline(options: TaglineOptions = {}): string {
   const env = options.env ?? process.env;
-  const override = env?.MOLTBOT_TAGLINE_INDEX;
+  const override = env?.RAZROOM_TAGLINE_INDEX;
   if (override !== undefined) {
     const parsed = Number.parseInt(override, 10);
     if (!Number.isNaN(parsed) && parsed >= 0) {

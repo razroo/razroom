@@ -12,7 +12,7 @@ describe("redactSensitiveStatusSummary", () => {
       channelSummary: ["ok"],
       queuedSystemEvents: ["none"],
       sessions: {
-        paths: ["/tmp/moltbot/sessions.json"],
+        paths: ["/tmp/razroom/sessions.json"],
         count: 1,
         defaults: { model: "gpt-5", contextTokens: 200_000 },
         recent: [
@@ -34,7 +34,7 @@ describe("redactSensitiveStatusSummary", () => {
         byAgent: [
           {
             agentId: "main",
-            path: "/tmp/moltbot/main-sessions.json",
+            path: "/tmp/razroom/main-sessions.json",
             count: 1,
             recent: [
               {

@@ -1,4 +1,4 @@
-import type { MoltBotApp } from "./app.ts";
+import type { RazroomApp } from "./app.ts";
 import type { AgentsListResult } from "./types.ts";
 import { refreshChat } from "./app-chat.ts";
 import {
@@ -186,33 +186,33 @@ export async function refreshActiveTab(host: SettingsHost) {
     await loadChannelsTab(host);
   }
   if (host.tab === "instances") {
-    await loadPresence(host as unknown as MoltBotApp);
+    await loadPresence(host as unknown as RazroomApp);
   }
   if (host.tab === "sessions") {
-    await loadSessions(host as unknown as MoltBotApp);
+    await loadSessions(host as unknown as RazroomApp);
   }
   if (host.tab === "cron") {
     await loadCron(host);
   }
   if (host.tab === "skills") {
-    await loadSkills(host as unknown as MoltBotApp);
+    await loadSkills(host as unknown as RazroomApp);
   }
   if (host.tab === "agents") {
-    await loadAgents(host as unknown as MoltBotApp);
-    await loadConfig(host as unknown as MoltBotApp);
+    await loadAgents(host as unknown as RazroomApp);
+    await loadConfig(host as unknown as RazroomApp);
     const agentIds = host.agentsList?.agents?.map((entry) => entry.id) ?? [];
     if (agentIds.length > 0) {
-      void loadAgentIdentities(host as unknown as MoltBotApp, agentIds);
+      void loadAgentIdentities(host as unknown as RazroomApp, agentIds);
     }
     const agentId =
       host.agentsSelectedId ?? host.agentsList?.defaultId ?? host.agentsList?.agents?.[0]?.id;
     if (agentId) {
-      void loadAgentIdentity(host as unknown as MoltBotApp, agentId);
+      void loadAgentIdentity(host as unknown as RazroomApp, agentId);
       if (host.agentsPanel === "skills") {
-        void loadAgentSkills(host as unknown as MoltBotApp, agentId);
+        void loadAgentSkills(host as unknown as RazroomApp, agentId);
       }
       if (host.agentsPanel === "channels") {
-        void loadChannels(host as unknown as MoltBotApp, false);
+        void loadChannels(host as unknown as RazroomApp, false);
       }
       if (host.agentsPanel === "cron") {
         void loadCron(host);
@@ -220,10 +220,10 @@ export async function refreshActiveTab(host: SettingsHost) {
     }
   }
   if (host.tab === "nodes") {
-    await loadNodes(host as unknown as MoltBotApp);
-    await loadDevices(host as unknown as MoltBotApp);
-    await loadConfig(host as unknown as MoltBotApp);
-    await loadExecApprovals(host as unknown as MoltBotApp);
+    await loadNodes(host as unknown as RazroomApp);
+    await loadDevices(host as unknown as RazroomApp);
+    await loadConfig(host as unknown as RazroomApp);
+    await loadExecApprovals(host as unknown as RazroomApp);
   }
   if (host.tab === "chat") {
     await refreshChat(host as unknown as Parameters<typeof refreshChat>[0]);
@@ -233,16 +233,16 @@ export async function refreshActiveTab(host: SettingsHost) {
     );
   }
   if (host.tab === "config") {
-    await loadConfigSchema(host as unknown as MoltBotApp);
-    await loadConfig(host as unknown as MoltBotApp);
+    await loadConfigSchema(host as unknown as RazroomApp);
+    await loadConfig(host as unknown as RazroomApp);
   }
   if (host.tab === "debug") {
-    await loadDebug(host as unknown as MoltBotApp);
+    await loadDebug(host as unknown as RazroomApp);
     host.eventLog = host.eventLogBuffer;
   }
   if (host.tab === "logs") {
     host.logsAtBottom = true;
-    await loadLogs(host as unknown as MoltBotApp, { reset: true });
+    await loadLogs(host as unknown as RazroomApp, { reset: true });
     scheduleLogsScroll(host as unknown as Parameters<typeof scheduleLogsScroll>[0], true);
   }
 }
@@ -251,7 +251,7 @@ export function inferBasePath() {
   if (typeof window === "undefined") {
     return "";
   }
-  const configured = window.__MOLTBOT_CONTROL_UI_BASE_PATH__;
+  const configured = window.__RAZROOM_CONTROL_UI_BASE_PATH__;
   if (typeof configured === "string" && configured.trim()) {
     return normalizeBasePath(configured);
   }
@@ -404,26 +404,26 @@ export function syncUrlWithSessionKey(host: SettingsHost, sessionKey: string, re
 
 export async function loadOverview(host: SettingsHost) {
   await Promise.all([
-    loadChannels(host as unknown as MoltBotApp, false),
-    loadPresence(host as unknown as MoltBotApp),
-    loadSessions(host as unknown as MoltBotApp),
-    loadCronStatus(host as unknown as MoltBotApp),
-    loadDebug(host as unknown as MoltBotApp),
+    loadChannels(host as unknown as RazroomApp, false),
+    loadPresence(host as unknown as RazroomApp),
+    loadSessions(host as unknown as RazroomApp),
+    loadCronStatus(host as unknown as RazroomApp),
+    loadDebug(host as unknown as RazroomApp),
   ]);
 }
 
 export async function loadChannelsTab(host: SettingsHost) {
   await Promise.all([
-    loadChannels(host as unknown as MoltBotApp, true),
-    loadConfigSchema(host as unknown as MoltBotApp),
-    loadConfig(host as unknown as MoltBotApp),
+    loadChannels(host as unknown as RazroomApp, true),
+    loadConfigSchema(host as unknown as RazroomApp),
+    loadConfig(host as unknown as RazroomApp),
   ]);
 }
 
 export async function loadCron(host: SettingsHost) {
   await Promise.all([
-    loadChannels(host as unknown as MoltBotApp, false),
-    loadCronStatus(host as unknown as MoltBotApp),
-    loadCronJobs(host as unknown as MoltBotApp),
+    loadChannels(host as unknown as RazroomApp, false),
+    loadCronStatus(host as unknown as RazroomApp),
+    loadCronJobs(host as unknown as RazroomApp),
   ]);
 }

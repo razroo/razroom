@@ -4,7 +4,7 @@ Adds an **optional** agent tool `llm-task` for running **JSON-only** LLM tasks
 (drafting, summarizing, classifying) with optional JSON Schema validation.
 
 Designed to be called from workflow engines (for example, Lobster via
-`moltbot.invoke --each`) without adding new MoltBot code per workflow.
+`razroom.invoke --each`) without adding new Razroom code per workflow.
 
 ## Enable
 
@@ -89,9 +89,9 @@ Returns `details.json` containing the parsed JSON (and validates against
 
 ## Bundled extension note
 
-This extension depends on MoltBot internal modules (the embedded agent runner).
-It is intended to ship as a **bundled** MoltBot extension (like `lobster`) and
+This extension depends on Razroom internal modules (the embedded agent runner).
+It is intended to ship as a **bundled** Razroom extension (like `lobster`) and
 be enabled via `plugins.entries` + tool allowlists.
 
 It is **not** currently designed to be copied into
-`~/.moltbot/extensions` as a standalone plugin directory.
+`~/.razroom/extensions` as a standalone plugin directory.

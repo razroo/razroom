@@ -1,19 +1,19 @@
 import { Command } from "commander";
 import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
-import type { ConfigFileSnapshot, MoltBotConfig } from "../config/types.js";
+import type { ConfigFileSnapshot, RazroomConfig } from "../config/types.js";
 
 /**
  * Test for issue #6070:
- * `moltbot config set/unset` must update snapshot.resolved (user config after $include/${ENV},
+ * `razroom config set/unset` must update snapshot.resolved (user config after $include/${ENV},
  * but before runtime defaults), so runtime defaults don't leak into the written config.
  */
 
 const mockReadConfigFileSnapshot = mock<[], Promise<ConfigFileSnapshot>>();
-const mockWriteConfigFile = mock<[MoltBotConfig], Promise<void>>(async () => {});
+const mockWriteConfigFile = mock<[RazroomConfig], Promise<void>>(async () => {});
 
 mock("../config/config.js", () => ({
   readConfigFileSnapshot: () => mockReadConfigFileSnapshot(),
-  writeConfigFile: (cfg: MoltBotConfig) => mockWriteConfigFile(cfg),
+  writeConfigFile: (cfg: RazroomConfig) => mockWriteConfigFile(cfg),
 }));
 
 const mockLog = mock();
@@ -32,11 +32,11 @@ mock("../runtime.js", () => ({
 }));
 
 function buildSnapshot(params: {
-  resolved: MoltBotConfig;
-  config: MoltBotConfig;
+  resolved: RazroomConfig;
+  config: RazroomConfig;
 }): ConfigFileSnapshot {
   return {
-    path: "/tmp/moltbot.json",
+    path: "/tmp/razroom.json",
     exists: true,
     raw: JSON.stringify(params.resolved),
     parsed: params.resolved,
@@ -60,7 +60,7 @@ describe("config cli", () => {
 
   describe("config set - issue #6070", () => {
     it("preserves existing config keys when setting a new value", async () => {
-      const resolved: MoltBotConfig = {
+      const resolved: RazroomConfig = {
         agents: {
           list: [{ id: "main" }, { id: "oracle", workspace: "~/oracle-workspace" }],
         },
@@ -68,7 +68,7 @@ describe("config cli", () => {
         tools: { allow: ["group:fs"] },
         logging: { level: "debug" },
       };
-      const runtimeMerged: MoltBotConfig = {
+      const runtimeMerged: RazroomConfig = {
         ...resolved,
         agents: {
           ...resolved.agents,
@@ -99,10 +99,10 @@ describe("config cli", () => {
     });
 
     it("does not inject runtime defaults into the written config", async () => {
-      const resolved: MoltBotConfig = {
+      const resolved: RazroomConfig = {
         gateway: { port: 18789 },
       };
-      const runtimeMerged: MoltBotConfig = {
+      const runtimeMerged: RazroomConfig = {
         ...resolved,
         agents: {
           defaults: {
@@ -139,7 +139,7 @@ describe("config cli", () => {
 
   describe("config unset - issue #6070", () => {
     it("preserves existing config keys when unsetting a value", async () => {
-      const resolved: MoltBotConfig = {
+      const resolved: RazroomConfig = {
         agents: { list: [{ id: "main" }] },
         gateway: { port: 18789 },
         tools: {
@@ -148,7 +148,7 @@ describe("config cli", () => {
         },
         logging: { level: "debug" },
       };
-      const runtimeMerged: MoltBotConfig = {
+      const runtimeMerged: RazroomConfig = {
         ...resolved,
         agents: {
           ...resolved.agents,

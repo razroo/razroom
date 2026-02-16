@@ -8,8 +8,8 @@ type HomeEnvSnapshot = {
   USERPROFILE: string | undefined;
   HOMEDRIVE: string | undefined;
   HOMEPATH: string | undefined;
-  MOLTBOT_STATE_DIR: string | undefined;
-  MOLTBOT_AGENT_DIR: string | undefined;
+  RAZROOM_STATE_DIR: string | undefined;
+  RAZROOM_AGENT_DIR: string | undefined;
   PI_CODING_AGENT_DIR: string | undefined;
 };
 
@@ -19,8 +19,8 @@ function snapshotHomeEnv(): HomeEnvSnapshot {
     USERPROFILE: process.env.USERPROFILE,
     HOMEDRIVE: process.env.HOMEDRIVE,
     HOMEPATH: process.env.HOMEPATH,
-    MOLTBOT_STATE_DIR: process.env.MOLTBOT_STATE_DIR,
-    MOLTBOT_AGENT_DIR: process.env.MOLTBOT_AGENT_DIR,
+    RAZROOM_STATE_DIR: process.env.RAZROOM_STATE_DIR,
+    RAZROOM_AGENT_DIR: process.env.RAZROOM_AGENT_DIR,
     PI_CODING_AGENT_DIR: process.env.PI_CODING_AGENT_DIR,
   };
 }
@@ -52,13 +52,13 @@ export function createTempHomeHarness(options: { prefix: string; beforeEachCase?
 
   async function withTempHome<T>(fn: (home: string) => Promise<T>): Promise<T> {
     const home = path.join(fixtureRoot, `case-${++caseId}`);
-    await fs.mkdir(path.join(home, ".moltbot", "agents", "main", "sessions"), { recursive: true });
+    await fs.mkdir(path.join(home, ".razroom", "agents", "main", "sessions"), { recursive: true });
     const envSnapshot = snapshotHomeEnv();
     process.env.HOME = home;
     process.env.USERPROFILE = home;
-    process.env.MOLTBOT_STATE_DIR = path.join(home, ".moltbot");
-    process.env.MOLTBOT_AGENT_DIR = path.join(home, ".moltbot", "agent");
-    process.env.PI_CODING_AGENT_DIR = path.join(home, ".moltbot", "agent");
+    process.env.RAZROOM_STATE_DIR = path.join(home, ".razroom");
+    process.env.RAZROOM_AGENT_DIR = path.join(home, ".razroom", "agent");
+    process.env.PI_CODING_AGENT_DIR = path.join(home, ".razroom", "agent");
 
     if (process.platform === "win32") {
       const match = home.match(/^([A-Za-z]:)(.*)$/);
@@ -84,7 +84,7 @@ export function makeReplyConfig(home: string) {
     agents: {
       defaults: {
         model: "anthropic/claude-opus-4-5",
-        workspace: path.join(home, "moltbot"),
+        workspace: path.join(home, "razroom"),
       },
     },
     channels: {

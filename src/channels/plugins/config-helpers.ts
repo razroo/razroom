@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 import { DEFAULT_ACCOUNT_ID } from "../../routing/session-key.js";
 
 type ChannelSection = {
@@ -7,12 +7,12 @@ type ChannelSection = {
 };
 
 export function setAccountEnabledInConfigSection(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   sectionKey: string;
   accountId: string;
   enabled: boolean;
   allowTopLevel?: boolean;
-}): MoltBotConfig {
+}): RazroomConfig {
   const accountKey = params.accountId || DEFAULT_ACCOUNT_ID;
   const channels = params.cfg.channels as Record<string, unknown> | undefined;
   const base = channels?.[params.sectionKey] as ChannelSection | undefined;
@@ -27,7 +27,7 @@ export function setAccountEnabledInConfigSection(params: {
           enabled: params.enabled,
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
   }
 
   const baseAccounts = base?.accounts ?? {};
@@ -47,15 +47,15 @@ export function setAccountEnabledInConfigSection(params: {
         },
       },
     },
-  } as MoltBotConfig;
+  } as RazroomConfig;
 }
 
 export function deleteAccountFromConfigSection(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   sectionKey: string;
   accountId: string;
   clearBaseFields?: string[];
-}): MoltBotConfig {
+}): RazroomConfig {
   const accountKey = params.accountId || DEFAULT_ACCOUNT_ID;
   const channels = params.cfg.channels as Record<string, unknown> | undefined;
   const base = channels?.[params.sectionKey] as ChannelSection | undefined;
@@ -78,7 +78,7 @@ export function deleteAccountFromConfigSection(params: {
           accounts: Object.keys(accounts).length ? accounts : undefined,
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
   }
 
   if (baseAccounts && Object.keys(baseAccounts).length > 0) {
@@ -98,14 +98,14 @@ export function deleteAccountFromConfigSection(params: {
           accounts: Object.keys(baseAccounts).length ? baseAccounts : undefined,
         },
       },
-    } as MoltBotConfig;
+    } as RazroomConfig;
   }
 
   const nextChannels = { ...params.cfg.channels } as Record<string, unknown>;
   delete nextChannels[params.sectionKey];
-  const nextCfg = { ...params.cfg } as MoltBotConfig;
+  const nextCfg = { ...params.cfg } as RazroomConfig;
   if (Object.keys(nextChannels).length > 0) {
-    nextCfg.channels = nextChannels as MoltBotConfig["channels"];
+    nextCfg.channels = nextChannels as RazroomConfig["channels"];
   } else {
     delete nextCfg.channels;
   }

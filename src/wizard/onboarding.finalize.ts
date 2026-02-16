@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import type { OnboardOptions } from "../commands/onboard-types.js";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { RuntimeEnv } from "../runtime.js";
 import type { GatewayWizardSettings, WizardFlow } from "./onboarding.types.js";
 import type { WizardPrompter } from "./prompts.js";
@@ -36,8 +36,8 @@ import { setupOnboardingShellCompletion } from "./onboarding.completion.js";
 type FinalizeOnboardingOptions = {
   flow: WizardFlow;
   opts: OnboardOptions;
-  baseConfig: MoltBotConfig;
-  nextConfig: MoltBotConfig;
+  baseConfig: RazroomConfig;
+  nextConfig: RazroomConfig;
   workspaceDir: string;
   settings: GatewayWizardSettings;
   prompter: WizardPrompter;
@@ -215,8 +215,8 @@ export async function finalizeOnboardingWizard(
       await prompter.note(
         [
           "Docs:",
-          "https://docs.moltbot.ai/gateway/health",
-          "https://docs.moltbot.ai/gateway/troubleshooting",
+          "https://docs.razroom.ai/gateway/health",
+          "https://docs.razroom.ai/gateway/troubleshooting",
         ].join("\n"),
         "Health check help",
       );
@@ -279,7 +279,7 @@ export async function finalizeOnboardingWizard(
         : undefined,
       `Gateway WS: ${links.wsUrl}`,
       gatewayStatusLine,
-      "Docs: https://docs.moltbot.ai/web/control-ui",
+      "Docs: https://docs.razroom.ai/web/control-ui",
     ]
       .filter(Boolean)
       .join("\n"),
@@ -308,11 +308,11 @@ export async function finalizeOnboardingWizard(
     await prompter.note(
       [
         "Gateway token: shared auth for the Gateway + Control UI.",
-        "Stored in: ~/.moltbot/moltbot.json (gateway.auth.token) or MOLTBOT_GATEWAY_TOKEN.",
-        `View token: ${formatCliCommand("moltbot config get gateway.auth.token")}`,
-        `Generate token: ${formatCliCommand("moltbot doctor --generate-gateway-token")}`,
-        "Web UI stores a copy in this browser's localStorage (moltbot.control.settings.v1).",
-        `Open the dashboard anytime: ${formatCliCommand("moltbot dashboard --no-open")}`,
+        "Stored in: ~/.razroom/razroom.json (gateway.auth.token) or RAZROOM_GATEWAY_TOKEN.",
+        `View token: ${formatCliCommand("razroom config get gateway.auth.token")}`,
+        `Generate token: ${formatCliCommand("razroom doctor --generate-gateway-token")}`,
+        "Web UI stores a copy in this browser's localStorage (razroom.control.settings.v1).",
+        `Open the dashboard anytime: ${formatCliCommand("razroom dashboard --no-open")}`,
         "If prompted: paste the token into Control UI settings (or use the tokenized dashboard URL).",
       ].join("\n"),
       "Token",
@@ -361,8 +361,8 @@ export async function finalizeOnboardingWizard(
         [
           `Dashboard link (with token): ${authedUrl}`,
           controlUiOpened
-            ? "Opened in your browser. Keep that tab to control MoltBot."
-            : "Copy/paste this URL in a browser on this machine to control MoltBot.",
+            ? "Opened in your browser. Keep that tab to control Razroom."
+            : "Copy/paste this URL in a browser on this machine to control Razroom.",
           controlUiOpenHint,
         ]
           .filter(Boolean)
@@ -371,7 +371,7 @@ export async function finalizeOnboardingWizard(
       );
     } else {
       await prompter.note(
-        `When you're ready: ${formatCliCommand("moltbot dashboard --no-open")}`,
+        `When you're ready: ${formatCliCommand("razroom dashboard --no-open")}`,
         "Later",
       );
     }
@@ -382,13 +382,13 @@ export async function finalizeOnboardingWizard(
   await prompter.note(
     [
       "Back up your agent workspace.",
-      "Docs: https://docs.moltbot.ai/concepts/agent-workspace",
+      "Docs: https://docs.razroom.ai/concepts/agent-workspace",
     ].join("\n"),
     "Workspace backup",
   );
 
   await prompter.note(
-    "Running agents on your computer is risky — harden your setup: https://docs.moltbot.ai/security",
+    "Running agents on your computer is risky — harden your setup: https://docs.razroom.ai/security",
     "Security",
   );
 
@@ -422,8 +422,8 @@ export async function finalizeOnboardingWizard(
       [
         `Dashboard link (with token): ${authedUrl}`,
         controlUiOpened
-          ? "Opened in your browser. Keep that tab to control MoltBot."
-          : "Copy/paste this URL in a browser on this machine to control MoltBot.",
+          ? "Opened in your browser. Keep that tab to control Razroom."
+          : "Copy/paste this URL in a browser on this machine to control Razroom.",
         controlUiOpenHint,
       ]
         .filter(Boolean)
@@ -443,34 +443,34 @@ export async function finalizeOnboardingWizard(
           webSearchKey
             ? "API key: stored in config (tools.web.search.apiKey)."
             : "API key: provided via BRAVE_API_KEY env var (Gateway environment).",
-          "Docs: https://docs.moltbot.ai/tools/web",
+          "Docs: https://docs.razroom.ai/tools/web",
         ].join("\n")
       : [
           "If you want your agent to be able to search the web, you’ll need an API key.",
           "",
-          "MoltBot uses Brave Search for the `web_search` tool. Without a Brave Search API key, web search won’t work.",
+          "Razroom uses Brave Search for the `web_search` tool. Without a Brave Search API key, web search won’t work.",
           "",
           "Set it up interactively:",
-          `- Run: ${formatCliCommand("moltbot configure --section web")}`,
+          `- Run: ${formatCliCommand("razroom configure --section web")}`,
           "- Enable web_search and paste your Brave Search API key",
           "",
           "Alternative: set BRAVE_API_KEY in the Gateway environment (no config changes).",
-          "Docs: https://docs.moltbot.ai/tools/web",
+          "Docs: https://docs.razroom.ai/tools/web",
         ].join("\n"),
     "Web search (optional)",
   );
 
   await prompter.note(
-    'What now: https://moltbot.ai/showcase ("What People Are Building").',
+    'What now: https://razroom.ai/showcase ("What People Are Building").',
     "What now",
   );
 
   await prompter.outro(
     controlUiOpened
-      ? "Onboarding complete. Dashboard opened; keep that tab to control MoltBot."
+      ? "Onboarding complete. Dashboard opened; keep that tab to control Razroom."
       : seededInBackground
         ? "Onboarding complete. Web UI seeded in the background; open it anytime with the dashboard link above."
-        : "Onboarding complete. Use the dashboard link above to control MoltBot.",
+        : "Onboarding complete. Use the dashboard link above to control Razroom.",
   );
 
   return { launchedTui };

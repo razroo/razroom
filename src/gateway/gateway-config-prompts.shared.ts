@@ -22,6 +22,6 @@ export const TAILSCALE_MISSING_BIN_NOTE_LINES = [
 
 export const TAILSCALE_DOCS_LINES = [
   "Docs:",
-  "https://docs.moltbot.ai/gateway/tailscale",
-  "https://docs.moltbot.ai/web",
+  "https://docs.razroom.ai/gateway/tailscale",
+  "https://docs.razroom.ai/web",
 ] as const;

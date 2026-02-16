@@ -36,8 +36,8 @@ export async function uploadToOneDrive(params: {
   const fetchFn = params.fetchFn ?? fetch;
   const token = await params.tokenProvider.getAccessToken(GRAPH_SCOPE);
 
-  // Use "MoltBotShared" folder to organize bot-uploaded files
-  const uploadPath = `/MoltBotShared/${encodeURIComponent(params.filename)}`;
+  // Use "RazroomShared" folder to organize bot-uploaded files
+  const uploadPath = `/RazroomShared/${encodeURIComponent(params.filename)}`;
 
   const res = await fetchFn(`${GRAPH_ROOT}/me/drive/root:${uploadPath}:/content`, {
     method: "PUT",
@@ -179,8 +179,8 @@ export async function uploadToSharePoint(params: {
   const fetchFn = params.fetchFn ?? fetch;
   const token = await params.tokenProvider.getAccessToken(GRAPH_SCOPE);
 
-  // Use "MoltBotShared" folder to organize bot-uploaded files
-  const uploadPath = `/MoltBotShared/${encodeURIComponent(params.filename)}`;
+  // Use "RazroomShared" folder to organize bot-uploaded files
+  const uploadPath = `/RazroomShared/${encodeURIComponent(params.filename)}`;
 
   const res = await fetchFn(
     `${GRAPH_ROOT}/sites/${params.siteId}/drive/root:${uploadPath}:/content`,

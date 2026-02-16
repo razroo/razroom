@@ -1,6 +1,6 @@
 import type { AgentTool, AgentToolResult } from "@mariozechner/pi-agent-core";
 import { describe, expect, it } from "bun:test";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import {
   filterToolsByPolicy,
   isToolAllowedByPolicyName,
@@ -43,15 +43,15 @@ describe("pi-tools.policy", () => {
 describe("resolveSubagentToolPolicy depth awareness", () => {
   const baseCfg = {
     agents: { defaults: { subagents: { maxSpawnDepth: 2 } } },
-  } as unknown as MoltBotConfig;
+  } as unknown as RazroomConfig;
 
   const deepCfg = {
     agents: { defaults: { subagents: { maxSpawnDepth: 3 } } },
-  } as unknown as MoltBotConfig;
+  } as unknown as RazroomConfig;
 
   const leafCfg = {
     agents: { defaults: { subagents: { maxSpawnDepth: 1 } } },
-  } as unknown as MoltBotConfig;
+  } as unknown as RazroomConfig;
 
   it("depth-1 orchestrator (maxSpawnDepth=2) allows sessions_spawn", () => {
     const policy = resolveSubagentToolPolicy(baseCfg, 1);

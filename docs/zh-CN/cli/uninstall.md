@@ -2,7 +2,7 @@
 read_when:
   - 你想移除 Gateway 网关服务和/或本地状态
   - 你想先进行试运行
-summary: "`moltbot uninstall` 的 CLI 参考（移除 Gateway 网关服务 + 本地数据）"
+summary: "`razroom uninstall` 的 CLI 参考（移除 Gateway 网关服务 + 本地数据）"
 title: uninstall
 x-i18n:
   generated_at: "2026-02-03T10:04:23Z"
@@ -13,12 +13,12 @@ x-i18n:
   workflow: 15
 ---
 
-# `moltbot uninstall`
+# `razroom uninstall`
 
 卸载 Gateway 网关服务 + 本地数据（CLI 保留）。
 
 ```bash
-moltbot uninstall
-moltbot uninstall --all --yes
-moltbot uninstall --dry-run
+razroom uninstall
+razroom uninstall --all --yes
+razroom uninstall --dry-run
 ```

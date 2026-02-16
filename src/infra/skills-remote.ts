@@ -1,5 +1,5 @@
 import type { SkillEligibilityContext, SkillEntry } from "../agents/skills.js";
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { NodeRegistry } from "../gateway/node-registry.js";
 import { loadWorkspaceSkillEntries } from "../agents/skills.js";
 import { bumpSkillsSnapshotVersion } from "../agents/skills/refresh.js";
@@ -243,7 +243,7 @@ export async function refreshRemoteNodeBins(params: {
   platform?: string;
   deviceFamily?: string;
   commands?: string[];
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   timeoutMs?: number;
 }) {
   if (!remoteRegistry) {
@@ -334,7 +334,7 @@ export function getRemoteSkillEligibility(): SkillEligibilityContext["remote"] |
   };
 }
 
-export async function refreshRemoteBinsForConnectedNodes(cfg: MoltBotConfig) {
+export async function refreshRemoteBinsForConnectedNodes(cfg: RazroomConfig) {
   if (!remoteRegistry) {
     return;
   }

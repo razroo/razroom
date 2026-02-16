@@ -1,8 +1,8 @@
 ---
 read_when:
-  - 向新用户介绍 MoltBot
-summary: MoltBot 是一个多渠道 AI 智能体 Gateway 网关，可在任何操作系统上运行。
-title: MoltBot
+  - 向新用户介绍 Razroom
+summary: Razroom 是一个多渠道 AI 智能体 Gateway 网关，可在任何操作系统上运行。
+title: Razroom
 x-i18n:
   generated_at: "2026-02-04T17:53:40Z"
   model: claude-opus-4-5
@@ -12,18 +12,18 @@ x-i18n:
   workflow: 15
 ---
 
-# MoltBot 🦞
+# Razroom 🦞
 
 <p align="center">
     <img
-        src="/assets/moltbot-logo-text-dark.png"
-        alt="MoltBot"
+        src="/assets/razroom-logo-text-dark.png"
+        alt="Razroom"
         width="500"
         class="dark:hidden"
     />
     <img
-        src="/assets/moltbot-logo-text.png"
-        alt="MoltBot"
+        src="/assets/razroom-logo-text.png"
+        alt="Razroom"
         width="500"
         class="hidden dark:block"
     />
@@ -38,17 +38,17 @@ x-i18n:
 
 <Columns>
   <Card title="入门指南" href="/start/getting-started" icon="rocket">
-    安装 MoltBot 并在几分钟内启动 Gateway 网关。
+    安装 Razroom 并在几分钟内启动 Gateway 网关。
   </Card>
   <Card title="运行向导" href="/start/wizard" icon="sparkles">
-    通过 `moltbot onboard` 和配对流程进行引导式设置。
+    通过 `razroom onboard` 和配对流程进行引导式设置。
   </Card>
   <Card title="打开控制界面" href="/web/control-ui" icon="layout-dashboard">
     启动浏览器仪表板，管理聊天、配置和会话。
   </Card>
 </Columns>
 
-MoltBot 通过单个 Gateway 网关进程将聊天应用连接到 Pi 等编程智能体。它为 MoltBot 助手提供支持，并支持本地或远程部署。
+Razroom 通过单个 Gateway 网关进程将聊天应用连接到 Pi 等编程智能体。它为 Razroom 助手提供支持，并支持本地或远程部署。
 
 ## 工作原理
 
@@ -90,20 +90,20 @@ Gateway 网关是会话、路由和渠道连接的唯一事实来源。
 ## 快速开始
 
 <Steps>
-  <Step title="安装 MoltBot">
+  <Step title="安装 Razroom">
     ```bash
-    npm install -g moltbot@latest
+    npm install -g razroom@latest
     ```
   </Step>
   <Step title="新手引导并安装服务">
     ```bash
-    moltbot onboard --install-daemon
+    razroom onboard --install-daemon
     ```
   </Step>
   <Step title="配对 WhatsApp 并启动 Gateway 网关">
     ```bash
-    moltbot channels login
-    moltbot gateway --port 18789
+    razroom channels login
+    razroom gateway --port 18789
     ```
   </Step>
 </Steps>
@@ -118,14 +118,14 @@ Gateway 网关启动后，打开浏览器控制界面。
 - 远程访问：[Web 界面](/web)和 [Tailscale](/gateway/tailscale)
 
 <p align="center">
-  <img src="whatsapp-moltbot.jpg" alt="MoltBot" width="420" />
+  <img src="whatsapp-razroom.jpg" alt="Razroom" width="420" />
 </p>
 
 ## 配置（可选）
 
-配置文件位于 `~/.moltbot/moltbot.json`。
+配置文件位于 `~/.razroom/razroom.json`。
 
-- 如果你**不做任何修改**，MoltBot 将使用内置的 Pi 二进制文件以 RPC 模式运行，并按发送者创建独立会话。
+- 如果你**不做任何修改**，Razroom 将使用内置的 Pi 二进制文件以 RPC 模式运行，并按发送者创建独立会话。
 - 如果你想要限制访问，可以从 `channels.whatsapp.allowFrom` 和（针对群组的）提及规则开始配置。
 
 示例：
@@ -138,7 +138,7 @@ Gateway 网关启动后，打开浏览器控制界面。
       groups: { "*": { requireMention: true } },
     },
   },
-  messages: { groupChat: { mentionPatterns: ["@moltbot"] } },
+  messages: { groupChat: { mentionPatterns: ["@razroom"] } },
 }
 ```
 

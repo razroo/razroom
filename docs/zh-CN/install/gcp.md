@@ -1,9 +1,9 @@
 ---
 read_when:
-  - 你想在 GCP 上 24/7 运行 MoltBot
+  - 你想在 GCP 上 24/7 运行 Razroom
   - 你想要在自己的 VM 上运行生产级、常驻的 Gateway 网关
   - 你想完全控制持久化、二进制文件和重启行为
-summary: 在 GCP Compute Engine VM（Docker）上 24/7 运行 MoltBot Gateway 网关并持久化状态
+summary: 在 GCP Compute Engine VM（Docker）上 24/7 运行 Razroom Gateway 网关并持久化状态
 title: GCP
 x-i18n:
   generated_at: "2026-02-03T07:52:50Z"
@@ -14,13 +14,13 @@ x-i18n:
   workflow: 15
 ---
 
-# 在 GCP Compute Engine 上运行 MoltBot（Docker，生产 VPS 指南）
+# 在 GCP Compute Engine 上运行 Razroom（Docker，生产 VPS 指南）
 
 ## 目标
 
-使用 Docker 在 GCP Compute Engine VM 上运行持久化的 MoltBot Gateway 网关，具有持久状态、内置二进制文件和安全的重启行为。
+使用 Docker 在 GCP Compute Engine VM 上运行持久化的 Razroom Gateway 网关，具有持久状态、内置二进制文件和安全的重启行为。
 
-如果你想要"MoltBot 24/7 大约 $5-12/月"，这是在 Google Cloud 上的可靠设置。
+如果你想要"Razroom 24/7 大约 $5-12/月"，这是在 Google Cloud 上的可靠设置。
 价格因机器类型和区域而异；选择适合你工作负载的最小 VM，如果遇到 OOM 则扩容。
 
 ## 我们在做什么（简单说明）？
@@ -28,8 +28,8 @@ x-i18n:
 - 创建 GCP 项目并启用计费
 - 创建 Compute Engine VM
 - 安装 Docker（隔离的应用运行时）
-- 在 Docker 中启动 MoltBot Gateway 网关
-- 在主机上持久化 `~/.moltbot` + `~/.moltbot/workspace`（重启/重建后仍保留）
+- 在 Docker 中启动 Razroom Gateway 网关
+- 在主机上持久化 `~/.razroom` + `~/.razroom/workspace`（重启/重建后仍保留）
 - 通过 SSH 隧道从你的笔记本电脑访问控制 UI
 
 Gateway 网关可以通过以下方式访问：
@@ -49,7 +49,7 @@ Ubuntu 也可以；请相应地映射软件包。
 2. 创建 Compute Engine VM（e2-small，Debian 12，20GB）
 3. SSH 进入 VM
 4. 安装 Docker
-5. 克隆 MoltBot 仓库
+5. 克隆 Razroom 仓库
 6. 创建持久化主机目录
 7. 配置 `.env` 和 `docker-compose.yml`
 8. 内置所需二进制文件、构建并启动
@@ -96,8 +96,8 @@ gcloud auth login
 **CLI：**
 
 ```bash
-gcloud projects create my-moltbot-project --name="MoltBot Gateway"
-gcloud config set project my-moltbot-project
+gcloud projects create my-razroom-project --name="Razroom Gateway"
+gcloud config set project my-razroom-project
 ```
 
 在 https://console.cloud.google.com/billing 启用计费（Compute Engine 必需）。
@@ -129,7 +129,7 @@ gcloud services enable compute.googleapis.com
 **CLI：**
 
 ```bash
-gcloud compute instances create moltbot-gateway \
+gcloud compute instances create razroom-gateway \
   --zone=us-central1-a \
   --machine-type=e2-small \
   --boot-disk-size=20GB \
@@ -140,7 +140,7 @@ gcloud compute instances create moltbot-gateway \
 **Console：**
 
 1. 转到 Compute Engine > VM instances > Create instance
-2. Name：`moltbot-gateway`
+2. Name：`razroom-gateway`
 3. Region：`us-central1`，Zone：`us-central1-a`
 4. Machine type：`e2-small`
 5. Boot disk：Debian 12，20GB
@@ -153,7 +153,7 @@ gcloud compute instances create moltbot-gateway \
 **CLI：**
 
 ```bash
-gcloud compute ssh moltbot-gateway --zone=us-central1-a
+gcloud compute ssh razroom-gateway --zone=us-central1-a
 ```
 
 **Console：**
@@ -182,7 +182,7 @@ exit
 然后重新 SSH 登录：
 
 ```bash
-gcloud compute ssh moltbot-gateway --zone=us-central1-a
+gcloud compute ssh razroom-gateway --zone=us-central1-a
 ```
 
 验证：
@@ -194,11 +194,11 @@ docker compose version
 
 ---
 
-## 6) 克隆 MoltBot 仓库
+## 6) 克隆 Razroom 仓库
 
 ```bash
-git clone https://github.com/moltbot/moltbot.git
-cd moltbot
+git clone https://github.com/razroom/razroom.git
+cd razroom
 ```
 
 本指南假设你将构建自定义镜像以保证二进制文件持久化。
@@ -211,8 +211,8 @@ Docker 容器是临时的。
 所有长期状态必须存在于主机上。
 
 ```bash
-mkdir -p ~/.moltbot
-mkdir -p ~/.moltbot/workspace
+mkdir -p ~/.razroom
+mkdir -p ~/.razroom/workspace
 ```
 
 ---
@@ -222,16 +222,16 @@ mkdir -p ~/.moltbot/workspace
 在仓库根目录创建 `.env`。
 
 ```bash
-MOLTBOT_IMAGE=moltbot:latest
-MOLTBOT_GATEWAY_TOKEN=change-me-now
-MOLTBOT_GATEWAY_BIND=lan
-MOLTBOT_GATEWAY_PORT=18789
+RAZROOM_IMAGE=razroom:latest
+RAZROOM_GATEWAY_TOKEN=change-me-now
+RAZROOM_GATEWAY_BIND=lan
+RAZROOM_GATEWAY_PORT=18789
 
-MOLTBOT_CONFIG_DIR=/home/$USER/.moltbot
-MOLTBOT_WORKSPACE_DIR=/home/$USER/.moltbot/workspace
+RAZROOM_CONFIG_DIR=/home/$USER/.razroom
+RAZROOM_WORKSPACE_DIR=/home/$USER/.razroom/workspace
 
 GOG_KEYRING_PASSWORD=change-me-now
-XDG_CONFIG_HOME=/home/node/.moltbot
+XDG_CONFIG_HOME=/home/node/.razroom
 ```
 
 生成强密钥：
@@ -250,8 +250,8 @@ openssl rand -hex 32
 
 ```yaml
 services:
-  moltbot-gateway:
-    image: ${MOLTBOT_IMAGE}
+  razroom-gateway:
+    image: ${RAZROOM_IMAGE}
     build: .
     restart: unless-stopped
     env_file:
@@ -260,19 +260,19 @@ services:
       - HOME=/home/node
       - NODE_ENV=production
       - TERM=xterm-256color
-      - MOLTBOT_GATEWAY_BIND=${MOLTBOT_GATEWAY_BIND}
-      - MOLTBOT_GATEWAY_PORT=${MOLTBOT_GATEWAY_PORT}
-      - MOLTBOT_GATEWAY_TOKEN=${MOLTBOT_GATEWAY_TOKEN}
+      - RAZROOM_GATEWAY_BIND=${RAZROOM_GATEWAY_BIND}
+      - RAZROOM_GATEWAY_PORT=${RAZROOM_GATEWAY_PORT}
+      - RAZROOM_GATEWAY_TOKEN=${RAZROOM_GATEWAY_TOKEN}
       - GOG_KEYRING_PASSWORD=${GOG_KEYRING_PASSWORD}
       - XDG_CONFIG_HOME=${XDG_CONFIG_HOME}
       - PATH=/home/linuxbrew/.linuxbrew/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     volumes:
-      - ${MOLTBOT_CONFIG_DIR}:/home/node/.moltbot
-      - ${MOLTBOT_WORKSPACE_DIR}:/home/node/.moltbot/workspace
+      - ${RAZROOM_CONFIG_DIR}:/home/node/.razroom
+      - ${RAZROOM_WORKSPACE_DIR}:/home/node/.razroom/workspace
     ports:
       # 推荐：在 VM 上保持 Gateway 网关仅绑定 loopback；通过 SSH 隧道访问。
       # 要公开暴露，移除 `127.0.0.1:` 前缀并相应配置防火墙。
-      - "127.0.0.1:${MOLTBOT_GATEWAY_PORT}:18789"
+      - "127.0.0.1:${RAZROOM_GATEWAY_PORT}:18789"
 
       # 可选：仅当你针对此 VM 运行 iOS/Android 节点并需要 Canvas 主机时。
       # 如果你公开暴露此端口，请阅读 /gateway/security 并相应配置防火墙。
@@ -283,9 +283,9 @@ services:
         "dist/index.js",
         "gateway",
         "--bind",
-        "${MOLTBOT_GATEWAY_BIND}",
+        "${RAZROOM_GATEWAY_BIND}",
         "--port",
-        "${MOLTBOT_GATEWAY_PORT}",
+        "${RAZROOM_GATEWAY_PORT}",
       ]
 ```
 
@@ -358,15 +358,15 @@ CMD ["node","dist/index.js"]
 
 ```bash
 docker compose build
-docker compose up -d moltbot-gateway
+docker compose up -d razroom-gateway
 ```
 
 验证二进制文件：
 
 ```bash
-docker compose exec moltbot-gateway which gog
-docker compose exec moltbot-gateway which goplaces
-docker compose exec moltbot-gateway which wacli
+docker compose exec razroom-gateway which gog
+docker compose exec razroom-gateway which goplaces
+docker compose exec razroom-gateway which wacli
 ```
 
 预期输出：
@@ -382,7 +382,7 @@ docker compose exec moltbot-gateway which wacli
 ## 12) 验证 Gateway 网关
 
 ```bash
-docker compose logs -f moltbot-gateway
+docker compose logs -f razroom-gateway
 ```
 
 成功：
@@ -398,7 +398,7 @@ docker compose logs -f moltbot-gateway
 创建 SSH 隧道以转发 Gateway 网关端口：
 
 ```bash
-gcloud compute ssh moltbot-gateway --zone=us-central1-a -- -L 18789:127.0.0.1:18789
+gcloud compute ssh razroom-gateway --zone=us-central1-a -- -L 18789:127.0.0.1:18789
 ```
 
 在浏览器中打开：
@@ -411,17 +411,17 @@ gcloud compute ssh moltbot-gateway --zone=us-central1-a -- -L 18789:127.0.0.1:18
 
 ## 什么持久化在哪里（真实来源）
 
-MoltBot 在 Docker 中运行，但 Docker 不是真实来源。
+Razroom 在 Docker 中运行，但 Docker 不是真实来源。
 所有长期状态必须在重启、重建和重启后仍然存在。
 
 | 组件             | 位置                              | 持久化机制    | 说明                        |
 | ---------------- | --------------------------------- | ------------- | --------------------------- |
-| Gateway 网关配置 | `/home/node/.moltbot/`           | 主机卷挂载    | 包括 `moltbot.json`、令牌  |
-| 模型认证配置文件 | `/home/node/.moltbot/`           | 主机卷挂载    | OAuth 令牌、API 密钥        |
-| Skill 配置       | `/home/node/.moltbot/skills/`    | 主机卷挂载    | Skill 级别状态              |
-| 智能体工作区     | `/home/node/.moltbot/workspace/` | 主机卷挂载    | 代码和智能体产物            |
-| WhatsApp 会话    | `/home/node/.moltbot/`           | 主机卷挂载    | 保留 QR 登录                |
-| Gmail 密钥环     | `/home/node/.moltbot/`           | 主机卷 + 密码 | 需要 `GOG_KEYRING_PASSWORD` |
+| Gateway 网关配置 | `/home/node/.razroom/`           | 主机卷挂载    | 包括 `razroom.json`、令牌  |
+| 模型认证配置文件 | `/home/node/.razroom/`           | 主机卷挂载    | OAuth 令牌、API 密钥        |
+| Skill 配置       | `/home/node/.razroom/skills/`    | 主机卷挂载    | Skill 级别状态              |
+| 智能体工作区     | `/home/node/.razroom/workspace/` | 主机卷挂载    | 代码和智能体产物            |
+| WhatsApp 会话    | `/home/node/.razroom/`           | 主机卷挂载    | 保留 QR 登录                |
+| Gmail 密钥环     | `/home/node/.razroom/`           | 主机卷 + 密码 | 需要 `GOG_KEYRING_PASSWORD` |
 | 外部二进制文件   | `/usr/local/bin/`                 | Docker 镜像   | 必须在构建时内置            |
 | Node 运行时      | 容器文件系统                      | Docker 镜像   | 每次镜像构建时重建          |
 | OS 包            | 容器文件系统                      | Docker 镜像   | 不要在运行时安装            |
@@ -431,10 +431,10 @@ MoltBot 在 Docker 中运行，但 Docker 不是真实来源。
 
 ## 更新
 
-在 VM 上更新 MoltBot：
+在 VM 上更新 Razroom：
 
 ```bash
-cd ~/moltbot
+cd ~/razroom
 git pull
 docker compose build
 docker compose up -d
@@ -464,15 +464,15 @@ gcloud compute os-login describe-profile
 
 ```bash
 # 首先停止 VM
-gcloud compute instances stop moltbot-gateway --zone=us-central1-a
+gcloud compute instances stop razroom-gateway --zone=us-central1-a
 
 # 更改机器类型
-gcloud compute instances set-machine-type moltbot-gateway \
+gcloud compute instances set-machine-type razroom-gateway \
   --zone=us-central1-a \
   --machine-type=e2-small
 
 # 启动 VM
-gcloud compute instances start moltbot-gateway --zone=us-central1-a
+gcloud compute instances start razroom-gateway --zone=us-central1-a
 ```
 
 ---
@@ -486,14 +486,14 @@ gcloud compute instances start moltbot-gateway --zone=us-central1-a
 1. 创建服务账户：
 
    ```bash
-   gcloud iam service-accounts create moltbot-deploy \
-     --display-name="MoltBot Deployment"
+   gcloud iam service-accounts create razroom-deploy \
+     --display-name="Razroom Deployment"
    ```
 
 2. 授予 Compute Instance Admin 角色（或更窄的自定义角色）：
    ```bash
-   gcloud projects add-iam-policy-binding my-moltbot-project \
-     --member="serviceAccount:moltbot-deploy@my-moltbot-project.iam.gserviceaccount.com" \
+   gcloud projects add-iam-policy-binding my-razroom-project \
+     --member="serviceAccount:razroom-deploy@my-razroom-project.iam.gserviceaccount.com" \
      --role="roles/compute.instanceAdmin.v1"
    ```
 

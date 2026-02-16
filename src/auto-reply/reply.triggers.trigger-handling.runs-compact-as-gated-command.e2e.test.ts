@@ -20,7 +20,7 @@ installTriggerHandlingE2eTestHooks();
 describe("trigger handling", () => {
   it("runs /compact as a gated command", async () => {
     await withTempHome(async (home) => {
-      const storePath = join(tmpdir(), `moltbot-session-test-${Date.now()}.json`);
+      const storePath = join(tmpdir(), `razroom-session-test-${Date.now()}.json`);
       getCompactEmbeddedPiSessionMock().mockResolvedValue({
         ok: true,
         compacted: true,
@@ -43,7 +43,7 @@ describe("trigger handling", () => {
           agents: {
             defaults: {
               model: "anthropic/claude-opus-4-5",
-              workspace: join(home, "moltbot"),
+              workspace: join(home, "razroom"),
             },
           },
           channels: {

@@ -1,9 +1,9 @@
 import { describe, expect, it } from "bun:test";
-import { MoltBotSchema } from "./zod-schema.js";
+import { RazroomSchema } from "./zod-schema.js";
 
 describe("skills entries config schema", () => {
   it("accepts custom fields under config", () => {
-    const res = MoltBotSchema.safeParse({
+    const res = RazroomSchema.safeParse({
       skills: {
         entries: {
           "custom-skill": {
@@ -21,7 +21,7 @@ describe("skills entries config schema", () => {
   });
 
   it("rejects unknown top-level fields", () => {
-    const res = MoltBotSchema.safeParse({
+    const res = RazroomSchema.safeParse({
       skills: {
         entries: {
           "custom-skill": {

@@ -31,7 +31,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: "anthropic/claude-opus-4-5",
-              workspace: path.join(home, "moltbot"),
+              workspace: path.join(home, "razroom"),
             },
           },
           tools: {
@@ -88,7 +88,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: "anthropic/claude-opus-4-5",
-              workspace: path.join(home, "moltbot"),
+              workspace: path.join(home, "razroom"),
             },
           },
           channels: { whatsapp: { allowFrom: ["*"] } },
@@ -120,7 +120,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: "anthropic/claude-opus-4-5",
-              workspace: path.join(home, "moltbot"),
+              workspace: path.join(home, "razroom"),
             },
           },
           channels: { whatsapp: { allowFrom: ["*"] } },
@@ -153,7 +153,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: "anthropic/claude-opus-4-5",
-              workspace: path.join(home, "moltbot"),
+              workspace: path.join(home, "razroom"),
             },
           },
           channels: { whatsapp: { allowFrom: ["*"] } },
@@ -168,7 +168,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: "anthropic/claude-opus-4-5",
-              workspace: path.join(home, "moltbot"),
+              workspace: path.join(home, "razroom"),
             },
           },
           channels: { whatsapp: { allowFrom: ["*"] } },

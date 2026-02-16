@@ -1,4 +1,4 @@
-import type { ChannelAccountSnapshot, RuntimeEnv } from "moltbot/plugin-sdk";
+import type { ChannelAccountSnapshot, RuntimeEnv } from "razroom/plugin-sdk";
 import WebSocket from "ws";
 import type { MattermostPost } from "./client.js";
 import { rawDataToString } from "./monitor-helpers.js";

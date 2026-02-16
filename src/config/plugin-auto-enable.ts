@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "./config.js";
+import type { RazroomConfig } from "./config.js";
 import { normalizeProviderId } from "../agents/model-selection.js";
 import {
   getChannelPluginCatalogEntry,
@@ -18,7 +18,7 @@ type PluginEnableChange = {
 };
 
 export type PluginAutoEnableResult = {
-  config: MoltBotConfig;
+  config: RazroomConfig;
   changes: string[];
 };
 
@@ -63,7 +63,7 @@ function accountsHaveKeys(value: unknown, keys: string[]): boolean {
 }
 
 function resolveChannelConfig(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   channelId: string,
 ): Record<string, unknown> | null {
   const channels = cfg.channels as Record<string, unknown> | undefined;
@@ -71,7 +71,7 @@ function resolveChannelConfig(
   return isRecord(entry) ? entry : null;
 }
 
-function isTelegramConfigured(cfg: MoltBotConfig, env: NodeJS.ProcessEnv): boolean {
+function isTelegramConfigured(cfg: RazroomConfig, env: NodeJS.ProcessEnv): boolean {
   if (hasNonEmptyString(env.TELEGRAM_BOT_TOKEN)) {
     return true;
   }
@@ -88,7 +88,7 @@ function isTelegramConfigured(cfg: MoltBotConfig, env: NodeJS.ProcessEnv): boole
   return recordHasKeys(entry);
 }
 
-function isDiscordConfigured(cfg: MoltBotConfig, env: NodeJS.ProcessEnv): boolean {
+function isDiscordConfigured(cfg: RazroomConfig, env: NodeJS.ProcessEnv): boolean {
   if (hasNonEmptyString(env.DISCORD_BOT_TOKEN)) {
     return true;
   }
@@ -105,7 +105,7 @@ function isDiscordConfigured(cfg: MoltBotConfig, env: NodeJS.ProcessEnv): boolea
   return recordHasKeys(entry);
 }
 
-function isIrcConfigured(cfg: MoltBotConfig, env: NodeJS.ProcessEnv): boolean {
+function isIrcConfigured(cfg: RazroomConfig, env: NodeJS.ProcessEnv): boolean {
   if (hasNonEmptyString(env.IRC_HOST) && hasNonEmptyString(env.IRC_NICK)) {
     return true;
   }
@@ -122,7 +122,7 @@ function isIrcConfigured(cfg: MoltBotConfig, env: NodeJS.ProcessEnv): boolean {
   return recordHasKeys(entry);
 }
 
-function isSlackConfigured(cfg: MoltBotConfig, env: NodeJS.ProcessEnv): boolean {
+function isSlackConfigured(cfg: RazroomConfig, env: NodeJS.ProcessEnv): boolean {
   if (
     hasNonEmptyString(env.SLACK_BOT_TOKEN) ||
     hasNonEmptyString(env.SLACK_APP_TOKEN) ||
@@ -147,7 +147,7 @@ function isSlackConfigured(cfg: MoltBotConfig, env: NodeJS.ProcessEnv): boolean 
   return recordHasKeys(entry);
 }
 
-function isSignalConfigured(cfg: MoltBotConfig): boolean {
+function isSignalConfigured(cfg: RazroomConfig): boolean {
   const entry = resolveChannelConfig(cfg, "signal");
   if (!entry) {
     return false;
@@ -167,7 +167,7 @@ function isSignalConfigured(cfg: MoltBotConfig): boolean {
   return recordHasKeys(entry);
 }
 
-function isIMessageConfigured(cfg: MoltBotConfig): boolean {
+function isIMessageConfigured(cfg: RazroomConfig): boolean {
   const entry = resolveChannelConfig(cfg, "imessage");
   if (!entry) {
     return false;
@@ -178,7 +178,7 @@ function isIMessageConfigured(cfg: MoltBotConfig): boolean {
   return recordHasKeys(entry);
 }
 
-function isWhatsAppConfigured(cfg: MoltBotConfig): boolean {
+function isWhatsAppConfigured(cfg: RazroomConfig): boolean {
   if (hasAnyWhatsAppAuth(cfg)) {
     return true;
   }
@@ -189,13 +189,13 @@ function isWhatsAppConfigured(cfg: MoltBotConfig): boolean {
   return recordHasKeys(entry);
 }
 
-function isGenericChannelConfigured(cfg: MoltBotConfig, channelId: string): boolean {
+function isGenericChannelConfigured(cfg: RazroomConfig, channelId: string): boolean {
   const entry = resolveChannelConfig(cfg, channelId);
   return recordHasKeys(entry);
 }
 
 export function isChannelConfigured(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   channelId: string,
   env: NodeJS.ProcessEnv = process.env,
 ): boolean {
@@ -219,7 +219,7 @@ export function isChannelConfigured(
   }
 }
 
-function collectModelRefs(cfg: MoltBotConfig): string[] {
+function collectModelRefs(cfg: RazroomConfig): string[] {
   const refs: string[] = [];
   const pushModelRef = (value: unknown) => {
     if (typeof value === "string" && value.trim()) {
@@ -273,7 +273,7 @@ function extractProviderFromModelRef(value: string): string | null {
   return normalizeProviderId(trimmed.slice(0, slash));
 }
 
-function isProviderConfigured(cfg: MoltBotConfig, providerId: string): boolean {
+function isProviderConfigured(cfg: RazroomConfig, providerId: string): boolean {
   const normalized = normalizeProviderId(providerId);
 
   const profiles = cfg.auth?.profiles;
@@ -310,7 +310,7 @@ function isProviderConfigured(cfg: MoltBotConfig, providerId: string): boolean {
 }
 
 function resolveConfiguredPlugins(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   env: NodeJS.ProcessEnv,
 ): PluginEnableChange[] {
   const changes: PluginEnableChange[] = [];
@@ -346,12 +346,12 @@ function resolveConfiguredPlugins(
   return changes;
 }
 
-function isPluginExplicitlyDisabled(cfg: MoltBotConfig, pluginId: string): boolean {
+function isPluginExplicitlyDisabled(cfg: RazroomConfig, pluginId: string): boolean {
   const entry = cfg.plugins?.entries?.[pluginId];
   return entry?.enabled === false;
 }
 
-function isPluginDenied(cfg: MoltBotConfig, pluginId: string): boolean {
+function isPluginDenied(cfg: RazroomConfig, pluginId: string): boolean {
   const deny = cfg.plugins?.deny;
   return Array.isArray(deny) && deny.includes(pluginId);
 }
@@ -366,7 +366,7 @@ function resolvePreferredOverIds(pluginId: string): string[] {
 }
 
 function shouldSkipPreferredPluginAutoEnable(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   entry: PluginEnableChange,
   configured: PluginEnableChange[],
 ): boolean {
@@ -388,7 +388,7 @@ function shouldSkipPreferredPluginAutoEnable(
   return false;
 }
 
-function ensureAllowlisted(cfg: MoltBotConfig, pluginId: string): MoltBotConfig {
+function ensureAllowlisted(cfg: RazroomConfig, pluginId: string): RazroomConfig {
   const allow = cfg.plugins?.allow;
   if (!Array.isArray(allow) || allow.includes(pluginId)) {
     return cfg;
@@ -402,7 +402,7 @@ function ensureAllowlisted(cfg: MoltBotConfig, pluginId: string): MoltBotConfig 
   };
 }
 
-function registerPluginEntry(cfg: MoltBotConfig, pluginId: string): MoltBotConfig {
+function registerPluginEntry(cfg: RazroomConfig, pluginId: string): RazroomConfig {
   const entries = {
     ...cfg.plugins?.entries,
     [pluginId]: {
@@ -430,7 +430,7 @@ function formatAutoEnableChange(entry: PluginEnableChange): string {
 }
 
 export function applyPluginAutoEnable(params: {
-  config: MoltBotConfig;
+  config: RazroomConfig;
   env?: NodeJS.ProcessEnv;
 }): PluginAutoEnableResult {
   const env = params.env ?? process.env;

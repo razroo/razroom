@@ -27,7 +27,7 @@ describe("discord audit", () => {
           },
         },
       },
-    } as unknown as import("../config/config.js").MoltBotConfig;
+    } as unknown as import("../config/config.js").RazroomConfig;
 
     const collected = collectDiscordAuditChannelIds({
       cfg,

@@ -1,14 +1,14 @@
 ---
-summary: "End-to-end guide for running MoltBot as a personal assistant with safety cautions"
+summary: "End-to-end guide for running Razroom as a personal assistant with safety cautions"
 read_when:
   - Onboarding a new assistant instance
   - Reviewing safety/permission implications
 title: "Personal Assistant Setup"
 ---
 
-# Building a personal assistant with MoltBot
+# Building a personal assistant with Razroom
 
-MoltBot is a WhatsApp + Telegram + Discord + iMessage gateway for **Pi** agents. Plugins add Mattermost. This guide is the "personal assistant" setup: one dedicated WhatsApp number that behaves like your always-on agent.
+Razroom is a WhatsApp + Telegram + Discord + iMessage gateway for **Pi** agents. Plugins add Mattermost. This guide is the "personal assistant" setup: one dedicated WhatsApp number that behaves like your always-on agent.
 
 ## ⚠️ Safety first
 
@@ -26,7 +26,7 @@ Start conservative:
 
 ## Prerequisites
 
-- MoltBot installed and onboarded — see [Getting Started](/start/getting-started) if you haven't done this yet
+- Razroom installed and onboarded — see [Getting Started](/start/getting-started) if you haven't done this yet
 - A second phone number (SIM/eSIM/prepaid) for the assistant
 
 ## The two-phone setup (recommended)
@@ -36,26 +36,26 @@ You want this:
 ```mermaid
 flowchart TB
     A["<b>Your Phone (personal)<br></b><br>Your WhatsApp<br>+1-555-YOU"] -- message --> B["<b>Second Phone (assistant)<br></b><br>Assistant WA<br>+1-555-ASSIST"]
-    B -- linked via QR --> C["<b>Your Mac (moltbot)<br></b><br>Pi agent"]
+    B -- linked via QR --> C["<b>Your Mac (razroom)<br></b><br>Pi agent"]
 ```
 
-If you link your personal WhatsApp to MoltBot, every message to you becomes “agent input”. That’s rarely what you want.
+If you link your personal WhatsApp to Razroom, every message to you becomes “agent input”. That’s rarely what you want.
 
 ## 5-minute quick start
 
 1. Pair WhatsApp Web (shows QR; scan with the assistant phone):
 
 ```bash
-moltbot channels login
+razroom channels login
 ```
 
 2. Start the Gateway (leave it running):
 
 ```bash
-moltbot gateway --port 18789
+razroom gateway --port 18789
 ```
 
-3. Put a minimal config in `~/.moltbot/moltbot.json`:
+3. Put a minimal config in `~/.razroom/razroom.json`:
 
 ```json5
 {
@@ -65,18 +65,18 @@ moltbot gateway --port 18789
 
 Now message the assistant number from your allowlisted phone.
 
-When onboarding finishes, we auto-open the dashboard and print a clean (non-tokenized) link. If it prompts for auth, paste the token from `gateway.auth.token` into Control UI settings. To reopen later: `moltbot dashboard`.
+When onboarding finishes, we auto-open the dashboard and print a clean (non-tokenized) link. If it prompts for auth, paste the token from `gateway.auth.token` into Control UI settings. To reopen later: `razroom dashboard`.
 
 ## Give the agent a workspace (AGENTS)
 
-MoltBot reads operating instructions and “memory” from its workspace directory.
+Razroom reads operating instructions and “memory” from its workspace directory.
 
-By default, MoltBot uses `~/.moltbot/workspace` as the agent workspace, and will create it (plus starter `AGENTS.md`, `SOUL.md`, `TOOLS.md`, `IDENTITY.md`, `USER.md`, `HEARTBEAT.md`) automatically on setup/first agent run. `BOOTSTRAP.md` is only created when the workspace is brand new (it should not come back after you delete it). `MEMORY.md` is optional (not auto-created); when present, it is loaded for normal sessions. Subagent sessions only inject `AGENTS.md` and `TOOLS.md`.
+By default, Razroom uses `~/.razroom/workspace` as the agent workspace, and will create it (plus starter `AGENTS.md`, `SOUL.md`, `TOOLS.md`, `IDENTITY.md`, `USER.md`, `HEARTBEAT.md`) automatically on setup/first agent run. `BOOTSTRAP.md` is only created when the workspace is brand new (it should not come back after you delete it). `MEMORY.md` is optional (not auto-created); when present, it is loaded for normal sessions. Subagent sessions only inject `AGENTS.md` and `TOOLS.md`.
 
-Tip: treat this folder like MoltBot’s “memory” and make it a git repo (ideally private) so your `AGENTS.md` + memory files are backed up. If git is installed, brand-new workspaces are auto-initialized.
+Tip: treat this folder like Razroom’s “memory” and make it a git repo (ideally private) so your `AGENTS.md` + memory files are backed up. If git is installed, brand-new workspaces are auto-initialized.
 
 ```bash
-moltbot setup
+razroom setup
 ```
 
 Full workspace layout + backup guide: [Agent workspace](/concepts/agent-workspace)
@@ -87,7 +87,7 @@ Optional: choose a different workspace with `agents.defaults.workspace` (support
 ```json5
 {
   agent: {
-    workspace: "~/.moltbot/workspace",
+    workspace: "~/.razroom/workspace",
   },
 }
 ```
@@ -104,7 +104,7 @@ If you already ship your own workspace files from a repo, you can disable bootst
 
 ## The config that turns it into “an assistant”
 
-MoltBot defaults to a good assistant setup, but you’ll usually want to tune:
+Razroom defaults to a good assistant setup, but you’ll usually want to tune:
 
 - persona/instructions in `SOUL.md`
 - thinking defaults (if desired)
@@ -117,7 +117,7 @@ Example:
   logging: { level: "info" },
   agent: {
     model: "anthropic/claude-opus-4-6",
-    workspace: "~/.moltbot/workspace",
+    workspace: "~/.razroom/workspace",
     thinkingDefault: "high",
     timeoutSeconds: 1800,
     // Start with 0; enable later.
@@ -133,7 +133,7 @@ Example:
   },
   routing: {
     groupChat: {
-      mentionPatterns: ["@moltbot", "moltbot"],
+      mentionPatterns: ["@razroom", "razroom"],
     },
   },
   session: {
@@ -150,20 +150,20 @@ Example:
 
 ## Sessions and memory
 
-- Session files: `~/.moltbot/agents/<agentId>/sessions/{{SessionId}}.jsonl`
-- Session metadata (token usage, last route, etc): `~/.moltbot/agents/<agentId>/sessions/sessions.json` (legacy: `~/.moltbot/sessions/sessions.json`)
+- Session files: `~/.razroom/agents/<agentId>/sessions/{{SessionId}}.jsonl`
+- Session metadata (token usage, last route, etc): `~/.razroom/agents/<agentId>/sessions/sessions.json` (legacy: `~/.razroom/sessions/sessions.json`)
 - `/new` or `/reset` starts a fresh session for that chat (configurable via `resetTriggers`). If sent alone, the agent replies with a short hello to confirm the reset.
 - `/compact [instructions]` compacts the session context and reports the remaining context budget.
 
 ## Heartbeats (proactive mode)
 
-By default, MoltBot runs a heartbeat every 30 minutes with the prompt:
+By default, Razroom runs a heartbeat every 30 minutes with the prompt:
 `Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. Do not infer or repeat old tasks from prior chats. If nothing needs attention, reply HEARTBEAT_OK.`
 Set `agents.defaults.heartbeat.every: "0m"` to disable.
 
-- If `HEARTBEAT.md` exists but is effectively empty (only blank lines and markdown headers like `# Heading`), MoltBot skips the heartbeat run to save API calls.
+- If `HEARTBEAT.md` exists but is effectively empty (only blank lines and markdown headers like `# Heading`), Razroom skips the heartbeat run to save API calls.
 - If the file is missing, the heartbeat still runs and the model decides what to do.
-- If the agent replies with `HEARTBEAT_OK` (optionally with short padding; see `agents.defaults.heartbeat.ackMaxChars`), MoltBot suppresses outbound delivery for that heartbeat.
+- If the agent replies with `HEARTBEAT_OK` (optionally with short padding; see `agents.defaults.heartbeat.ackMaxChars`), Razroom suppresses outbound delivery for that heartbeat.
 - Heartbeats run full agent turns — shorter intervals burn more tokens.
 
 ```json5
@@ -189,25 +189,25 @@ Here’s the screenshot.
 MEDIA:https://example.com/screenshot.png
 ```
 
-MoltBot extracts these and sends them as media alongside the text.
+Razroom extracts these and sends them as media alongside the text.
 
 ## Operations checklist
 
 ```bash
-moltbot status          # local status (creds, sessions, queued events)
-moltbot status --all    # full diagnosis (read-only, pasteable)
-moltbot status --deep   # adds gateway health probes (Telegram + Discord)
-moltbot health --json   # gateway health snapshot (WS)
+razroom status          # local status (creds, sessions, queued events)
+razroom status --all    # full diagnosis (read-only, pasteable)
+razroom status --deep   # adds gateway health probes (Telegram + Discord)
+razroom health --json   # gateway health snapshot (WS)
 ```
 
-Logs live under `/tmp/moltbot/` (default: `moltbot-YYYY-MM-DD.log`).
+Logs live under `/tmp/razroom/` (default: `razroom-YYYY-MM-DD.log`).
 
 ## Next steps
 
 - WebChat: [WebChat](/web/webchat)
 - Gateway ops: [Gateway runbook](/gateway)
 - Cron + wakeups: [Cron jobs](/automation/cron-jobs)
-- macOS menu bar companion: [MoltBot macOS app](/platforms/macos)
+- macOS menu bar companion: [Razroom macOS app](/platforms/macos)
 - iOS node app: [iOS app](/platforms/ios)
 - Android node app: [Android app](/platforms/android)
 - Windows status: [Windows (WSL2)](/platforms/windows)

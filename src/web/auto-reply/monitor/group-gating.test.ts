@@ -10,7 +10,7 @@ let sessionDir: string | undefined;
 let sessionStorePath: string;
 
 beforeEach(async () => {
-  sessionDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-group-gating-"));
+  sessionDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-group-gating-"));
   sessionStorePath = path.join(sessionDir, "sessions.json");
   await fs.writeFile(sessionStorePath, "{}");
 });
@@ -279,7 +279,7 @@ describe("applyGroupGating", () => {
           groups: { "*": { requireMention: false } },
         },
       },
-      messages: { groupChat: { mentionPatterns: ["@moltbot"] } },
+      messages: { groupChat: { mentionPatterns: ["@razroom"] } },
     });
 
     const { result } = runGroupGating({

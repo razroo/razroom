@@ -76,9 +76,9 @@ async function main() {
     process.exit(1);
   }
 
-  const baseDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-zai-fallback-"));
+  const baseDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-zai-fallback-"));
   const stateDir = path.join(baseDir, "state");
-  const configPath = path.join(baseDir, "moltbot.json");
+  const configPath = path.join(baseDir, "razroom.json");
   await fs.mkdir(stateDir, { recursive: true });
 
   const config = {
@@ -99,16 +99,16 @@ async function main() {
   await fs.writeFile(configPath, JSON.stringify(config, null, 2), "utf8");
 
   const sessionId =
-    process.env.MOLTBOT_ZAI_FALLBACK_SESSION_ID ??
-    process.env.MOLTBOT_ZAI_FALLBACK_SESSION_ID ??
+    process.env.RAZROOM_ZAI_FALLBACK_SESSION_ID ??
+    process.env.RAZROOM_ZAI_FALLBACK_SESSION_ID ??
     randomUUID();
 
   const baseEnv: NodeJS.ProcessEnv = {
     ...process.env,
-    MOLTBOT_CONFIG_PATH: configPath,
-    MOLTBOT_STATE_DIR: stateDir,
-    MOLTBOT_CONFIG_PATH: configPath,
-    MOLTBOT_STATE_DIR: stateDir,
+    RAZROOM_CONFIG_PATH: configPath,
+    RAZROOM_STATE_DIR: stateDir,
+    RAZROOM_CONFIG_PATH: configPath,
+    RAZROOM_STATE_DIR: stateDir,
     ZAI_API_KEY: zaiKey,
     Z_AI_API_KEY: "",
   };
@@ -131,7 +131,7 @@ async function main() {
     "Then use the read tool to display the file contents. Reply with just the file contents.";
   const run1 = await runCommand(
     "run1",
-    ["moltbot", "agent", "--local", "--session-id", sessionId, "--message", toolPrompt],
+    ["razroom", "agent", "--local", "--session-id", sessionId, "--message", toolPrompt],
     envValidAnthropic,
   );
   if (run1.code !== 0) {
@@ -149,7 +149,7 @@ async function main() {
     "What is the content of zai-fallback-tool.txt? Reply with just the contents.";
   const run2 = await runCommand(
     "run2",
-    ["moltbot", "agent", "--local", "--session-id", sessionId, "--message", followupPrompt],
+    ["razroom", "agent", "--local", "--session-id", sessionId, "--message", followupPrompt],
     envInvalidAnthropic,
   );
 

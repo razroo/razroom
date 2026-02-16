@@ -1,12 +1,12 @@
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { PluginInstallRecord } from "../config/types.plugins.js";
 
 export type PluginInstallUpdate = PluginInstallRecord & { pluginId: string };
 
 export function recordPluginInstall(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   update: PluginInstallUpdate,
-): MoltBotConfig {
+): RazroomConfig {
   const { pluginId, ...record } = update;
   const installs = {
     ...cfg.plugins?.installs,

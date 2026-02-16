@@ -39,7 +39,7 @@ mock("../web/session.js", () => webMocks);
 import { getReplyFromConfig } from "./reply.js";
 
 const { withTempHome } = createTempHomeHarness({
-  prefix: "moltbot-typing-",
+  prefix: "razroom-typing-",
   beforeEachCase: () => runEmbeddedPiAgentMock.mockClear(),
 });
 
@@ -49,7 +49,7 @@ afterEach(() => {
 
 describe("getReplyFromConfig typing (heartbeat)", () => {
   beforeEach(() => {
-    vi.stubEnv("MOLTBOT_TEST_FAST", "1");
+    vi.stubEnv("RAZROOM_TEST_FAST", "1");
   });
 
   it("starts typing for normal runs", async () => {

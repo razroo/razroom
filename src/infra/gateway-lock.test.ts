@@ -13,14 +13,14 @@ let fixtureCount = 0;
 async function makeEnv() {
   const dir = path.join(fixtureRoot, `case-${fixtureCount++}`);
   await fs.mkdir(dir, { recursive: true });
-  const configPath = path.join(dir, "moltbot.json");
+  const configPath = path.join(dir, "razroom.json");
   await fs.writeFile(configPath, "{}", "utf8");
   await fs.mkdir(resolveGatewayLockDir(), { recursive: true });
   return {
     env: {
       ...process.env,
-      MOLTBOT_STATE_DIR: dir,
-      MOLTBOT_CONFIG_PATH: configPath,
+      RAZROOM_STATE_DIR: dir,
+      RAZROOM_CONFIG_PATH: configPath,
     },
     cleanup: async () => {},
   };
@@ -64,7 +64,7 @@ function makeProcStat(pid: number, startTime: number) {
 
 describe("gateway lock", () => {
   beforeAll(async () => {
-    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-gateway-lock-"));
+    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-gateway-lock-"));
   });
 
   beforeEach(() => {

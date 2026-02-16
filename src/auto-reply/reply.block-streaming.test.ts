@@ -28,7 +28,7 @@ type HomeEnvSnapshot = {
   USERPROFILE: string | undefined;
   HOMEDRIVE: string | undefined;
   HOMEPATH: string | undefined;
-  MOLTBOT_STATE_DIR: string | undefined;
+  RAZROOM_STATE_DIR: string | undefined;
 };
 
 function snapshotHomeEnv(): HomeEnvSnapshot {
@@ -37,7 +37,7 @@ function snapshotHomeEnv(): HomeEnvSnapshot {
     USERPROFILE: process.env.USERPROFILE,
     HOMEDRIVE: process.env.HOMEDRIVE,
     HOMEPATH: process.env.HOMEPATH,
-    MOLTBOT_STATE_DIR: process.env.MOLTBOT_STATE_DIR,
+    RAZROOM_STATE_DIR: process.env.RAZROOM_STATE_DIR,
   };
 }
 
@@ -56,11 +56,11 @@ let caseId = 0;
 
 async function withTempHome<T>(fn: (home: string) => Promise<T>): Promise<T> {
   const home = path.join(fixtureRoot, `case-${++caseId}`);
-  await fs.mkdir(path.join(home, ".moltbot", "agents", "main", "sessions"), { recursive: true });
+  await fs.mkdir(path.join(home, ".razroom", "agents", "main", "sessions"), { recursive: true });
   const envSnapshot = snapshotHomeEnv();
   process.env.HOME = home;
   process.env.USERPROFILE = home;
-  process.env.MOLTBOT_STATE_DIR = path.join(home, ".moltbot");
+  process.env.RAZROOM_STATE_DIR = path.join(home, ".razroom");
 
   if (process.platform === "win32") {
     const match = home.match(/^([A-Za-z]:)(.*)$/);
@@ -79,7 +79,7 @@ async function withTempHome<T>(fn: (home: string) => Promise<T>): Promise<T> {
 
 describe("block streaming", () => {
   beforeAll(async () => {
-    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-stream-"));
+    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-stream-"));
   });
 
   afterAll(async () => {
@@ -99,7 +99,7 @@ describe("block streaming", () => {
   });
 
   beforeEach(() => {
-    vi.stubEnv("MOLTBOT_TEST_FAST", "1");
+    vi.stubEnv("RAZROOM_TEST_FAST", "1");
     piEmbeddedMock.abortEmbeddedPiRun.mockReset().mockReturnValue(false);
     piEmbeddedMock.queueEmbeddedPiMessage.mockReset().mockReturnValue(false);
     piEmbeddedMock.isEmbeddedPiRunActive.mockReset().mockReturnValue(false);
@@ -160,7 +160,7 @@ describe("block streaming", () => {
           agents: {
             defaults: {
               model: "anthropic/claude-opus-4-5",
-              workspace: path.join(home, "moltbot"),
+              workspace: path.join(home, "razroom"),
             },
           },
           channels: { telegram: { allowFrom: ["*"] } },
@@ -199,7 +199,7 @@ describe("block streaming", () => {
           agents: {
             defaults: {
               model: "anthropic/claude-opus-4-5",
-              workspace: path.join(home, "moltbot"),
+              workspace: path.join(home, "razroom"),
             },
           },
           channels: { telegram: { allowFrom: ["*"], streamMode: "block" } },
@@ -248,7 +248,7 @@ describe("block streaming", () => {
           agents: {
             defaults: {
               model: "anthropic/claude-opus-4-5",
-              workspace: path.join(home, "moltbot"),
+              workspace: path.join(home, "razroom"),
             },
           },
           channels: { telegram: { allowFrom: ["*"] } },
@@ -295,7 +295,7 @@ describe("block streaming", () => {
           agents: {
             defaults: {
               model: "anthropic/claude-opus-4-5",
-              workspace: path.join(home, "moltbot"),
+              workspace: path.join(home, "razroom"),
             },
           },
           channels: { telegram: { allowFrom: ["*"] } },

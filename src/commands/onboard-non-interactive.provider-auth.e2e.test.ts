@@ -50,16 +50,16 @@ async function removeDirWithRetry(dir: string): Promise<void> {
 function captureEnv(): EnvSnapshot {
   return {
     home: process.env.HOME,
-    stateDir: process.env.MOLTBOT_STATE_DIR,
-    configPath: process.env.MOLTBOT_CONFIG_PATH,
-    skipChannels: process.env.MOLTBOT_SKIP_CHANNELS,
-    skipGmail: process.env.MOLTBOT_SKIP_GMAIL_WATCHER,
-    skipCron: process.env.MOLTBOT_SKIP_CRON,
-    skipCanvas: process.env.MOLTBOT_SKIP_CANVAS_HOST,
-    token: process.env.MOLTBOT_GATEWAY_TOKEN,
-    password: process.env.MOLTBOT_GATEWAY_PASSWORD,
+    stateDir: process.env.RAZROOM_STATE_DIR,
+    configPath: process.env.RAZROOM_CONFIG_PATH,
+    skipChannels: process.env.RAZROOM_SKIP_CHANNELS,
+    skipGmail: process.env.RAZROOM_SKIP_GMAIL_WATCHER,
+    skipCron: process.env.RAZROOM_SKIP_CRON,
+    skipCanvas: process.env.RAZROOM_SKIP_CANVAS_HOST,
+    token: process.env.RAZROOM_GATEWAY_TOKEN,
+    password: process.env.RAZROOM_GATEWAY_PASSWORD,
     customApiKey: process.env.CUSTOM_API_KEY,
-    disableConfigCache: process.env.MOLTBOT_DISABLE_CONFIG_CACHE,
+    disableConfigCache: process.env.RAZROOM_DISABLE_CONFIG_CACHE,
   };
 }
 
@@ -73,16 +73,16 @@ function restoreEnvVar(key: keyof NodeJS.ProcessEnv, value: string | undefined):
 
 function restoreEnv(prev: EnvSnapshot): void {
   restoreEnvVar("HOME", prev.home);
-  restoreEnvVar("MOLTBOT_STATE_DIR", prev.stateDir);
-  restoreEnvVar("MOLTBOT_CONFIG_PATH", prev.configPath);
-  restoreEnvVar("MOLTBOT_SKIP_CHANNELS", prev.skipChannels);
-  restoreEnvVar("MOLTBOT_SKIP_GMAIL_WATCHER", prev.skipGmail);
-  restoreEnvVar("MOLTBOT_SKIP_CRON", prev.skipCron);
-  restoreEnvVar("MOLTBOT_SKIP_CANVAS_HOST", prev.skipCanvas);
-  restoreEnvVar("MOLTBOT_GATEWAY_TOKEN", prev.token);
-  restoreEnvVar("MOLTBOT_GATEWAY_PASSWORD", prev.password);
+  restoreEnvVar("RAZROOM_STATE_DIR", prev.stateDir);
+  restoreEnvVar("RAZROOM_CONFIG_PATH", prev.configPath);
+  restoreEnvVar("RAZROOM_SKIP_CHANNELS", prev.skipChannels);
+  restoreEnvVar("RAZROOM_SKIP_GMAIL_WATCHER", prev.skipGmail);
+  restoreEnvVar("RAZROOM_SKIP_CRON", prev.skipCron);
+  restoreEnvVar("RAZROOM_SKIP_CANVAS_HOST", prev.skipCanvas);
+  restoreEnvVar("RAZROOM_GATEWAY_TOKEN", prev.token);
+  restoreEnvVar("RAZROOM_GATEWAY_PASSWORD", prev.password);
   restoreEnvVar("CUSTOM_API_KEY", prev.customApiKey);
-  restoreEnvVar("MOLTBOT_DISABLE_CONFIG_CACHE", prev.disableConfigCache);
+  restoreEnvVar("RAZROOM_DISABLE_CONFIG_CACHE", prev.disableConfigCache);
 }
 
 async function withOnboardEnv(
@@ -91,20 +91,20 @@ async function withOnboardEnv(
 ): Promise<void> {
   const prev = captureEnv();
 
-  process.env.MOLTBOT_SKIP_CHANNELS = "1";
-  process.env.MOLTBOT_SKIP_GMAIL_WATCHER = "1";
-  process.env.MOLTBOT_SKIP_CRON = "1";
-  process.env.MOLTBOT_SKIP_CANVAS_HOST = "1";
-  process.env.MOLTBOT_DISABLE_CONFIG_CACHE = "1";
-  delete process.env.MOLTBOT_GATEWAY_TOKEN;
-  delete process.env.MOLTBOT_GATEWAY_PASSWORD;
+  process.env.RAZROOM_SKIP_CHANNELS = "1";
+  process.env.RAZROOM_SKIP_GMAIL_WATCHER = "1";
+  process.env.RAZROOM_SKIP_CRON = "1";
+  process.env.RAZROOM_SKIP_CANVAS_HOST = "1";
+  process.env.RAZROOM_DISABLE_CONFIG_CACHE = "1";
+  delete process.env.RAZROOM_GATEWAY_TOKEN;
+  delete process.env.RAZROOM_GATEWAY_PASSWORD;
   delete process.env.CUSTOM_API_KEY;
 
   const tempHome = await fs.mkdtemp(path.join(os.tmpdir(), prefix));
-  const configPath = path.join(tempHome, "moltbot.json");
+  const configPath = path.join(tempHome, "razroom.json");
   process.env.HOME = tempHome;
-  process.env.MOLTBOT_STATE_DIR = tempHome;
-  process.env.MOLTBOT_CONFIG_PATH = configPath;
+  process.env.RAZROOM_STATE_DIR = tempHome;
+  process.env.RAZROOM_CONFIG_PATH = configPath;
 
   const runtime: RuntimeMock = {
     log: () => {},
@@ -157,7 +157,7 @@ async function expectApiKeyProfile(params: {
 
 describe("onboard (non-interactive): provider auth", () => {
   it("stores MiniMax API key and uses global baseUrl by default", async () => {
-    await withOnboardEnv("moltbot-onboard-minimax-", async ({ configPath, runtime }) => {
+    await withOnboardEnv("razroom-onboard-minimax-", async ({ configPath, runtime }) => {
       await runNonInteractive(
         {
           nonInteractive: true,
@@ -190,7 +190,7 @@ describe("onboard (non-interactive): provider auth", () => {
   }, 60_000);
 
   it("supports MiniMax CN API endpoint auth choice", async () => {
-    await withOnboardEnv("moltbot-onboard-minimax-cn-", async ({ configPath, runtime }) => {
+    await withOnboardEnv("razroom-onboard-minimax-cn-", async ({ configPath, runtime }) => {
       await runNonInteractive(
         {
           nonInteractive: true,
@@ -223,7 +223,7 @@ describe("onboard (non-interactive): provider auth", () => {
   }, 60_000);
 
   it("stores Z.AI API key and uses global baseUrl by default", async () => {
-    await withOnboardEnv("moltbot-onboard-zai-", async ({ configPath, runtime }) => {
+    await withOnboardEnv("razroom-onboard-zai-", async ({ configPath, runtime }) => {
       await runNonInteractive(
         {
           nonInteractive: true,
@@ -252,7 +252,7 @@ describe("onboard (non-interactive): provider auth", () => {
   }, 60_000);
 
   it("supports Z.AI CN coding endpoint auth choice", async () => {
-    await withOnboardEnv("moltbot-onboard-zai-cn-", async ({ configPath, runtime }) => {
+    await withOnboardEnv("razroom-onboard-zai-cn-", async ({ configPath, runtime }) => {
       await runNonInteractive(
         {
           nonInteractive: true,
@@ -277,7 +277,7 @@ describe("onboard (non-interactive): provider auth", () => {
   }, 60_000);
 
   it("stores xAI API key and sets default model", async () => {
-    await withOnboardEnv("moltbot-onboard-xai-", async ({ configPath, runtime }) => {
+    await withOnboardEnv("razroom-onboard-xai-", async ({ configPath, runtime }) => {
       const rawKey = "xai-test-\r\nkey";
       await runNonInteractive(
         {
@@ -305,7 +305,7 @@ describe("onboard (non-interactive): provider auth", () => {
   }, 60_000);
 
   it("stores Vercel AI Gateway API key and sets default model", async () => {
-    await withOnboardEnv("moltbot-onboard-ai-gateway-", async ({ configPath, runtime }) => {
+    await withOnboardEnv("razroom-onboard-ai-gateway-", async ({ configPath, runtime }) => {
       await runNonInteractive(
         {
           nonInteractive: true,
@@ -338,7 +338,7 @@ describe("onboard (non-interactive): provider auth", () => {
   }, 60_000);
 
   it("stores token auth profile", async () => {
-    await withOnboardEnv("moltbot-onboard-token-", async ({ configPath, runtime }) => {
+    await withOnboardEnv("razroom-onboard-token-", async ({ configPath, runtime }) => {
       const cleanToken = `sk-ant-oat01-${"a".repeat(80)}`;
       const token = `${cleanToken.slice(0, 30)}\r${cleanToken.slice(30)}`;
 
@@ -375,7 +375,7 @@ describe("onboard (non-interactive): provider auth", () => {
   }, 60_000);
 
   it("stores OpenAI API key and sets OpenAI default model", async () => {
-    await withOnboardEnv("moltbot-onboard-openai-", async ({ configPath, runtime }) => {
+    await withOnboardEnv("razroom-onboard-openai-", async ({ configPath, runtime }) => {
       await runNonInteractive(
         {
           nonInteractive: true,
@@ -398,7 +398,7 @@ describe("onboard (non-interactive): provider auth", () => {
   }, 60_000);
 
   it("rejects vLLM auth choice in non-interactive mode", async () => {
-    await withOnboardEnv("moltbot-onboard-vllm-non-interactive-", async ({ runtime }) => {
+    await withOnboardEnv("razroom-onboard-vllm-non-interactive-", async ({ runtime }) => {
       await expect(
         runNonInteractive(
           {
@@ -416,7 +416,7 @@ describe("onboard (non-interactive): provider auth", () => {
   }, 60_000);
 
   it("stores LiteLLM API key and sets default model", async () => {
-    await withOnboardEnv("moltbot-onboard-litellm-", async ({ configPath, runtime }) => {
+    await withOnboardEnv("razroom-onboard-litellm-", async ({ configPath, runtime }) => {
       await runNonInteractive(
         {
           nonInteractive: true,
@@ -449,14 +449,14 @@ describe("onboard (non-interactive): provider auth", () => {
   it.each([
     {
       name: "stores Cloudflare AI Gateway API key and metadata",
-      prefix: "moltbot-onboard-cf-gateway-",
+      prefix: "razroom-onboard-cf-gateway-",
       options: {
         authChoice: "cloudflare-ai-gateway-api-key",
       },
     },
     {
       name: "infers Cloudflare auth choice from API key flags",
-      prefix: "moltbot-onboard-cf-gateway-infer-",
+      prefix: "razroom-onboard-cf-gateway-infer-",
       options: {},
     },
   ])(
@@ -502,7 +502,7 @@ describe("onboard (non-interactive): provider auth", () => {
   );
 
   it("infers Together auth choice from --together-api-key and sets default model", async () => {
-    await withOnboardEnv("moltbot-onboard-together-infer-", async ({ configPath, runtime }) => {
+    await withOnboardEnv("razroom-onboard-together-infer-", async ({ configPath, runtime }) => {
       await runNonInteractive(
         {
           nonInteractive: true,
@@ -532,7 +532,7 @@ describe("onboard (non-interactive): provider auth", () => {
   }, 60_000);
 
   it("infers QIANFAN auth choice from --qianfan-api-key and sets default model", async () => {
-    await withOnboardEnv("moltbot-onboard-qianfan-infer-", async ({ configPath, runtime }) => {
+    await withOnboardEnv("razroom-onboard-qianfan-infer-", async ({ configPath, runtime }) => {
       await runNonInteractive(
         {
           nonInteractive: true,
@@ -562,7 +562,7 @@ describe("onboard (non-interactive): provider auth", () => {
   }, 60_000);
 
   it("configures a custom provider from non-interactive flags", async () => {
-    await withOnboardEnv("moltbot-onboard-custom-provider-", async ({ configPath, runtime }) => {
+    await withOnboardEnv("razroom-onboard-custom-provider-", async ({ configPath, runtime }) => {
       await runNonInteractive(
         {
           nonInteractive: true,
@@ -605,7 +605,7 @@ describe("onboard (non-interactive): provider auth", () => {
 
   it("infers custom provider auth choice from custom flags", async () => {
     await withOnboardEnv(
-      "moltbot-onboard-custom-provider-infer-",
+      "razroom-onboard-custom-provider-infer-",
       async ({ configPath, runtime }) => {
         await runNonInteractive(
           {
@@ -647,7 +647,7 @@ describe("onboard (non-interactive): provider auth", () => {
 
   it("uses CUSTOM_API_KEY env fallback for non-interactive custom provider auth", async () => {
     await withOnboardEnv(
-      "moltbot-onboard-custom-provider-env-fallback-",
+      "razroom-onboard-custom-provider-env-fallback-",
       async ({ configPath, runtime }) => {
         process.env.CUSTOM_API_KEY = "custom-env-key";
 
@@ -685,7 +685,7 @@ describe("onboard (non-interactive): provider auth", () => {
 
   it("uses matching profile fallback for non-interactive custom provider auth", async () => {
     await withOnboardEnv(
-      "moltbot-onboard-custom-provider-profile-fallback-",
+      "razroom-onboard-custom-provider-profile-fallback-",
       async ({ configPath, runtime }) => {
         const { upsertAuthProfile } = await import("../agents/auth-profiles.js");
         upsertAuthProfile({
@@ -731,7 +731,7 @@ describe("onboard (non-interactive): provider auth", () => {
 
   it("fails custom provider auth when compatibility is invalid", async () => {
     await withOnboardEnv(
-      "moltbot-onboard-custom-provider-invalid-compat-",
+      "razroom-onboard-custom-provider-invalid-compat-",
       async ({ runtime }) => {
         await expect(
           runNonInteractive(
@@ -754,7 +754,7 @@ describe("onboard (non-interactive): provider auth", () => {
   }, 60_000);
 
   it("fails custom provider auth when explicit provider id is invalid", async () => {
-    await withOnboardEnv("moltbot-onboard-custom-provider-invalid-id-", async ({ runtime }) => {
+    await withOnboardEnv("razroom-onboard-custom-provider-invalid-id-", async ({ runtime }) => {
       await expect(
         runNonInteractive(
           {
@@ -778,7 +778,7 @@ describe("onboard (non-interactive): provider auth", () => {
 
   it("fails inferred custom auth when required flags are incomplete", async () => {
     await withOnboardEnv(
-      "moltbot-onboard-custom-provider-missing-required-",
+      "razroom-onboard-custom-provider-missing-required-",
       async ({ runtime }) => {
         await expect(
           runNonInteractive(

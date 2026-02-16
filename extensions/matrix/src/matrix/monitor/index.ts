@@ -1,5 +1,5 @@
 import { format } from "node:util";
-import { mergeAllowlist, summarizeMapping, type RuntimeEnv } from "moltbot/plugin-sdk";
+import { mergeAllowlist, summarizeMapping, type RuntimeEnv } from "razroom/plugin-sdk";
 import type { CoreConfig, ReplyToMode } from "../../types.js";
 import { resolveMatrixTargets } from "../../resolve-targets.js";
 import { getMatrixRuntime } from "../../runtime.js";

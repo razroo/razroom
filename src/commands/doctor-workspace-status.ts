@@ -1,11 +1,11 @@
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../agents/agent-scope.js";
 import { buildWorkspaceSkillStatus } from "../agents/skills-status.js";
-import { loadMoltBotPlugins } from "../plugins/loader.js";
+import { loadRazroomPlugins } from "../plugins/loader.js";
 import { note } from "../terminal/note.js";
 import { detectLegacyWorkspaceDirs, formatLegacyWorkspaceWarning } from "./doctor-workspace.js";
 
-export function noteWorkspaceStatus(cfg: MoltBotConfig) {
+export function noteWorkspaceStatus(cfg: RazroomConfig) {
   const workspaceDir = resolveAgentWorkspaceDir(cfg, resolveDefaultAgentId(cfg));
   const legacyWorkspace = detectLegacyWorkspaceDirs({ workspaceDir });
   if (legacyWorkspace.legacyDirs.length > 0) {
@@ -25,7 +25,7 @@ export function noteWorkspaceStatus(cfg: MoltBotConfig) {
     "Skills status",
   );
 
-  const pluginRegistry = loadMoltBotPlugins({
+  const pluginRegistry = loadRazroomPlugins({
     config: cfg,
     workspaceDir,
     logger: {

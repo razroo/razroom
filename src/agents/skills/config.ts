@@ -1,4 +1,4 @@
-import type { MoltBotConfig, SkillConfig } from "../../config/config.js";
+import type { RazroomConfig, SkillConfig } from "../../config/config.js";
 import type { SkillEligibilityContext, SkillEntry } from "./types.js";
 import {
   hasBinary,
@@ -15,12 +15,12 @@ const DEFAULT_CONFIG_VALUES: Record<string, boolean> = {
 
 export { hasBinary, resolveConfigPath, resolveRuntimePlatform };
 
-export function isConfigPathTruthy(config: MoltBotConfig | undefined, pathStr: string): boolean {
+export function isConfigPathTruthy(config: RazroomConfig | undefined, pathStr: string): boolean {
   return isConfigPathTruthyWithDefaults(config, pathStr, DEFAULT_CONFIG_VALUES);
 }
 
 export function resolveSkillConfig(
-  config: MoltBotConfig | undefined,
+  config: RazroomConfig | undefined,
   skillKey: string,
 ): SkillConfig | undefined {
   const skills = config?.skills?.entries;
@@ -45,13 +45,13 @@ function normalizeAllowlist(input: unknown): string[] | undefined {
   return normalized.length > 0 ? normalized : undefined;
 }
 
-const BUNDLED_SOURCES = new Set(["moltbot-bundled"]);
+const BUNDLED_SOURCES = new Set(["razroom-bundled"]);
 
 function isBundledSkill(entry: SkillEntry): boolean {
   return BUNDLED_SOURCES.has(entry.skill.source);
 }
 
-export function resolveBundledAllowlist(config?: MoltBotConfig): string[] | undefined {
+export function resolveBundledAllowlist(config?: RazroomConfig): string[] | undefined {
   return normalizeAllowlist(config?.skills?.allowBundled);
 }
 
@@ -68,7 +68,7 @@ export function isBundledSkillAllowed(entry: SkillEntry, allowlist?: string[]): 
 
 export function shouldIncludeSkill(params: {
   entry: SkillEntry;
-  config?: MoltBotConfig;
+  config?: RazroomConfig;
   eligibility?: SkillEligibilityContext;
 }): boolean {
   const { entry, config, eligibility } = params;

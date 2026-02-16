@@ -1,10 +1,10 @@
 ---
 read_when:
-  - 你想让 MoltBot 在云 VPS 上 24/7 运行（而不是你的笔记本电脑）
+  - 你想让 Razroom 在云 VPS 上 24/7 运行（而不是你的笔记本电脑）
   - 你想在自己的 VPS 上运行生产级、永久在线的 Gateway 网关
   - 你想完全控制持久化、二进制文件和重启行为
-  - 你在 Hetzner 或类似提供商上用 Docker 运行 MoltBot
-summary: 在廉价的 Hetzner VPS（Docker）上 24/7 运行 MoltBot Gateway 网关，带持久状态和内置二进制文件
+  - 你在 Hetzner 或类似提供商上用 Docker 运行 Razroom
+summary: 在廉价的 Hetzner VPS（Docker）上 24/7 运行 Razroom Gateway 网关，带持久状态和内置二进制文件
 title: Hetzner
 x-i18n:
   generated_at: "2026-02-03T07:52:17Z"
@@ -15,21 +15,21 @@ x-i18n:
   workflow: 15
 ---
 
-# 在 Hetzner 上运行 MoltBot（Docker，生产 VPS 指南）
+# 在 Hetzner 上运行 Razroom（Docker，生产 VPS 指南）
 
 ## 目标
 
-使用 Docker 在 Hetzner VPS 上运行持久的 MoltBot Gateway 网关，带持久状态、内置二进制文件和安全的重启行为。
+使用 Docker 在 Hetzner VPS 上运行持久的 Razroom Gateway 网关，带持久状态、内置二进制文件和安全的重启行为。
 
-如果你想要"约 $5 实现 MoltBot 24/7"，这是最简单可靠的设置。
+如果你想要"约 $5 实现 Razroom 24/7"，这是最简单可靠的设置。
 Hetzner 定价会变化；选择最小的 Debian/Ubuntu VPS，如果遇到 OOM 再扩容。
 
 ## 我们在做什么（简单说明）？
 
 - 租用一台小型 Linux 服务器（Hetzner VPS）
 - 安装 Docker（隔离的应用运行时）
-- 在 Docker 中启动 MoltBot Gateway 网关
-- 在主机上持久化 `~/.moltbot` + `~/.moltbot/workspace`（重启/重建后保留）
+- 在 Docker 中启动 Razroom Gateway 网关
+- 在主机上持久化 `~/.razroom` + `~/.razroom/workspace`（重启/重建后保留）
 - 通过 SSH 隧道从你的笔记本电脑访问控制 UI
 
 Gateway 网关可以通过以下方式访问：
@@ -47,7 +47,7 @@ Gateway 网关可以通过以下方式访问：
 
 1. 配置 Hetzner VPS
 2. 安装 Docker
-3. 克隆 MoltBot 仓库
+3. 克隆 Razroom 仓库
 4. 创建持久化主机目录
 5. 配置 `.env` 和 `docker-compose.yml`
 6. 将所需二进制文件烘焙到镜像中
@@ -103,11 +103,11 @@ docker compose version
 
 ---
 
-## 3) 克隆 MoltBot 仓库
+## 3) 克隆 Razroom 仓库
 
 ```bash
-git clone https://github.com/moltbot/moltbot.git
-cd moltbot
+git clone https://github.com/razroom/razroom.git
+cd razroom
 ```
 
 本指南假设你将构建自定义镜像以保证二进制文件持久化。
@@ -120,12 +120,12 @@ Docker 容器是临时的。
 所有长期状态必须存储在主机上。
 
 ```bash
-mkdir -p /root/.moltbot
-mkdir -p /root/.moltbot/workspace
+mkdir -p /root/.razroom
+mkdir -p /root/.razroom/workspace
 
 # 将所有权设置为容器用户（uid 1000）：
-chown -R 1000:1000 /root/.moltbot
-chown -R 1000:1000 /root/.moltbot/workspace
+chown -R 1000:1000 /root/.razroom
+chown -R 1000:1000 /root/.razroom/workspace
 ```
 
 ---
@@ -135,16 +135,16 @@ chown -R 1000:1000 /root/.moltbot/workspace
 在仓库根目录创建 `.env`。
 
 ```bash
-MOLTBOT_IMAGE=moltbot:latest
-MOLTBOT_GATEWAY_TOKEN=change-me-now
-MOLTBOT_GATEWAY_BIND=lan
-MOLTBOT_GATEWAY_PORT=18789
+RAZROOM_IMAGE=razroom:latest
+RAZROOM_GATEWAY_TOKEN=change-me-now
+RAZROOM_GATEWAY_BIND=lan
+RAZROOM_GATEWAY_PORT=18789
 
-MOLTBOT_CONFIG_DIR=/root/.moltbot
-MOLTBOT_WORKSPACE_DIR=/root/.moltbot/workspace
+RAZROOM_CONFIG_DIR=/root/.razroom
+RAZROOM_WORKSPACE_DIR=/root/.razroom/workspace
 
 GOG_KEYRING_PASSWORD=change-me-now
-XDG_CONFIG_HOME=/home/node/.moltbot
+XDG_CONFIG_HOME=/home/node/.razroom
 ```
 
 生成强密钥：
@@ -163,8 +163,8 @@ openssl rand -hex 32
 
 ```yaml
 services:
-  moltbot-gateway:
-    image: ${MOLTBOT_IMAGE}
+  razroom-gateway:
+    image: ${RAZROOM_IMAGE}
     build: .
     restart: unless-stopped
     env_file:
@@ -173,19 +173,19 @@ services:
       - HOME=/home/node
       - NODE_ENV=production
       - TERM=xterm-256color
-      - MOLTBOT_GATEWAY_BIND=${MOLTBOT_GATEWAY_BIND}
-      - MOLTBOT_GATEWAY_PORT=${MOLTBOT_GATEWAY_PORT}
-      - MOLTBOT_GATEWAY_TOKEN=${MOLTBOT_GATEWAY_TOKEN}
+      - RAZROOM_GATEWAY_BIND=${RAZROOM_GATEWAY_BIND}
+      - RAZROOM_GATEWAY_PORT=${RAZROOM_GATEWAY_PORT}
+      - RAZROOM_GATEWAY_TOKEN=${RAZROOM_GATEWAY_TOKEN}
       - GOG_KEYRING_PASSWORD=${GOG_KEYRING_PASSWORD}
       - XDG_CONFIG_HOME=${XDG_CONFIG_HOME}
       - PATH=/home/linuxbrew/.linuxbrew/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     volumes:
-      - ${MOLTBOT_CONFIG_DIR}:/home/node/.moltbot
-      - ${MOLTBOT_WORKSPACE_DIR}:/home/node/.moltbot/workspace
+      - ${RAZROOM_CONFIG_DIR}:/home/node/.razroom
+      - ${RAZROOM_WORKSPACE_DIR}:/home/node/.razroom/workspace
     ports:
       # 推荐：在 VPS 上保持 Gateway 网关仅限 loopback；通过 SSH 隧道访问。
       # 要公开暴露，移除 `127.0.0.1:` 前缀并相应配置防火墙。
-      - "127.0.0.1:${MOLTBOT_GATEWAY_PORT}:18789"
+      - "127.0.0.1:${RAZROOM_GATEWAY_PORT}:18789"
 
       # 可选：仅当你对此 VPS 运行 iOS/Android 节点并需要 Canvas 主机时。
       # 如果你公开暴露此端口，请阅读 /gateway/security 并相应配置防火墙。
@@ -196,9 +196,9 @@ services:
         "dist/index.js",
         "gateway",
         "--bind",
-        "${MOLTBOT_GATEWAY_BIND}",
+        "${RAZROOM_GATEWAY_BIND}",
         "--port",
-        "${MOLTBOT_GATEWAY_PORT}",
+        "${RAZROOM_GATEWAY_PORT}",
       ]
 ```
 
@@ -271,15 +271,15 @@ CMD ["node","dist/index.js"]
 
 ```bash
 docker compose build
-docker compose up -d moltbot-gateway
+docker compose up -d razroom-gateway
 ```
 
 验证二进制文件：
 
 ```bash
-docker compose exec moltbot-gateway which gog
-docker compose exec moltbot-gateway which goplaces
-docker compose exec moltbot-gateway which wacli
+docker compose exec razroom-gateway which gog
+docker compose exec razroom-gateway which goplaces
+docker compose exec razroom-gateway which wacli
 ```
 
 预期输出：
@@ -295,7 +295,7 @@ docker compose exec moltbot-gateway which wacli
 ## 9) 验证 Gateway 网关
 
 ```bash
-docker compose logs -f moltbot-gateway
+docker compose logs -f razroom-gateway
 ```
 
 成功：
@@ -320,17 +320,17 @@ ssh -N -L 18789:127.0.0.1:18789 root@YOUR_VPS_IP
 
 ## 持久化位置（事实来源）
 
-MoltBot 在 Docker 中运行，但 Docker 不是事实来源。
+Razroom 在 Docker 中运行，但 Docker 不是事实来源。
 所有长期状态必须在重启、重建和重启后保留。
 
 | 组件             | 位置                              | 持久化机制    | 说明                        |
 | ---------------- | --------------------------------- | ------------- | --------------------------- |
-| Gateway 网关配置 | `/home/node/.moltbot/`           | 主机卷挂载    | 包括 `moltbot.json`、令牌  |
-| 模型认证配置文件 | `/home/node/.moltbot/`           | 主机卷挂载    | OAuth 令牌、API 密钥        |
-| Skill 配置       | `/home/node/.moltbot/skills/`    | 主机卷挂载    | Skill 级别状态              |
-| 智能体工作区     | `/home/node/.moltbot/workspace/` | 主机卷挂载    | 代码和智能体产物            |
-| WhatsApp 会话    | `/home/node/.moltbot/`           | 主机卷挂载    | 保留二维码登录              |
-| Gmail 密钥环     | `/home/node/.moltbot/`           | 主机卷 + 密码 | 需要 `GOG_KEYRING_PASSWORD` |
+| Gateway 网关配置 | `/home/node/.razroom/`           | 主机卷挂载    | 包括 `razroom.json`、令牌  |
+| 模型认证配置文件 | `/home/node/.razroom/`           | 主机卷挂载    | OAuth 令牌、API 密钥        |
+| Skill 配置       | `/home/node/.razroom/skills/`    | 主机卷挂载    | Skill 级别状态              |
+| 智能体工作区     | `/home/node/.razroom/workspace/` | 主机卷挂载    | 代码和智能体产物            |
+| WhatsApp 会话    | `/home/node/.razroom/`           | 主机卷挂载    | 保留二维码登录              |
+| Gmail 密钥环     | `/home/node/.razroom/`           | 主机卷 + 密码 | 需要 `GOG_KEYRING_PASSWORD` |
 | 外部二进制文件   | `/usr/local/bin/`                 | Docker 镜像   | 必须在构建时烘焙            |
 | Node 运行时      | 容器文件系统                      | Docker 镜像   | 每次镜像构建时重建          |
 | 操作系统包       | 容器文件系统                      | Docker 镜像   | 不要在运行时安装            |

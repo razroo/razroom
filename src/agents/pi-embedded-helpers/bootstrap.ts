@@ -1,7 +1,7 @@
 import type { AgentMessage } from "@mariozechner/pi-agent-core";
 import fs from "node:fs/promises";
 import path from "node:path";
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 import type { WorkspaceBootstrapFile } from "../workspace.js";
 import type { EmbeddedContextFile } from "./types.js";
 import { truncateUtf16Safe } from "../../utils.js";
@@ -103,7 +103,7 @@ type AllocatedBootstrapFile = {
   budget: number;
 };
 
-export function resolveBootstrapMaxChars(cfg?: MoltBotConfig): number {
+export function resolveBootstrapMaxChars(cfg?: RazroomConfig): number {
   const raw = cfg?.agents?.defaults?.bootstrapMaxChars;
   if (typeof raw === "number" && Number.isFinite(raw) && raw > 0) {
     return Math.floor(raw);
@@ -111,7 +111,7 @@ export function resolveBootstrapMaxChars(cfg?: MoltBotConfig): number {
   return DEFAULT_BOOTSTRAP_MAX_CHARS;
 }
 
-export function resolveBootstrapTotalMaxChars(cfg?: MoltBotConfig): number {
+export function resolveBootstrapTotalMaxChars(cfg?: RazroomConfig): number {
   const raw = cfg?.agents?.defaults?.bootstrapTotalMaxChars;
   if (typeof raw === "number" && Number.isFinite(raw) && raw > 0) {
     return Math.floor(raw);

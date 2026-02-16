@@ -10,7 +10,7 @@
  * - Registry integration
  */
 
-import type { MoltBotConfig } from "moltbot/plugin-sdk";
+import type { RazroomConfig } from "razroom/plugin-sdk";
 import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import { sendMessageTwitchInternal } from "./send.js";
 
@@ -57,7 +57,7 @@ describe("send", () => {
         },
       },
     },
-  } as unknown as MoltBotConfig;
+  } as unknown as RazroomConfig;
 
   beforeEach(() => {
     // mock.restore() // TODO: Review mock cleanup;

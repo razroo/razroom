@@ -42,7 +42,7 @@ mock("../media/store.js", async (importOriginal) => {
   };
 });
 
-const HOME = path.join(os.tmpdir(), `moltbot-inbound-media-${crypto.randomUUID()}`);
+const HOME = path.join(os.tmpdir(), `razroom-inbound-media-${crypto.randomUUID()}`);
 process.env.HOME = HOME;
 
 mock("@whiskeysockets/baileys", async () => {

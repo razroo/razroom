@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "moltbot/plugin-sdk";
+import type { RazroomConfig } from "razroom/plugin-sdk";
 
 export type TlonResolvedAccount = {
   accountId: string;
@@ -16,7 +16,7 @@ export type TlonResolvedAccount = {
 };
 
 export function resolveTlonAccount(
-  cfg: MoltBotConfig,
+  cfg: RazroomConfig,
   accountId?: string | null,
 ): TlonResolvedAccount {
   const base = cfg.channels?.tlon as
@@ -87,7 +87,7 @@ export function resolveTlonAccount(
   };
 }
 
-export function listTlonAccountIds(cfg: MoltBotConfig): string[] {
+export function listTlonAccountIds(cfg: RazroomConfig): string[] {
   const base = cfg.channels?.tlon as
     | { ship?: string; accounts?: Record<string, Record<string, unknown>> }
     | undefined;

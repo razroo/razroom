@@ -3,13 +3,13 @@ import type {
   ChannelOutboundAdapter,
   ChannelPlugin,
   ChannelSetupInput,
-  MoltBotConfig,
-} from "moltbot/plugin-sdk";
+  RazroomConfig,
+} from "razroom/plugin-sdk";
 import {
   applyAccountNameToChannelSection,
   DEFAULT_ACCOUNT_ID,
   normalizeAccountId,
-} from "moltbot/plugin-sdk";
+} from "razroom/plugin-sdk";
 import { tlonChannelConfigSchema } from "./config-schema.js";
 import { monitorTlonProvider } from "./monitor/index.js";
 import { tlonOnboardingAdapter } from "./onboarding.js";
@@ -33,10 +33,10 @@ type TlonSetupInput = ChannelSetupInput & {
 };
 
 function applyTlonSetupConfig(params: {
-  cfg: MoltBotConfig;
+  cfg: RazroomConfig;
   accountId: string;
   input: TlonSetupInput;
-}): MoltBotConfig {
+}): RazroomConfig {
   const { cfg, accountId, input } = params;
   const useDefault = accountId === DEFAULT_ACCOUNT_ID;
   const namedConfig = applyAccountNameToChannelSection({
@@ -204,7 +204,7 @@ export const tlonPlugin: ChannelPlugin = {
               enabled,
             },
           },
-        } as MoltBotConfig;
+        } as RazroomConfig;
       }
       return {
         ...cfg,
@@ -221,7 +221,7 @@ export const tlonPlugin: ChannelPlugin = {
             },
           },
         },
-      } as MoltBotConfig;
+      } as RazroomConfig;
     },
     deleteAccount: ({ cfg, accountId }) => {
       const useDefault = !accountId || accountId === "default";
@@ -237,7 +237,7 @@ export const tlonPlugin: ChannelPlugin = {
             ...cfg.channels,
             tlon: rest,
           },
-        } as MoltBotConfig;
+        } as RazroomConfig;
       }
       // oxlint-disable-next-line no-unused-vars
       const { [accountId]: removed, ...remainingAccounts } = (cfg.channels?.tlon?.accounts ??
@@ -251,7 +251,7 @@ export const tlonPlugin: ChannelPlugin = {
             accounts: remainingAccounts,
           },
         },
-      } as MoltBotConfig;
+      } as RazroomConfig;
     },
     isConfigured: (account) => account.configured,
     describeAccount: (account) => ({

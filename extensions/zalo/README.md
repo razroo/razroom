@@ -1,17 +1,17 @@
-# @moltbot/zalo
+# @razroom/zalo
 
-Zalo channel plugin for MoltBot (Bot API).
+Zalo channel plugin for Razroom (Bot API).
 
 ## Install (local checkout)
 
 ```bash
-moltbot plugins install ./extensions/zalo
+razroom plugins install ./extensions/zalo
 ```
 
 ## Install (npm)
 
 ```bash
-moltbot plugins install @moltbot/zalo
+razroom plugins install @razroom/zalo
 ```
 
 Onboarding: select Zalo and confirm the install prompt to fetch the plugin automatically.

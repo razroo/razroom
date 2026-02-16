@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
-# Rootless MoltBot in Podman: run after one-time setup.
+# Rootless Razroom in Podman: run after one-time setup.
 #
 # One-time setup (from repo root): ./setup-podman.sh
 # Then:
-#   ./scripts/run-moltbot-podman.sh launch           # Start gateway
-#   ./scripts/run-moltbot-podman.sh launch setup      # Onboarding wizard
+#   ./scripts/run-razroom-podman.sh launch           # Start gateway
+#   ./scripts/run-razroom-podman.sh launch setup      # Onboarding wizard
 #
-# As the moltbot user (no repo needed):
-#   sudo -u moltbot /home/moltbot/run-moltbot-podman.sh
-#   sudo -u moltbot /home/moltbot/run-moltbot-podman.sh setup
+# As the razroom user (no repo needed):
+#   sudo -u razroom /home/razroom/run-razroom-podman.sh
+#   sudo -u razroom /home/razroom/run-razroom-podman.sh setup
 #
 # Legacy: "setup-host" delegates to ../setup-podman.sh
 
 set -euo pipefail
 
-MOLTBOT_USER="${MOLTBOT_PODMAN_USER:-moltbot}"
+RAZROOM_USER="${RAZROOM_PODMAN_USER:-razroom}"
 
 resolve_user_home() {
   local user="$1"
@@ -31,9 +31,9 @@ resolve_user_home() {
   printf '%s' "$home"
 }
 
-MOLTBOT_HOME="$(resolve_user_home "$MOLTBOT_USER")"
-MOLTBOT_UID="$(id -u "$MOLTBOT_USER" 2>/dev/null || true)"
-LAUNCH_SCRIPT="$MOLTBOT_HOME/run-moltbot-podman.sh"
+RAZROOM_HOME="$(resolve_user_home "$RAZROOM_USER")"
+RAZROOM_UID="$(id -u "$RAZROOM_USER" 2>/dev/null || true)"
+LAUNCH_SCRIPT="$RAZROOM_HOME/run-razroom-podman.sh"
 
 # Legacy: setup-host → run setup-podman.sh
 if [[ "${1:-}" == "setup-host" ]]; then
@@ -47,37 +47,37 @@ if [[ "${1:-}" == "setup-host" ]]; then
   exit 1
 fi
 
-# --- Step 2: launch (from repo: re-exec as moltbot in safe cwd; from moltbot home: run container) ---
+# --- Step 2: launch (from repo: re-exec as razroom in safe cwd; from razroom home: run container) ---
 if [[ "${1:-}" == "launch" ]]; then
   shift
-  if [[ -n "${MOLTBOT_UID:-}" && "$(id -u)" -ne "$MOLTBOT_UID" ]]; then
-    # Exec as moltbot with cwd=/tmp so a nologin user never inherits an invalid cwd.
-    exec sudo -u "$MOLTBOT_USER" env HOME="$MOLTBOT_HOME" PATH="$PATH" TERM="${TERM:-}" \
+  if [[ -n "${RAZROOM_UID:-}" && "$(id -u)" -ne "$RAZROOM_UID" ]]; then
+    # Exec as razroom with cwd=/tmp so a nologin user never inherits an invalid cwd.
+    exec sudo -u "$RAZROOM_USER" env HOME="$RAZROOM_HOME" PATH="$PATH" TERM="${TERM:-}" \
       bash -c 'cd /tmp && exec '"$LAUNCH_SCRIPT"' "$@"' _ "$@"
   fi
-  # Already moltbot; fall through to container run (with remaining args, e.g. "setup")
+  # Already razroom; fall through to container run (with remaining args, e.g. "setup")
 fi
 
-# --- Container run (script in moltbot home, run as moltbot) ---
+# --- Container run (script in razroom home, run as razroom) ---
 EFFECTIVE_HOME="${HOME:-}"
-if [[ -n "${MOLTBOT_UID:-}" && "$(id -u)" -eq "$MOLTBOT_UID" ]]; then
-  EFFECTIVE_HOME="$MOLTBOT_HOME"
-  export HOME="$MOLTBOT_HOME"
+if [[ -n "${RAZROOM_UID:-}" && "$(id -u)" -eq "$RAZROOM_UID" ]]; then
+  EFFECTIVE_HOME="$RAZROOM_HOME"
+  export HOME="$RAZROOM_HOME"
 fi
 if [[ -z "${EFFECTIVE_HOME:-}" ]]; then
-  EFFECTIVE_HOME="${MOLTBOT_HOME:-/tmp}"
+  EFFECTIVE_HOME="${RAZROOM_HOME:-/tmp}"
 fi
-CONFIG_DIR="${MOLTBOT_CONFIG_DIR:-$EFFECTIVE_HOME/.moltbot}"
-ENV_FILE="${MOLTBOT_PODMAN_ENV:-$CONFIG_DIR/.env}"
-WORKSPACE_DIR="${MOLTBOT_WORKSPACE_DIR:-$CONFIG_DIR/workspace}"
-CONTAINER_NAME="${MOLTBOT_PODMAN_CONTAINER:-moltbot}"
-MOLTBOT_IMAGE="${MOLTBOT_PODMAN_IMAGE:-moltbot:local}"
-PODMAN_PULL="${MOLTBOT_PODMAN_PULL:-never}"
-HOST_GATEWAY_PORT="${MOLTBOT_PODMAN_GATEWAY_HOST_PORT:-${MOLTBOT_GATEWAY_PORT:-18789}}"
-HOST_BRIDGE_PORT="${MOLTBOT_PODMAN_BRIDGE_HOST_PORT:-${MOLTBOT_BRIDGE_PORT:-18790}}"
-GATEWAY_BIND="${MOLTBOT_GATEWAY_BIND:-lan}"
+CONFIG_DIR="${RAZROOM_CONFIG_DIR:-$EFFECTIVE_HOME/.razroom}"
+ENV_FILE="${RAZROOM_PODMAN_ENV:-$CONFIG_DIR/.env}"
+WORKSPACE_DIR="${RAZROOM_WORKSPACE_DIR:-$CONFIG_DIR/workspace}"
+CONTAINER_NAME="${RAZROOM_PODMAN_CONTAINER:-razroom}"
+RAZROOM_IMAGE="${RAZROOM_PODMAN_IMAGE:-razroom:local}"
+PODMAN_PULL="${RAZROOM_PODMAN_PULL:-never}"
+HOST_GATEWAY_PORT="${RAZROOM_PODMAN_GATEWAY_HOST_PORT:-${RAZROOM_GATEWAY_PORT:-18789}}"
+HOST_BRIDGE_PORT="${RAZROOM_PODMAN_BRIDGE_HOST_PORT:-${RAZROOM_BRIDGE_PORT:-18790}}"
+GATEWAY_BIND="${RAZROOM_GATEWAY_BIND:-lan}"
 
-# Safe cwd for podman (moltbot is nologin; avoid inherited cwd from sudo)
+# Safe cwd for podman (razroom is nologin; avoid inherited cwd from sudo)
 cd "$EFFECTIVE_HOME" 2>/dev/null || cd /tmp 2>/dev/null || true
 
 RUN_SETUP=false
@@ -134,27 +134,27 @@ PY
     od -An -N32 -tx1 /dev/urandom | tr -d " \n"
     return 0
   fi
-  echo "Missing dependency: need openssl or python3 (or od) to generate MOLTBOT_GATEWAY_TOKEN." >&2
+  echo "Missing dependency: need openssl or python3 (or od) to generate RAZROOM_GATEWAY_TOKEN." >&2
   exit 1
 }
 
-if [[ -z "${MOLTBOT_GATEWAY_TOKEN:-}" ]]; then
-  export MOLTBOT_GATEWAY_TOKEN="$(generate_token_hex_32)"
+if [[ -z "${RAZROOM_GATEWAY_TOKEN:-}" ]]; then
+  export RAZROOM_GATEWAY_TOKEN="$(generate_token_hex_32)"
   mkdir -p "$(dirname "$ENV_FILE")"
-  upsert_env_var "$ENV_FILE" "MOLTBOT_GATEWAY_TOKEN" "$MOLTBOT_GATEWAY_TOKEN"
-  echo "Generated MOLTBOT_GATEWAY_TOKEN and wrote it to $ENV_FILE." >&2
+  upsert_env_var "$ENV_FILE" "RAZROOM_GATEWAY_TOKEN" "$RAZROOM_GATEWAY_TOKEN"
+  echo "Generated RAZROOM_GATEWAY_TOKEN and wrote it to $ENV_FILE." >&2
 fi
 
 # The gateway refuses to start unless gateway.mode=local is set in config.
 # Keep this minimal; users can run the wizard later to configure channels/providers.
-CONFIG_JSON="$CONFIG_DIR/moltbot.json"
+CONFIG_JSON="$CONFIG_DIR/razroom.json"
 if [[ ! -f "$CONFIG_JSON" ]]; then
   echo '{ gateway: { mode: "local" } }' >"$CONFIG_JSON"
   chmod 600 "$CONFIG_JSON" 2>/dev/null || true
   echo "Created $CONFIG_JSON (minimal gateway.mode=local)." >&2
 fi
 
-PODMAN_USERNS="${MOLTBOT_PODMAN_USERNS:-keep-id}"
+PODMAN_USERNS="${RAZROOM_PODMAN_USERNS:-keep-id}"
 USERNS_ARGS=()
 RUN_USER_ARGS=()
 case "$PODMAN_USERNS" in
@@ -162,7 +162,7 @@ case "$PODMAN_USERNS" in
   keep-id) USERNS_ARGS=(--userns=keep-id) ;;
   host) USERNS_ARGS=(--userns=host) ;;
   *)
-    echo "Unsupported MOLTBOT_PODMAN_USERNS=$PODMAN_USERNS (expected: keep-id, auto, host)." >&2
+    echo "Unsupported RAZROOM_PODMAN_USERNS=$PODMAN_USERNS (expected: keep-id, auto, host)." >&2
     exit 2
     ;;
 esac
@@ -173,7 +173,7 @@ if [[ "$PODMAN_USERNS" == "keep-id" ]]; then
   RUN_USER_ARGS=(--user "${RUN_UID}:${RUN_GID}")
   echo "Starting container as uid=${RUN_UID} gid=${RUN_GID} (must match owner of $CONFIG_DIR)" >&2
 else
-  echo "Starting container without --user (MOLTBOT_PODMAN_USERNS=$PODMAN_USERNS), mounts may require ownership fixes." >&2
+  echo "Starting container without --user (RAZROOM_PODMAN_USERNS=$PODMAN_USERNS), mounts may require ownership fixes." >&2
 fi
 
 ENV_FILE_ARGS=()
@@ -184,11 +184,11 @@ if [[ "$RUN_SETUP" == true ]]; then
     --init \
     "${USERNS_ARGS[@]}" "${RUN_USER_ARGS[@]}" \
     -e HOME=/home/node -e TERM=xterm-256color -e BROWSER=echo \
-    -e MOLTBOT_GATEWAY_TOKEN="$MOLTBOT_GATEWAY_TOKEN" \
-    -v "$CONFIG_DIR:/home/node/.moltbot:rw" \
-    -v "$WORKSPACE_DIR:/home/node/.moltbot/workspace:rw" \
+    -e RAZROOM_GATEWAY_TOKEN="$RAZROOM_GATEWAY_TOKEN" \
+    -v "$CONFIG_DIR:/home/node/.razroom:rw" \
+    -v "$WORKSPACE_DIR:/home/node/.razroom/workspace:rw" \
     "${ENV_FILE_ARGS[@]}" \
-    "$MOLTBOT_IMAGE" \
+    "$RAZROOM_IMAGE" \
     node dist/index.js onboard "$@"
 fi
 
@@ -197,13 +197,13 @@ podman run --pull="$PODMAN_PULL" -d --replace \
   --init \
   "${USERNS_ARGS[@]}" "${RUN_USER_ARGS[@]}" \
   -e HOME=/home/node -e TERM=xterm-256color \
-  -e MOLTBOT_GATEWAY_TOKEN="$MOLTBOT_GATEWAY_TOKEN" \
+  -e RAZROOM_GATEWAY_TOKEN="$RAZROOM_GATEWAY_TOKEN" \
   "${ENV_FILE_ARGS[@]}" \
-  -v "$CONFIG_DIR:/home/node/.moltbot:rw" \
-  -v "$WORKSPACE_DIR:/home/node/.moltbot/workspace:rw" \
+  -v "$CONFIG_DIR:/home/node/.razroom:rw" \
+  -v "$WORKSPACE_DIR:/home/node/.razroom/workspace:rw" \
   -p "${HOST_GATEWAY_PORT}:18789" \
   -p "${HOST_BRIDGE_PORT}:18790" \
-  "$MOLTBOT_IMAGE" \
+  "$RAZROOM_IMAGE" \
   node dist/index.js gateway --bind "$GATEWAY_BIND" --port 18789
 
 echo "Container $CONTAINER_NAME started. Dashboard: http://127.0.0.1:${HOST_GATEWAY_PORT}/"

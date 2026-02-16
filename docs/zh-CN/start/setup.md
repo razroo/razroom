@@ -2,7 +2,7 @@
 read_when:
   - 设置新机器
   - 你想要"最新最好的"而不破坏你的个人设置
-summary: 设置指南：在保持最新的同时保持你的 MoltBot 设置个性化
+summary: 设置指南：在保持最新的同时保持你的 Razroom 设置个性化
 title: 设置
 x-i18n:
   generated_at: "2026-02-03T07:54:27Z"
@@ -19,7 +19,7 @@ x-i18n:
 
 ## 太长不看
 
-- **个性化设置存放在仓库之外：** `~/.moltbot/workspace`（工作区）+ `~/.moltbot/moltbot.json`（配置）。
+- **个性化设置存放在仓库之外：** `~/.razroom/workspace`（工作区）+ `~/.razroom/razroom.json`（配置）。
 - **稳定工作流：** 安装 macOS 应用；让它运行内置的 Gateway 网关。
 - **前沿工作流：** 通过 `pnpm gateway:watch` 自己运行 Gateway 网关，然后让 macOS 应用以本地模式连接。
 
@@ -33,43 +33,43 @@ x-i18n:
 
 如果你想要"100% 为我定制"*并且*易于更新，将你的自定义内容保存在：
 
-- **配置：** `~/.moltbot/moltbot.json`（JSON/JSON5 格式）
-- **工作区：** `~/.moltbot/workspace`（Skills、提示、记忆；将其设为私有 git 仓库）
+- **配置：** `~/.razroom/razroom.json`（JSON/JSON5 格式）
+- **工作区：** `~/.razroom/workspace`（Skills、提示、记忆；将其设为私有 git 仓库）
 
 引导一次：
 
 ```bash
-moltbot setup
+razroom setup
 ```
 
 在此仓库内部，使用本地 CLI 入口：
 
 ```bash
-moltbot setup
+razroom setup
 ```
 
-如果你还没有全局安装，通过 `pnpm moltbot setup` 运行它。
+如果你还没有全局安装，通过 `pnpm razroom setup` 运行它。
 
 ## 稳定工作流（macOS 应用优先）
 
-1. 安装并启动 **MoltBot.app**（菜单栏）。
+1. 安装并启动 **Razroom.app**（菜单栏）。
 2. 完成新手引导/权限检查清单（TCC 提示）。
 3. 确保 Gateway 网关是**本地**并正在运行（应用管理它）。
 4. 链接表面（示例：WhatsApp）：
 
 ```bash
-moltbot channels login
+razroom channels login
 ```
 
 5. 完整性检查：
 
 ```bash
-moltbot health
+razroom health
 ```
 
 如果你的构建版本中没有新手引导：
 
-- 运行 `moltbot setup`，然后 `moltbot channels login`，然后手动启动 Gateway 网关（`moltbot gateway`）。
+- 运行 `razroom setup`，然后 `razroom channels login`，然后手动启动 Gateway 网关（`razroom gateway`）。
 
 ## 前沿工作流（在终端中运行 Gateway 网关）
 
@@ -94,7 +94,7 @@ pnpm gateway:watch
 
 ### 2) 将 macOS 应用指向你正在运行的 Gateway 网关
 
-在 **MoltBot.app** 中：
+在 **Razroom.app** 中：
 
 - 连接模式：**本地**
   应用将连接到在配置端口上运行的 Gateway 网关。
@@ -105,33 +105,33 @@ pnpm gateway:watch
 - 或通过 CLI：
 
 ```bash
-moltbot health
+razroom health
 ```
 
 ### 常见陷阱
 
 - **端口错误：** Gateway 网关 WS 默认为 `ws://127.0.0.1:18789`；保持应用 + CLI 在同一端口上。
 - **状态存储位置：**
-  - 凭证：`~/.moltbot/credentials/`
-  - 会话：`~/.moltbot/agents/<agentId>/sessions/`
-  - 日志：`/tmp/moltbot/`
+  - 凭证：`~/.razroom/credentials/`
+  - 会话：`~/.razroom/agents/<agentId>/sessions/`
+  - 日志：`/tmp/razroom/`
 
 ## 凭证存储映射
 
 在调试认证或决定备份什么时使用此映射：
 
-- **WhatsApp**：`~/.moltbot/credentials/whatsapp/<accountId>/creds.json`
+- **WhatsApp**：`~/.razroom/credentials/whatsapp/<accountId>/creds.json`
 - **Telegram bot token**：配置/环境变量或 `channels.telegram.tokenFile`
 - **Discord bot token**：配置/环境变量（尚不支持令牌文件）
 - **Slack tokens**：配置/环境变量（`channels.slack.*`）
-- **配对允许列表**：`~/.moltbot/credentials/<channel>-allowFrom.json`
-- **模型认证配置文件**：`~/.moltbot/agents/<agentId>/agent/auth-profiles.json`
-- **旧版 OAuth 导入**：`~/.moltbot/credentials/oauth.json`
+- **配对允许列表**：`~/.razroom/credentials/<channel>-allowFrom.json`
+- **模型认证配置文件**：`~/.razroom/agents/<agentId>/agent/auth-profiles.json`
+- **旧版 OAuth 导入**：`~/.razroom/credentials/oauth.json`
   更多详情：[安全](/gateway/security#credential-storage-map)。
 
 ## 更新（不破坏你的设置）
 
-- 将 `~/.moltbot/workspace` 和 `~/.moltbot/` 保持为"你的东西"；不要将个人提示/配置放入 `moltbot` 仓库。
+- 将 `~/.razroom/workspace` 和 `~/.razroom/` 保持为"你的东西"；不要将个人提示/配置放入 `razroom` 仓库。
 - 更新源码：`git pull` + `pnpm install`（当锁文件更改时）+ 继续使用 `pnpm gateway:watch`。
 
 ## Linux（systemd 用户服务）
@@ -149,5 +149,5 @@ sudo loginctl enable-linger $USER
 - [Gateway 网关运行手册](/gateway)（标志、监督、端口）
 - [Gateway 网关配置](/gateway/configuration)（配置模式 + 示例）
 - [Discord](/channels/discord) 和 [Telegram](/channels/telegram)（回复标签 + replyToMode 设置）
-- [MoltBot 助手设置](/start/moltbot)
+- [Razroom 助手设置](/start/razroom)
 - [macOS 应用](/platforms/macos)（Gateway 网关生命周期）

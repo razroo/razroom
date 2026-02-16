@@ -7,13 +7,13 @@ title: "Agent Runtime"
 
 # Agent Runtime 🤖
 
-MoltBot runs a single embedded agent runtime derived from **pi-mono**.
+Razroom runs a single embedded agent runtime derived from **pi-mono**.
 
 ## Workspace (required)
 
-MoltBot uses a single agent workspace directory (`agents.defaults.workspace`) as the agent’s **only** working directory (`cwd`) for tools and context.
+Razroom uses a single agent workspace directory (`agents.defaults.workspace`) as the agent’s **only** working directory (`cwd`) for tools and context.
 
-Recommended: use `moltbot setup` to create `~/.moltbot/moltbot.json` if missing and initialize the workspace files.
+Recommended: use `razroom setup` to create `~/.razroom/razroom.json` if missing and initialize the workspace files.
 
 Full workspace layout + backup guide: [Agent workspace](/concepts/agent-workspace)
 
@@ -23,7 +23,7 @@ per-session workspaces under `agents.defaults.sandbox.workspaceRoot` (see
 
 ## Bootstrap files (injected)
 
-Inside `agents.defaults.workspace`, MoltBot expects these user-editable files:
+Inside `agents.defaults.workspace`, Razroom expects these user-editable files:
 
 - `AGENTS.md` — operating instructions + “memory”
 - `SOUL.md` — persona, boundaries, tone
@@ -32,11 +32,11 @@ Inside `agents.defaults.workspace`, MoltBot expects these user-editable files:
 - `IDENTITY.md` — agent name/vibe/emoji
 - `USER.md` — user profile + preferred address
 
-On the first turn of a new session, MoltBot injects the contents of these files directly into the agent context.
+On the first turn of a new session, Razroom injects the contents of these files directly into the agent context.
 
 Blank files are skipped. Large files are trimmed and truncated with a marker so prompts stay lean (read the file for full content).
 
-If a file is missing, MoltBot injects a single “missing file” marker line (and `moltbot setup` will create a safe default template).
+If a file is missing, Razroom injects a single “missing file” marker line (and `razroom setup` will create a safe default template).
 
 `BOOTSTRAP.md` is only created for a **brand new workspace** (no other bootstrap files present). If you delete it after completing the ritual, it should not be recreated on later restarts.
 
@@ -55,17 +55,17 @@ guidance for how _you_ want them used.
 
 ## Skills
 
-MoltBot loads skills from three locations (workspace wins on name conflict):
+Razroom loads skills from three locations (workspace wins on name conflict):
 
 - Bundled (shipped with the install)
-- Managed/local: `~/.moltbot/skills`
+- Managed/local: `~/.razroom/skills`
 - Workspace: `<workspace>/skills`
 
 Skills can be gated by config/env (see `skills` in [Gateway configuration](/gateway/configuration)).
 
 ## pi-mono integration
 
-MoltBot reuses pieces of the pi-mono codebase (models/tools), but **session management, discovery, and tool wiring are MoltBot-owned**.
+Razroom reuses pieces of the pi-mono codebase (models/tools), but **session management, discovery, and tool wiring are Razroom-owned**.
 
 - No pi-coding agent runtime.
 - No `~/.pi/agent` or `<workspace>/.pi` settings are consulted.
@@ -74,9 +74,9 @@ MoltBot reuses pieces of the pi-mono codebase (models/tools), but **session mana
 
 Session transcripts are stored as JSONL at:
 
-- `~/.moltbot/agents/<agentId>/sessions/<SessionId>.jsonl`
+- `~/.razroom/agents/<agentId>/sessions/<SessionId>.jsonl`
 
-The session ID is stable and chosen by MoltBot.
+The session ID is stable and chosen by Razroom.
 Legacy Pi/Tau session folders are **not** read.
 
 ## Steering while streaming
@@ -109,7 +109,7 @@ Model refs in config (for example `agents.defaults.model` and `agents.defaults.m
 
 - Use `provider/model` when configuring models.
 - If the model ID itself contains `/` (OpenRouter-style), include the provider prefix (example: `openrouter/moonshotai/kimi-k2`).
-- If you omit the provider, MoltBot treats the input as an alias or a model for the **default provider** (only works when there is no `/` in the model ID).
+- If you omit the provider, Razroom treats the input as an alias or a model for the **default provider** (only works when there is no `/` in the model ID).
 
 ## Configuration (minimal)
 

@@ -1,5 +1,5 @@
 ---
-summary: "Scripted onboarding and agent setup for the MoltBot CLI"
+summary: "Scripted onboarding and agent setup for the Razroom CLI"
 read_when:
   - You are automating onboarding in scripts or CI
   - You need non-interactive examples for specific providers
@@ -9,7 +9,7 @@ sidebarTitle: "CLI automation"
 
 # CLI Automation
 
-Use `--non-interactive` to automate `moltbot onboard`.
+Use `--non-interactive` to automate `razroom onboard`.
 
 <Note>
 `--json` does not imply non-interactive mode. Use `--non-interactive` (and `--workspace`) for scripts.
@@ -18,7 +18,7 @@ Use `--non-interactive` to automate `moltbot onboard`.
 ## Baseline non-interactive example
 
 ```bash
-moltbot onboard --non-interactive \
+razroom onboard --non-interactive \
   --mode local \
   --auth-choice apiKey \
   --anthropic-api-key "$ANTHROPIC_API_KEY" \
@@ -36,7 +36,7 @@ Add `--json` for a machine-readable summary.
 <AccordionGroup>
   <Accordion title="Gemini example">
     ```bash
-    moltbot onboard --non-interactive \
+    razroom onboard --non-interactive \
       --mode local \
       --auth-choice gemini-api-key \
       --gemini-api-key "$GEMINI_API_KEY" \
@@ -46,7 +46,7 @@ Add `--json` for a machine-readable summary.
   </Accordion>
   <Accordion title="Z.AI example">
     ```bash
-    moltbot onboard --non-interactive \
+    razroom onboard --non-interactive \
       --mode local \
       --auth-choice zai-api-key \
       --zai-api-key "$ZAI_API_KEY" \
@@ -56,7 +56,7 @@ Add `--json` for a machine-readable summary.
   </Accordion>
   <Accordion title="Vercel AI Gateway example">
     ```bash
-    moltbot onboard --non-interactive \
+    razroom onboard --non-interactive \
       --mode local \
       --auth-choice ai-gateway-api-key \
       --ai-gateway-api-key "$AI_GATEWAY_API_KEY" \
@@ -66,7 +66,7 @@ Add `--json` for a machine-readable summary.
   </Accordion>
   <Accordion title="Cloudflare AI Gateway example">
     ```bash
-    moltbot onboard --non-interactive \
+    razroom onboard --non-interactive \
       --mode local \
       --auth-choice cloudflare-ai-gateway-api-key \
       --cloudflare-ai-gateway-account-id "your-account-id" \
@@ -78,7 +78,7 @@ Add `--json` for a machine-readable summary.
   </Accordion>
   <Accordion title="Moonshot example">
     ```bash
-    moltbot onboard --non-interactive \
+    razroom onboard --non-interactive \
       --mode local \
       --auth-choice moonshot-api-key \
       --moonshot-api-key "$MOONSHOT_API_KEY" \
@@ -88,7 +88,7 @@ Add `--json` for a machine-readable summary.
   </Accordion>
   <Accordion title="Synthetic example">
     ```bash
-    moltbot onboard --non-interactive \
+    razroom onboard --non-interactive \
       --mode local \
       --auth-choice synthetic-api-key \
       --synthetic-api-key "$SYNTHETIC_API_KEY" \
@@ -98,7 +98,7 @@ Add `--json` for a machine-readable summary.
   </Accordion>
   <Accordion title="OpenCode Zen example">
     ```bash
-    moltbot onboard --non-interactive \
+    razroom onboard --non-interactive \
       --mode local \
       --auth-choice opencode-zen \
       --opencode-zen-api-key "$OPENCODE_API_KEY" \
@@ -108,7 +108,7 @@ Add `--json` for a machine-readable summary.
   </Accordion>
   <Accordion title="Custom provider example">
     ```bash
-    moltbot onboard --non-interactive \
+    razroom onboard --non-interactive \
       --mode local \
       --auth-choice custom-api-key \
       --custom-base-url "https://llm.example.com/v1" \
@@ -127,12 +127,12 @@ Add `--json` for a machine-readable summary.
 
 ## Add another agent
 
-Use `moltbot agents add <name>` to create a separate agent with its own workspace,
+Use `razroom agents add <name>` to create a separate agent with its own workspace,
 sessions, and auth profiles. Running without `--workspace` launches the wizard.
 
 ```bash
-moltbot agents add work \
-  --workspace ~/.moltbot/workspace-work \
+razroom agents add work \
+  --workspace ~/.razroom/workspace-work \
   --model openai/gpt-5.2 \
   --bind whatsapp:biz \
   --non-interactive \
@@ -147,7 +147,7 @@ What it sets:
 
 Notes:
 
-- Default workspaces follow `~/.moltbot/workspace-<agentId>`.
+- Default workspaces follow `~/.razroom/workspace-<agentId>`.
 - Add `bindings` to route inbound messages (the wizard can do this).
 - Non-interactive flags: `--model`, `--agent-dir`, `--bind`, `--non-interactive`.
 
@@ -155,4 +155,4 @@ Notes:
 
 - Onboarding hub: [Onboarding Wizard (CLI)](/start/wizard)
 - Full reference: [CLI Onboarding Reference](/start/wizard-cli-reference)
-- Command reference: [`moltbot onboard`](/cli/onboard)
+- Command reference: [`razroom onboard`](/cli/onboard)

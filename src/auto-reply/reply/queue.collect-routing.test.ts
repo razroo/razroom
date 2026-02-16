@@ -1,5 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it } from "bun:test";
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 import type { FollowupRun, QueueSettings } from "./queue.js";
 import { defaultRuntime } from "../../runtime.js";
 import { enqueueFollowupRun, scheduleFollowupDrain } from "./queue.js";
@@ -54,7 +54,7 @@ function createRun(params: {
       sessionId: "sess",
       sessionFile: "/tmp/session.json",
       workspaceDir: "/tmp",
-      config: {} as MoltBotConfig,
+      config: {} as RazroomConfig,
       provider: "openai",
       model: "gpt-test",
       timeoutMs: 10_000,

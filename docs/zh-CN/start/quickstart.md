@@ -1,7 +1,7 @@
 ---
 read_when:
   - 你希望以最快的方式从安装到运行一个可用的 Gateway 网关
-summary: 安装 MoltBot，完成 Gateway 网关新手引导，并配对你的第一个渠道。
+summary: 安装 Razroom，完成 Gateway 网关新手引导，并配对你的第一个渠道。
 title: 快速开始
 x-i18n:
   generated_at: "2026-02-04T17:53:21Z"
@@ -13,7 +13,7 @@ x-i18n:
 ---
 
 <Note>
-MoltBot 需要 Node 22 或更新版本。
+Razroom 需要 Node 22 或更新版本。
 </Note>
 
 ## 安装
@@ -21,12 +21,12 @@ MoltBot 需要 Node 22 或更新版本。
 <Tabs>
   <Tab title="npm">
     ```bash
-    npm install -g moltbot@latest
+    npm install -g razroom@latest
     ```
   </Tab>
   <Tab title="pnpm">
     ```bash
-    pnpm add -g moltbot@latest
+    pnpm add -g razroom@latest
     ```
   </Tab>
 </Tabs>
@@ -36,47 +36,47 @@ MoltBot 需要 Node 22 或更新版本。
 <Steps>
   <Step title="新手引导并安装服务">
     ```bash
-    moltbot onboard --install-daemon
+    razroom onboard --install-daemon
     ```
   </Step>
   <Step title="配对 WhatsApp">
     ```bash
-    moltbot channels login
+    razroom channels login
     ```
   </Step>
   <Step title="启动 Gateway 网关">
     ```bash
-    moltbot gateway --port 18789
+    razroom gateway --port 18789
     ```
   </Step>
 </Steps>
 
-完成新手引导后，Gateway 网关将通过用户服务运行。你也可以使用 `moltbot gateway` 手动启动。
+完成新手引导后，Gateway 网关将通过用户服务运行。你也可以使用 `razroom gateway` 手动启动。
 
 <Info>
 之后在 npm 安装和 git 安装之间切换非常简单。安装另一种方式后，运行
-`moltbot doctor` 即可更新 Gateway 网关服务入口点。
+`razroom doctor` 即可更新 Gateway 网关服务入口点。
 </Info>
 
 ## 从源码安装（开发）
 
 ```bash
-git clone https://github.com/moltbot/moltbot.git
-cd moltbot
+git clone https://github.com/razroom/razroom.git
+cd razroom
 pnpm install
 pnpm ui:build # 首次运行时会自动安装 UI 依赖
 pnpm build
-moltbot onboard --install-daemon
+razroom onboard --install-daemon
 ```
 
-如果你还没有全局安装，可以在仓库目录中通过 `pnpm moltbot ...` 运行新手引导。
+如果你还没有全局安装，可以在仓库目录中通过 `pnpm razroom ...` 运行新手引导。
 
 ## 多实例快速开始（可选）
 
 ```bash
-MOLTBOT_CONFIG_PATH=~/.moltbot/a.json \
-MOLTBOT_STATE_DIR=~/.moltbot-a \
-moltbot gateway --port 19001
+RAZROOM_CONFIG_PATH=~/.razroom/a.json \
+RAZROOM_STATE_DIR=~/.razroom-a \
+razroom gateway --port 19001
 ```
 
 ## 发送测试消息
@@ -84,5 +84,5 @@ moltbot gateway --port 19001
 需要一个正在运行的 Gateway 网关。
 
 ```bash
-moltbot message send --target +15555550123 --message "Hello from MoltBot"
+razroom message send --target +15555550123 --message "Hello from Razroom"
 ```

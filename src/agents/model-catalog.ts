@@ -1,6 +1,6 @@
-import { type MoltBotConfig, loadConfig } from "../config/config.js";
-import { resolveMoltBotAgentDir } from "./agent-paths.js";
-import { ensureMoltBotModelsJson } from "./models-config.js";
+import { type RazroomConfig, loadConfig } from "../config/config.js";
+import { resolveRazroomAgentDir } from "./agent-paths.js";
+import { ensureRazroomModelsJson } from "./models-config.js";
 
 export type ModelCatalogEntry = {
   id: string;
@@ -68,7 +68,7 @@ export function __setModelCatalogImportForTest(loader?: () => Promise<PiSdkModul
 }
 
 export async function loadModelCatalog(params?: {
-  config?: MoltBotConfig;
+  config?: RazroomConfig;
   useCache?: boolean;
 }): Promise<ModelCatalogEntry[]> {
   if (params?.useCache === false) {
@@ -90,16 +90,16 @@ export async function loadModelCatalog(params?: {
       });
     try {
       const cfg = params?.config ?? loadConfig();
-      await ensureMoltBotModelsJson(cfg);
+      await ensureRazroomModelsJson(cfg);
       await (
         await import("./pi-auth-json.js")
-      ).ensurePiAuthJsonFromAuthProfiles(resolveMoltBotAgentDir());
+      ).ensurePiAuthJsonFromAuthProfiles(resolveRazroomAgentDir());
       // IMPORTANT: keep the dynamic import *inside* the try/catch.
       // If this fails once (e.g. during a pnpm install that temporarily swaps node_modules),
       // we must not poison the cache with a rejected promise (otherwise all channel handlers
       // will keep failing until restart).
       const piSdk = await importPiSdk();
-      const agentDir = resolveMoltBotAgentDir();
+      const agentDir = resolveRazroomAgentDir();
       const { join } = await import("node:path");
       const authStorage = new piSdk.AuthStorage(join(agentDir, "auth.json"));
       const registry = new piSdk.ModelRegistry(authStorage, join(agentDir, "models.json")) as

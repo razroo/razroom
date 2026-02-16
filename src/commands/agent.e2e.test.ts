@@ -12,7 +12,7 @@ mock("../agents/model-catalog.js", () => ({
   loadModelCatalog: mock(),
 }));
 
-import type { MoltBotConfig } from "../config/config.js";
+import type { RazroomConfig } from "../config/config.js";
 import type { RuntimeEnv } from "../runtime.js";
 import { telegramPlugin } from "../../extensions/telegram/src/channel.js";
 import { setTelegramRuntime } from "../../extensions/telegram/src/runtime.js";
@@ -36,14 +36,14 @@ const runtime: RuntimeEnv = {
 const configSpy = spyOn(configModule, "loadConfig");
 
 async function withTempHome<T>(fn: (home: string) => Promise<T>): Promise<T> {
-  return withTempHomeBase(fn, { prefix: "moltbot-agent-" });
+  return withTempHomeBase(fn, { prefix: "razroom-agent-" });
 }
 
 function mockConfig(
   home: string,
   storePath: string,
-  agentOverrides?: Partial<NonNullable<NonNullable<MoltBotConfig["agents"]>["defaults"]>>,
-  telegramOverrides?: Partial<NonNullable<MoltBotConfig["telegram"]>>,
+  agentOverrides?: Partial<NonNullable<NonNullable<RazroomConfig["agents"]>["defaults"]>>,
+  telegramOverrides?: Partial<NonNullable<RazroomConfig["telegram"]>>,
   agentsList?: Array<{ id: string; default?: boolean }>,
 ) {
   configSpy.mockReturnValue({
@@ -51,7 +51,7 @@ function mockConfig(
       defaults: {
         model: { primary: "anthropic/claude-opus-4-5" },
         models: { "anthropic/claude-opus-4-5": {} },
-        workspace: path.join(home, "moltbot"),
+        workspace: path.join(home, "razroom"),
         ...agentOverrides,
       },
       list: agentsList,

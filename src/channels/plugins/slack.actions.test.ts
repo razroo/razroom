@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 import { createSlackActions } from "./slack.actions.js";
 
 const handleSlackAction = mock(async () => ({ details: { ok: true } }));
@@ -14,7 +14,7 @@ describe("slack actions adapter", () => {
   });
 
   it("forwards threadId for read", async () => {
-    const cfg = { channels: { slack: { botToken: "tok" } } } as MoltBotConfig;
+    const cfg = { channels: { slack: { botToken: "tok" } } } as RazroomConfig;
     const actions = createSlackActions("slack");
 
     await actions.handleAction?.({
@@ -36,7 +36,7 @@ describe("slack actions adapter", () => {
   });
 
   it("forwards normalized limit for emoji-list", async () => {
-    const cfg = { channels: { slack: { botToken: "tok" } } } as MoltBotConfig;
+    const cfg = { channels: { slack: { botToken: "tok" } } } as RazroomConfig;
     const actions = createSlackActions("slack");
 
     await actions.handleAction?.({

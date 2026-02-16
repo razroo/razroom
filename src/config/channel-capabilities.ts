@@ -1,4 +1,4 @@
-import type { MoltBotConfig } from "./config.js";
+import type { RazroomConfig } from "./config.js";
 import type { TelegramCapabilitiesConfig } from "./types.telegram.js";
 import { normalizeChannelId } from "../channels/plugins/index.js";
 import { normalizeAccountId } from "../routing/session-key.js";
@@ -49,7 +49,7 @@ function resolveAccountCapabilities(params: {
 }
 
 export function resolveChannelCapabilities(params: {
-  cfg?: Partial<MoltBotConfig>;
+  cfg?: Partial<RazroomConfig>;
   channel?: string | null;
   accountId?: string | null;
 }): string[] | undefined {

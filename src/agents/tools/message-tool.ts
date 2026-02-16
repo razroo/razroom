@@ -1,5 +1,5 @@
 import { Type } from "@sinclair/typebox";
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 import type { AnyAgentTool } from "./common.js";
 import { BLUEBUBBLES_GROUP_ACTIONS } from "../../channels/plugins/bluebubbles-actions.js";
 import {
@@ -295,7 +295,7 @@ const MessageToolSchema = buildMessageToolSchemaFromActions(AllMessageActions, {
 type MessageToolOptions = {
   agentAccountId?: string;
   agentSessionKey?: string;
-  config?: MoltBotConfig;
+  config?: RazroomConfig;
   currentChannelId?: string;
   currentChannelProvider?: string;
   currentThreadTs?: string;
@@ -305,7 +305,7 @@ type MessageToolOptions = {
   requireExplicitTarget?: boolean;
 };
 
-function buildMessageToolSchema(cfg: MoltBotConfig) {
+function buildMessageToolSchema(cfg: RazroomConfig) {
   const actions = listChannelMessageActions(cfg);
   const includeButtons = supportsChannelMessageButtons(cfg);
   const includeCards = supportsChannelMessageCards(cfg);
@@ -351,7 +351,7 @@ function filterActionsForContext(params: {
 }
 
 function buildMessageToolDescription(options?: {
-  config?: MoltBotConfig;
+  config?: RazroomConfig;
   currentChannel?: string;
   currentChannelId?: string;
 }): string {

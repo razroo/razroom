@@ -8,7 +8,7 @@ title: Feishu
 
 # Feishu bot
 
-Feishu (Lark) is a team chat platform used by companies for messaging and collaboration. This plugin connects MoltBot to a Feishu/Lark bot using the platform’s WebSocket event subscription so messages can be received without exposing a public webhook URL.
+Feishu (Lark) is a team chat platform used by companies for messaging and collaboration. This plugin connects Razroom to a Feishu/Lark bot using the platform’s WebSocket event subscription so messages can be received without exposing a public webhook URL.
 
 ---
 
@@ -17,13 +17,13 @@ Feishu (Lark) is a team chat platform used by companies for messaging and collab
 Install the Feishu plugin:
 
 ```bash
-moltbot plugins install @moltbot/feishu
+razroom plugins install @razroom/feishu
 ```
 
 Local checkout (when running from a git repo):
 
 ```bash
-moltbot plugins install ./extensions/feishu
+razroom plugins install ./extensions/feishu
 ```
 
 ---
@@ -34,38 +34,38 @@ There are two ways to add the Feishu channel:
 
 ### Method 1: onboarding wizard (recommended)
 
-If you just installed MoltBot, run the wizard:
+If you just installed Razroom, run the wizard:
 
 ```bash
-moltbot onboard
+razroom onboard
 ```
 
 The wizard guides you through:
 
 1. Creating a Feishu app and collecting credentials
-2. Configuring app credentials in MoltBot
+2. Configuring app credentials in Razroom
 3. Starting the gateway
 
 ✅ **After configuration**, check gateway status:
 
-- `moltbot gateway status`
-- `moltbot logs --follow`
+- `razroom gateway status`
+- `razroom logs --follow`
 
 ### Method 2: CLI setup
 
 If you already completed initial install, add the channel via CLI:
 
 ```bash
-moltbot channels add
+razroom channels add
 ```
 
 Choose **Feishu**, then enter the App ID and App Secret.
 
 ✅ **After configuration**, manage the gateway:
 
-- `moltbot gateway status`
-- `moltbot gateway restart`
-- `moltbot logs --follow`
+- `razroom gateway status`
+- `razroom gateway restart`
+- `razroom logs --follow`
 
 ---
 
@@ -141,8 +141,8 @@ In **App Capability** > **Bot**:
 
 ⚠️ **Important:** before setting event subscription, make sure:
 
-1. You already ran `moltbot channels add` for Feishu
-2. The gateway is running (`moltbot gateway status`)
+1. You already ran `razroom channels add` for Feishu
+2. The gateway is running (`razroom gateway status`)
 
 In **Event Subscription**:
 
@@ -161,19 +161,19 @@ In **Event Subscription**:
 
 ---
 
-## Step 2: Configure MoltBot
+## Step 2: Configure Razroom
 
 ### Configure with the wizard (recommended)
 
 ```bash
-moltbot channels add
+razroom channels add
 ```
 
 Choose **Feishu** and paste your App ID + App Secret.
 
 ### Configure via config file
 
-Edit `~/.moltbot/moltbot.json`:
+Edit `~/.razroom/razroom.json`:
 
 ```json5
 {
@@ -227,7 +227,7 @@ If your tenant is on Lark (international), set the domain to `lark` (or a full d
 ### 1. Start the gateway
 
 ```bash
-moltbot gateway
+razroom gateway
 ```
 
 ### 2. Send a test message
@@ -239,7 +239,7 @@ In Feishu, find your bot and send a message.
 By default, the bot replies with a pairing code. Approve it:
 
 ```bash
-moltbot pairing approve feishu <CODE>
+razroom pairing approve feishu <CODE>
 ```
 
 After approval, you can chat normally.
@@ -263,8 +263,8 @@ After approval, you can chat normally.
 - **Approve pairing**:
 
   ```bash
-  moltbot pairing list feishu
-  moltbot pairing approve feishu <CODE>
+  razroom pairing list feishu
+  razroom pairing approve feishu <CODE>
   ```
 
 - **Allowlist mode**: set `channels.feishu.allowFrom` with allowed Open IDs
@@ -337,7 +337,7 @@ Group IDs look like `oc_xxx`.
 **Method 1 (recommended)**
 
 1. Start the gateway and @mention the bot in the group
-2. Run `moltbot logs --follow` and look for `chat_id`
+2. Run `razroom logs --follow` and look for `chat_id`
 
 **Method 2**
 
@@ -350,14 +350,14 @@ User IDs look like `ou_xxx`.
 **Method 1 (recommended)**
 
 1. Start the gateway and DM the bot
-2. Run `moltbot logs --follow` and look for `open_id`
+2. Run `razroom logs --follow` and look for `open_id`
 
 **Method 2**
 
 Check pairing requests for user Open IDs:
 
 ```bash
-moltbot pairing list feishu
+razroom pairing list feishu
 ```
 
 ---
@@ -376,11 +376,11 @@ moltbot pairing list feishu
 
 | Command                    | Description                   |
 | -------------------------- | ----------------------------- |
-| `moltbot gateway status`  | Show gateway status           |
-| `moltbot gateway install` | Install/start gateway service |
-| `moltbot gateway stop`    | Stop gateway service          |
-| `moltbot gateway restart` | Restart gateway service       |
-| `moltbot logs --follow`   | Tail gateway logs             |
+| `razroom gateway status`  | Show gateway status           |
+| `razroom gateway install` | Install/start gateway service |
+| `razroom gateway stop`    | Stop gateway service          |
+| `razroom gateway restart` | Restart gateway service       |
+| `razroom logs --follow`   | Tail gateway logs             |
 
 ---
 
@@ -391,7 +391,7 @@ moltbot pairing list feishu
 1. Ensure the bot is added to the group
 2. Ensure you @mention the bot (default behavior)
 3. Check `groupPolicy` is not set to `"disabled"`
-4. Check logs: `moltbot logs --follow`
+4. Check logs: `razroom logs --follow`
 
 ### Bot does not receive messages
 
@@ -399,8 +399,8 @@ moltbot pairing list feishu
 2. Ensure event subscription includes `im.message.receive_v1`
 3. Ensure **long connection** is enabled
 4. Ensure app permissions are complete
-5. Ensure the gateway is running: `moltbot gateway status`
-6. Check logs: `moltbot logs --follow`
+5. Ensure the gateway is running: `razroom gateway status`
+6. Check logs: `razroom logs --follow`
 
 ### App Secret leak
 
@@ -476,12 +476,12 @@ Use `bindings` to route Feishu DMs or groups to different agents.
       {
         id: "clawd-fan",
         workspace: "/home/user/clawd-fan",
-        agentDir: "/home/user/.moltbot/agents/clawd-fan/agent",
+        agentDir: "/home/user/.razroom/agents/clawd-fan/agent",
       },
       {
         id: "clawd-xi",
         workspace: "/home/user/clawd-xi",
-        agentDir: "/home/user/.moltbot/agents/clawd-xi/agent",
+        agentDir: "/home/user/.razroom/agents/clawd-xi/agent",
       },
     ],
   },

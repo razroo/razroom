@@ -1,4 +1,4 @@
-# Google Antigravity Auth (MoltBot plugin)
+# Google Antigravity Auth (Razroom plugin)
 
 OAuth provider plugin for **Google Antigravity** (Cloud Code Assist).
 
@@ -7,7 +7,7 @@ OAuth provider plugin for **Google Antigravity** (Cloud Code Assist).
 Bundled plugins are disabled by default. Enable this one:
 
 ```bash
-moltbot plugins enable google-antigravity-auth
+razroom plugins enable google-antigravity-auth
 ```
 
 Restart the Gateway after enabling.
@@ -15,7 +15,7 @@ Restart the Gateway after enabling.
 ## Authenticate
 
 ```bash
-moltbot models auth login --provider google-antigravity --set-default
+razroom models auth login --provider google-antigravity --set-default
 ```
 
 ## Notes

@@ -3,7 +3,7 @@ import os from "node:os";
 import path from "node:path";
 import { describe, expect, it, mock, spyOn } from "bun:test";
 import "./test-helpers/fast-core-tools.js";
-import { createMoltBotTools } from "./moltbot-tools.js";
+import { createRazroomTools } from "./razroom-tools.js";
 
 mock("./tools/gateway.js", () => ({
   callGatewayTool: mock(async (method: string) => {
@@ -18,14 +18,14 @@ describe("gateway tool", () => {
   it("schedules SIGUSR1 restart", async () => {
     // TODO: Implement fake timers for Bun;
     const kill = spyOn(process, "kill").mockImplementation(() => true);
-    const previousStateDir = process.env.MOLTBOT_STATE_DIR;
-    const previousProfile = process.env.MOLTBOT_PROFILE;
-    const stateDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-test-"));
-    process.env.MOLTBOT_STATE_DIR = stateDir;
-    process.env.MOLTBOT_PROFILE = "isolated";
+    const previousStateDir = process.env.RAZROOM_STATE_DIR;
+    const previousProfile = process.env.RAZROOM_PROFILE;
+    const stateDir = await fs.mkdtemp(path.join(os.tmpdir(), "razroom-test-"));
+    process.env.RAZROOM_STATE_DIR = stateDir;
+    process.env.RAZROOM_PROFILE = "isolated";
 
     try {
-      const tool = createMoltBotTools({
+      const tool = createRazroomTools({
         config: { commands: { restart: true } },
       }).find((candidate) => candidate.name === "gateway");
       expect(tool).toBeDefined();
@@ -51,7 +51,7 @@ describe("gateway tool", () => {
       };
       expect(parsed.payload?.kind).toBe("restart");
       expect(parsed.payload?.doctorHint).toBe(
-        "Run: moltbot --profile isolated doctor --non-interactive",
+        "Run: razroom --profile isolated doctor --non-interactive",
       );
 
       expect(kill).not.toHaveBeenCalled();
@@ -61,21 +61,21 @@ describe("gateway tool", () => {
       kill.mockRestore();
       // TODO: Restore real timers;
       if (previousStateDir === undefined) {
-        delete process.env.MOLTBOT_STATE_DIR;
+        delete process.env.RAZROOM_STATE_DIR;
       } else {
-        process.env.MOLTBOT_STATE_DIR = previousStateDir;
+        process.env.RAZROOM_STATE_DIR = previousStateDir;
       }
       if (previousProfile === undefined) {
-        delete process.env.MOLTBOT_PROFILE;
+        delete process.env.RAZROOM_PROFILE;
       } else {
-        process.env.MOLTBOT_PROFILE = previousProfile;
+        process.env.RAZROOM_PROFILE = previousProfile;
       }
     }
   });
 
   it("passes config.apply through gateway call", async () => {
     const { callGatewayTool } = await import("./tools/gateway.js");
-    const tool = createMoltBotTools({
+    const tool = createRazroomTools({
       agentSessionKey: "agent:main:whatsapp:dm:+15555550123",
     }).find((candidate) => candidate.name === "gateway");
     expect(tool).toBeDefined();
@@ -83,7 +83,7 @@ describe("gateway tool", () => {
       throw new Error("missing gateway tool");
     }
 
-    const raw = '{\n  agents: { defaults: { workspace: "~/moltbot" } }\n}\n';
+    const raw = '{\n  agents: { defaults: { workspace: "~/razroom" } }\n}\n';
     await tool.execute("call2", {
       action: "config.apply",
       raw,
@@ -103,7 +103,7 @@ describe("gateway tool", () => {
 
   it("passes config.patch through gateway call", async () => {
     const { callGatewayTool } = await import("./tools/gateway.js");
-    const tool = createMoltBotTools({
+    const tool = createRazroomTools({
       agentSessionKey: "agent:main:whatsapp:dm:+15555550123",
     }).find((candidate) => candidate.name === "gateway");
     expect(tool).toBeDefined();
@@ -131,7 +131,7 @@ describe("gateway tool", () => {
 
   it("passes update.run through gateway call", async () => {
     const { callGatewayTool } = await import("./tools/gateway.js");
-    const tool = createMoltBotTools({
+    const tool = createRazroomTools({
       agentSessionKey: "agent:main:whatsapp:dm:+15555550123",
     }).find((candidate) => candidate.name === "gateway");
     expect(tool).toBeDefined();

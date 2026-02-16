@@ -1,7 +1,7 @@
 import { createRequire } from "node:module";
 
-declare const __MOLTBOT_VERSION__: string | undefined;
-const CORE_PACKAGE_NAME = "moltbot";
+declare const __RAZROOM_VERSION__: string | undefined;
+const CORE_PACKAGE_NAME = "razroom";
 
 const PACKAGE_JSON_CANDIDATES = [
   "../package.json",
@@ -61,11 +61,11 @@ export function resolveVersionFromModuleUrl(moduleUrl: string): string | null {
   );
 }
 
-// Single source of truth for the current MoltBot version.
+// Single source of truth for the current Razroom version.
 // - Embedded/bundled builds: injected define or env var.
 // - Dev/npm builds: package.json.
 export const VERSION =
-  (typeof __MOLTBOT_VERSION__ === "string" && __MOLTBOT_VERSION__) ||
-  process.env.MOLTBOT_BUNDLED_VERSION ||
+  (typeof __RAZROOM_VERSION__ === "string" && __RAZROOM_VERSION__) ||
+  process.env.RAZROOM_BUNDLED_VERSION ||
   resolveVersionFromModuleUrl(import.meta.url) ||
   "0.0.0";

@@ -26,7 +26,7 @@ export type GatewayBonjourAdvertiseOpts = {
 };
 
 function isDisabledByEnv() {
-  if (isTruthyEnvValue(process.env.MOLTBOT_DISABLE_BONJOUR)) {
+  if (isTruthyEnvValue(process.env.RAZROOM_DISABLE_BONJOUR)) {
     return true;
   }
   if (process.env.NODE_ENV === "test") {
@@ -40,12 +40,12 @@ function isDisabledByEnv() {
 
 function safeServiceName(name: string) {
   const trimmed = name.trim();
-  return trimmed.length > 0 ? trimmed : "MoltBot";
+  return trimmed.length > 0 ? trimmed : "Razroom";
 }
 
 function prettifyInstanceName(name: string) {
   const normalized = name.trim().replace(/\s+/g, " ");
-  return normalized.replace(/\s+\(MoltBot\)\s*$/i, "").trim() || normalized;
+  return normalized.replace(/\s+\(Razroom\)\s*$/i, "").trim() || normalized;
 }
 
 type BonjourService = {
@@ -95,18 +95,18 @@ export async function startGatewayBonjourAdvertiser(
   // `Mac.localdomain`) can confuse some resolvers/browsers and break discovery.
   // Keep only the first label and normalize away a trailing `.local`.
   const hostnameRaw =
-    process.env.MOLTBOT_MDNS_HOSTNAME?.trim() ||
-    process.env.MOLTBOT_MDNS_HOSTNAME?.trim() ||
-    "moltbot";
+    process.env.RAZROOM_MDNS_HOSTNAME?.trim() ||
+    process.env.RAZROOM_MDNS_HOSTNAME?.trim() ||
+    "razroom";
   const hostname =
     hostnameRaw
       .replace(/\.local$/i, "")
       .split(".")[0]
-      .trim() || "moltbot";
+      .trim() || "razroom";
   const instanceName =
     typeof opts.instanceName === "string" && opts.instanceName.trim()
       ? opts.instanceName.trim()
-      : `${hostname} (MoltBot)`;
+      : `${hostname} (Razroom)`;
   const displayName = prettifyInstanceName(instanceName);
 
   const txtBase: Record<string, string> = {
@@ -147,7 +147,7 @@ export async function startGatewayBonjourAdvertiser(
 
   const gateway = responder.createService({
     name: safeServiceName(instanceName),
-    type: "moltbot-gw",
+    type: "razroom-gw",
     protocol: Protocol.TCP,
     port: opts.gatewayPort,
     domain: "local",

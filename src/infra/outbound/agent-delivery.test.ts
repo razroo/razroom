@@ -12,7 +12,7 @@ mock("./targets.js", async () => {
   };
 });
 
-import type { MoltBotConfig } from "../../config/config.js";
+import type { RazroomConfig } from "../../config/config.js";
 import { resolveAgentDeliveryPlan, resolveAgentOutboundTarget } from "./agent-delivery.js";
 
 describe("agent delivery helpers", () => {
@@ -45,7 +45,7 @@ describe("agent delivery helpers", () => {
     });
 
     const resolved = resolveAgentOutboundTarget({
-      cfg: {} as MoltBotConfig,
+      cfg: {} as RazroomConfig,
       plan,
       targetMode: "implicit",
     });
@@ -68,7 +68,7 @@ describe("agent delivery helpers", () => {
 
     mocks.resolveOutboundTarget.mockClear();
     const resolved = resolveAgentOutboundTarget({
-      cfg: {} as MoltBotConfig,
+      cfg: {} as RazroomConfig,
       plan,
       targetMode: "explicit",
       validateExplicitTarget: false,

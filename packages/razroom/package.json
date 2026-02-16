@@ -1,0 +1,16 @@
+{
+  "name": "razroom",
+  "version": "2026.2.12",
+  "description": "Compatibility shim that forwards to razroom",
+  "bin": {
+    "razroom": "./bin/razroom.js"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./cli-entry": "./bin/razroom.js"
+  },
+  "dependencies": {
+    "razroom": "workspace:*"
+  }
+}

@@ -1,5 +1,5 @@
 import chokidar from "chokidar";
-import type { MoltBotConfig, ConfigFileSnapshot, GatewayReloadMode } from "../config/config.js";
+import type { RazroomConfig, ConfigFileSnapshot, GatewayReloadMode } from "../config/config.js";
 import { type ChannelId, listChannelPlugins } from "../channels/plugins/index.js";
 import { getActivePluginRegistry } from "../plugins/runtime.js";
 import { isPlainObject } from "../utils.js";
@@ -157,7 +157,7 @@ export function diffConfigPaths(prev: unknown, next: unknown, prefix = ""): stri
   return [prefix || "<root>"];
 }
 
-export function resolveGatewayReloadSettings(cfg: MoltBotConfig): GatewayReloadSettings {
+export function resolveGatewayReloadSettings(cfg: RazroomConfig): GatewayReloadSettings {
   const rawMode = cfg.gateway?.reload?.mode;
   const mode =
     rawMode === "off" || rawMode === "restart" || rawMode === "hot" || rawMode === "hybrid"
@@ -247,10 +247,10 @@ export type GatewayConfigReloader = {
 };
 
 export function startGatewayConfigReloader(opts: {
-  initialConfig: MoltBotConfig;
+  initialConfig: RazroomConfig;
   readSnapshot: () => Promise<ConfigFileSnapshot>;
-  onHotReload: (plan: GatewayReloadPlan, nextConfig: MoltBotConfig) => Promise<void>;
-  onRestart: (plan: GatewayReloadPlan, nextConfig: MoltBotConfig) => void;
+  onHotReload: (plan: GatewayReloadPlan, nextConfig: RazroomConfig) => Promise<void>;
+  onRestart: (plan: GatewayReloadPlan, nextConfig: RazroomConfig) => void;
   log: {
     info: (msg: string) => void;
     warn: (msg: string) => void;

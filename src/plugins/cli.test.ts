@@ -7,7 +7,7 @@ const mocks = vi.hoisted(() => ({
 }));
 
 mock("./loader.js", () => ({
-  loadMoltBotPlugins: () => ({
+  loadRazroomPlugins: () => ({
     cliRegistrars: [
       {
         pluginId: "memory-core",

@@ -1,14 +1,14 @@
 ---
-summary: "CLI reference for `moltbot setup` (initialize config + workspace)"
+summary: "CLI reference for `razroom setup` (initialize config + workspace)"
 read_when:
   - You’re doing first-run setup without the full onboarding wizard
   - You want to set the default workspace path
 title: "setup"
 ---
 
-# `moltbot setup`
+# `razroom setup`
 
-Initialize `~/.moltbot/moltbot.json` and the agent workspace.
+Initialize `~/.razroom/razroom.json` and the agent workspace.
 
 Related:
 
@@ -18,12 +18,12 @@ Related:
 ## Examples
 
 ```bash
-moltbot setup
-moltbot setup --workspace ~/.moltbot/workspace
+razroom setup
+razroom setup --workspace ~/.razroom/workspace
 ```
 
 To run the wizard via setup:
 
 ```bash
-moltbot setup --wizard
+razroom setup --wizard
 ```

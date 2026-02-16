@@ -2,7 +2,7 @@
 read_when:
   - 你正在管理已配对的节点（摄像头、屏幕、画布）
   - 你需要批准请求或调用节点命令
-summary: "`moltbot nodes` 的 CLI 参考（列表/状态/批准/调用，摄像头/画布/屏幕）"
+summary: "`razroom nodes` 的 CLI 参考（列表/状态/批准/调用，摄像头/画布/屏幕）"
 title: nodes
 x-i18n:
   generated_at: "2026-02-03T10:04:26Z"
@@ -13,7 +13,7 @@ x-i18n:
   workflow: 15
 ---
 
-# `moltbot nodes`
+# `razroom nodes`
 
 管理已配对的节点（设备）并调用节点功能。
 
@@ -30,14 +30,14 @@ x-i18n:
 ## 常用命令
 
 ```bash
-moltbot nodes list
-moltbot nodes list --connected
-moltbot nodes list --last-connected 24h
-moltbot nodes pending
-moltbot nodes approve <requestId>
-moltbot nodes status
-moltbot nodes status --connected
-moltbot nodes status --last-connected 24h
+razroom nodes list
+razroom nodes list --connected
+razroom nodes list --last-connected 24h
+razroom nodes pending
+razroom nodes approve <requestId>
+razroom nodes status
+razroom nodes status --connected
+razroom nodes status --last-connected 24h
 ```
 
 `nodes list` 打印待处理/已配对表格。已配对行包含最近连接时长（Last Connect）。
@@ -47,10 +47,10 @@ moltbot nodes status --last-connected 24h
 ## 调用 / 运行
 
 ```bash
-moltbot nodes invoke --node <id|name|ip> --command <command> --params <json>
-moltbot nodes run --node <id|name|ip> <command...>
-moltbot nodes run --raw "git status"
-moltbot nodes run --agent main --node <id|name|ip> --raw "git status"
+razroom nodes invoke --node <id|name|ip> --command <command> --params <json>
+razroom nodes run --node <id|name|ip> <command...>
+razroom nodes run --raw "git status"
+razroom nodes run --agent main --node <id|name|ip> --raw "git status"
 ```
 
 调用标志：

@@ -220,7 +220,7 @@ describe("skills-cli", () => {
     let tempWorkspaceDir = "";
 
     beforeAll(() => {
-      tempWorkspaceDir = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-skills-test-"));
+      tempWorkspaceDir = fs.mkdtempSync(path.join(os.tmpdir(), "razroom-skills-test-"));
     });
 
     afterAll(() => {
@@ -236,7 +236,7 @@ describe("skills-cli", () => {
           skill: {
             name: "peekaboo",
             description: "Capture UI screenshots",
-            source: "moltbot-bundled",
+            source: "razroom-bundled",
             filePath: path.join(baseDir, "SKILL.md"),
             baseDir,
           } as SkillEntry["skill"],

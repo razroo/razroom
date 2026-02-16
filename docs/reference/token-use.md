@@ -1,5 +1,5 @@
 ---
-summary: "How MoltBot builds prompt context and reports token usage + costs"
+summary: "How Razroom builds prompt context and reports token usage + costs"
 read_when:
   - Explaining token usage, costs, or context windows
   - Debugging context growth or compaction behavior
@@ -8,12 +8,12 @@ title: "Token Use and Costs"
 
 # Token use & costs
 
-MoltBot tracks **tokens**, not characters. Tokens are model-specific, but most
+Razroom tracks **tokens**, not characters. Tokens are model-specific, but most
 OpenAI-style models average ~4 characters per token for English text.
 
 ## How the system prompt is built
 
-MoltBot assembles its own system prompt on every run. It includes:
+Razroom assembles its own system prompt on every run. It includes:
 
 - Tool list + short descriptions
 - Skills list (only metadata; instructions are loaded on demand with `read`)
@@ -47,12 +47,12 @@ Use these in chat:
 - `/usage off|tokens|full` → appends a **per-response usage footer** to every reply.
   - Persists per session (stored as `responseUsage`).
   - OAuth auth **hides cost** (tokens only).
-- `/usage cost` → shows a local cost summary from MoltBot session logs.
+- `/usage cost` → shows a local cost summary from Razroom session logs.
 
 Other surfaces:
 
 - **TUI/Web TUI:** `/status` + `/usage` are supported.
-- **CLI:** `moltbot status --usage` and `moltbot channels list` show
+- **CLI:** `razroom status --usage` and `razroom channels list` show
   provider quota windows (not per-response costs).
 
 ## Cost estimation (when shown)
@@ -64,12 +64,12 @@ models.providers.<provider>.models[].cost
 ```
 
 These are **USD per 1M tokens** for `input`, `output`, `cacheRead`, and
-`cacheWrite`. If pricing is missing, MoltBot shows tokens only. OAuth tokens
+`cacheWrite`. If pricing is missing, Razroom shows tokens only. OAuth tokens
 never show dollar cost.
 
 ## Cache TTL and pruning impact
 
-Provider prompt caching only applies within the cache TTL window. MoltBot can
+Provider prompt caching only applies within the cache TTL window. Razroom can
 optionally run **cache-ttl pruning**: it prunes the session once the cache TTL
 has expired, then resets the cache window so subsequent requests can re-use the
 freshly cached context instead of re-caching the full history. This keeps cache

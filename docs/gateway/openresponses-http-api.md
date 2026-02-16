@@ -8,7 +8,7 @@ title: "OpenResponses API"
 
 # OpenResponses API (HTTP)
 
-MoltBot’s Gateway can serve an OpenResponses-compatible `POST /v1/responses` endpoint.
+Razroom’s Gateway can serve an OpenResponses-compatible `POST /v1/responses` endpoint.
 
 This endpoint is **disabled by default**. Enable it in config first.
 
@@ -16,7 +16,7 @@ This endpoint is **disabled by default**. Enable it in config first.
 - Same port as the Gateway (WS + HTTP multiplex): `http://<gateway-host>:<port>/v1/responses`
 
 Under the hood, requests are executed as a normal Gateway agent run (same codepath as
-`moltbot agent`), so routing/permissions/config match your Gateway.
+`razroom agent`), so routing/permissions/config match your Gateway.
 
 ## Authentication
 
@@ -26,24 +26,24 @@ Uses the Gateway auth configuration. Send a bearer token:
 
 Notes:
 
-- When `gateway.auth.mode="token"`, use `gateway.auth.token` (or `MOLTBOT_GATEWAY_TOKEN`).
-- When `gateway.auth.mode="password"`, use `gateway.auth.password` (or `MOLTBOT_GATEWAY_PASSWORD`).
+- When `gateway.auth.mode="token"`, use `gateway.auth.token` (or `RAZROOM_GATEWAY_TOKEN`).
+- When `gateway.auth.mode="password"`, use `gateway.auth.password` (or `RAZROOM_GATEWAY_PASSWORD`).
 - If `gateway.auth.rateLimit` is configured and too many auth failures occur, the endpoint returns `429` with `Retry-After`.
 
 ## Choosing an agent
 
 No custom headers required: encode the agent id in the OpenResponses `model` field:
 
-- `model: "moltbot:<agentId>"` (example: `"moltbot:main"`, `"moltbot:beta"`)
+- `model: "razroom:<agentId>"` (example: `"razroom:main"`, `"razroom:beta"`)
 - `model: "agent:<agentId>"` (alias)
 
-Or target a specific MoltBot agent by header:
+Or target a specific Razroom agent by header:
 
-- `x-moltbot-agent-id: <agentId>` (default: `main`)
+- `x-razroom-agent-id: <agentId>` (default: `main`)
 
 Advanced:
 
-- `x-moltbot-session-key: <sessionKey>` to fully control session routing.
+- `x-razroom-session-key: <sessionKey>` to fully control session routing.
 
 ## Enabling the endpoint
 
@@ -311,9 +311,9 @@ Non-streaming:
 curl -sS http://127.0.0.1:18789/v1/responses \
   -H 'Authorization: Bearer YOUR_TOKEN' \
   -H 'Content-Type: application/json' \
-  -H 'x-moltbot-agent-id: main' \
+  -H 'x-razroom-agent-id: main' \
   -d '{
-    "model": "moltbot",
+    "model": "razroom",
     "input": "hi"
   }'
 ```
@@ -324,9 +324,9 @@ Streaming:
 curl -N http://127.0.0.1:18789/v1/responses \
   -H 'Authorization: Bearer YOUR_TOKEN' \
   -H 'Content-Type: application/json' \
-  -H 'x-moltbot-agent-id: main' \
+  -H 'x-razroom-agent-id: main' \
   -d '{
-    "model": "moltbot",
+    "model": "razroom",
     "stream": true,
     "input": "hi"
   }'
