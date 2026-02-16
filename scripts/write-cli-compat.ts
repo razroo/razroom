@@ -9,6 +9,12 @@ import {
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const distDir = path.join(rootDir, "dist");
 const cliDir = path.join(distDir, "cli");
+const daemonCliModulePath = path.join(cliDir, "daemon-cli.js");
+
+// Bun builds already emit dist/cli/daemon-cli.js directly, so no legacy shim is needed.
+if (fs.existsSync(daemonCliModulePath)) {
+  process.exit(0);
+}
 
 const findCandidates = () =>
   fs.readdirSync(distDir).filter((entry) => {
