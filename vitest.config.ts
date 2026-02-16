@@ -11,8 +11,13 @@ const ciWorkers = isWindows ? 2 : 3;
 
 export default defineConfig({
   resolve: {
-    // Keep this ordered: the base `@razroo/razroom/plugin-sdk` alias is a prefix match.
     alias: [
+      // Map bun:test imports to our vitest compatibility shim.
+      {
+        find: "bun:test",
+        replacement: path.join(repoRoot, "test", "bun-test-shim.ts"),
+      },
+      // Keep this ordered: the base `@razroo/razroom/plugin-sdk` alias is a prefix match.
       {
         find: "@razroo/razroom/plugin-sdk/account-id",
         replacement: path.join(repoRoot, "src", "plugin-sdk", "account-id.ts"),

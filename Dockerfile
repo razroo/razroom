@@ -4,6 +4,9 @@ FROM node:22-bookworm
 RUN curl -fsSL https://bun.sh/install | bash
 ENV PATH="/root/.bun/bin:${PATH}"
 
+# Install pnpm (required by ui:build runner)
+RUN npm install --global pnpm@10.23.0
+
 WORKDIR /app
 
 ARG OPENCLAW_DOCKER_APT_PACKAGES=""
@@ -14,7 +17,7 @@ RUN if [ -n "$OPENCLAW_DOCKER_APT_PACKAGES" ]; then \
       rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*; \
     fi
 
-COPY package.json bun.lock pnpm-workspace.yaml .npmrc ./
+COPY package.json pnpm-lock.yaml bun.lock pnpm-workspace.yaml .npmrc ./
 COPY ui/package.json ./ui/package.json
 COPY patches ./patches
 COPY scripts ./scripts
@@ -43,5 +46,5 @@ USER node
 #
 # For container platforms requiring external health checks:
 #   1. Set OPENCLAW_GATEWAY_TOKEN or OPENCLAW_GATEWAY_PASSWORD env var
-#   2. Override CMD: ["node","openclaw.mjs","gateway","--allow-unconfigured","--bind","lan"]
-CMD ["node", "openclaw.mjs", "gateway", "--allow-unconfigured"]
+#   2. Override CMD: ["node","razroom.mjs","gateway","--allow-unconfigured","--bind","lan"]
+CMD ["node", "razroom.mjs", "gateway", "--allow-unconfigured"]
