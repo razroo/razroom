@@ -1,4 +1,4 @@
-import type { RuntimeEnv } from "openclaw/plugin-sdk";
+import type { RuntimeEnv } from "moltbot/plugin-sdk";
 import { describe, expect, it, mock, spyOn } from "bun:test";
 import {
   createMattermostConnectOnce,

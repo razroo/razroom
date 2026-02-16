@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { MoltBotConfig } from "../../config/config.js";
 
 const mocks = vi.hoisted(() => ({
   loadSessionStore: mock(),
@@ -30,7 +30,7 @@ describe("resolveSessionKeyForRequest", () => {
     mocks.listAgentIds.mockReturnValue(["main"]);
   });
 
-  const baseCfg: OpenClawConfig = {};
+  const baseCfg: MoltBotConfig = {};
 
   it("returns sessionKey when --to resolves a session key via context", async () => {
     mocks.resolveStorePath.mockReturnValue("/tmp/main-store.json");

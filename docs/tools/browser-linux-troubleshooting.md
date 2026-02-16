@@ -1,5 +1,5 @@
 ---
-summary: "Fix Chrome/Brave/Edge/Chromium CDP startup issues for OpenClaw browser control on Linux"
+summary: "Fix Chrome/Brave/Edge/Chromium CDP startup issues for MoltBot browser control on Linux"
 read_when: "Browser control fails on Linux, especially with snap Chromium"
 title: "Browser Troubleshooting"
 ---
@@ -8,15 +8,15 @@ title: "Browser Troubleshooting"
 
 ## Problem: "Failed to start Chrome CDP on port 18800"
 
-OpenClaw's browser control server fails to launch Chrome/Brave/Edge/Chromium with the error:
+MoltBot's browser control server fails to launch Chrome/Brave/Edge/Chromium with the error:
 
 ```
-{"error":"Error: Failed to start Chrome CDP on port 18800 for profile \"openclaw\"."}
+{"error":"Error: Failed to start Chrome CDP on port 18800 for profile \"moltbot\"."}
 ```
 
 ### Root Cause
 
-On Ubuntu (and many Linux distros), the default Chromium installation is a **snap package**. Snap's AppArmor confinement interferes with how OpenClaw spawns and monitors the browser process.
+On Ubuntu (and many Linux distros), the default Chromium installation is a **snap package**. Snap's AppArmor confinement interferes with how MoltBot spawns and monitors the browser process.
 
 The `apt install chromium` command installs a stub package that redirects to snap:
 
@@ -37,7 +37,7 @@ sudo dpkg -i google-chrome-stable_current_amd64.deb
 sudo apt --fix-broken install -y  # if there are dependency errors
 ```
 
-Then update your OpenClaw config (`~/.openclaw/openclaw.json`):
+Then update your MoltBot config (`~/.moltbot/moltbot.json`):
 
 ```json
 {
@@ -52,7 +52,7 @@ Then update your OpenClaw config (`~/.openclaw/openclaw.json`):
 
 ### Solution 2: Use Snap Chromium with Attach-Only Mode
 
-If you must use snap Chromium, configure OpenClaw to attach to a manually-started browser:
+If you must use snap Chromium, configure MoltBot to attach to a manually-started browser:
 
 1. Update config:
 
@@ -72,20 +72,20 @@ If you must use snap Chromium, configure OpenClaw to attach to a manually-starte
 ```bash
 chromium-browser --headless --no-sandbox --disable-gpu \
   --remote-debugging-port=18800 \
-  --user-data-dir=$HOME/.openclaw/browser/openclaw/user-data \
+  --user-data-dir=$HOME/.moltbot/browser/moltbot/user-data \
   about:blank &
 ```
 
 3. Optionally create a systemd user service to auto-start Chrome:
 
 ```ini
-# ~/.config/systemd/user/openclaw-browser.service
+# ~/.config/systemd/user/moltbot-browser.service
 [Unit]
-Description=OpenClaw Browser (Chrome CDP)
+Description=MoltBot Browser (Chrome CDP)
 After=network.target
 
 [Service]
-ExecStart=/snap/bin/chromium --headless --no-sandbox --disable-gpu --remote-debugging-port=18800 --user-data-dir=%h/.openclaw/browser/openclaw/user-data about:blank
+ExecStart=/snap/bin/chromium --headless --no-sandbox --disable-gpu --remote-debugging-port=18800 --user-data-dir=%h/.moltbot/browser/moltbot/user-data about:blank
 Restart=on-failure
 RestartSec=5
 
@@ -93,7 +93,7 @@ RestartSec=5
 WantedBy=default.target
 ```
 
-Enable with: `systemctl --user enable --now openclaw-browser.service`
+Enable with: `systemctl --user enable --now moltbot-browser.service`
 
 ### Verifying the Browser Works
 
@@ -123,17 +123,17 @@ curl -s http://127.0.0.1:18791/tabs
 
 ### Problem: "Chrome extension relay is running, but no tab is connected"
 
-You’re using the `chrome` profile (extension relay). It expects the OpenClaw
+You’re using the `chrome` profile (extension relay). It expects the MoltBot
 browser extension to be attached to a live tab.
 
 Fix options:
 
-1. **Use the managed browser:** `openclaw browser start --browser-profile openclaw`
-   (or set `browser.defaultProfile: "openclaw"`).
+1. **Use the managed browser:** `moltbot browser start --browser-profile moltbot`
+   (or set `browser.defaultProfile: "moltbot"`).
 2. **Use the extension relay:** install the extension, open a tab, and click the
-   OpenClaw extension icon to attach it.
+   MoltBot extension icon to attach it.
 
 Notes:
 
 - The `chrome` profile uses your **system default Chromium browser** when possible.
-- Local `openclaw` profiles auto-assign `cdpPort`/`cdpUrl`; only set those for remote CDP.
+- Local `moltbot` profiles auto-assign `cdpPort`/`cdpUrl`; only set those for remote CDP.

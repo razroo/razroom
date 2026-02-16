@@ -33,7 +33,7 @@ function withLoopbackBrowserAuthImpl(
   deps: LoopbackBrowserAuthDeps,
 ): RequestInit & { timeoutMs?: number } {
   const headers = new Headers(init?.headers ?? {});
-  if (headers.has("authorization") || headers.has("x-openclaw-password")) {
+  if (headers.has("authorization") || headers.has("x-moltbot-password")) {
     return { ...init, headers };
   }
   if (!isLoopbackHttpUrl(url)) {
@@ -48,7 +48,7 @@ function withLoopbackBrowserAuthImpl(
       return { ...init, headers };
     }
     if (auth.password) {
-      headers.set("x-openclaw-password", auth.password);
+      headers.set("x-moltbot-password", auth.password);
       return { ...init, headers };
     }
   } catch {
@@ -69,7 +69,7 @@ function withLoopbackBrowserAuthImpl(
     if (bridgeAuth?.token) {
       headers.set("Authorization", `Bearer ${bridgeAuth.token}`);
     } else if (bridgeAuth?.password) {
-      headers.set("x-openclaw-password", bridgeAuth.password);
+      headers.set("x-moltbot-password", bridgeAuth.password);
     }
   } catch {
     // ignore
@@ -92,7 +92,7 @@ function withLoopbackBrowserAuth(
 function enhanceBrowserFetchError(url: string, err: unknown, timeoutMs: number): Error {
   const hint = isAbsoluteHttp(url)
     ? "If this is a sandboxed session, ensure the sandbox browser is running and try again."
-    : `Start (or restart) the OpenClaw gateway (OpenClaw.app menubar, or \`${formatCliCommand("openclaw gateway")}\`) and try again.`;
+    : `Start (or restart) the MoltBot gateway (MoltBot.app menubar, or \`${formatCliCommand("moltbot gateway")}\`) and try again.`;
   const msg = String(err);
   const msgLower = msg.toLowerCase();
   const looksLikeTimeout =
@@ -103,10 +103,10 @@ function enhanceBrowserFetchError(url: string, err: unknown, timeoutMs: number):
     msgLower.includes("aborterror");
   if (looksLikeTimeout) {
     return new Error(
-      `Can't reach the OpenClaw browser control service (timed out after ${timeoutMs}ms). ${hint}`,
+      `Can't reach the MoltBot browser control service (timed out after ${timeoutMs}ms). ${hint}`,
     );
   }
-  return new Error(`Can't reach the OpenClaw browser control service. ${hint} (${msg})`);
+  return new Error(`Can't reach the MoltBot browser control service. ${hint} (${msg})`);
 }
 
 async function fetchHttpJson<T>(

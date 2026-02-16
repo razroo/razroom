@@ -1,6 +1,6 @@
-# @openclaw/voice-call
+# @moltbot/voice-call
 
-Official Voice Call plugin for **OpenClaw**.
+Official Voice Call plugin for **MoltBot**.
 
 Providers:
 
@@ -9,15 +9,15 @@ Providers:
 - **Plivo** (Voice API + XML transfer + GetInput speech)
 - **Mock** (dev/no network)
 
-Docs: `https://docs.openclaw.ai/plugins/voice-call`
-Plugin system: `https://docs.openclaw.ai/plugin`
+Docs: `https://docs.moltbot.ai/plugins/voice-call`
+Plugin system: `https://docs.moltbot.ai/plugin`
 
 ## Install (local dev)
 
-### Option A: install via OpenClaw (recommended)
+### Option A: install via MoltBot (recommended)
 
 ```bash
-openclaw plugins install @openclaw/voice-call
+moltbot plugins install @moltbot/voice-call
 ```
 
 Restart the Gateway afterwards.
@@ -25,9 +25,9 @@ Restart the Gateway afterwards.
 ### Option B: copy into your global extensions folder (dev)
 
 ```bash
-mkdir -p ~/.openclaw/extensions
-cp -R extensions/voice-call ~/.openclaw/extensions/voice-call
-cd ~/.openclaw/extensions/voice-call && pnpm install
+mkdir -p ~/.moltbot/extensions
+cp -R extensions/voice-call ~/.moltbot/extensions/voice-call
+cd ~/.moltbot/extensions/voice-call && pnpm install
 ```
 
 ## Config
@@ -112,13 +112,13 @@ Notes:
 ## CLI
 
 ```bash
-openclaw voicecall call --to "+15555550123" --message "Hello from OpenClaw"
-openclaw voicecall continue --call-id <id> --message "Any questions?"
-openclaw voicecall speak --call-id <id> --message "One moment"
-openclaw voicecall end --call-id <id>
-openclaw voicecall status --call-id <id>
-openclaw voicecall tail
-openclaw voicecall expose --mode funnel
+moltbot voicecall call --to "+15555550123" --message "Hello from MoltBot"
+moltbot voicecall continue --call-id <id> --message "Any questions?"
+moltbot voicecall speak --call-id <id> --message "One moment"
+moltbot voicecall end --call-id <id>
+moltbot voicecall status --call-id <id>
+moltbot voicecall tail
+moltbot voicecall expose --mode funnel
 ```
 
 ## Tool

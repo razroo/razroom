@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
-import type { OpenClawConfig } from "../config/config.js";
+import type { MoltBotConfig } from "../config/config.js";
 
 const mocks = vi.hoisted(() => ({
-  loadConfig: mock<() => OpenClawConfig>(),
-  writeConfigFile: mock(async (_cfg: OpenClawConfig) => {}),
+  loadConfig: mock<() => MoltBotConfig>(),
+  writeConfigFile: mock(async (_cfg: MoltBotConfig) => {}),
 }));
 
 mock("../config/config.js", async (importOriginal) => {
@@ -25,7 +25,7 @@ describe("ensureBrowserControlAuth", () => {
   });
 
   it("returns existing auth and skips writes", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: MoltBotConfig = {
       gateway: {
         auth: {
           token: "already-set",
@@ -41,7 +41,7 @@ describe("ensureBrowserControlAuth", () => {
   });
 
   it("auto-generates and persists a token when auth is missing", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: MoltBotConfig = {
       browser: {
         enabled: true,
       },
@@ -63,7 +63,7 @@ describe("ensureBrowserControlAuth", () => {
   });
 
   it("skips auto-generation in test env", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: MoltBotConfig = {
       browser: {
         enabled: true,
       },
@@ -80,7 +80,7 @@ describe("ensureBrowserControlAuth", () => {
   });
 
   it("respects explicit password mode", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: MoltBotConfig = {
       gateway: {
         auth: {
           mode: "password",
@@ -99,7 +99,7 @@ describe("ensureBrowserControlAuth", () => {
   });
 
   it("reuses auth from latest config snapshot", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: MoltBotConfig = {
       browser: {
         enabled: true,
       },

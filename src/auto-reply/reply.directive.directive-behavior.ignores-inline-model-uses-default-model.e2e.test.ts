@@ -34,7 +34,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: { primary: "anthropic/claude-opus-4-5" },
-              workspace: path.join(home, "openclaw"),
+              workspace: path.join(home, "moltbot"),
               models: {
                 "anthropic/claude-opus-4-5": {},
                 "openai/gpt-4.1-mini": {},
@@ -84,7 +84,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: "anthropic/claude-opus-4-5",
-              workspace: path.join(home, "openclaw"),
+              workspace: path.join(home, "moltbot"),
             },
           },
           channels: { whatsapp: { allowFrom: ["*"] } },
@@ -121,7 +121,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: "anthropic/claude-opus-4-5",
-              workspace: path.join(home, "openclaw"),
+              workspace: path.join(home, "moltbot"),
             },
           },
           tools: {

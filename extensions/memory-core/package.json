@@ -1,16 +1,16 @@
 {
-  "name": "@openclaw/memory-core",
+  "name": "@moltbot/memory-core",
   "version": "2026.2.15",
   "private": true,
-  "description": "OpenClaw core memory search plugin",
+  "description": "MoltBot core memory search plugin",
   "type": "module",
   "devDependencies": {
-    "openclaw": "workspace:*"
+    "moltbot": "workspace:*"
   },
   "peerDependencies": {
-    "openclaw": ">=2026.1.26"
+    "moltbot": ">=2026.1.26"
   },
-  "openclaw": {
+  "moltbot": {
     "extensions": [
       "./index.ts"
     ]

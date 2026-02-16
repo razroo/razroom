@@ -7,7 +7,7 @@ import { note, readConfigFileSnapshot } from "./doctor.e2e-harness.js";
 describe("doctor command", () => {
   it("warns when the state directory is missing", async () => {
     readConfigFileSnapshot.mockResolvedValue({
-      path: "/tmp/openclaw.json",
+      path: "/tmp/moltbot.json",
       exists: true,
       raw: "{}",
       parsed: {},
@@ -17,9 +17,9 @@ describe("doctor command", () => {
       legacyIssues: [],
     });
 
-    const missingDir = fs.mkdtempSync(path.join(os.tmpdir(), "openclaw-missing-state-"));
+    const missingDir = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-missing-state-"));
     fs.rmSync(missingDir, { recursive: true, force: true });
-    process.env.OPENCLAW_STATE_DIR = missingDir;
+    process.env.MOLTBOT_STATE_DIR = missingDir;
     note.mockClear();
 
     const { doctorCommand } = await import("./doctor.js");
@@ -35,7 +35,7 @@ describe("doctor command", () => {
 
   it("warns about opencode provider overrides", async () => {
     readConfigFileSnapshot.mockResolvedValue({
-      path: "/tmp/openclaw.json",
+      path: "/tmp/moltbot.json",
       exists: true,
       raw: "{}",
       parsed: {},
@@ -67,9 +67,9 @@ describe("doctor command", () => {
     expect(warned).toBe(true);
   });
 
-  it("skips gateway auth warning when OPENCLAW_GATEWAY_TOKEN is set", async () => {
+  it("skips gateway auth warning when MOLTBOT_GATEWAY_TOKEN is set", async () => {
     readConfigFileSnapshot.mockResolvedValue({
-      path: "/tmp/openclaw.json",
+      path: "/tmp/moltbot.json",
       exists: true,
       raw: "{}",
       parsed: {},
@@ -81,8 +81,8 @@ describe("doctor command", () => {
       legacyIssues: [],
     });
 
-    const prevToken = process.env.OPENCLAW_GATEWAY_TOKEN;
-    process.env.OPENCLAW_GATEWAY_TOKEN = "env-token-1234567890";
+    const prevToken = process.env.MOLTBOT_GATEWAY_TOKEN;
+    process.env.MOLTBOT_GATEWAY_TOKEN = "env-token-1234567890";
     note.mockClear();
 
     try {
@@ -93,9 +93,9 @@ describe("doctor command", () => {
       );
     } finally {
       if (prevToken === undefined) {
-        delete process.env.OPENCLAW_GATEWAY_TOKEN;
+        delete process.env.MOLTBOT_GATEWAY_TOKEN;
       } else {
-        process.env.OPENCLAW_GATEWAY_TOKEN = prevToken;
+        process.env.MOLTBOT_GATEWAY_TOKEN = prevToken;
       }
     }
 

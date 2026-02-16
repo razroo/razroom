@@ -56,9 +56,9 @@ const originForPort = (port: number) => `http://127.0.0.1:${port}`;
 
 function restoreGatewayToken(prevToken: string | undefined) {
   if (prevToken === undefined) {
-    delete process.env.OPENCLAW_GATEWAY_TOKEN;
+    delete process.env.MOLTBOT_GATEWAY_TOKEN;
   } else {
-    process.env.OPENCLAW_GATEWAY_TOKEN = prevToken;
+    process.env.MOLTBOT_GATEWAY_TOKEN = prevToken;
   }
 }
 
@@ -117,8 +117,8 @@ describe("gateway server auth/connect", () => {
 
     test("closes silent handshakes after timeout", { timeout: 60_000 }, async () => {
       // TODO: Restore real timers;
-      const prevHandshakeTimeout = process.env.OPENCLAW_TEST_HANDSHAKE_TIMEOUT_MS;
-      process.env.OPENCLAW_TEST_HANDSHAKE_TIMEOUT_MS = "50";
+      const prevHandshakeTimeout = process.env.MOLTBOT_TEST_HANDSHAKE_TIMEOUT_MS;
+      process.env.MOLTBOT_TEST_HANDSHAKE_TIMEOUT_MS = "50";
       try {
         const ws = await openWs(port);
         const handshakeTimeoutMs = getHandshakeTimeoutMs();
@@ -126,9 +126,9 @@ describe("gateway server auth/connect", () => {
         expect(closed).toBe(true);
       } finally {
         if (prevHandshakeTimeout === undefined) {
-          delete process.env.OPENCLAW_TEST_HANDSHAKE_TIMEOUT_MS;
+          delete process.env.MOLTBOT_TEST_HANDSHAKE_TIMEOUT_MS;
         } else {
-          process.env.OPENCLAW_TEST_HANDSHAKE_TIMEOUT_MS = prevHandshakeTimeout;
+          process.env.MOLTBOT_TEST_HANDSHAKE_TIMEOUT_MS = prevHandshakeTimeout;
         }
       }
     });
@@ -181,7 +181,7 @@ describe("gateway server auth/connect", () => {
       const token =
         typeof (testState.gatewayAuth as { token?: unknown } | undefined)?.token === "string"
           ? ((testState.gatewayAuth as { token?: string }).token ?? undefined)
-          : process.env.OPENCLAW_GATEWAY_TOKEN;
+          : process.env.MOLTBOT_GATEWAY_TOKEN;
       expect(typeof token).toBe("string");
 
       const { loadOrCreateDeviceIdentity, publicKeyRawBase64UrlFromPem, signDevicePayload } =
@@ -191,7 +191,7 @@ describe("gateway server auth/connect", () => {
       const path = await import("node:path");
       // Fresh identity: avoid leaking prior scopes (presence merges lists).
       const identity = loadOrCreateDeviceIdentity(
-        path.join(os.tmpdir(), `openclaw-test-device-${randomUUID()}.json`),
+        path.join(os.tmpdir(), `moltbot-test-device-${randomUUID()}.json`),
       );
       const signedAtMs = Date.now();
       const payload = buildDeviceAuthPayload({
@@ -266,7 +266,7 @@ describe("gateway server auth/connect", () => {
       const token =
         typeof (testState.gatewayAuth as { token?: unknown } | undefined)?.token === "string"
           ? ((testState.gatewayAuth as { token?: string }).token ?? undefined)
-          : process.env.OPENCLAW_GATEWAY_TOKEN;
+          : process.env.MOLTBOT_GATEWAY_TOKEN;
       expect(typeof token).toBe("string");
 
       const { loadOrCreateDeviceIdentity, publicKeyRawBase64UrlFromPem, signDevicePayload } =
@@ -461,8 +461,8 @@ describe("gateway server auth/connect", () => {
     let prevToken: string | undefined;
 
     beforeAll(async () => {
-      prevToken = process.env.OPENCLAW_GATEWAY_TOKEN;
-      process.env.OPENCLAW_GATEWAY_TOKEN = "secret";
+      prevToken = process.env.MOLTBOT_GATEWAY_TOKEN;
+      process.env.MOLTBOT_GATEWAY_TOKEN = "secret";
       port = await getFreePort();
       server = await startGatewayServer(port);
     });
@@ -470,9 +470,9 @@ describe("gateway server auth/connect", () => {
     afterAll(async () => {
       await server.close();
       if (prevToken === undefined) {
-        delete process.env.OPENCLAW_GATEWAY_TOKEN;
+        delete process.env.MOLTBOT_GATEWAY_TOKEN;
       } else {
-        process.env.OPENCLAW_GATEWAY_TOKEN = prevToken;
+        process.env.MOLTBOT_GATEWAY_TOKEN = prevToken;
       }
     });
 
@@ -578,9 +578,9 @@ describe("gateway server auth/connect", () => {
     ws.close();
     await server.close();
     if (prevToken === undefined) {
-      delete process.env.OPENCLAW_GATEWAY_TOKEN;
+      delete process.env.MOLTBOT_GATEWAY_TOKEN;
     } else {
-      process.env.OPENCLAW_GATEWAY_TOKEN = prevToken;
+      process.env.MOLTBOT_GATEWAY_TOKEN = prevToken;
     }
   });
 
@@ -594,8 +594,8 @@ describe("gateway server auth/connect", () => {
       },
       // oxlint-disable-next-line typescript/no-explicit-any
     } as any);
-    const prevToken = process.env.OPENCLAW_GATEWAY_TOKEN;
-    process.env.OPENCLAW_GATEWAY_TOKEN = "secret";
+    const prevToken = process.env.MOLTBOT_GATEWAY_TOKEN;
+    process.env.MOLTBOT_GATEWAY_TOKEN = "secret";
     const port = await getFreePort();
     const server = await startGatewayServer(port);
     const ws = new WebSocket(`ws://127.0.0.1:${port}`, {
@@ -649,17 +649,17 @@ describe("gateway server auth/connect", () => {
     ws.close();
     await server.close();
     if (prevToken === undefined) {
-      delete process.env.OPENCLAW_GATEWAY_TOKEN;
+      delete process.env.MOLTBOT_GATEWAY_TOKEN;
     } else {
-      process.env.OPENCLAW_GATEWAY_TOKEN = prevToken;
+      process.env.MOLTBOT_GATEWAY_TOKEN = prevToken;
     }
   });
 
   test("allows control ui with stale device identity when device auth is disabled", async () => {
     testState.gatewayControlUi = { dangerouslyDisableDeviceAuth: true };
     testState.gatewayAuth = { mode: "token", token: "secret" };
-    const prevToken = process.env.OPENCLAW_GATEWAY_TOKEN;
-    process.env.OPENCLAW_GATEWAY_TOKEN = "secret";
+    const prevToken = process.env.MOLTBOT_GATEWAY_TOKEN;
+    process.env.MOLTBOT_GATEWAY_TOKEN = "secret";
     const port = await getFreePort();
     const server = await startGatewayServer(port);
     const ws = await openWs(port, { origin: originForPort(port) });
@@ -697,9 +697,9 @@ describe("gateway server auth/connect", () => {
     ws.close();
     await server.close();
     if (prevToken === undefined) {
-      delete process.env.OPENCLAW_GATEWAY_TOKEN;
+      delete process.env.MOLTBOT_GATEWAY_TOKEN;
     } else {
-      process.env.OPENCLAW_GATEWAY_TOKEN = prevToken;
+      process.env.MOLTBOT_GATEWAY_TOKEN = prevToken;
     }
   });
 
@@ -733,9 +733,9 @@ describe("gateway server auth/connect", () => {
     ws2.close();
     await server.close();
     if (prevToken === undefined) {
-      delete process.env.OPENCLAW_GATEWAY_TOKEN;
+      delete process.env.MOLTBOT_GATEWAY_TOKEN;
     } else {
-      process.env.OPENCLAW_GATEWAY_TOKEN = prevToken;
+      process.env.MOLTBOT_GATEWAY_TOKEN = prevToken;
     }
   });
 
@@ -807,7 +807,7 @@ describe("gateway server auth/connect", () => {
     const { GATEWAY_CLIENT_MODES, GATEWAY_CLIENT_NAMES } =
       await import("../utils/message-channel.js");
     const { server, ws, port, prevToken } = await startServerWithClient("secret");
-    const identityDir = await mkdtemp(join(tmpdir(), "openclaw-device-scope-"));
+    const identityDir = await mkdtemp(join(tmpdir(), "moltbot-device-scope-"));
     const identity = loadOrCreateDeviceIdentity(join(identityDir, "device.json"));
     const client = {
       id: GATEWAY_CLIENT_NAMES.TEST,
@@ -868,9 +868,9 @@ describe("gateway server auth/connect", () => {
     ws2.close();
     await server.close();
     if (prevToken === undefined) {
-      delete process.env.OPENCLAW_GATEWAY_TOKEN;
+      delete process.env.MOLTBOT_GATEWAY_TOKEN;
     } else {
-      process.env.OPENCLAW_GATEWAY_TOKEN = prevToken;
+      process.env.MOLTBOT_GATEWAY_TOKEN = prevToken;
     }
   });
 
@@ -906,9 +906,9 @@ describe("gateway server auth/connect", () => {
     ws2.close();
     await server.close();
     if (prevToken === undefined) {
-      delete process.env.OPENCLAW_GATEWAY_TOKEN;
+      delete process.env.MOLTBOT_GATEWAY_TOKEN;
     } else {
-      process.env.OPENCLAW_GATEWAY_TOKEN = prevToken;
+      process.env.MOLTBOT_GATEWAY_TOKEN = prevToken;
     }
   });
 

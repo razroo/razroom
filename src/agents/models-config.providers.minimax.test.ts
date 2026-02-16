@@ -6,7 +6,7 @@ import { resolveImplicitProviders } from "./models-config.providers.js";
 
 describe("MiniMax implicit provider (#15275)", () => {
   it("should use anthropic-messages API for API-key provider", async () => {
-    const agentDir = mkdtempSync(join(tmpdir(), "openclaw-test-"));
+    const agentDir = mkdtempSync(join(tmpdir(), "moltbot-test-"));
     const previous = process.env.MINIMAX_API_KEY;
     process.env.MINIMAX_API_KEY = "test-key";
 

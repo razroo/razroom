@@ -1,4 +1,4 @@
-import type { ClawdbotConfig, PluginRuntime, RuntimeEnv } from "openclaw/plugin-sdk";
+import type { ClawdbotConfig, PluginRuntime, RuntimeEnv } from "moltbot/plugin-sdk";
 import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import type { FeishuMessageEvent } from "./bot.js";
 import { handleFeishuMessage } from "./bot.js";

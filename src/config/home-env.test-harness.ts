@@ -16,7 +16,7 @@ function snapshotHomeEnv(): HomeEnvSnapshot {
     userProfile: process.env.USERPROFILE,
     homeDrive: process.env.HOMEDRIVE,
     homePath: process.env.HOMEPATH,
-    stateDir: process.env.OPENCLAW_STATE_DIR,
+    stateDir: process.env.MOLTBOT_STATE_DIR,
   };
 }
 
@@ -32,7 +32,7 @@ function restoreHomeEnv(snapshot: HomeEnvSnapshot) {
   restoreKey("USERPROFILE", snapshot.userProfile);
   restoreKey("HOMEDRIVE", snapshot.homeDrive);
   restoreKey("HOMEPATH", snapshot.homePath);
-  restoreKey("OPENCLAW_STATE_DIR", snapshot.stateDir);
+  restoreKey("MOLTBOT_STATE_DIR", snapshot.stateDir);
 }
 
 export async function withTempHome<T>(
@@ -40,12 +40,12 @@ export async function withTempHome<T>(
   fn: (home: string) => Promise<T>,
 ): Promise<T> {
   const home = await fs.mkdtemp(path.join(os.tmpdir(), prefix));
-  await fs.mkdir(path.join(home, ".openclaw"), { recursive: true });
+  await fs.mkdir(path.join(home, ".moltbot"), { recursive: true });
 
   const snapshot = snapshotHomeEnv();
   process.env.HOME = home;
   process.env.USERPROFILE = home;
-  process.env.OPENCLAW_STATE_DIR = path.join(home, ".openclaw");
+  process.env.MOLTBOT_STATE_DIR = path.join(home, ".moltbot");
 
   if (process.platform === "win32") {
     const match = home.match(/^([A-Za-z]:)(.*)$/);

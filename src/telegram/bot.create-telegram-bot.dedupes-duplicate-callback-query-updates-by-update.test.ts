@@ -39,7 +39,7 @@ describe("createTelegramBot", () => {
           message_id: 9001,
         },
       },
-      me: { username: "openclaw_bot" },
+      me: { username: "moltbot_bot" },
       getFile: async () => ({}),
     };
 
@@ -74,7 +74,7 @@ describe("createTelegramBot", () => {
           message_id: 9001,
         },
       },
-      me: { username: "openclaw_bot" },
+      me: { username: "moltbot_bot" },
       getFile: async () => ({}),
     });
 
@@ -89,7 +89,7 @@ describe("createTelegramBot", () => {
           message_id: 9001,
         },
       },
-      me: { username: "openclaw_bot" },
+      me: { username: "moltbot_bot" },
       getFile: async () => ({}),
     });
 

@@ -1,7 +1,7 @@
 import { join, parse } from "node:path";
 import { describe, expect, it, mock, spyOn, beforeEach, afterEach } from "bun:test";
 
-mock("openclaw/plugin-sdk", () => ({
+mock("moltbot/plugin-sdk", () => ({
   isWSL2Sync: () => false,
 }));
 

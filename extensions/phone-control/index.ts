@@ -1,4 +1,4 @@
-import type { OpenClawPluginApi, OpenClawPluginService } from "openclaw/plugin-sdk";
+import type { MoltBotPluginApi, MoltBotPluginService } from "moltbot/plugin-sdk";
 import fs from "node:fs/promises";
 import path from "node:path";
 
@@ -155,18 +155,18 @@ async function writeArmState(statePath: string, state: ArmStateFile | null): Pro
   await fs.writeFile(statePath, `${JSON.stringify(state, null, 2)}\n`, "utf8");
 }
 
-function normalizeDenyList(cfg: OpenClawPluginApi["config"]): string[] {
+function normalizeDenyList(cfg: MoltBotPluginApi["config"]): string[] {
   return uniqSorted([...(cfg.gateway?.nodes?.denyCommands ?? [])]);
 }
 
-function normalizeAllowList(cfg: OpenClawPluginApi["config"]): string[] {
+function normalizeAllowList(cfg: MoltBotPluginApi["config"]): string[] {
   return uniqSorted([...(cfg.gateway?.nodes?.allowCommands ?? [])]);
 }
 
 function patchConfigNodeLists(
-  cfg: OpenClawPluginApi["config"],
+  cfg: MoltBotPluginApi["config"],
   next: { allowCommands: string[]; denyCommands: string[] },
-): OpenClawPluginApi["config"] {
+): MoltBotPluginApi["config"] {
   return {
     ...cfg,
     gateway: {
@@ -181,7 +181,7 @@ function patchConfigNodeLists(
 }
 
 async function disarmNow(params: {
-  api: OpenClawPluginApi;
+  api: MoltBotPluginApi;
   stateDir: string;
   statePath: string;
   reason: string;
@@ -283,10 +283,10 @@ function formatStatus(state: ArmStateFile | null): string {
   return `Phone control: armed (${until}).\nTemporarily allowed: ${cmdLabel}`;
 }
 
-export default function register(api: OpenClawPluginApi) {
+export default function register(api: MoltBotPluginApi) {
   let expiryInterval: ReturnType<typeof setInterval> | null = null;
 
-  const timerService: OpenClawPluginService = {
+  const timerService: MoltBotPluginService = {
     id: "phone-control-expiry",
     start: async (ctx) => {
       const statePath = resolveStatePath(ctx.stateDir);

@@ -1,8 +1,8 @@
 {
-  "name": "@openclaw/twitch",
+  "name": "@moltbot/twitch",
   "version": "2026.2.15",
   "private": true,
-  "description": "OpenClaw Twitch channel plugin",
+  "description": "MoltBot Twitch channel plugin",
   "type": "module",
   "dependencies": {
     "@twurple/api": "^8.0.3",
@@ -11,9 +11,9 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "openclaw": "workspace:*"
+    "moltbot": "workspace:*"
   },
-  "openclaw": {
+  "moltbot": {
     "extensions": [
       "./index.ts"
     ]

@@ -1,5 +1,5 @@
 import { describe, expect, it, mock, spyOn } from "bun:test";
-import type { OpenClawConfig } from "../config/config.js";
+import type { MoltBotConfig } from "../config/config.js";
 import type { ChannelGroupPolicy } from "../config/group-policy.js";
 import type { TelegramAccountConfig } from "../config/types.js";
 import type { RuntimeEnv } from "../runtime.js";
@@ -48,7 +48,7 @@ describe("registerTelegramNativeCommands (plugin auth)", () => {
 
     registerTelegramNativeCommands({
       bot: bot as unknown as Parameters<typeof registerTelegramNativeCommands>[0]["bot"],
-      cfg: {} as OpenClawConfig,
+      cfg: {} as MoltBotConfig,
       runtime: { log } as RuntimeEnv,
       accountId: "default",
       telegramCfg: {} as TelegramAccountConfig,
@@ -101,7 +101,7 @@ describe("registerTelegramNativeCommands (plugin auth)", () => {
       },
     } as const;
 
-    const cfg = {} as OpenClawConfig;
+    const cfg = {} as MoltBotConfig;
     const telegramCfg = {} as TelegramAccountConfig;
     const resolveGroupPolicy = () =>
       ({

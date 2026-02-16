@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { afterAll, beforeAll, describe, expect, it, mock, spyOn } from "bun:test";
-import { createOpenClawTools } from "../agents/openclaw-tools.js";
+import { createMoltBotTools } from "../agents/moltbot-tools.js";
 import { resolveSessionTranscriptPath } from "../config/sessions.js";
 import { emitAgentEvent } from "../infra/agent-events.js";
 import {
@@ -21,26 +21,26 @@ let prevGatewayToken: string | undefined;
 const gatewayToken = "test-token";
 
 beforeAll(async () => {
-  prevGatewayPort = process.env.OPENCLAW_GATEWAY_PORT;
-  prevGatewayToken = process.env.OPENCLAW_GATEWAY_TOKEN;
+  prevGatewayPort = process.env.MOLTBOT_GATEWAY_PORT;
+  prevGatewayToken = process.env.MOLTBOT_GATEWAY_TOKEN;
   gatewayPort = await getFreePort();
   testState.gatewayAuth = { mode: "token", token: gatewayToken };
-  process.env.OPENCLAW_GATEWAY_PORT = String(gatewayPort);
-  process.env.OPENCLAW_GATEWAY_TOKEN = gatewayToken;
+  process.env.MOLTBOT_GATEWAY_PORT = String(gatewayPort);
+  process.env.MOLTBOT_GATEWAY_TOKEN = gatewayToken;
   server = await startGatewayServer(gatewayPort);
 });
 
 afterAll(async () => {
   await server.close();
   if (prevGatewayPort === undefined) {
-    delete process.env.OPENCLAW_GATEWAY_PORT;
+    delete process.env.MOLTBOT_GATEWAY_PORT;
   } else {
-    process.env.OPENCLAW_GATEWAY_PORT = prevGatewayPort;
+    process.env.MOLTBOT_GATEWAY_PORT = prevGatewayPort;
   }
   if (prevGatewayToken === undefined) {
-    delete process.env.OPENCLAW_GATEWAY_TOKEN;
+    delete process.env.MOLTBOT_GATEWAY_TOKEN;
   } else {
-    process.env.OPENCLAW_GATEWAY_TOKEN = prevGatewayToken;
+    process.env.MOLTBOT_GATEWAY_TOKEN = prevGatewayToken;
   }
 });
 
@@ -89,7 +89,7 @@ describe("sessions_send gateway loopback", () => {
       });
     });
 
-    const tool = createOpenClawTools().find((candidate) => candidate.name === "sessions_send");
+    const tool = createMoltBotTools().find((candidate) => candidate.name === "sessions_send");
     if (!tool) {
       throw new Error("missing sessions_send tool");
     }
@@ -162,7 +162,7 @@ describe("sessions_send label lookup", () => {
       timeoutMs: 5000,
     });
 
-    const tool = createOpenClawTools().find((candidate) => candidate.name === "sessions_send");
+    const tool = createMoltBotTools().find((candidate) => candidate.name === "sessions_send");
     if (!tool) {
       throw new Error("missing sessions_send tool");
     }
@@ -184,7 +184,7 @@ describe("sessions_send label lookup", () => {
   });
 
   it("returns error when label not found", { timeout: 60_000 }, async () => {
-    const tool = createOpenClawTools().find((candidate) => candidate.name === "sessions_send");
+    const tool = createMoltBotTools().find((candidate) => candidate.name === "sessions_send");
     if (!tool) {
       throw new Error("missing sessions_send tool");
     }
@@ -200,7 +200,7 @@ describe("sessions_send label lookup", () => {
   });
 
   it("returns error when neither sessionKey nor label provided", { timeout: 60_000 }, async () => {
-    const tool = createOpenClawTools().find((candidate) => candidate.name === "sessions_send");
+    const tool = createMoltBotTools().find((candidate) => candidate.name === "sessions_send");
     if (!tool) {
       throw new Error("missing sessions_send tool");
     }

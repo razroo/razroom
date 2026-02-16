@@ -5,10 +5,10 @@ import { afterAll, beforeAll, describe, expect, it, mock, spyOn } from "bun:test
 import type { BrowserServerState } from "./server-context.js";
 import { createBrowserRouteContext } from "./server-context.js";
 
-const chromeUserDataDir = vi.hoisted(() => ({ dir: "/tmp/openclaw" }));
+const chromeUserDataDir = vi.hoisted(() => ({ dir: "/tmp/moltbot" }));
 
 beforeAll(async () => {
-  chromeUserDataDir.dir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-chrome-user-data-"));
+  chromeUserDataDir.dir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-chrome-user-data-"));
 });
 
 afterAll(async () => {
@@ -18,11 +18,11 @@ afterAll(async () => {
 mock("./chrome.js", () => ({
   isChromeCdpReady: mock(async () => true),
   isChromeReachable: mock(async () => true),
-  launchOpenClawChrome: mock(async () => {
+  launchMoltBotChrome: mock(async () => {
     throw new Error("unexpected launch");
   }),
-  resolveOpenClawUserDataDir: mock(() => chromeUserDataDir.dir),
-  stopOpenClawChrome: mock(async () => {}),
+  resolveMoltBotUserDataDir: mock(() => chromeUserDataDir.dir),
+  stopMoltBotChrome: mock(async () => {}),
 }));
 
 function makeBrowserState(): BrowserServerState {
@@ -48,7 +48,7 @@ function makeBrowserState(): BrowserServerState {
           cdpPort: 18792,
           color: "#00AA00",
         },
-        openclaw: { cdpPort: 18800, color: "#FF4500" },
+        moltbot: { cdpPort: 18800, color: "#FF4500" },
       },
     },
     profiles: new Map(),

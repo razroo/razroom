@@ -3,7 +3,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-const CORE_PACKAGE_NAMES = new Set(["openclaw"]);
+const CORE_PACKAGE_NAMES = new Set(["moltbot"]);
 
 async function readPackageName(dir: string): Promise<string | null> {
   try {
@@ -82,7 +82,7 @@ function candidateDirsFromArgv1(argv1: string): string[] {
   return candidates;
 }
 
-export async function resolveOpenClawPackageRoot(opts: {
+export async function resolveMoltBotPackageRoot(opts: {
   cwd?: string;
   argv1?: string;
   moduleUrl?: string;
@@ -109,7 +109,7 @@ export async function resolveOpenClawPackageRoot(opts: {
   return null;
 }
 
-export function resolveOpenClawPackageRootSync(opts: {
+export function resolveMoltBotPackageRootSync(opts: {
   cwd?: string;
   argv1?: string;
   moduleUrl?: string;

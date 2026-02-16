@@ -10,7 +10,7 @@ let sessionDir: string | undefined;
 let sessionStorePath: string;
 
 beforeEach(async () => {
-  sessionDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-group-gating-"));
+  sessionDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-group-gating-"));
   sessionStorePath = path.join(sessionDir, "sessions.json");
   await fs.writeFile(sessionStorePath, "{}");
 });
@@ -279,7 +279,7 @@ describe("applyGroupGating", () => {
           groups: { "*": { requireMention: false } },
         },
       },
-      messages: { groupChat: { mentionPatterns: ["@openclaw"] } },
+      messages: { groupChat: { mentionPatterns: ["@moltbot"] } },
     });
 
     const { result } = runGroupGating({

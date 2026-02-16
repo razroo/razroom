@@ -3,14 +3,14 @@ import { afterEach, beforeAll, beforeEach, describe, expect, it, mock, spyOn } f
 let modelsListCommand: typeof import("./models/list.list-command.js").modelsListCommand;
 
 const loadConfig = mock();
-const ensureOpenClawModelsJson = mock().mockResolvedValue(undefined);
-const resolveOpenClawAgentDir = mock().mockReturnValue("/tmp/openclaw-agent");
+const ensureMoltBotModelsJson = mock().mockResolvedValue(undefined);
+const resolveMoltBotAgentDir = mock().mockReturnValue("/tmp/moltbot-agent");
 const ensureAuthProfileStore = mock().mockReturnValue({ version: 1, profiles: {} });
 const listProfilesForProvider = mock().mockReturnValue([]);
 const resolveAuthProfileDisplayLabel = mock(({ profileId }: { profileId: string }) => profileId);
 const resolveAuthStorePathForDisplay = vi
   .fn()
-  .mockReturnValue("/tmp/openclaw-agent/auth-profiles.json");
+  .mockReturnValue("/tmp/moltbot-agent/auth-profiles.json");
 const resolveProfileUnusableUntilForDisplay = mock().mockReturnValue(null);
 const resolveEnvApiKey = mock().mockReturnValue(undefined);
 const resolveAwsSdkEnvVarName = mock().mockReturnValue(undefined);
@@ -24,17 +24,17 @@ const modelRegistryState = {
 let previousExitCode: number | undefined;
 
 mock("../config/config.js", () => ({
-  CONFIG_PATH: "/tmp/openclaw.json",
-  STATE_DIR: "/tmp/openclaw-state",
+  CONFIG_PATH: "/tmp/moltbot.json",
+  STATE_DIR: "/tmp/moltbot-state",
   loadConfig,
 }));
 
 mock("../agents/models-config.js", () => ({
-  ensureOpenClawModelsJson,
+  ensureMoltBotModelsJson,
 }));
 
 mock("../agents/agent-paths.js", () => ({
-  resolveOpenClawAgentDir,
+  resolveMoltBotAgentDir,
 }));
 
 mock("../agents/auth-profiles.js", () => ({

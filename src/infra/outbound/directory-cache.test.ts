@@ -1,9 +1,9 @@
 import { describe, expect, it, mock, spyOn } from "bun:test";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { MoltBotConfig } from "../../config/config.js";
 import { DirectoryCache } from "./directory-cache.js";
 
 describe("DirectoryCache", () => {
-  const cfg = {} as OpenClawConfig;
+  const cfg = {} as MoltBotConfig;
 
   it("expires entries after ttl", () => {
     // TODO: Implement fake timers for Bun;

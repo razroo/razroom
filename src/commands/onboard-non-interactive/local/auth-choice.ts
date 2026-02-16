@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../../../config/config.js";
+import type { MoltBotConfig } from "../../../config/config.js";
 import type { RuntimeEnv } from "../../../runtime.js";
 import type { AuthChoice, OnboardOptions } from "../../onboard-types.js";
 import { upsertAuthProfile } from "../../../agents/auth-profiles.js";
@@ -60,12 +60,12 @@ import { detectZaiEndpoint } from "../../zai-endpoint-detect.js";
 import { resolveNonInteractiveApiKey } from "../api-keys.js";
 
 export async function applyNonInteractiveAuthChoice(params: {
-  nextConfig: OpenClawConfig;
+  nextConfig: MoltBotConfig;
   authChoice: AuthChoice;
   opts: OnboardOptions;
   runtime: RuntimeEnv;
-  baseConfig: OpenClawConfig;
-}): Promise<OpenClawConfig | null> {
+  baseConfig: MoltBotConfig;
+}): Promise<MoltBotConfig | null> {
   const { authChoice, opts, runtime, baseConfig } = params;
   let nextConfig = params.nextConfig;
 
@@ -454,8 +454,8 @@ export async function applyNonInteractiveAuthChoice(params: {
   }
 
   const applyMoonshotApiKeyChoice = async (
-    applyConfig: (cfg: OpenClawConfig) => OpenClawConfig,
-  ): Promise<OpenClawConfig | null> => {
+    applyConfig: (cfg: MoltBotConfig) => MoltBotConfig,
+  ): Promise<MoltBotConfig | null> => {
     const resolved = await resolveNonInteractiveApiKey({
       provider: "moonshot",
       cfg: baseConfig,

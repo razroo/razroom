@@ -20,7 +20,7 @@ mock("../infra/env.js", () => ({
 }));
 
 mock("../infra/path-env.js", () => ({
-  ensureOpenClawCliOnPath: ensurePathMock,
+  ensureMoltBotCliOnPath: ensurePathMock,
 }));
 
 mock("../infra/runtime-guard.js", () => ({
@@ -40,9 +40,9 @@ describe("runCli exit behavior", () => {
       throw new Error(`unexpected process.exit(${String(code)})`);
     }) as typeof process.exit);
 
-    await runCli(["node", "openclaw", "status"]);
+    await runCli(["node", "moltbot", "status"]);
 
-    expect(tryRouteCliMock).toHaveBeenCalledWith(["node", "openclaw", "status"]);
+    expect(tryRouteCliMock).toHaveBeenCalledWith(["node", "moltbot", "status"]);
     expect(exitSpy).not.toHaveBeenCalled();
     exitSpy.mockRestore();
   });

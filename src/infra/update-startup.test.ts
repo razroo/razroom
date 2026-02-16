@@ -4,8 +4,8 @@ import path from "node:path";
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import type { UpdateCheckResult } from "./update-check.js";
 
-mock("./openclaw-root.js", () => ({
-  resolveOpenClawPackageRoot: mock(),
+mock("./moltbot-root.js", () => ({
+  resolveMoltBotPackageRoot: mock(),
 }));
 
 mock("./update-check.js", async () => {
@@ -45,14 +45,14 @@ describe("update-startup", () => {
   let hadNodeEnv = false;
   let hadVitest = false;
 
-  let resolveOpenClawPackageRoot: (typeof import("./openclaw-root.js"))["resolveOpenClawPackageRoot"];
+  let resolveMoltBotPackageRoot: (typeof import("./moltbot-root.js"))["resolveMoltBotPackageRoot"];
   let checkUpdateStatus: (typeof import("./update-check.js"))["checkUpdateStatus"];
   let resolveNpmChannelTag: (typeof import("./update-check.js"))["resolveNpmChannelTag"];
   let runGatewayUpdateCheck: (typeof import("./update-startup.js"))["runGatewayUpdateCheck"];
   let loaded = false;
 
   beforeAll(async () => {
-    suiteRoot = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-update-check-suite-"));
+    suiteRoot = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-update-check-suite-"));
   });
 
   beforeEach(async () => {
@@ -60,9 +60,9 @@ describe("update-startup", () => {
     vi.setSystemTime(new Date("2026-01-17T10:00:00Z"));
     tempDir = path.join(suiteRoot, `case-${++suiteCase}`);
     await fs.mkdir(tempDir);
-    hadStateDir = Object.prototype.hasOwnProperty.call(process.env, "OPENCLAW_STATE_DIR");
-    prevStateDir = process.env.OPENCLAW_STATE_DIR;
-    process.env.OPENCLAW_STATE_DIR = tempDir;
+    hadStateDir = Object.prototype.hasOwnProperty.call(process.env, "MOLTBOT_STATE_DIR");
+    prevStateDir = process.env.MOLTBOT_STATE_DIR;
+    process.env.MOLTBOT_STATE_DIR = tempDir;
 
     hadNodeEnv = Object.prototype.hasOwnProperty.call(process.env, "NODE_ENV");
     prevNodeEnv = process.env.NODE_ENV;
@@ -75,7 +75,7 @@ describe("update-startup", () => {
 
     // Perf: load mocked modules once (after timers/env are set up).
     if (!loaded) {
-      ({ resolveOpenClawPackageRoot } = await import("./openclaw-root.js"));
+      ({ resolveMoltBotPackageRoot } = await import("./moltbot-root.js"));
       ({ checkUpdateStatus, resolveNpmChannelTag } = await import("./update-check.js"));
       ({ runGatewayUpdateCheck } = await import("./update-startup.js"));
       loaded = true;
@@ -85,9 +85,9 @@ describe("update-startup", () => {
   afterEach(async () => {
     // TODO: Restore real timers;
     if (hadStateDir) {
-      process.env.OPENCLAW_STATE_DIR = prevStateDir;
+      process.env.MOLTBOT_STATE_DIR = prevStateDir;
     } else {
-      delete process.env.OPENCLAW_STATE_DIR;
+      delete process.env.MOLTBOT_STATE_DIR;
     }
     if (hadNodeEnv) {
       process.env.NODE_ENV = prevNodeEnv;
@@ -110,9 +110,9 @@ describe("update-startup", () => {
   });
 
   it("logs update hint for npm installs when newer tag exists", async () => {
-    vi.mocked(resolveOpenClawPackageRoot).mockResolvedValue("/opt/openclaw");
+    vi.mocked(resolveMoltBotPackageRoot).mockResolvedValue("/opt/moltbot");
     vi.mocked(checkUpdateStatus).mockResolvedValue({
-      root: "/opt/openclaw",
+      root: "/opt/moltbot",
       installKind: "package",
       packageManager: "npm",
     } satisfies UpdateCheckResult);
@@ -140,9 +140,9 @@ describe("update-startup", () => {
   });
 
   it("uses latest when beta tag is older than release", async () => {
-    vi.mocked(resolveOpenClawPackageRoot).mockResolvedValue("/opt/openclaw");
+    vi.mocked(resolveMoltBotPackageRoot).mockResolvedValue("/opt/moltbot");
     vi.mocked(checkUpdateStatus).mockResolvedValue({
-      root: "/opt/openclaw",
+      root: "/opt/moltbot",
       installKind: "package",
       packageManager: "npm",
     } satisfies UpdateCheckResult);

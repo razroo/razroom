@@ -1,4 +1,4 @@
-import type { MSTeamsConfig } from "openclaw/plugin-sdk";
+import type { MSTeamsConfig } from "moltbot/plugin-sdk";
 import { describe, expect, it } from "bun:test";
 import {
   isMSTeamsGroupAllowed,

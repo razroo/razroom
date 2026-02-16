@@ -1,7 +1,7 @@
-# OpenClaw → Vitamin: Bun TypeScript Migration Report
+# MoltBot → Vitamin: Bun TypeScript Migration Report
 
 **Migration Date:** February 15, 2026
-**Source:** `/Users/charlie/GithubProjects/openclaw`
+**Source:** `/Users/charlie/GithubProjects/moltbot`
 **Destination:** `/Users/charlie/Razroo/vitamin`
 **Runtime:** Node.js 22+ → Bun 1.3.9
 
@@ -30,14 +30,14 @@
 - `package.json` - Updated engines, packageManager, all scripts
 
 ### Phase 3: Runtime Adaptation
-- ✅ Updated `openclaw.mjs` for Bun (removed Node compile cache)
+- ✅ Updated `moltbot.mjs` for Bun (removed Node compile cache)
 - ✅ Updated `src/entry.ts` to skip Node-specific respawn for Bun
 - ✅ Created `src/infra/runtime-detect.ts` - Runtime detection utilities
 - ✅ Updated `src/infra/runtime-guard.ts` - Added Bun detection & version checking
 - ✅ Updated `src/memory/sqlite.ts` - Adapted for bun:sqlite
 
 **Key Files Modified:**
-- `openclaw.mjs` - Changed shebang, removed Node-specific code
+- `moltbot.mjs` - Changed shebang, removed Node-specific code
 - `src/entry.ts` - Added Bun detection, skips respawn
 - `src/infra/runtime-detect.ts` - New: `isBun()`, `isNode()`, `getRuntimeName()`
 - `src/infra/runtime-guard.ts` - Updated `RuntimeKind`, `detectRuntime()`, `runtimeSatisfies()`
@@ -45,11 +45,11 @@
 
 **Verification:**
 ```bash
-$ bun openclaw.mjs --version
+$ bun moltbot.mjs --version
 2026.2.15
 
-$ bun openclaw.mjs --help
-🦞 OpenClaw 2026.2.15 (5dc2a64)
+$ bun moltbot.mjs --help
+🦞 MoltBot 2026.2.15 (5dc2a64)
 [Lists all commands successfully]
 ```
 
@@ -131,7 +131,7 @@ $ bun openclaw.mjs --help
 
 ### Updated
 - ✅ `package.json` - Engines (bun>=1.0.0), packageManager, 63 scripts
-- ✅ `openclaw.mjs` - Bun shebang, removed Node-specific code
+- ✅ `moltbot.mjs` - Bun shebang, removed Node-specific code
 - ✅ `src/entry.ts` - Bun runtime detection
 - ✅ `src/infra/runtime-guard.ts` - Bun support
 - ✅ `src/memory/sqlite.ts` - bun:sqlite support
@@ -241,8 +241,8 @@ bun install
 bun run build
 
 # Run CLI
-bun openclaw.mjs --version
-bun openclaw.mjs --help
+bun moltbot.mjs --version
+bun moltbot.mjs --help
 
 # Run tests
 bun test                    # All tests

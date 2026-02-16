@@ -1,5 +1,5 @@
 import path from "node:path";
-import type { OpenClawConfig } from "../config/config.js";
+import type { MoltBotConfig } from "../config/config.js";
 import type { RequirementConfigCheck, Requirements } from "../shared/requirements.js";
 import { evaluateEntryMetadataRequirements } from "../shared/entry-status.js";
 import { CONFIG_DIR } from "../utils.js";
@@ -158,7 +158,7 @@ function normalizeInstallOptions(
 
 function buildSkillStatus(
   entry: SkillEntry,
-  config?: OpenClawConfig,
+  config?: MoltBotConfig,
   prefs?: SkillsInstallPreferences,
   eligibility?: SkillEligibilityContext,
   bundledNames?: Set<string>,
@@ -172,7 +172,7 @@ function buildSkillStatus(
   const bundled =
     bundledNames && bundledNames.size > 0
       ? bundledNames.has(entry.skill.name)
-      : entry.skill.source === "openclaw-bundled";
+      : entry.skill.source === "moltbot-bundled";
 
   const { emoji, homepage, required, missing, requirementsSatisfied, configChecks } =
     evaluateEntryMetadataRequirements({
@@ -217,7 +217,7 @@ function buildSkillStatus(
 export function buildWorkspaceSkillStatus(
   workspaceDir: string,
   opts?: {
-    config?: OpenClawConfig;
+    config?: MoltBotConfig;
     managedSkillsDir?: string;
     entries?: SkillEntry[];
     eligibility?: SkillEligibilityContext;

@@ -14,7 +14,7 @@ function makeMoonshotConfig(home: string, storePath: string) {
     agents: {
       defaults: {
         model: { primary: "anthropic/claude-opus-4-5" },
-        workspace: path.join(home, "openclaw"),
+        workspace: path.join(home, "moltbot"),
         models: {
           "anthropic/claude-opus-4-5": {},
           "moonshot/kimi-k2-0905-preview": {},
@@ -112,7 +112,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: { primary: "minimax/MiniMax-M2.1" },
-              workspace: path.join(home, "openclaw"),
+              workspace: path.join(home, "moltbot"),
               models: {
                 "minimax/MiniMax-M2.1": {},
                 "minimax/MiniMax-M2.1-lightning": {},
@@ -156,7 +156,7 @@ describe("directive behavior", () => {
           agents: {
             defaults: {
               model: { primary: "minimax/MiniMax-M2.1" },
-              workspace: path.join(home, "openclaw"),
+              workspace: path.join(home, "moltbot"),
               models: {
                 "minimax/MiniMax-M2.1": {},
                 "minimax/MiniMax-M2.1-lightning": {},

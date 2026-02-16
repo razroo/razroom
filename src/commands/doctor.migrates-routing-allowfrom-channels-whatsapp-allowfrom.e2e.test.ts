@@ -3,7 +3,7 @@ import {
   findLegacyGatewayServices,
   note,
   readConfigFileSnapshot,
-  resolveOpenClawPackageRoot,
+  resolveMoltBotPackageRoot,
   runCommandWithTimeout,
   runGatewayUpdate,
   serviceInstall,
@@ -16,7 +16,7 @@ import {
 describe("doctor command", () => {
   it("migrates routing.allowFrom to channels.whatsapp.allowFrom", { timeout: 60_000 }, async () => {
     readConfigFileSnapshot.mockResolvedValue({
-      path: "/tmp/openclaw.json",
+      path: "/tmp/moltbot.json",
       exists: true,
       raw: "{}",
       parsed: { routing: { allowFrom: ["+15555550123"] } },
@@ -60,7 +60,7 @@ describe("doctor command", () => {
 
   it("skips legacy gateway services migration", { timeout: 60_000 }, async () => {
     readConfigFileSnapshot.mockResolvedValue({
-      path: "/tmp/openclaw.json",
+      path: "/tmp/moltbot.json",
       exists: true,
       raw: "{}",
       parsed: {},
@@ -73,7 +73,7 @@ describe("doctor command", () => {
     findLegacyGatewayServices.mockResolvedValueOnce([
       {
         platform: "darwin",
-        label: "com.steipete.openclaw.gateway",
+        label: "com.steipete.moltbot.gateway",
         detail: "loaded",
       },
     ]);
@@ -94,10 +94,10 @@ describe("doctor command", () => {
   });
 
   it("offers to update first for git checkouts", async () => {
-    delete process.env.OPENCLAW_UPDATE_IN_PROGRESS;
+    delete process.env.MOLTBOT_UPDATE_IN_PROGRESS;
 
-    const root = "/tmp/openclaw";
-    resolveOpenClawPackageRoot.mockResolvedValueOnce(root);
+    const root = "/tmp/moltbot";
+    resolveMoltBotPackageRoot.mockResolvedValueOnce(root);
     runCommandWithTimeout.mockResolvedValueOnce({
       stdout: `${root}\n`,
       stderr: "",
@@ -114,7 +114,7 @@ describe("doctor command", () => {
     });
 
     readConfigFileSnapshot.mockResolvedValue({
-      path: "/tmp/openclaw.json",
+      path: "/tmp/moltbot.json",
       exists: true,
       raw: "{}",
       parsed: {},

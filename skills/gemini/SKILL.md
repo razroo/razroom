@@ -4,7 +4,7 @@ description: Gemini CLI for one-shot Q&A, summaries, and generation.
 homepage: https://ai.google.dev/
 metadata:
   {
-    "openclaw":
+    "moltbot":
       {
         "emoji": "♊️",
         "requires": { "bins": ["gemini"] },

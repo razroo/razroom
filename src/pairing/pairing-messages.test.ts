@@ -5,16 +5,16 @@ describe("buildPairingReply", () => {
   let previousProfile: string | undefined;
 
   beforeEach(() => {
-    previousProfile = process.env.OPENCLAW_PROFILE;
-    process.env.OPENCLAW_PROFILE = "isolated";
+    previousProfile = process.env.MOLTBOT_PROFILE;
+    process.env.MOLTBOT_PROFILE = "isolated";
   });
 
   afterEach(() => {
     if (previousProfile === undefined) {
-      delete process.env.OPENCLAW_PROFILE;
+      delete process.env.MOLTBOT_PROFILE;
       return;
     }
-    process.env.OPENCLAW_PROFILE = previousProfile;
+    process.env.MOLTBOT_PROFILE = previousProfile;
   });
 
   const cases = [
@@ -55,9 +55,9 @@ describe("buildPairingReply", () => {
       const text = buildPairingReply(testCase);
       expect(text).toContain(testCase.idLine);
       expect(text).toContain(`Pairing code: ${testCase.code}`);
-      // CLI commands should respect OPENCLAW_PROFILE when set (most tests run with isolated profile)
+      // CLI commands should respect MOLTBOT_PROFILE when set (most tests run with isolated profile)
       const commandRe = new RegExp(
-        `(?:openclaw|openclaw) --profile isolated pairing approve ${testCase.channel} ${testCase.code}`,
+        `(?:moltbot|moltbot) --profile isolated pairing approve ${testCase.channel} ${testCase.code}`,
       );
       expect(text).toMatch(commandRe);
     });

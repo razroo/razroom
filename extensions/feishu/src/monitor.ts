@@ -5,7 +5,7 @@ import {
   type RuntimeEnv,
   type HistoryEntry,
   installRequestBodyLimitGuard,
-} from "openclaw/plugin-sdk";
+} from "moltbot/plugin-sdk";
 import type { ResolvedFeishuAccount } from "./types.js";
 import { resolveFeishuAccount, listEnabledFeishuAccounts } from "./accounts.js";
 import { handleFeishuMessage, type FeishuMessageEvent, type FeishuBotAddedEvent } from "./bot.js";

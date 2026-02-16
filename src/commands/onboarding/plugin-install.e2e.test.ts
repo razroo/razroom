@@ -13,12 +13,12 @@ mock("../../plugins/install.js", () => ({
 }));
 
 mock("../../plugins/loader.js", () => ({
-  loadOpenClawPlugins: mock(),
+  loadMoltBotPlugins: mock(),
 }));
 
 import fs from "node:fs";
 import type { ChannelPluginCatalogEntry } from "../../channels/plugins/catalog.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { MoltBotConfig } from "../../config/config.js";
 import type { WizardPrompter } from "../../wizard/prompts.js";
 import { makePrompter, makeRuntime } from "./__tests__/test-utils.js";
 import { ensureOnboardingPluginInstalled } from "./plugin-install.js";
@@ -34,7 +34,7 @@ const baseEntry: ChannelPluginCatalogEntry = {
     blurb: "Test",
   },
   install: {
-    npmSpec: "@openclaw/zalo",
+    npmSpec: "@moltbot/zalo",
     localPath: "extensions/zalo",
   },
 };
@@ -49,7 +49,7 @@ describe("ensureOnboardingPluginInstalled", () => {
     const prompter = makePrompter({
       select: mock(async () => "npm") as WizardPrompter["select"],
     });
-    const cfg: OpenClawConfig = { plugins: { allow: ["other"] } };
+    const cfg: MoltBotConfig = { plugins: { allow: ["other"] } };
     vi.mocked(fs.existsSync).mockReturnValue(false);
     installPluginFromNpmSpec.mockResolvedValue({
       ok: true,
@@ -69,10 +69,10 @@ describe("ensureOnboardingPluginInstalled", () => {
     expect(result.cfg.plugins?.entries?.zalo?.enabled).toBe(true);
     expect(result.cfg.plugins?.allow).toContain("zalo");
     expect(result.cfg.plugins?.installs?.zalo?.source).toBe("npm");
-    expect(result.cfg.plugins?.installs?.zalo?.spec).toBe("@openclaw/zalo");
+    expect(result.cfg.plugins?.installs?.zalo?.spec).toBe("@moltbot/zalo");
     expect(result.cfg.plugins?.installs?.zalo?.installPath).toBe("/tmp/zalo");
     expect(installPluginFromNpmSpec).toHaveBeenCalledWith(
-      expect.objectContaining({ spec: "@openclaw/zalo" }),
+      expect.objectContaining({ spec: "@moltbot/zalo" }),
     );
   });
 
@@ -81,7 +81,7 @@ describe("ensureOnboardingPluginInstalled", () => {
     const prompter = makePrompter({
       select: mock(async () => "local") as WizardPrompter["select"],
     });
-    const cfg: OpenClawConfig = {};
+    const cfg: MoltBotConfig = {};
     vi.mocked(fs.existsSync).mockImplementation((value) => {
       const raw = String(value);
       return (
@@ -106,7 +106,7 @@ describe("ensureOnboardingPluginInstalled", () => {
     const runtime = makeRuntime();
     const select = mock(async () => "skip") as WizardPrompter["select"];
     const prompter = makePrompter({ select });
-    const cfg: OpenClawConfig = { update: { channel: "dev" } };
+    const cfg: MoltBotConfig = { update: { channel: "dev" } };
     vi.mocked(fs.existsSync).mockImplementation((value) => {
       const raw = String(value);
       return (
@@ -129,7 +129,7 @@ describe("ensureOnboardingPluginInstalled", () => {
     const runtime = makeRuntime();
     const select = mock(async () => "skip") as WizardPrompter["select"];
     const prompter = makePrompter({ select });
-    const cfg: OpenClawConfig = { update: { channel: "beta" } };
+    const cfg: MoltBotConfig = { update: { channel: "beta" } };
     vi.mocked(fs.existsSync).mockImplementation((value) => {
       const raw = String(value);
       return (
@@ -157,7 +157,7 @@ describe("ensureOnboardingPluginInstalled", () => {
       note,
       confirm,
     });
-    const cfg: OpenClawConfig = {};
+    const cfg: MoltBotConfig = {};
     vi.mocked(fs.existsSync).mockImplementation((value) => {
       const raw = String(value);
       return (

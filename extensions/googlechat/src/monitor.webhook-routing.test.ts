@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
-import type { OpenClawConfig, PluginRuntime } from "openclaw/plugin-sdk";
+import type { MoltBotConfig, PluginRuntime } from "moltbot/plugin-sdk";
 import { EventEmitter } from "node:events";
 import { describe, expect, it, mock, spyOn } from "bun:test";
 import type { ResolvedGoogleChatAccount } from "./accounts.js";
@@ -67,7 +67,7 @@ function registerTwoTargets() {
   const sinkA = mock();
   const sinkB = mock();
   const core = {} as PluginRuntime;
-  const config = {} as OpenClawConfig;
+  const config = {} as MoltBotConfig;
 
   const unregisterA = registerGoogleChatWebhookTarget({
     account: baseAccount("A"),

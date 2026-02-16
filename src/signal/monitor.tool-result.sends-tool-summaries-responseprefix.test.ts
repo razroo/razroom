@@ -1,5 +1,5 @@
 import { describe, expect, it, mock, spyOn } from "bun:test";
-import type { OpenClawConfig } from "../config/config.js";
+import type { MoltBotConfig } from "../config/config.js";
 import { peekSystemEvents } from "../infra/system-events.js";
 import { resolveAgentRoute } from "../routing/resolve-route.js";
 import { normalizeE164 } from "../utils.js";
@@ -322,7 +322,7 @@ describe("monitorSignalProvider tool results", () => {
     });
 
     const route = resolveAgentRoute({
-      cfg: config as OpenClawConfig,
+      cfg: config as MoltBotConfig,
       channel: "signal",
       accountId: "default",
       peer: { kind: "direct", id: normalizeE164("+15550001111") },
@@ -365,7 +365,7 @@ describe("monitorSignalProvider tool results", () => {
     });
 
     const route = resolveAgentRoute({
-      cfg: config as OpenClawConfig,
+      cfg: config as MoltBotConfig,
       channel: "signal",
       accountId: "default",
       peer: { kind: "direct", id: normalizeE164("+15550001111") },

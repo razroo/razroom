@@ -2,7 +2,7 @@ import { EventEmitter } from "node:events";
 import path from "node:path";
 import { Readable } from "node:stream";
 import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
-import type { OpenClawConfig } from "../config/config.js";
+import type { MoltBotConfig } from "../config/config.js";
 
 type SpawnCall = {
   command: string;
@@ -56,19 +56,19 @@ describe("Agent-specific sandbox config", () => {
   it("should use agent-specific workspaceRoot", async () => {
     const { resolveSandboxContext } = await import("./sandbox.js");
 
-    const cfg: OpenClawConfig = {
+    const cfg: MoltBotConfig = {
       agents: {
         defaults: {
           sandbox: {
             mode: "all",
             scope: "agent",
-            workspaceRoot: "~/.openclaw/sandboxes",
+            workspaceRoot: "~/.moltbot/sandboxes",
           },
         },
         list: [
           {
             id: "isolated",
-            workspace: "~/openclaw-isolated",
+            workspace: "~/moltbot-isolated",
             sandbox: {
               mode: "all",
               scope: "agent",
@@ -92,7 +92,7 @@ describe("Agent-specific sandbox config", () => {
   it("should prefer agent config over global for multiple agents", async () => {
     const { resolveSandboxContext } = await import("./sandbox.js");
 
-    const cfg: OpenClawConfig = {
+    const cfg: MoltBotConfig = {
       agents: {
         defaults: {
           sandbox: {
@@ -103,14 +103,14 @@ describe("Agent-specific sandbox config", () => {
         list: [
           {
             id: "main",
-            workspace: "~/openclaw",
+            workspace: "~/moltbot",
             sandbox: {
               mode: "off",
             },
           },
           {
             id: "family",
-            workspace: "~/openclaw-family",
+            workspace: "~/moltbot-family",
             sandbox: {
               mode: "all",
               scope: "agent",
@@ -139,7 +139,7 @@ describe("Agent-specific sandbox config", () => {
   it("should prefer agent-specific sandbox tool policy", async () => {
     const { resolveSandboxContext } = await import("./sandbox.js");
 
-    const cfg: OpenClawConfig = {
+    const cfg: MoltBotConfig = {
       agents: {
         defaults: {
           sandbox: {
@@ -150,7 +150,7 @@ describe("Agent-specific sandbox config", () => {
         list: [
           {
             id: "restricted",
-            workspace: "~/openclaw-restricted",
+            workspace: "~/moltbot-restricted",
             sandbox: {
               mode: "all",
               scope: "agent",
@@ -192,7 +192,7 @@ describe("Agent-specific sandbox config", () => {
   it("should use global sandbox config when no agent-specific config exists", async () => {
     const { resolveSandboxContext } = await import("./sandbox.js");
 
-    const cfg: OpenClawConfig = {
+    const cfg: MoltBotConfig = {
       agents: {
         defaults: {
           sandbox: {
@@ -203,7 +203,7 @@ describe("Agent-specific sandbox config", () => {
         list: [
           {
             id: "main",
-            workspace: "~/openclaw",
+            workspace: "~/moltbot",
           },
         ],
       },
@@ -222,7 +222,7 @@ describe("Agent-specific sandbox config", () => {
   it("should allow agent-specific docker setupCommand overrides", async () => {
     const { resolveSandboxContext } = await import("./sandbox.js");
 
-    const cfg: OpenClawConfig = {
+    const cfg: MoltBotConfig = {
       agents: {
         defaults: {
           sandbox: {
@@ -236,7 +236,7 @@ describe("Agent-specific sandbox config", () => {
         list: [
           {
             id: "work",
-            workspace: "~/openclaw-work",
+            workspace: "~/moltbot-work",
             sandbox: {
               mode: "all",
               scope: "agent",
@@ -271,7 +271,7 @@ describe("Agent-specific sandbox config", () => {
   it("should ignore agent-specific docker overrides when scope is shared", async () => {
     const { resolveSandboxContext } = await import("./sandbox.js");
 
-    const cfg: OpenClawConfig = {
+    const cfg: MoltBotConfig = {
       agents: {
         defaults: {
           sandbox: {
@@ -285,7 +285,7 @@ describe("Agent-specific sandbox config", () => {
         list: [
           {
             id: "work",
-            workspace: "~/openclaw-work",
+            workspace: "~/moltbot-work",
             sandbox: {
               mode: "all",
               scope: "shared",
@@ -321,7 +321,7 @@ describe("Agent-specific sandbox config", () => {
   it("should allow agent-specific docker settings beyond setupCommand", async () => {
     const { resolveSandboxContext } = await import("./sandbox.js");
 
-    const cfg: OpenClawConfig = {
+    const cfg: MoltBotConfig = {
       agents: {
         defaults: {
           sandbox: {
@@ -336,7 +336,7 @@ describe("Agent-specific sandbox config", () => {
         list: [
           {
             id: "work",
-            workspace: "~/openclaw-work",
+            workspace: "~/moltbot-work",
             sandbox: {
               mode: "all",
               scope: "agent",
@@ -364,7 +364,7 @@ describe("Agent-specific sandbox config", () => {
   it("should override with agent-specific sandbox mode 'off'", async () => {
     const { resolveSandboxContext } = await import("./sandbox.js");
 
-    const cfg: OpenClawConfig = {
+    const cfg: MoltBotConfig = {
       agents: {
         defaults: {
           sandbox: {
@@ -375,7 +375,7 @@ describe("Agent-specific sandbox config", () => {
         list: [
           {
             id: "main",
-            workspace: "~/openclaw",
+            workspace: "~/moltbot",
             sandbox: {
               mode: "off",
             },
@@ -396,7 +396,7 @@ describe("Agent-specific sandbox config", () => {
   it("should use agent-specific sandbox mode 'all'", async () => {
     const { resolveSandboxContext } = await import("./sandbox.js");
 
-    const cfg: OpenClawConfig = {
+    const cfg: MoltBotConfig = {
       agents: {
         defaults: {
           sandbox: {
@@ -406,7 +406,7 @@ describe("Agent-specific sandbox config", () => {
         list: [
           {
             id: "family",
-            workspace: "~/openclaw-family",
+            workspace: "~/moltbot-family",
             sandbox: {
               mode: "all",
               scope: "agent",
@@ -429,7 +429,7 @@ describe("Agent-specific sandbox config", () => {
   it("should use agent-specific scope", async () => {
     const { resolveSandboxContext } = await import("./sandbox.js");
 
-    const cfg: OpenClawConfig = {
+    const cfg: MoltBotConfig = {
       agents: {
         defaults: {
           sandbox: {
@@ -440,7 +440,7 @@ describe("Agent-specific sandbox config", () => {
         list: [
           {
             id: "work",
-            workspace: "~/openclaw-work",
+            workspace: "~/moltbot-work",
             sandbox: {
               mode: "all",
               scope: "agent",
@@ -463,7 +463,7 @@ describe("Agent-specific sandbox config", () => {
   it("includes session_status in default sandbox allowlist", async () => {
     const { resolveSandboxConfigForAgent } = await import("./sandbox.js");
 
-    const cfg: OpenClawConfig = {
+    const cfg: MoltBotConfig = {
       agents: {
         defaults: {
           sandbox: {
@@ -481,7 +481,7 @@ describe("Agent-specific sandbox config", () => {
   it("includes image in default sandbox allowlist", async () => {
     const { resolveSandboxConfigForAgent } = await import("./sandbox.js");
 
-    const cfg: OpenClawConfig = {
+    const cfg: MoltBotConfig = {
       agents: {
         defaults: {
           sandbox: {
@@ -499,7 +499,7 @@ describe("Agent-specific sandbox config", () => {
   it("injects image into explicit sandbox allowlists", async () => {
     const { resolveSandboxConfigForAgent } = await import("./sandbox.js");
 
-    const cfg: OpenClawConfig = {
+    const cfg: MoltBotConfig = {
       tools: {
         sandbox: {
           tools: {

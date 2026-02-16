@@ -1,10 +1,10 @@
-# @openclaw/nostr
+# @moltbot/nostr
 
-Nostr DM channel plugin for OpenClaw using NIP-04 encrypted direct messages.
+Nostr DM channel plugin for MoltBot using NIP-04 encrypted direct messages.
 
 ## Overview
 
-This extension adds Nostr as a messaging channel to OpenClaw. It enables your bot to:
+This extension adds Nostr as a messaging channel to MoltBot. It enables your bot to:
 
 - Receive encrypted DMs from Nostr users
 - Send encrypted responses back
@@ -13,7 +13,7 @@ This extension adds Nostr as a messaging channel to OpenClaw. It enables your bo
 ## Installation
 
 ```bash
-openclaw plugins install @openclaw/nostr
+moltbot plugins install @moltbot/nostr
 ```
 
 ## Quick Setup
@@ -90,7 +90,7 @@ openclaw plugins install @openclaw/nostr
 # Using strfry
 docker run -p 7777:7777 ghcr.io/hoytech/strfry
 
-# Configure openclaw to use local relay
+# Configure moltbot to use local relay
 "relays": ["ws://localhost:7777"]
 ```
 

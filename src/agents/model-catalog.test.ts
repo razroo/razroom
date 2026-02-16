@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
-import type { OpenClawConfig } from "../config/config.js";
+import type { MoltBotConfig } from "../config/config.js";
 import {
   __setModelCatalogImportForTest,
   loadModelCatalog,
@@ -9,11 +9,11 @@ import {
 type PiSdkModule = typeof import("./pi-model-discovery.js");
 
 mock("./models-config.js", () => ({
-  ensureOpenClawModelsJson: mock().mockResolvedValue({ agentDir: "/tmp", wrote: false }),
+  ensureMoltBotModelsJson: mock().mockResolvedValue({ agentDir: "/tmp", wrote: false }),
 }));
 
 mock("./agent-paths.js", () => ({
-  resolveOpenClawAgentDir: () => "/tmp/openclaw",
+  resolveMoltBotAgentDir: () => "/tmp/moltbot",
 }));
 
 describe("loadModelCatalog", () => {
@@ -46,7 +46,7 @@ describe("loadModelCatalog", () => {
       } as unknown as PiSdkModule;
     });
 
-    const cfg = {} as OpenClawConfig;
+    const cfg = {} as MoltBotConfig;
     const first = await loadModelCatalog({ config: cfg });
     expect(first).toEqual([]);
 
@@ -80,7 +80,7 @@ describe("loadModelCatalog", () => {
         }) as unknown as PiSdkModule,
     );
 
-    const result = await loadModelCatalog({ config: {} as OpenClawConfig });
+    const result = await loadModelCatalog({ config: {} as MoltBotConfig });
     expect(result).toEqual([{ id: "gpt-4.1", name: "GPT-4.1", provider: "openai" }]);
     expect(warnSpy).toHaveBeenCalledTimes(1);
   });
@@ -112,7 +112,7 @@ describe("loadModelCatalog", () => {
         }) as unknown as PiSdkModule,
     );
 
-    const result = await loadModelCatalog({ config: {} as OpenClawConfig });
+    const result = await loadModelCatalog({ config: {} as MoltBotConfig });
     expect(result).toContainEqual(
       expect.objectContaining({
         provider: "openai-codex",

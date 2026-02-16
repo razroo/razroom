@@ -51,7 +51,7 @@ mock("../pairing/pairing-store.js", () => ({
 }));
 
 mock("../config/sessions.js", () => ({
-  resolveStorePath: mock(() => "/tmp/openclaw-sessions.json"),
+  resolveStorePath: mock(() => "/tmp/moltbot-sessions.json"),
   updateLastRoute: (...args: unknown[]) => updateLastRouteMock(...args),
   resolveSessionKey: mock(),
   readSessionUpdatedAt: mock(() => undefined),

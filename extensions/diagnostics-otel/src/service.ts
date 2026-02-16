@@ -1,5 +1,5 @@
 import type { SeverityNumber } from "@opentelemetry/api-logs";
-import type { DiagnosticEventPayload, OpenClawPluginService } from "openclaw/plugin-sdk";
+import type { DiagnosticEventPayload, MoltBotPluginService } from "moltbot/plugin-sdk";
 import { metrics, trace, SpanStatusCode } from "@opentelemetry/api";
 import { OTLPLogExporter } from "@opentelemetry/exporter-logs-otlp-http";
 import { OTLPMetricExporter } from "@opentelemetry/exporter-metrics-otlp-http";
@@ -10,9 +10,9 @@ import { PeriodicExportingMetricReader } from "@opentelemetry/sdk-metrics";
 import { NodeSDK } from "@opentelemetry/sdk-node";
 import { ParentBasedSampler, TraceIdRatioBasedSampler } from "@opentelemetry/sdk-trace-base";
 import { SemanticResourceAttributes } from "@opentelemetry/semantic-conventions";
-import { onDiagnosticEvent, registerLogTransport } from "openclaw/plugin-sdk";
+import { onDiagnosticEvent, registerLogTransport } from "moltbot/plugin-sdk";
 
-const DEFAULT_SERVICE_NAME = "openclaw";
+const DEFAULT_SERVICE_NAME = "moltbot";
 
 function normalizeEndpoint(endpoint?: string): string | undefined {
   const trimmed = endpoint?.trim();
@@ -39,7 +39,7 @@ function resolveSampleRate(value: number | undefined): number | undefined {
   return value;
 }
 
-export function createDiagnosticsOtelService(): OpenClawPluginService {
+export function createDiagnosticsOtelService(): MoltBotPluginService {
   let sdk: NodeSDK | null = null;
   let logProvider: LoggerProvider | null = null;
   let stopLogTransport: (() => void) | null = null;
@@ -129,78 +129,78 @@ export function createDiagnosticsOtelService(): OpenClawPluginService {
         FATAL: 21 as SeverityNumber,
       };
 
-      const meter = metrics.getMeter("openclaw");
-      const tracer = trace.getTracer("openclaw");
+      const meter = metrics.getMeter("moltbot");
+      const tracer = trace.getTracer("moltbot");
 
-      const tokensCounter = meter.createCounter("openclaw.tokens", {
+      const tokensCounter = meter.createCounter("moltbot.tokens", {
         unit: "1",
         description: "Token usage by type",
       });
-      const costCounter = meter.createCounter("openclaw.cost.usd", {
+      const costCounter = meter.createCounter("moltbot.cost.usd", {
         unit: "1",
         description: "Estimated model cost (USD)",
       });
-      const durationHistogram = meter.createHistogram("openclaw.run.duration_ms", {
+      const durationHistogram = meter.createHistogram("moltbot.run.duration_ms", {
         unit: "ms",
         description: "Agent run duration",
       });
-      const contextHistogram = meter.createHistogram("openclaw.context.tokens", {
+      const contextHistogram = meter.createHistogram("moltbot.context.tokens", {
         unit: "1",
         description: "Context window size and usage",
       });
-      const webhookReceivedCounter = meter.createCounter("openclaw.webhook.received", {
+      const webhookReceivedCounter = meter.createCounter("moltbot.webhook.received", {
         unit: "1",
         description: "Webhook requests received",
       });
-      const webhookErrorCounter = meter.createCounter("openclaw.webhook.error", {
+      const webhookErrorCounter = meter.createCounter("moltbot.webhook.error", {
         unit: "1",
         description: "Webhook processing errors",
       });
-      const webhookDurationHistogram = meter.createHistogram("openclaw.webhook.duration_ms", {
+      const webhookDurationHistogram = meter.createHistogram("moltbot.webhook.duration_ms", {
         unit: "ms",
         description: "Webhook processing duration",
       });
-      const messageQueuedCounter = meter.createCounter("openclaw.message.queued", {
+      const messageQueuedCounter = meter.createCounter("moltbot.message.queued", {
         unit: "1",
         description: "Messages queued for processing",
       });
-      const messageProcessedCounter = meter.createCounter("openclaw.message.processed", {
+      const messageProcessedCounter = meter.createCounter("moltbot.message.processed", {
         unit: "1",
         description: "Messages processed by outcome",
       });
-      const messageDurationHistogram = meter.createHistogram("openclaw.message.duration_ms", {
+      const messageDurationHistogram = meter.createHistogram("moltbot.message.duration_ms", {
         unit: "ms",
         description: "Message processing duration",
       });
-      const queueDepthHistogram = meter.createHistogram("openclaw.queue.depth", {
+      const queueDepthHistogram = meter.createHistogram("moltbot.queue.depth", {
         unit: "1",
         description: "Queue depth on enqueue/dequeue",
       });
-      const queueWaitHistogram = meter.createHistogram("openclaw.queue.wait_ms", {
+      const queueWaitHistogram = meter.createHistogram("moltbot.queue.wait_ms", {
         unit: "ms",
         description: "Queue wait time before execution",
       });
-      const laneEnqueueCounter = meter.createCounter("openclaw.queue.lane.enqueue", {
+      const laneEnqueueCounter = meter.createCounter("moltbot.queue.lane.enqueue", {
         unit: "1",
         description: "Command queue lane enqueue events",
       });
-      const laneDequeueCounter = meter.createCounter("openclaw.queue.lane.dequeue", {
+      const laneDequeueCounter = meter.createCounter("moltbot.queue.lane.dequeue", {
         unit: "1",
         description: "Command queue lane dequeue events",
       });
-      const sessionStateCounter = meter.createCounter("openclaw.session.state", {
+      const sessionStateCounter = meter.createCounter("moltbot.session.state", {
         unit: "1",
         description: "Session state transitions",
       });
-      const sessionStuckCounter = meter.createCounter("openclaw.session.stuck", {
+      const sessionStuckCounter = meter.createCounter("moltbot.session.stuck", {
         unit: "1",
         description: "Sessions stuck in processing",
       });
-      const sessionStuckAgeHistogram = meter.createHistogram("openclaw.session.stuck_age_ms", {
+      const sessionStuckAgeHistogram = meter.createHistogram("moltbot.session.stuck_age_ms", {
         unit: "ms",
         description: "Age of stuck sessions",
       });
-      const runAttemptCounter = meter.createCounter("openclaw.run.attempt", {
+      const runAttemptCounter = meter.createCounter("moltbot.run.attempt", {
         unit: "1",
         description: "Run attempts",
       });
@@ -217,7 +217,7 @@ export function createDiagnosticsOtelService(): OpenClawPluginService {
             : {},
         );
         logProvider = new LoggerProvider({ resource, processors: [processor] });
-        const otelLogger = logProvider.getLogger("openclaw");
+        const otelLogger = logProvider.getLogger("moltbot");
 
         stopLogTransport = registerLogTransport((logObj) => {
           const safeStringify = (value: unknown) => {
@@ -275,13 +275,13 @@ export function createDiagnosticsOtelService(): OpenClawPluginService {
           }
 
           const attributes: Record<string, string | number | boolean> = {
-            "openclaw.log.level": logLevelName,
+            "moltbot.log.level": logLevelName,
           };
           if (meta?.name) {
-            attributes["openclaw.logger"] = meta.name;
+            attributes["moltbot.logger"] = meta.name;
           }
           if (meta?.parentNames?.length) {
-            attributes["openclaw.logger.parents"] = meta.parentNames.join(".");
+            attributes["moltbot.logger.parents"] = meta.parentNames.join(".");
           }
           if (bindings) {
             for (const [key, value] of Object.entries(bindings)) {
@@ -290,14 +290,14 @@ export function createDiagnosticsOtelService(): OpenClawPluginService {
                 typeof value === "number" ||
                 typeof value === "boolean"
               ) {
-                attributes[`openclaw.${key}`] = value;
+                attributes[`moltbot.${key}`] = value;
               } else if (value != null) {
-                attributes[`openclaw.${key}`] = safeStringify(value);
+                attributes[`moltbot.${key}`] = safeStringify(value);
               }
             }
           }
           if (numericArgs.length > 0) {
-            attributes["openclaw.log.args"] = safeStringify(numericArgs);
+            attributes["moltbot.log.args"] = safeStringify(numericArgs);
           }
           if (meta?.path?.filePath) {
             attributes["code.filepath"] = meta.path.filePath;
@@ -309,7 +309,7 @@ export function createDiagnosticsOtelService(): OpenClawPluginService {
             attributes["code.function"] = meta.path.method;
           }
           if (meta?.path?.filePathWithLine) {
-            attributes["openclaw.code.location"] = meta.path.filePathWithLine;
+            attributes["moltbot.code.location"] = meta.path.filePathWithLine;
           }
 
           otelLogger.emit({
@@ -338,29 +338,29 @@ export function createDiagnosticsOtelService(): OpenClawPluginService {
 
       const recordModelUsage = (evt: Extract<DiagnosticEventPayload, { type: "model.usage" }>) => {
         const attrs = {
-          "openclaw.channel": evt.channel ?? "unknown",
-          "openclaw.provider": evt.provider ?? "unknown",
-          "openclaw.model": evt.model ?? "unknown",
+          "moltbot.channel": evt.channel ?? "unknown",
+          "moltbot.provider": evt.provider ?? "unknown",
+          "moltbot.model": evt.model ?? "unknown",
         };
 
         const usage = evt.usage;
         if (usage.input) {
-          tokensCounter.add(usage.input, { ...attrs, "openclaw.token": "input" });
+          tokensCounter.add(usage.input, { ...attrs, "moltbot.token": "input" });
         }
         if (usage.output) {
-          tokensCounter.add(usage.output, { ...attrs, "openclaw.token": "output" });
+          tokensCounter.add(usage.output, { ...attrs, "moltbot.token": "output" });
         }
         if (usage.cacheRead) {
-          tokensCounter.add(usage.cacheRead, { ...attrs, "openclaw.token": "cache_read" });
+          tokensCounter.add(usage.cacheRead, { ...attrs, "moltbot.token": "cache_read" });
         }
         if (usage.cacheWrite) {
-          tokensCounter.add(usage.cacheWrite, { ...attrs, "openclaw.token": "cache_write" });
+          tokensCounter.add(usage.cacheWrite, { ...attrs, "moltbot.token": "cache_write" });
         }
         if (usage.promptTokens) {
-          tokensCounter.add(usage.promptTokens, { ...attrs, "openclaw.token": "prompt" });
+          tokensCounter.add(usage.promptTokens, { ...attrs, "moltbot.token": "prompt" });
         }
         if (usage.total) {
-          tokensCounter.add(usage.total, { ...attrs, "openclaw.token": "total" });
+          tokensCounter.add(usage.total, { ...attrs, "moltbot.token": "total" });
         }
 
         if (evt.costUsd) {
@@ -372,13 +372,13 @@ export function createDiagnosticsOtelService(): OpenClawPluginService {
         if (evt.context?.limit) {
           contextHistogram.record(evt.context.limit, {
             ...attrs,
-            "openclaw.context": "limit",
+            "moltbot.context": "limit",
           });
         }
         if (evt.context?.used) {
           contextHistogram.record(evt.context.used, {
             ...attrs,
-            "openclaw.context": "used",
+            "moltbot.context": "used",
           });
         }
 
@@ -387,16 +387,16 @@ export function createDiagnosticsOtelService(): OpenClawPluginService {
         }
         const spanAttrs: Record<string, string | number> = {
           ...attrs,
-          "openclaw.sessionKey": evt.sessionKey ?? "",
-          "openclaw.sessionId": evt.sessionId ?? "",
-          "openclaw.tokens.input": usage.input ?? 0,
-          "openclaw.tokens.output": usage.output ?? 0,
-          "openclaw.tokens.cache_read": usage.cacheRead ?? 0,
-          "openclaw.tokens.cache_write": usage.cacheWrite ?? 0,
-          "openclaw.tokens.total": usage.total ?? 0,
+          "moltbot.sessionKey": evt.sessionKey ?? "",
+          "moltbot.sessionId": evt.sessionId ?? "",
+          "moltbot.tokens.input": usage.input ?? 0,
+          "moltbot.tokens.output": usage.output ?? 0,
+          "moltbot.tokens.cache_read": usage.cacheRead ?? 0,
+          "moltbot.tokens.cache_write": usage.cacheWrite ?? 0,
+          "moltbot.tokens.total": usage.total ?? 0,
         };
 
-        const span = spanWithDuration("openclaw.model.usage", spanAttrs, evt.durationMs);
+        const span = spanWithDuration("moltbot.model.usage", spanAttrs, evt.durationMs);
         span.end();
       };
 
@@ -404,8 +404,8 @@ export function createDiagnosticsOtelService(): OpenClawPluginService {
         evt: Extract<DiagnosticEventPayload, { type: "webhook.received" }>,
       ) => {
         const attrs = {
-          "openclaw.channel": evt.channel ?? "unknown",
-          "openclaw.webhook": evt.updateType ?? "unknown",
+          "moltbot.channel": evt.channel ?? "unknown",
+          "moltbot.webhook": evt.updateType ?? "unknown",
         };
         webhookReceivedCounter.add(1, attrs);
       };
@@ -414,8 +414,8 @@ export function createDiagnosticsOtelService(): OpenClawPluginService {
         evt: Extract<DiagnosticEventPayload, { type: "webhook.processed" }>,
       ) => {
         const attrs = {
-          "openclaw.channel": evt.channel ?? "unknown",
-          "openclaw.webhook": evt.updateType ?? "unknown",
+          "moltbot.channel": evt.channel ?? "unknown",
+          "moltbot.webhook": evt.updateType ?? "unknown",
         };
         if (typeof evt.durationMs === "number") {
           webhookDurationHistogram.record(evt.durationMs, attrs);
@@ -425,9 +425,9 @@ export function createDiagnosticsOtelService(): OpenClawPluginService {
         }
         const spanAttrs: Record<string, string | number> = { ...attrs };
         if (evt.chatId !== undefined) {
-          spanAttrs["openclaw.chatId"] = String(evt.chatId);
+          spanAttrs["moltbot.chatId"] = String(evt.chatId);
         }
-        const span = spanWithDuration("openclaw.webhook.processed", spanAttrs, evt.durationMs);
+        const span = spanWithDuration("moltbot.webhook.processed", spanAttrs, evt.durationMs);
         span.end();
       };
 
@@ -435,8 +435,8 @@ export function createDiagnosticsOtelService(): OpenClawPluginService {
         evt: Extract<DiagnosticEventPayload, { type: "webhook.error" }>,
       ) => {
         const attrs = {
-          "openclaw.channel": evt.channel ?? "unknown",
-          "openclaw.webhook": evt.updateType ?? "unknown",
+          "moltbot.channel": evt.channel ?? "unknown",
+          "moltbot.webhook": evt.updateType ?? "unknown",
         };
         webhookErrorCounter.add(1, attrs);
         if (!tracesEnabled) {
@@ -444,12 +444,12 @@ export function createDiagnosticsOtelService(): OpenClawPluginService {
         }
         const spanAttrs: Record<string, string | number> = {
           ...attrs,
-          "openclaw.error": evt.error,
+          "moltbot.error": evt.error,
         };
         if (evt.chatId !== undefined) {
-          spanAttrs["openclaw.chatId"] = String(evt.chatId);
+          spanAttrs["moltbot.chatId"] = String(evt.chatId);
         }
-        const span = tracer.startSpan("openclaw.webhook.error", {
+        const span = tracer.startSpan("moltbot.webhook.error", {
           attributes: spanAttrs,
         });
         span.setStatus({ code: SpanStatusCode.ERROR, message: evt.error });
@@ -460,8 +460,8 @@ export function createDiagnosticsOtelService(): OpenClawPluginService {
         evt: Extract<DiagnosticEventPayload, { type: "message.queued" }>,
       ) => {
         const attrs = {
-          "openclaw.channel": evt.channel ?? "unknown",
-          "openclaw.source": evt.source ?? "unknown",
+          "moltbot.channel": evt.channel ?? "unknown",
+          "moltbot.source": evt.source ?? "unknown",
         };
         messageQueuedCounter.add(1, attrs);
         if (typeof evt.queueDepth === "number") {
@@ -473,8 +473,8 @@ export function createDiagnosticsOtelService(): OpenClawPluginService {
         evt: Extract<DiagnosticEventPayload, { type: "message.processed" }>,
       ) => {
         const attrs = {
-          "openclaw.channel": evt.channel ?? "unknown",
-          "openclaw.outcome": evt.outcome ?? "unknown",
+          "moltbot.channel": evt.channel ?? "unknown",
+          "moltbot.outcome": evt.outcome ?? "unknown",
         };
         messageProcessedCounter.add(1, attrs);
         if (typeof evt.durationMs === "number") {
@@ -485,21 +485,21 @@ export function createDiagnosticsOtelService(): OpenClawPluginService {
         }
         const spanAttrs: Record<string, string | number> = { ...attrs };
         if (evt.sessionKey) {
-          spanAttrs["openclaw.sessionKey"] = evt.sessionKey;
+          spanAttrs["moltbot.sessionKey"] = evt.sessionKey;
         }
         if (evt.sessionId) {
-          spanAttrs["openclaw.sessionId"] = evt.sessionId;
+          spanAttrs["moltbot.sessionId"] = evt.sessionId;
         }
         if (evt.chatId !== undefined) {
-          spanAttrs["openclaw.chatId"] = String(evt.chatId);
+          spanAttrs["moltbot.chatId"] = String(evt.chatId);
         }
         if (evt.messageId !== undefined) {
-          spanAttrs["openclaw.messageId"] = String(evt.messageId);
+          spanAttrs["moltbot.messageId"] = String(evt.messageId);
         }
         if (evt.reason) {
-          spanAttrs["openclaw.reason"] = evt.reason;
+          spanAttrs["moltbot.reason"] = evt.reason;
         }
-        const span = spanWithDuration("openclaw.message.processed", spanAttrs, evt.durationMs);
+        const span = spanWithDuration("moltbot.message.processed", spanAttrs, evt.durationMs);
         if (evt.outcome === "error") {
           span.setStatus({ code: SpanStatusCode.ERROR, message: evt.error });
         }
@@ -509,7 +509,7 @@ export function createDiagnosticsOtelService(): OpenClawPluginService {
       const recordLaneEnqueue = (
         evt: Extract<DiagnosticEventPayload, { type: "queue.lane.enqueue" }>,
       ) => {
-        const attrs = { "openclaw.lane": evt.lane };
+        const attrs = { "moltbot.lane": evt.lane };
         laneEnqueueCounter.add(1, attrs);
         queueDepthHistogram.record(evt.queueSize, attrs);
       };
@@ -517,7 +517,7 @@ export function createDiagnosticsOtelService(): OpenClawPluginService {
       const recordLaneDequeue = (
         evt: Extract<DiagnosticEventPayload, { type: "queue.lane.dequeue" }>,
       ) => {
-        const attrs = { "openclaw.lane": evt.lane };
+        const attrs = { "moltbot.lane": evt.lane };
         laneDequeueCounter.add(1, attrs);
         queueDepthHistogram.record(evt.queueSize, attrs);
         if (typeof evt.waitMs === "number") {
@@ -528,9 +528,9 @@ export function createDiagnosticsOtelService(): OpenClawPluginService {
       const recordSessionState = (
         evt: Extract<DiagnosticEventPayload, { type: "session.state" }>,
       ) => {
-        const attrs: Record<string, string> = { "openclaw.state": evt.state };
+        const attrs: Record<string, string> = { "moltbot.state": evt.state };
         if (evt.reason) {
-          attrs["openclaw.reason"] = evt.reason;
+          attrs["moltbot.reason"] = evt.reason;
         }
         sessionStateCounter.add(1, attrs);
       };
@@ -538,7 +538,7 @@ export function createDiagnosticsOtelService(): OpenClawPluginService {
       const recordSessionStuck = (
         evt: Extract<DiagnosticEventPayload, { type: "session.stuck" }>,
       ) => {
-        const attrs: Record<string, string> = { "openclaw.state": evt.state };
+        const attrs: Record<string, string> = { "moltbot.state": evt.state };
         sessionStuckCounter.add(1, attrs);
         if (typeof evt.ageMs === "number") {
           sessionStuckAgeHistogram.record(evt.ageMs, attrs);
@@ -548,26 +548,26 @@ export function createDiagnosticsOtelService(): OpenClawPluginService {
         }
         const spanAttrs: Record<string, string | number> = { ...attrs };
         if (evt.sessionKey) {
-          spanAttrs["openclaw.sessionKey"] = evt.sessionKey;
+          spanAttrs["moltbot.sessionKey"] = evt.sessionKey;
         }
         if (evt.sessionId) {
-          spanAttrs["openclaw.sessionId"] = evt.sessionId;
+          spanAttrs["moltbot.sessionId"] = evt.sessionId;
         }
-        spanAttrs["openclaw.queueDepth"] = evt.queueDepth ?? 0;
-        spanAttrs["openclaw.ageMs"] = evt.ageMs;
-        const span = tracer.startSpan("openclaw.session.stuck", { attributes: spanAttrs });
+        spanAttrs["moltbot.queueDepth"] = evt.queueDepth ?? 0;
+        spanAttrs["moltbot.ageMs"] = evt.ageMs;
+        const span = tracer.startSpan("moltbot.session.stuck", { attributes: spanAttrs });
         span.setStatus({ code: SpanStatusCode.ERROR, message: "session stuck" });
         span.end();
       };
 
       const recordRunAttempt = (evt: Extract<DiagnosticEventPayload, { type: "run.attempt" }>) => {
-        runAttemptCounter.add(1, { "openclaw.attempt": evt.attempt });
+        runAttemptCounter.add(1, { "moltbot.attempt": evt.attempt });
       };
 
       const recordHeartbeat = (
         evt: Extract<DiagnosticEventPayload, { type: "diagnostic.heartbeat" }>,
       ) => {
-        queueDepthHistogram.record(evt.queued, { "openclaw.channel": "heartbeat" });
+        queueDepthHistogram.record(evt.queued, { "moltbot.channel": "heartbeat" });
       };
 
       unsubscribe = onDiagnosticEvent((evt: DiagnosticEventPayload) => {
@@ -629,5 +629,5 @@ export function createDiagnosticsOtelService(): OpenClawPluginService {
         sdk = null;
       }
     },
-  } satisfies OpenClawPluginService;
+  } satisfies MoltBotPluginService;
 }

@@ -6,14 +6,14 @@ import { resolveImplicitProviders } from "./models-config.providers.js";
 
 describe("vLLM provider", () => {
   it("should not include vllm when no API key is configured", async () => {
-    const agentDir = mkdtempSync(join(tmpdir(), "openclaw-test-"));
+    const agentDir = mkdtempSync(join(tmpdir(), "moltbot-test-"));
     const providers = await resolveImplicitProviders({ agentDir });
 
     expect(providers?.vllm).toBeUndefined();
   });
 
   it("should include vllm when VLLM_API_KEY is set", async () => {
-    const agentDir = mkdtempSync(join(tmpdir(), "openclaw-test-"));
+    const agentDir = mkdtempSync(join(tmpdir(), "moltbot-test-"));
     process.env.VLLM_API_KEY = "test-key";
 
     try {

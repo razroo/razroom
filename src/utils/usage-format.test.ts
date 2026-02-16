@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import type { OpenClawConfig } from "../config/config.js";
+import type { MoltBotConfig } from "../config/config.js";
 import {
   estimateUsageCost,
   formatTokenCount,
@@ -35,7 +35,7 @@ describe("usage-format", () => {
           },
         },
       },
-    } as OpenClawConfig;
+    } as MoltBotConfig;
 
     const cost = resolveModelCostConfig({
       provider: "test",

@@ -67,9 +67,9 @@ mock("node:fs", async (importOriginal) => {
   return { ...wrapped, default: wrapped };
 });
 
-mock("./openclaw-root.js", () => ({
-  resolveOpenClawPackageRoot: mock(async () => null),
-  resolveOpenClawPackageRootSync: mock(() => null),
+mock("./moltbot-root.js", () => ({
+  resolveMoltBotPackageRoot: mock(async () => null),
+  resolveMoltBotPackageRootSync: mock(() => null),
 }));
 
 describe("control UI assets helpers (fs-mocked)", () => {
@@ -110,16 +110,16 @@ describe("control UI assets helpers (fs-mocked)", () => {
     );
   });
 
-  it("uses resolveOpenClawPackageRoot when available", async () => {
-    const openclawRoot = await import("./openclaw-root.js");
+  it("uses resolveMoltBotPackageRoot when available", async () => {
+    const moltbotRoot = await import("./moltbot-root.js");
     const { resolveControlUiDistIndexPath } = await import("./control-ui-assets.js");
 
-    const pkgRoot = abs("fixtures/openclaw");
+    const pkgRoot = abs("fixtures/moltbot");
     (
-      openclawRoot.resolveOpenClawPackageRoot as unknown as ReturnType<typeof mock>
+      moltbotRoot.resolveMoltBotPackageRoot as unknown as ReturnType<typeof mock>
     ).mockResolvedValueOnce(pkgRoot);
 
-    await expect(resolveControlUiDistIndexPath(abs("fixtures/bin/openclaw"))).resolves.toBe(
+    await expect(resolveControlUiDistIndexPath(abs("fixtures/bin/moltbot"))).resolves.toBe(
       path.join(pkgRoot, "dist", "control-ui", "index.html"),
     );
   });
@@ -128,10 +128,10 @@ describe("control UI assets helpers (fs-mocked)", () => {
     const { resolveControlUiDistIndexPath } = await import("./control-ui-assets.js");
 
     const root = abs("fixtures/fallback");
-    setFile(path.join(root, "package.json"), JSON.stringify({ name: "openclaw" }));
+    setFile(path.join(root, "package.json"), JSON.stringify({ name: "moltbot" }));
     setFile(path.join(root, "dist", "control-ui", "index.html"), "<html></html>\n");
 
-    await expect(resolveControlUiDistIndexPath(path.join(root, "openclaw.mjs"))).resolves.toBe(
+    await expect(resolveControlUiDistIndexPath(path.join(root, "moltbot.mjs"))).resolves.toBe(
       path.join(root, "dist", "control-ui", "index.html"),
     );
   });
@@ -139,7 +139,7 @@ describe("control UI assets helpers (fs-mocked)", () => {
   it("returns null when fallback package name does not match", async () => {
     const { resolveControlUiDistIndexPath } = await import("./control-ui-assets.js");
 
-    const root = abs("fixtures/not-openclaw");
+    const root = abs("fixtures/not-moltbot");
     setFile(path.join(root, "package.json"), JSON.stringify({ name: "malicious-pkg" }));
     setFile(path.join(root, "dist", "control-ui", "index.html"), "<html></html>\n");
 
@@ -180,12 +180,12 @@ describe("control UI assets helpers (fs-mocked)", () => {
   });
 
   it("resolves control-ui root for dist bundle argv1 and moduleUrl candidates", async () => {
-    const openclawRoot = await import("./openclaw-root.js");
+    const moltbotRoot = await import("./moltbot-root.js");
     const { resolveControlUiRootSync } = await import("./control-ui-assets.js");
 
-    const pkgRoot = abs("fixtures/openclaw-bundle");
+    const pkgRoot = abs("fixtures/moltbot-bundle");
     (
-      openclawRoot.resolveOpenClawPackageRootSync as unknown as ReturnType<typeof mock>
+      moltbotRoot.resolveMoltBotPackageRootSync as unknown as ReturnType<typeof mock>
     ).mockReturnValueOnce(pkgRoot);
 
     const uiDir = path.join(pkgRoot, "dist", "control-ui");

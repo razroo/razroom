@@ -1,6 +1,6 @@
 import type { ReplyPayload } from "../../auto-reply/types.js";
 import type { ChannelOutboundAdapter } from "../../channels/plugins/types.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { MoltBotConfig } from "../../config/config.js";
 import type { sendMessageDiscord } from "../../discord/send.js";
 import type { sendMessageIMessage } from "../../imessage/send.js";
 import type { sendMessageSlack } from "../../slack/send.js";
@@ -81,7 +81,7 @@ type ChannelHandler = {
 
 // Channel docking: outbound delivery delegates to plugin.outbound adapters.
 async function createChannelHandler(params: {
-  cfg: OpenClawConfig;
+  cfg: MoltBotConfig;
   channel: Exclude<OutboundChannel, "none">;
   to: string;
   accountId?: string;
@@ -119,7 +119,7 @@ async function createChannelHandler(params: {
 
 function createPluginHandler(params: {
   outbound?: ChannelOutboundAdapter;
-  cfg: OpenClawConfig;
+  cfg: MoltBotConfig;
   channel: Exclude<OutboundChannel, "none">;
   to: string;
   accountId?: string;
@@ -196,7 +196,7 @@ function createPluginHandler(params: {
 const isAbortError = (err: unknown): boolean => err instanceof Error && err.name === "AbortError";
 
 type DeliverOutboundPayloadsCoreParams = {
-  cfg: OpenClawConfig;
+  cfg: MoltBotConfig;
   channel: Exclude<OutboundChannel, "none">;
   to: string;
   accountId?: string;

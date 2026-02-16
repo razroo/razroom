@@ -35,7 +35,7 @@ describe("trigger handling", () => {
           agents: {
             defaults: {
               model: "anthropic/claude-opus-4-5",
-              workspace: join(home, "openclaw"),
+              workspace: join(home, "moltbot"),
             },
           },
           channels: {
@@ -44,7 +44,7 @@ describe("trigger handling", () => {
             },
           },
           session: {
-            store: join(tmpdir(), `openclaw-session-test-${Date.now()}.json`),
+            store: join(tmpdir(), `moltbot-session-test-${Date.now()}.json`),
           },
         },
       );
@@ -66,7 +66,7 @@ describe("trigger handling", () => {
           agents: {
             defaults: {
               model: "anthropic/claude-opus-4-5",
-              workspace: join(home, "openclaw"),
+              workspace: join(home, "moltbot"),
             },
           },
           channels: {
@@ -75,7 +75,7 @@ describe("trigger handling", () => {
             },
           },
           session: {
-            store: join(tmpdir(), `openclaw-session-test-${Date.now()}.json`),
+            store: join(tmpdir(), `moltbot-session-test-${Date.now()}.json`),
           },
         },
       );

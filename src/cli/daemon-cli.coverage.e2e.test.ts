@@ -81,43 +81,43 @@ mock("./progress.js", () => ({
 
 describe("daemon-cli coverage", () => {
   const originalEnv = {
-    OPENCLAW_STATE_DIR: process.env.OPENCLAW_STATE_DIR,
-    OPENCLAW_CONFIG_PATH: process.env.OPENCLAW_CONFIG_PATH,
-    OPENCLAW_GATEWAY_PORT: process.env.OPENCLAW_GATEWAY_PORT,
-    OPENCLAW_PROFILE: process.env.OPENCLAW_PROFILE,
+    MOLTBOT_STATE_DIR: process.env.MOLTBOT_STATE_DIR,
+    MOLTBOT_CONFIG_PATH: process.env.MOLTBOT_CONFIG_PATH,
+    MOLTBOT_GATEWAY_PORT: process.env.MOLTBOT_GATEWAY_PORT,
+    MOLTBOT_PROFILE: process.env.MOLTBOT_PROFILE,
   };
 
   beforeEach(() => {
-    process.env.OPENCLAW_STATE_DIR = "/tmp/openclaw-cli-state";
-    process.env.OPENCLAW_CONFIG_PATH = "/tmp/openclaw-cli-state/openclaw.json";
-    delete process.env.OPENCLAW_GATEWAY_PORT;
-    delete process.env.OPENCLAW_PROFILE;
+    process.env.MOLTBOT_STATE_DIR = "/tmp/moltbot-cli-state";
+    process.env.MOLTBOT_CONFIG_PATH = "/tmp/moltbot-cli-state/moltbot.json";
+    delete process.env.MOLTBOT_GATEWAY_PORT;
+    delete process.env.MOLTBOT_PROFILE;
     serviceReadCommand.mockResolvedValue(null);
   });
 
   afterEach(() => {
-    if (originalEnv.OPENCLAW_STATE_DIR !== undefined) {
-      process.env.OPENCLAW_STATE_DIR = originalEnv.OPENCLAW_STATE_DIR;
+    if (originalEnv.MOLTBOT_STATE_DIR !== undefined) {
+      process.env.MOLTBOT_STATE_DIR = originalEnv.MOLTBOT_STATE_DIR;
     } else {
-      delete process.env.OPENCLAW_STATE_DIR;
+      delete process.env.MOLTBOT_STATE_DIR;
     }
 
-    if (originalEnv.OPENCLAW_CONFIG_PATH !== undefined) {
-      process.env.OPENCLAW_CONFIG_PATH = originalEnv.OPENCLAW_CONFIG_PATH;
+    if (originalEnv.MOLTBOT_CONFIG_PATH !== undefined) {
+      process.env.MOLTBOT_CONFIG_PATH = originalEnv.MOLTBOT_CONFIG_PATH;
     } else {
-      delete process.env.OPENCLAW_CONFIG_PATH;
+      delete process.env.MOLTBOT_CONFIG_PATH;
     }
 
-    if (originalEnv.OPENCLAW_GATEWAY_PORT !== undefined) {
-      process.env.OPENCLAW_GATEWAY_PORT = originalEnv.OPENCLAW_GATEWAY_PORT;
+    if (originalEnv.MOLTBOT_GATEWAY_PORT !== undefined) {
+      process.env.MOLTBOT_GATEWAY_PORT = originalEnv.MOLTBOT_GATEWAY_PORT;
     } else {
-      delete process.env.OPENCLAW_GATEWAY_PORT;
+      delete process.env.MOLTBOT_GATEWAY_PORT;
     }
 
-    if (originalEnv.OPENCLAW_PROFILE !== undefined) {
-      process.env.OPENCLAW_PROFILE = originalEnv.OPENCLAW_PROFILE;
+    if (originalEnv.MOLTBOT_PROFILE !== undefined) {
+      process.env.MOLTBOT_PROFILE = originalEnv.MOLTBOT_PROFILE;
     } else {
-      delete process.env.OPENCLAW_PROFILE;
+      delete process.env.MOLTBOT_PROFILE;
     }
   });
 
@@ -148,10 +148,10 @@ describe("daemon-cli coverage", () => {
     serviceReadCommand.mockResolvedValueOnce({
       programArguments: ["/bin/node", "cli", "gateway", "--port", "19001"],
       environment: {
-        OPENCLAW_PROFILE: "dev",
-        OPENCLAW_STATE_DIR: "/tmp/openclaw-daemon-state",
-        OPENCLAW_CONFIG_PATH: "/tmp/openclaw-daemon-state/openclaw.json",
-        OPENCLAW_GATEWAY_PORT: "19001",
+        MOLTBOT_PROFILE: "dev",
+        MOLTBOT_STATE_DIR: "/tmp/moltbot-daemon-state",
+        MOLTBOT_CONFIG_PATH: "/tmp/moltbot-daemon-state/moltbot.json",
+        MOLTBOT_GATEWAY_PORT: "19001",
       },
       sourcePath: "/tmp/bot.molt.gateway.plist",
     });

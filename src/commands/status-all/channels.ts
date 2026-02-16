@@ -4,7 +4,7 @@ import type {
   ChannelId,
   ChannelPlugin,
 } from "../../channels/plugins/types.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { MoltBotConfig } from "../../config/config.js";
 import {
   buildChannelAccountSnapshot,
   formatChannelAllowFrom,
@@ -88,7 +88,7 @@ const formatAccountLabel = (params: { accountId: string; name?: string }) => {
 const resolveAccountEnabled = (
   plugin: ChannelPlugin,
   account: unknown,
-  cfg: OpenClawConfig,
+  cfg: MoltBotConfig,
 ): boolean => {
   if (plugin.config.isEnabled) {
     return plugin.config.isEnabled(account, cfg);
@@ -100,7 +100,7 @@ const resolveAccountEnabled = (
 const resolveAccountConfigured = async (
   plugin: ChannelPlugin,
   account: unknown,
-  cfg: OpenClawConfig,
+  cfg: MoltBotConfig,
 ): Promise<boolean> => {
   if (plugin.config.isConfigured) {
     return await plugin.config.isConfigured(account, cfg);
@@ -111,7 +111,7 @@ const resolveAccountConfigured = async (
 
 const buildAccountNotes = (params: {
   plugin: ChannelPlugin;
-  cfg: OpenClawConfig;
+  cfg: MoltBotConfig;
   entry: ChannelAccountRow;
 }) => {
   const { plugin, cfg, entry } = params;
@@ -201,7 +201,7 @@ function collectMissingPaths(accounts: ChannelAccountRow[]): string[] {
 
 function summarizeTokenConfig(params: {
   plugin: ChannelPlugin;
-  cfg: OpenClawConfig;
+  cfg: MoltBotConfig;
   accounts: ChannelAccountRow[];
   showSecrets: boolean;
 }): { state: "ok" | "setup" | "warn" | null; detail: string | null } {
@@ -288,7 +288,7 @@ function summarizeTokenConfig(params: {
 // `status --all` channels table.
 // Keep this generic: channel-specific rules belong in the channel plugin.
 export async function buildChannelsTable(
-  cfg: OpenClawConfig,
+  cfg: MoltBotConfig,
   opts?: { showSecrets?: boolean },
 ): Promise<{
   rows: ChannelRow[];

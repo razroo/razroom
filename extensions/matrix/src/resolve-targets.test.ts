@@ -1,4 +1,4 @@
-import type { ChannelDirectoryEntry } from "openclaw/plugin-sdk";
+import type { ChannelDirectoryEntry } from "moltbot/plugin-sdk";
 import { describe, expect, it, mock, spyOn, beforeEach } from "bun:test";
 import { listMatrixDirectoryPeersLive } from "./directory-live.js";
 import { resolveMatrixTargets } from "./resolve-targets.js";

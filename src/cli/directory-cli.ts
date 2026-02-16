@@ -70,7 +70,7 @@ export function registerDirectoryCli(program: Command) {
       () =>
         `\n${theme.muted("Docs:")} ${formatDocsLink(
           "/cli/directory",
-          "docs.openclaw.ai/cli/directory",
+          "docs.moltbot.ai/cli/directory",
         )}\n`,
     )
     .action(() => {

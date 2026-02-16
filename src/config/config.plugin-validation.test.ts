@@ -24,14 +24,14 @@ async function writePluginFixture(params: {
     manifest.channels = params.channels;
   }
   await fs.writeFile(
-    path.join(params.dir, "openclaw.plugin.json"),
+    path.join(params.dir, "moltbot.plugin.json"),
     JSON.stringify(manifest, null, 2),
     "utf-8",
   );
 }
 
 describe("config plugin validation", () => {
-  const fixtureRoot = path.join(os.tmpdir(), "openclaw-config-plugin-validation");
+  const fixtureRoot = path.join(os.tmpdir(), "moltbot-config-plugin-validation");
   let caseIndex = 0;
 
   function createCaseHome() {
@@ -40,7 +40,7 @@ describe("config plugin validation", () => {
   }
 
   const validateInHome = (home: string, raw: unknown) => {
-    process.env.OPENCLAW_STATE_DIR = path.join(home, ".openclaw");
+    process.env.MOLTBOT_STATE_DIR = path.join(home, ".moltbot");
     return validateConfigObjectWithPlugins(raw);
   };
 

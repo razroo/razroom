@@ -5,7 +5,7 @@ describe("buildInboundLine", () => {
   it("prefixes group messages with sender", () => {
     const line = buildInboundLine({
       cfg: {
-        agents: { defaults: { workspace: "/tmp/openclaw" } },
+        agents: { defaults: { workspace: "/tmp/moltbot" } },
         channels: { whatsapp: { messagePrefix: "" } },
       } as never,
       agentId: "main",
@@ -34,7 +34,7 @@ describe("buildInboundLine", () => {
   it("includes reply-to context blocks when replyToBody is present", () => {
     const line = buildInboundLine({
       cfg: {
-        agents: { defaults: { workspace: "/tmp/openclaw" } },
+        agents: { defaults: { workspace: "/tmp/moltbot" } },
         channels: { whatsapp: { messagePrefix: "" } },
       } as never,
       agentId: "main",
@@ -58,7 +58,7 @@ describe("buildInboundLine", () => {
   it("applies the WhatsApp messagePrefix when configured", () => {
     const line = buildInboundLine({
       cfg: {
-        agents: { defaults: { workspace: "/tmp/openclaw" } },
+        agents: { defaults: { workspace: "/tmp/moltbot" } },
         channels: { whatsapp: { messagePrefix: "[PFX]" } },
       } as never,
       agentId: "main",

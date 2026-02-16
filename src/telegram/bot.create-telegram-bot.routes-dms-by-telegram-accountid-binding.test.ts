@@ -50,7 +50,7 @@ describe("createTelegramBot", () => {
         date: 1736380800,
         message_id: 42,
       },
-      me: { username: "openclaw_bot" },
+      me: { username: "moltbot_bot" },
       getFile: async () => ({ download: async () => new Uint8Array() }),
     });
 
@@ -83,7 +83,7 @@ describe("createTelegramBot", () => {
         text: "hello",
         date: 1736380800,
       },
-      me: { username: "openclaw_bot" },
+      me: { username: "moltbot_bot" },
       getFile: async () => ({ download: async () => new Uint8Array() }),
     });
 
@@ -124,7 +124,7 @@ describe("createTelegramBot", () => {
         date: 1736380800,
         message_thread_id: 99,
       },
-      me: { username: "openclaw_bot" },
+      me: { username: "moltbot_bot" },
       getFile: async () => ({ download: async () => new Uint8Array() }),
     });
 
@@ -151,7 +151,7 @@ describe("createTelegramBot", () => {
         text: "hello",
         date: 1736380800,
       },
-      me: { username: "openclaw_bot" },
+      me: { username: "moltbot_bot" },
       getFile: async () => ({ download: async () => new Uint8Array() }),
     });
 
@@ -228,7 +228,7 @@ describe("createTelegramBot", () => {
         message_id: 42,
         message_thread_id: 99,
       },
-      me: { username: "openclaw_bot" },
+      me: { username: "moltbot_bot" },
       getFile: async () => ({ download: async () => new Uint8Array() }),
     });
 
@@ -289,7 +289,7 @@ describe("createTelegramBot", () => {
         message_id: 42,
         message_thread_id: 99,
       },
-      me: { username: "openclaw_bot" },
+      me: { username: "moltbot_bot" },
       getFile: async () => ({ download: async () => new Uint8Array() }),
     });
 
@@ -325,7 +325,7 @@ describe("createTelegramBot", () => {
         message_id: 5,
         from: { first_name: "Ada" },
       },
-      me: { username: "openclaw_bot" },
+      me: { username: "moltbot_bot" },
       getFile: async () => ({ download: async () => new Uint8Array() }),
     });
 

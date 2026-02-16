@@ -30,16 +30,16 @@ const noopAsync = async () => {};
 const noop = () => {};
 const authProfilePathFor = (agentDir: string) => path.join(agentDir, "auth-profiles.json");
 const requireAgentDir = () => {
-  const agentDir = process.env.OPENCLAW_AGENT_DIR;
+  const agentDir = process.env.MOLTBOT_AGENT_DIR;
   if (!agentDir) {
-    throw new Error("OPENCLAW_AGENT_DIR not set");
+    throw new Error("MOLTBOT_AGENT_DIR not set");
   }
   return agentDir;
 };
 
 describe("applyAuthChoice", () => {
-  const previousStateDir = process.env.OPENCLAW_STATE_DIR;
-  const previousAgentDir = process.env.OPENCLAW_AGENT_DIR;
+  const previousStateDir = process.env.MOLTBOT_STATE_DIR;
+  const previousAgentDir = process.env.MOLTBOT_AGENT_DIR;
   const previousPiAgentDir = process.env.PI_CODING_AGENT_DIR;
   const previousAnthropicKey = process.env.ANTHROPIC_API_KEY;
   const previousOpenrouterKey = process.env.OPENROUTER_API_KEY;
@@ -62,14 +62,14 @@ describe("applyAuthChoice", () => {
       tempStateDir = null;
     }
     if (previousStateDir === undefined) {
-      delete process.env.OPENCLAW_STATE_DIR;
+      delete process.env.MOLTBOT_STATE_DIR;
     } else {
-      process.env.OPENCLAW_STATE_DIR = previousStateDir;
+      process.env.MOLTBOT_STATE_DIR = previousStateDir;
     }
     if (previousAgentDir === undefined) {
-      delete process.env.OPENCLAW_AGENT_DIR;
+      delete process.env.MOLTBOT_AGENT_DIR;
     } else {
-      process.env.OPENCLAW_AGENT_DIR = previousAgentDir;
+      process.env.MOLTBOT_AGENT_DIR = previousAgentDir;
     }
     if (previousPiAgentDir === undefined) {
       delete process.env.PI_CODING_AGENT_DIR;
@@ -124,10 +124,10 @@ describe("applyAuthChoice", () => {
   });
 
   it("does not throw when openai-codex oauth fails", async () => {
-    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-auth-"));
-    process.env.OPENCLAW_STATE_DIR = tempStateDir;
-    process.env.OPENCLAW_AGENT_DIR = path.join(tempStateDir, "agent");
-    process.env.PI_CODING_AGENT_DIR = process.env.OPENCLAW_AGENT_DIR;
+    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-auth-"));
+    process.env.MOLTBOT_STATE_DIR = tempStateDir;
+    process.env.MOLTBOT_AGENT_DIR = path.join(tempStateDir, "agent");
+    process.env.PI_CODING_AGENT_DIR = process.env.MOLTBOT_AGENT_DIR;
 
     loginOpenAICodexOAuth.mockRejectedValueOnce(new Error("oauth failed"));
 
@@ -161,10 +161,10 @@ describe("applyAuthChoice", () => {
   });
 
   it("prompts and writes MiniMax API key when selecting minimax-api", async () => {
-    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-auth-"));
-    process.env.OPENCLAW_STATE_DIR = tempStateDir;
-    process.env.OPENCLAW_AGENT_DIR = path.join(tempStateDir, "agent");
-    process.env.PI_CODING_AGENT_DIR = process.env.OPENCLAW_AGENT_DIR;
+    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-auth-"));
+    process.env.MOLTBOT_STATE_DIR = tempStateDir;
+    process.env.MOLTBOT_AGENT_DIR = path.join(tempStateDir, "agent");
+    process.env.PI_CODING_AGENT_DIR = process.env.MOLTBOT_AGENT_DIR;
 
     const text = mock().mockResolvedValue("sk-minimax-test");
     const select: WizardPrompter["select"] = mock(
@@ -214,10 +214,10 @@ describe("applyAuthChoice", () => {
   });
 
   it("prompts and writes MiniMax API key when selecting minimax-api-key-cn", async () => {
-    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-auth-"));
-    process.env.OPENCLAW_STATE_DIR = tempStateDir;
-    process.env.OPENCLAW_AGENT_DIR = path.join(tempStateDir, "agent");
-    process.env.PI_CODING_AGENT_DIR = process.env.OPENCLAW_AGENT_DIR;
+    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-auth-"));
+    process.env.MOLTBOT_STATE_DIR = tempStateDir;
+    process.env.MOLTBOT_AGENT_DIR = path.join(tempStateDir, "agent");
+    process.env.PI_CODING_AGENT_DIR = process.env.MOLTBOT_AGENT_DIR;
 
     const text = mock().mockResolvedValue("sk-minimax-test");
     const select: WizardPrompter["select"] = mock(
@@ -268,10 +268,10 @@ describe("applyAuthChoice", () => {
   });
 
   it("prompts and writes Synthetic API key when selecting synthetic-api-key", async () => {
-    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-auth-"));
-    process.env.OPENCLAW_STATE_DIR = tempStateDir;
-    process.env.OPENCLAW_AGENT_DIR = path.join(tempStateDir, "agent");
-    process.env.PI_CODING_AGENT_DIR = process.env.OPENCLAW_AGENT_DIR;
+    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-auth-"));
+    process.env.MOLTBOT_STATE_DIR = tempStateDir;
+    process.env.MOLTBOT_AGENT_DIR = path.join(tempStateDir, "agent");
+    process.env.PI_CODING_AGENT_DIR = process.env.MOLTBOT_AGENT_DIR;
 
     const text = mock().mockResolvedValue("sk-synthetic-test");
     const select: WizardPrompter["select"] = mock(
@@ -321,10 +321,10 @@ describe("applyAuthChoice", () => {
   });
 
   it("prompts and writes Hugging Face API key when selecting huggingface-api-key", async () => {
-    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-auth-"));
-    process.env.OPENCLAW_STATE_DIR = tempStateDir;
-    process.env.OPENCLAW_AGENT_DIR = path.join(tempStateDir, "agent");
-    process.env.PI_CODING_AGENT_DIR = process.env.OPENCLAW_AGENT_DIR;
+    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-auth-"));
+    process.env.MOLTBOT_STATE_DIR = tempStateDir;
+    process.env.MOLTBOT_AGENT_DIR = path.join(tempStateDir, "agent");
+    process.env.PI_CODING_AGENT_DIR = process.env.MOLTBOT_AGENT_DIR;
 
     const text = mock().mockResolvedValue("hf-test-token");
     const select: WizardPrompter["select"] = mock(
@@ -375,10 +375,10 @@ describe("applyAuthChoice", () => {
   });
 
   it("prompts for Z.AI endpoint when selecting zai-api-key", async () => {
-    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-auth-"));
-    process.env.OPENCLAW_STATE_DIR = tempStateDir;
-    process.env.OPENCLAW_AGENT_DIR = path.join(tempStateDir, "agent");
-    process.env.PI_CODING_AGENT_DIR = process.env.OPENCLAW_AGENT_DIR;
+    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-auth-"));
+    process.env.MOLTBOT_STATE_DIR = tempStateDir;
+    process.env.MOLTBOT_AGENT_DIR = path.join(tempStateDir, "agent");
+    process.env.PI_CODING_AGENT_DIR = process.env.MOLTBOT_AGENT_DIR;
 
     const text = mock().mockResolvedValue("zai-test-key");
     const select = mock(async (params: { message: string }) => {
@@ -429,10 +429,10 @@ describe("applyAuthChoice", () => {
   });
 
   it("uses endpoint-specific auth choice without prompting for Z.AI endpoint", async () => {
-    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-auth-"));
-    process.env.OPENCLAW_STATE_DIR = tempStateDir;
-    process.env.OPENCLAW_AGENT_DIR = path.join(tempStateDir, "agent");
-    process.env.PI_CODING_AGENT_DIR = process.env.OPENCLAW_AGENT_DIR;
+    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-auth-"));
+    process.env.MOLTBOT_STATE_DIR = tempStateDir;
+    process.env.MOLTBOT_AGENT_DIR = path.join(tempStateDir, "agent");
+    process.env.PI_CODING_AGENT_DIR = process.env.MOLTBOT_AGENT_DIR;
 
     const text = mock().mockResolvedValue("zai-test-key");
     const select = mock(async () => "default");
@@ -470,10 +470,10 @@ describe("applyAuthChoice", () => {
   });
 
   it("maps apiKey + tokenProvider=huggingface to huggingface-api-key flow", async () => {
-    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-auth-"));
-    process.env.OPENCLAW_STATE_DIR = tempStateDir;
-    process.env.OPENCLAW_AGENT_DIR = path.join(tempStateDir, "agent");
-    process.env.PI_CODING_AGENT_DIR = process.env.OPENCLAW_AGENT_DIR;
+    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-auth-"));
+    process.env.MOLTBOT_STATE_DIR = tempStateDir;
+    process.env.MOLTBOT_AGENT_DIR = path.join(tempStateDir, "agent");
+    process.env.PI_CODING_AGENT_DIR = process.env.MOLTBOT_AGENT_DIR;
     delete process.env.HF_TOKEN;
     delete process.env.HUGGINGFACE_HUB_TOKEN;
 
@@ -528,10 +528,10 @@ describe("applyAuthChoice", () => {
     expect(parsed.profiles?.["huggingface:default"]?.key).toBe("hf-token-provider-test");
   });
   it("does not override the global default model when selecting xai-api-key without setDefaultModel", async () => {
-    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-auth-"));
-    process.env.OPENCLAW_STATE_DIR = tempStateDir;
-    process.env.OPENCLAW_AGENT_DIR = path.join(tempStateDir, "agent");
-    process.env.PI_CODING_AGENT_DIR = process.env.OPENCLAW_AGENT_DIR;
+    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-auth-"));
+    process.env.MOLTBOT_STATE_DIR = tempStateDir;
+    process.env.MOLTBOT_AGENT_DIR = path.join(tempStateDir, "agent");
+    process.env.PI_CODING_AGENT_DIR = process.env.MOLTBOT_AGENT_DIR;
 
     const text = mock().mockResolvedValue("sk-xai-test");
     const select: WizardPrompter["select"] = mock(
@@ -582,10 +582,10 @@ describe("applyAuthChoice", () => {
   });
 
   it("sets default model when selecting github-copilot", async () => {
-    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-auth-"));
-    process.env.OPENCLAW_STATE_DIR = tempStateDir;
-    process.env.OPENCLAW_AGENT_DIR = path.join(tempStateDir, "agent");
-    process.env.PI_CODING_AGENT_DIR = process.env.OPENCLAW_AGENT_DIR;
+    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-auth-"));
+    process.env.MOLTBOT_STATE_DIR = tempStateDir;
+    process.env.MOLTBOT_AGENT_DIR = path.join(tempStateDir, "agent");
+    process.env.PI_CODING_AGENT_DIR = process.env.MOLTBOT_AGENT_DIR;
 
     const prompter: WizardPrompter = {
       intro: mock(noopAsync),
@@ -634,10 +634,10 @@ describe("applyAuthChoice", () => {
   });
 
   it("does not override the default model when selecting opencode-zen without setDefaultModel", async () => {
-    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-auth-"));
-    process.env.OPENCLAW_STATE_DIR = tempStateDir;
-    process.env.OPENCLAW_AGENT_DIR = path.join(tempStateDir, "agent");
-    process.env.PI_CODING_AGENT_DIR = process.env.OPENCLAW_AGENT_DIR;
+    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-auth-"));
+    process.env.MOLTBOT_STATE_DIR = tempStateDir;
+    process.env.MOLTBOT_AGENT_DIR = path.join(tempStateDir, "agent");
+    process.env.PI_CODING_AGENT_DIR = process.env.MOLTBOT_AGENT_DIR;
 
     const text = mock().mockResolvedValue("sk-opencode-zen-test");
     const select: WizardPrompter["select"] = mock(
@@ -685,10 +685,10 @@ describe("applyAuthChoice", () => {
   });
 
   it("does not persist literal 'undefined' when Anthropic API key prompt returns undefined", async () => {
-    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-auth-"));
-    process.env.OPENCLAW_STATE_DIR = tempStateDir;
-    process.env.OPENCLAW_AGENT_DIR = path.join(tempStateDir, "agent");
-    process.env.PI_CODING_AGENT_DIR = process.env.OPENCLAW_AGENT_DIR;
+    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-auth-"));
+    process.env.MOLTBOT_STATE_DIR = tempStateDir;
+    process.env.MOLTBOT_AGENT_DIR = path.join(tempStateDir, "agent");
+    process.env.PI_CODING_AGENT_DIR = process.env.MOLTBOT_AGENT_DIR;
     delete process.env.ANTHROPIC_API_KEY;
 
     const text = mock(async () => undefined as unknown as string);
@@ -733,10 +733,10 @@ describe("applyAuthChoice", () => {
   });
 
   it("does not persist literal 'undefined' when OpenRouter API key prompt returns undefined", async () => {
-    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-auth-"));
-    process.env.OPENCLAW_STATE_DIR = tempStateDir;
-    process.env.OPENCLAW_AGENT_DIR = path.join(tempStateDir, "agent");
-    process.env.PI_CODING_AGENT_DIR = process.env.OPENCLAW_AGENT_DIR;
+    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-auth-"));
+    process.env.MOLTBOT_STATE_DIR = tempStateDir;
+    process.env.MOLTBOT_AGENT_DIR = path.join(tempStateDir, "agent");
+    process.env.PI_CODING_AGENT_DIR = process.env.MOLTBOT_AGENT_DIR;
     delete process.env.OPENROUTER_API_KEY;
 
     const text = mock(async () => undefined as unknown as string);
@@ -781,10 +781,10 @@ describe("applyAuthChoice", () => {
   });
 
   it("uses existing OPENROUTER_API_KEY when selecting openrouter-api-key", async () => {
-    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-auth-"));
-    process.env.OPENCLAW_STATE_DIR = tempStateDir;
-    process.env.OPENCLAW_AGENT_DIR = path.join(tempStateDir, "agent");
-    process.env.PI_CODING_AGENT_DIR = process.env.OPENCLAW_AGENT_DIR;
+    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-auth-"));
+    process.env.MOLTBOT_STATE_DIR = tempStateDir;
+    process.env.MOLTBOT_AGENT_DIR = path.join(tempStateDir, "agent");
+    process.env.PI_CODING_AGENT_DIR = process.env.MOLTBOT_AGENT_DIR;
     process.env.OPENROUTER_API_KEY = "sk-openrouter-test";
 
     const text = mock();
@@ -842,10 +842,10 @@ describe("applyAuthChoice", () => {
   });
 
   it("ignores legacy LiteLLM oauth profiles when selecting litellm-api-key", async () => {
-    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-auth-"));
-    process.env.OPENCLAW_STATE_DIR = tempStateDir;
-    process.env.OPENCLAW_AGENT_DIR = path.join(tempStateDir, "agent");
-    process.env.PI_CODING_AGENT_DIR = process.env.OPENCLAW_AGENT_DIR;
+    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-auth-"));
+    process.env.MOLTBOT_STATE_DIR = tempStateDir;
+    process.env.MOLTBOT_AGENT_DIR = path.join(tempStateDir, "agent");
+    process.env.PI_CODING_AGENT_DIR = process.env.MOLTBOT_AGENT_DIR;
     process.env.LITELLM_API_KEY = "sk-litellm-test";
 
     const authProfilePath = authProfilePathFor(requireAgentDir());
@@ -932,10 +932,10 @@ describe("applyAuthChoice", () => {
   });
 
   it("uses existing AI_GATEWAY_API_KEY when selecting ai-gateway-api-key", async () => {
-    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-auth-"));
-    process.env.OPENCLAW_STATE_DIR = tempStateDir;
-    process.env.OPENCLAW_AGENT_DIR = path.join(tempStateDir, "agent");
-    process.env.PI_CODING_AGENT_DIR = process.env.OPENCLAW_AGENT_DIR;
+    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-auth-"));
+    process.env.MOLTBOT_STATE_DIR = tempStateDir;
+    process.env.MOLTBOT_AGENT_DIR = path.join(tempStateDir, "agent");
+    process.env.PI_CODING_AGENT_DIR = process.env.MOLTBOT_AGENT_DIR;
     process.env.AI_GATEWAY_API_KEY = "gateway-test-key";
 
     const text = mock();
@@ -995,10 +995,10 @@ describe("applyAuthChoice", () => {
   });
 
   it("uses existing CLOUDFLARE_AI_GATEWAY_API_KEY when selecting cloudflare-ai-gateway-api-key", async () => {
-    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-auth-"));
-    process.env.OPENCLAW_STATE_DIR = tempStateDir;
-    process.env.OPENCLAW_AGENT_DIR = path.join(tempStateDir, "agent");
-    process.env.PI_CODING_AGENT_DIR = process.env.OPENCLAW_AGENT_DIR;
+    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-auth-"));
+    process.env.MOLTBOT_STATE_DIR = tempStateDir;
+    process.env.MOLTBOT_AGENT_DIR = path.join(tempStateDir, "agent");
+    process.env.PI_CODING_AGENT_DIR = process.env.MOLTBOT_AGENT_DIR;
     process.env.CLOUDFLARE_AI_GATEWAY_API_KEY = "cf-gateway-test-key";
 
     const text = vi
@@ -1065,10 +1065,10 @@ describe("applyAuthChoice", () => {
   });
 
   it("writes Chutes OAuth credentials when selecting chutes (remote/manual)", async () => {
-    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-auth-"));
-    process.env.OPENCLAW_STATE_DIR = tempStateDir;
-    process.env.OPENCLAW_AGENT_DIR = path.join(tempStateDir, "agent");
-    process.env.PI_CODING_AGENT_DIR = process.env.OPENCLAW_AGENT_DIR;
+    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-auth-"));
+    process.env.MOLTBOT_STATE_DIR = tempStateDir;
+    process.env.MOLTBOT_AGENT_DIR = path.join(tempStateDir, "agent");
+    process.env.PI_CODING_AGENT_DIR = process.env.MOLTBOT_AGENT_DIR;
     process.env.SSH_TTY = "1";
     process.env.CHUTES_CLIENT_ID = "cid_test";
 
@@ -1164,10 +1164,10 @@ describe("applyAuthChoice", () => {
   });
 
   it("writes Qwen credentials when selecting qwen-portal", async () => {
-    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-auth-"));
-    process.env.OPENCLAW_STATE_DIR = tempStateDir;
-    process.env.OPENCLAW_AGENT_DIR = path.join(tempStateDir, "agent");
-    process.env.PI_CODING_AGENT_DIR = process.env.OPENCLAW_AGENT_DIR;
+    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-auth-"));
+    process.env.MOLTBOT_STATE_DIR = tempStateDir;
+    process.env.MOLTBOT_AGENT_DIR = path.join(tempStateDir, "agent");
+    process.env.PI_CODING_AGENT_DIR = process.env.MOLTBOT_AGENT_DIR;
 
     resolvePluginProviders.mockReturnValue([
       {
@@ -1259,10 +1259,10 @@ describe("applyAuthChoice", () => {
   });
 
   it("writes MiniMax credentials when selecting minimax-portal", async () => {
-    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-auth-"));
-    process.env.OPENCLAW_STATE_DIR = tempStateDir;
-    process.env.OPENCLAW_AGENT_DIR = path.join(tempStateDir, "agent");
-    process.env.PI_CODING_AGENT_DIR = process.env.OPENCLAW_AGENT_DIR;
+    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-auth-"));
+    process.env.MOLTBOT_STATE_DIR = tempStateDir;
+    process.env.MOLTBOT_AGENT_DIR = path.join(tempStateDir, "agent");
+    process.env.PI_CODING_AGENT_DIR = process.env.MOLTBOT_AGENT_DIR;
 
     resolvePluginProviders.mockReturnValue([
       {

@@ -7,7 +7,7 @@ import {
 describe("github-copilot token", () => {
   const loadJsonFile = mock();
   const saveJsonFile = mock();
-  const cachePath = "/tmp/openclaw-state/credentials/github-copilot.token.json";
+  const cachePath = "/tmp/moltbot-state/credentials/github-copilot.token.json";
 
   beforeEach(() => {
     loadJsonFile.mockReset();

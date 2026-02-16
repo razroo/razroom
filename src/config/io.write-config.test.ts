@@ -23,7 +23,7 @@ describe("config io write", () => {
     userProfile: process.env.USERPROFILE,
     homeDrive: process.env.HOMEDRIVE,
     homePath: process.env.HOMEPATH,
-    stateDir: process.env.OPENCLAW_STATE_DIR,
+    stateDir: process.env.MOLTBOT_STATE_DIR,
   });
 
   const restoreHomeEnv = (snapshot: HomeEnvSnapshot) => {
@@ -38,7 +38,7 @@ describe("config io write", () => {
     restoreKey("USERPROFILE", snapshot.userProfile);
     restoreKey("HOMEDRIVE", snapshot.homeDrive);
     restoreKey("HOMEPATH", snapshot.homePath);
-    restoreKey("OPENCLAW_STATE_DIR", snapshot.stateDir);
+    restoreKey("MOLTBOT_STATE_DIR", snapshot.stateDir);
   };
 
   let fixtureRoot = "";
@@ -47,12 +47,12 @@ describe("config io write", () => {
   async function withTempHome(prefix: string, fn: (home: string) => Promise<void>): Promise<void> {
     const safePrefix = prefix.trim().replace(/[^a-zA-Z0-9._-]+/g, "-") || "tmp";
     const home = path.join(fixtureRoot, `${safePrefix}${caseId++}`);
-    await fs.mkdir(path.join(home, ".openclaw"), { recursive: true });
+    await fs.mkdir(path.join(home, ".moltbot"), { recursive: true });
 
     const snapshot = snapshotHomeEnv();
     process.env.HOME = home;
     process.env.USERPROFILE = home;
-    process.env.OPENCLAW_STATE_DIR = path.join(home, ".openclaw");
+    process.env.MOLTBOT_STATE_DIR = path.join(home, ".moltbot");
 
     if (process.platform === "win32") {
       const match = home.match(/^([A-Za-z]:)(.*)$/);
@@ -70,7 +70,7 @@ describe("config io write", () => {
   }
 
   beforeAll(async () => {
-    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-config-io-"));
+    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-config-io-"));
   });
 
   afterAll(async () => {
@@ -81,8 +81,8 @@ describe("config io write", () => {
   });
 
   it("persists caller changes onto resolved config without leaking runtime defaults", async () => {
-    await withTempHome("openclaw-config-io-", async (home) => {
-      const configPath = path.join(home, ".openclaw", "openclaw.json");
+    await withTempHome("moltbot-config-io-", async (home) => {
+      const configPath = path.join(home, ".moltbot", "moltbot.json");
       await fs.mkdir(path.dirname(configPath), { recursive: true });
       await fs.writeFile(
         configPath,
@@ -122,8 +122,8 @@ describe("config io write", () => {
   });
 
   it("preserves env var references when writing", async () => {
-    await withTempHome("openclaw-config-io-", async (home) => {
-      const configPath = path.join(home, ".openclaw", "openclaw.json");
+    await withTempHome("moltbot-config-io-", async (home) => {
+      const configPath = path.join(home, ".moltbot", "moltbot.json");
       await fs.mkdir(path.dirname(configPath), { recursive: true });
       await fs.writeFile(
         configPath,
@@ -181,8 +181,8 @@ describe("config io write", () => {
   });
 
   it("does not reintroduce Slack/Discord legacy dm.policy defaults when writing", async () => {
-    await withTempHome("openclaw-config-io-", async (home) => {
-      const configPath = path.join(home, ".openclaw", "openclaw.json");
+    await withTempHome("moltbot-config-io-", async (home) => {
+      const configPath = path.join(home, ".moltbot", "moltbot.json");
       await fs.mkdir(path.dirname(configPath), { recursive: true });
       await fs.writeFile(
         configPath,
@@ -243,8 +243,8 @@ describe("config io write", () => {
   });
 
   it("keeps env refs in arrays when appending entries", async () => {
-    await withTempHome("openclaw-config-io-", async (home) => {
-      const configPath = path.join(home, ".openclaw", "openclaw.json");
+    await withTempHome("moltbot-config-io-", async (home) => {
+      const configPath = path.join(home, ".moltbot", "moltbot.json");
       await fs.mkdir(path.dirname(configPath), { recursive: true });
       await fs.writeFile(
         configPath,
@@ -316,8 +316,8 @@ describe("config io write", () => {
   });
 
   it("logs an overwrite audit entry when replacing an existing config file", async () => {
-    await withTempHome("openclaw-config-io-", async (home) => {
-      const configPath = path.join(home, ".openclaw", "openclaw.json");
+    await withTempHome("moltbot-config-io-", async (home) => {
+      const configPath = path.join(home, ".moltbot", "moltbot.json");
       await fs.mkdir(path.dirname(configPath), { recursive: true });
       await fs.writeFile(
         configPath,
@@ -355,7 +355,7 @@ describe("config io write", () => {
   });
 
   it("does not log an overwrite audit entry when creating config for the first time", async () => {
-    await withTempHome("openclaw-config-io-", async (home) => {
+    await withTempHome("moltbot-config-io-", async (home) => {
       const warn = mock();
       const io = createConfigIO({
         env: {} as NodeJS.ProcessEnv,
@@ -378,9 +378,9 @@ describe("config io write", () => {
   });
 
   it("appends config write audit JSONL entries with forensic metadata", async () => {
-    await withTempHome("openclaw-config-io-", async (home) => {
-      const configPath = path.join(home, ".openclaw", "openclaw.json");
-      const auditPath = path.join(home, ".openclaw", "logs", "config-audit.jsonl");
+    await withTempHome("moltbot-config-io-", async (home) => {
+      const configPath = path.join(home, ".moltbot", "moltbot.json");
+      const auditPath = path.join(home, ".moltbot", "logs", "config-audit.jsonl");
       await fs.mkdir(path.dirname(configPath), { recursive: true });
       await fs.writeFile(
         configPath,
@@ -423,9 +423,9 @@ describe("config io write", () => {
   });
 
   it("records gateway watch session markers in config audit entries", async () => {
-    await withTempHome("openclaw-config-io-", async (home) => {
-      const configPath = path.join(home, ".openclaw", "openclaw.json");
-      const auditPath = path.join(home, ".openclaw", "logs", "config-audit.jsonl");
+    await withTempHome("moltbot-config-io-", async (home) => {
+      const configPath = path.join(home, ".moltbot", "moltbot.json");
+      const auditPath = path.join(home, ".moltbot", "logs", "config-audit.jsonl");
       await fs.mkdir(path.dirname(configPath), { recursive: true });
       await fs.writeFile(
         configPath,
@@ -435,9 +435,9 @@ describe("config io write", () => {
 
       const io = createConfigIO({
         env: {
-          OPENCLAW_WATCH_MODE: "1",
-          OPENCLAW_WATCH_SESSION: "watch-session-1",
-          OPENCLAW_WATCH_COMMAND: "gateway --force",
+          MOLTBOT_WATCH_MODE: "1",
+          MOLTBOT_WATCH_SESSION: "watch-session-1",
+          MOLTBOT_WATCH_COMMAND: "gateway --force",
         } as NodeJS.ProcessEnv,
         homedir: () => home,
         logger: {

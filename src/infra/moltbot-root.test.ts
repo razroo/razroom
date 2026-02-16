@@ -4,8 +4,8 @@ import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 
 type FakeFsEntry = { kind: "file"; content: string } | { kind: "dir" };
 
-const VITEST_FS_BASE = path.join(path.parse(process.cwd()).root, "__openclaw_vitest__");
-const FIXTURE_BASE = path.join(VITEST_FS_BASE, "openclaw-root");
+const VITEST_FS_BASE = path.join(path.parse(process.cwd()).root, "__moltbot_vitest__");
+const FIXTURE_BASE = path.join(VITEST_FS_BASE, "moltbot-root");
 
 const state = vi.hoisted(() => ({
   entries: new Map<string, FakeFsEntry>(),
@@ -91,60 +91,60 @@ mock("node:fs/promises", async (importOriginal) => {
   return { ...wrapped, default: wrapped };
 });
 
-describe("resolveOpenClawPackageRoot", () => {
+describe("resolveMoltBotPackageRoot", () => {
   beforeEach(() => {
     state.entries.clear();
     state.realpaths.clear();
   });
 
   it("resolves package root from .bin argv1", async () => {
-    const { resolveOpenClawPackageRootSync } = await import("./openclaw-root.js");
+    const { resolveMoltBotPackageRootSync } = await import("./moltbot-root.js");
 
     const project = fx("bin-scenario");
-    const argv1 = path.join(project, "node_modules", ".bin", "openclaw");
-    const pkgRoot = path.join(project, "node_modules", "openclaw");
-    setFile(path.join(pkgRoot, "package.json"), JSON.stringify({ name: "openclaw" }));
+    const argv1 = path.join(project, "node_modules", ".bin", "moltbot");
+    const pkgRoot = path.join(project, "node_modules", "moltbot");
+    setFile(path.join(pkgRoot, "package.json"), JSON.stringify({ name: "moltbot" }));
 
-    expect(resolveOpenClawPackageRootSync({ argv1 })).toBe(pkgRoot);
+    expect(resolveMoltBotPackageRootSync({ argv1 })).toBe(pkgRoot);
   });
 
   it("resolves package root via symlinked argv1", async () => {
-    const { resolveOpenClawPackageRootSync } = await import("./openclaw-root.js");
+    const { resolveMoltBotPackageRootSync } = await import("./moltbot-root.js");
 
     const project = fx("symlink-scenario");
-    const bin = path.join(project, "bin", "openclaw");
+    const bin = path.join(project, "bin", "moltbot");
     const realPkg = path.join(project, "real-pkg");
-    state.realpaths.set(abs(bin), abs(path.join(realPkg, "openclaw.mjs")));
-    setFile(path.join(realPkg, "package.json"), JSON.stringify({ name: "openclaw" }));
+    state.realpaths.set(abs(bin), abs(path.join(realPkg, "moltbot.mjs")));
+    setFile(path.join(realPkg, "package.json"), JSON.stringify({ name: "moltbot" }));
 
-    expect(resolveOpenClawPackageRootSync({ argv1: bin })).toBe(realPkg);
+    expect(resolveMoltBotPackageRootSync({ argv1: bin })).toBe(realPkg);
   });
 
   it("prefers moduleUrl candidates", async () => {
-    const { resolveOpenClawPackageRootSync } = await import("./openclaw-root.js");
+    const { resolveMoltBotPackageRootSync } = await import("./moltbot-root.js");
 
     const pkgRoot = fx("moduleurl");
-    setFile(path.join(pkgRoot, "package.json"), JSON.stringify({ name: "openclaw" }));
+    setFile(path.join(pkgRoot, "package.json"), JSON.stringify({ name: "moltbot" }));
     const moduleUrl = pathToFileURL(path.join(pkgRoot, "dist", "index.js")).toString();
 
-    expect(resolveOpenClawPackageRootSync({ moduleUrl })).toBe(pkgRoot);
+    expect(resolveMoltBotPackageRootSync({ moduleUrl })).toBe(pkgRoot);
   });
 
-  it("returns null for non-openclaw package roots", async () => {
-    const { resolveOpenClawPackageRootSync } = await import("./openclaw-root.js");
+  it("returns null for non-moltbot package roots", async () => {
+    const { resolveMoltBotPackageRootSync } = await import("./moltbot-root.js");
 
-    const pkgRoot = fx("not-openclaw");
-    setFile(path.join(pkgRoot, "package.json"), JSON.stringify({ name: "not-openclaw" }));
+    const pkgRoot = fx("not-moltbot");
+    setFile(path.join(pkgRoot, "package.json"), JSON.stringify({ name: "not-moltbot" }));
 
-    expect(resolveOpenClawPackageRootSync({ cwd: pkgRoot })).toBeNull();
+    expect(resolveMoltBotPackageRootSync({ cwd: pkgRoot })).toBeNull();
   });
 
   it("async resolver matches sync behavior", async () => {
-    const { resolveOpenClawPackageRoot } = await import("./openclaw-root.js");
+    const { resolveMoltBotPackageRoot } = await import("./moltbot-root.js");
 
     const pkgRoot = fx("async");
-    setFile(path.join(pkgRoot, "package.json"), JSON.stringify({ name: "openclaw" }));
+    setFile(path.join(pkgRoot, "package.json"), JSON.stringify({ name: "moltbot" }));
 
-    await expect(resolveOpenClawPackageRoot({ cwd: pkgRoot })).resolves.toBe(pkgRoot);
+    await expect(resolveMoltBotPackageRoot({ cwd: pkgRoot })).resolves.toBe(pkgRoot);
   });
 });

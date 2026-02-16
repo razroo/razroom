@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../../config/config.js";
+import type { MoltBotConfig } from "../../config/config.js";
 import type { SessionEntry } from "../../config/sessions.js";
 import type { MsgContext } from "../templating.js";
 import type { ElevatedLevel, ReasoningLevel, ThinkLevel, VerboseLevel } from "../thinking.js";
@@ -15,7 +15,7 @@ import {
 } from "./directive-handling.js";
 import { clearInlineDirectives } from "./get-reply-directives-utils.js";
 
-type AgentDefaults = NonNullable<OpenClawConfig["agents"]>["defaults"];
+type AgentDefaults = NonNullable<MoltBotConfig["agents"]>["defaults"];
 
 export type ApplyDirectiveResult =
   | { kind: "reply"; reply: ReplyPayload | ReplyPayload[] | undefined }
@@ -36,7 +36,7 @@ export type ApplyDirectiveResult =
 
 export async function applyInlineDirectiveOverrides(params: {
   ctx: MsgContext;
-  cfg: OpenClawConfig;
+  cfg: MoltBotConfig;
   agentId: string;
   agentDir: string;
   agentCfg: AgentDefaults;

@@ -3,15 +3,15 @@ import { afterAll, beforeAll, describe, expect, it, mock, spyOn } from "bun:test
 let previousProfile: string | undefined;
 
 beforeAll(() => {
-  previousProfile = process.env.OPENCLAW_PROFILE;
-  process.env.OPENCLAW_PROFILE = "isolated";
+  previousProfile = process.env.MOLTBOT_PROFILE;
+  process.env.MOLTBOT_PROFILE = "isolated";
 });
 
 afterAll(() => {
   if (previousProfile === undefined) {
-    delete process.env.OPENCLAW_PROFILE;
+    delete process.env.MOLTBOT_PROFILE;
   } else {
-    process.env.OPENCLAW_PROFILE = previousProfile;
+    process.env.MOLTBOT_PROFILE = previousProfile;
   }
 });
 
@@ -95,7 +95,7 @@ mock("../memory/manager.js", () => ({
         files: 2,
         chunks: 3,
         dirty: false,
-        workspaceDir: "/tmp/openclaw",
+        workspaceDir: "/tmp/moltbot",
         dbPath: "/tmp/memory.sqlite",
         provider: "openai",
         model: "text-embedding-3-small",
@@ -216,8 +216,8 @@ mock("../gateway/call.js", async (importOriginal) => {
 mock("../gateway/session-utils.js", () => ({
   listAgentsForGateway: mocks.listAgentsForGateway,
 }));
-mock("../infra/openclaw-root.js", () => ({
-  resolveOpenClawPackageRoot: mock().mockResolvedValue("/tmp/openclaw"),
+mock("../infra/moltbot-root.js", () => ({
+  resolveMoltBotPackageRoot: mock().mockResolvedValue("/tmp/moltbot"),
 }));
 mock("../infra/os-summary.js", () => ({
   resolveOsSummary: () => ({
@@ -229,11 +229,11 @@ mock("../infra/os-summary.js", () => ({
 }));
 mock("../infra/update-check.js", () => ({
   checkUpdateStatus: mock().mockResolvedValue({
-    root: "/tmp/openclaw",
+    root: "/tmp/moltbot",
     installKind: "git",
     packageManager: "pnpm",
     git: {
-      root: "/tmp/openclaw",
+      root: "/tmp/moltbot",
       branch: "main",
       upstream: "origin/main",
       dirty: false,
@@ -244,8 +244,8 @@ mock("../infra/update-check.js", () => ({
     deps: {
       manager: "pnpm",
       status: "ok",
-      lockfilePath: "/tmp/openclaw/pnpm-lock.yaml",
-      markerPath: "/tmp/openclaw/node_modules/.modules.yaml",
+      lockfilePath: "/tmp/moltbot/pnpm-lock.yaml",
+      markerPath: "/tmp/moltbot/node_modules/.modules.yaml",
     },
     registry: { latestVersion: "0.0.0" },
   }),
@@ -372,7 +372,7 @@ describe("statusCommand", () => {
     (runtime.log as vi.Mock).mockClear();
     await statusCommand({}, runtime as never);
     const logs = (runtime.log as vi.Mock).mock.calls.map((c) => String(c[0]));
-    expect(logs.some((l) => l.includes("OpenClaw status"))).toBe(true);
+    expect(logs.some((l) => l.includes("MoltBot status"))).toBe(true);
     expect(logs.some((l) => l.includes("Overview"))).toBe(true);
     expect(logs.some((l) => l.includes("Security audit"))).toBe(true);
     expect(logs.some((l) => l.includes("Summary:"))).toBe(true);
@@ -392,17 +392,17 @@ describe("statusCommand", () => {
     expect(
       logs.some(
         (l) =>
-          l.includes("openclaw status --all") ||
-          l.includes("openclaw --profile isolated status --all") ||
-          l.includes("openclaw status --all") ||
-          l.includes("openclaw --profile isolated status --all"),
+          l.includes("moltbot status --all") ||
+          l.includes("moltbot --profile isolated status --all") ||
+          l.includes("moltbot status --all") ||
+          l.includes("moltbot --profile isolated status --all"),
       ),
     ).toBe(true);
   });
 
   it("shows gateway auth when reachable", async () => {
-    const prevToken = process.env.OPENCLAW_GATEWAY_TOKEN;
-    process.env.OPENCLAW_GATEWAY_TOKEN = "abcd1234";
+    const prevToken = process.env.MOLTBOT_GATEWAY_TOKEN;
+    process.env.MOLTBOT_GATEWAY_TOKEN = "abcd1234";
     try {
       mocks.probeGateway.mockResolvedValueOnce({
         ok: true,
@@ -421,9 +421,9 @@ describe("statusCommand", () => {
       expect(logs.some((l) => l.includes("auth token"))).toBe(true);
     } finally {
       if (prevToken === undefined) {
-        delete process.env.OPENCLAW_GATEWAY_TOKEN;
+        delete process.env.MOLTBOT_GATEWAY_TOKEN;
       } else {
-        process.env.OPENCLAW_GATEWAY_TOKEN = prevToken;
+        process.env.MOLTBOT_GATEWAY_TOKEN = prevToken;
       }
     }
   });

@@ -5,7 +5,7 @@ mock("../pi-model-discovery.js", () => ({
   discoverModels: mock(() => ({ find: mock(() => null) })),
 }));
 
-import type { OpenClawConfig } from "../../config/config.js";
+import type { MoltBotConfig } from "../../config/config.js";
 import { discoverModels } from "../pi-model-discovery.js";
 import { buildInlineProviderModels, resolveModel } from "./model.js";
 import {
@@ -120,7 +120,7 @@ describe("resolveModel", () => {
           },
         },
       },
-    } as OpenClawConfig;
+    } as MoltBotConfig;
 
     const result = resolveModel("custom", "missing-model", "/tmp/agent", cfg);
 
@@ -326,7 +326,7 @@ describe("resolveModel", () => {
     // This test verifies the ordering: codex fallback must fire BEFORE the generic providerCfg fallback.
     // If ordering is wrong, the generic fallback would use api: "openai-responses" (the default)
     // instead of "openai-codex-responses".
-    const cfg: OpenClawConfig = {
+    const cfg: MoltBotConfig = {
       models: {
         providers: {
           "openai-codex": {
@@ -335,7 +335,7 @@ describe("resolveModel", () => {
           },
         },
       },
-    } as OpenClawConfig;
+    } as MoltBotConfig;
 
     vi.mocked(discoverModels).mockReturnValue({
       find: mock(() => null),

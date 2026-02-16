@@ -9,7 +9,7 @@
  * - Abort signal handling
  */
 
-import type { OpenClawConfig } from "openclaw/plugin-sdk";
+import type { MoltBotConfig } from "moltbot/plugin-sdk";
 import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import { twitchOutbound } from "./outbound.js";
 
@@ -49,7 +49,7 @@ describe("outbound", () => {
         },
       },
     },
-  } as unknown as OpenClawConfig;
+  } as unknown as MoltBotConfig;
 
   beforeEach(() => {
     // mock.restore() // TODO: Review mock cleanup;

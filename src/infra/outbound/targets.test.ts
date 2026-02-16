@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from "bun:test";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { MoltBotConfig } from "../../config/config.js";
 import { telegramPlugin } from "../../../extensions/telegram/src/channel.js";
 import { whatsappPlugin } from "../../../extensions/whatsapp/src/channel.js";
 import { setActivePluginRegistry } from "../../plugins/runtime.js";
@@ -17,7 +17,7 @@ describe("resolveOutboundTarget", () => {
   });
 
   it("rejects whatsapp with empty target even when allowFrom configured", () => {
-    const cfg: OpenClawConfig = {
+    const cfg: MoltBotConfig = {
       channels: { whatsapp: { allowFrom: ["+1555"] } },
     };
     const res = resolveOutboundTarget({

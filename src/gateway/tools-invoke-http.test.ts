@@ -51,7 +51,7 @@ mock("../plugins/tools.js", () => ({
 
 // Perf: the real tool factory instantiates many tools per request; for these HTTP
 // routing/policy tests we only need a small set of tool names.
-mock("../agents/openclaw-tools.js", () => {
+mock("../agents/moltbot-tools.js", () => {
   const toolInputError = (message: string) => {
     const err = new Error(message);
     err.name = "ToolInputError";
@@ -110,7 +110,7 @@ mock("../agents/openclaw-tools.js", () => {
   ];
 
   return {
-    createOpenClawTools: () => tools,
+    createMoltBotTools: () => tools,
   };
 });
 
@@ -163,8 +163,8 @@ afterAll(async () => {
 });
 
 beforeEach(() => {
-  delete process.env.OPENCLAW_GATEWAY_TOKEN;
-  delete process.env.OPENCLAW_GATEWAY_PASSWORD;
+  delete process.env.MOLTBOT_GATEWAY_TOKEN;
+  delete process.env.MOLTBOT_GATEWAY_PASSWORD;
   pluginHttpHandlers = [];
   cfg = {};
 });

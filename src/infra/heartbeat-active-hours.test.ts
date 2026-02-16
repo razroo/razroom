@@ -1,8 +1,8 @@
 import { describe, expect, it } from "bun:test";
-import type { OpenClawConfig } from "../config/config.js";
+import type { MoltBotConfig } from "../config/config.js";
 import { isWithinActiveHours } from "./heartbeat-active-hours.js";
 
-function cfgWithUserTimezone(userTimezone = "UTC"): OpenClawConfig {
+function cfgWithUserTimezone(userTimezone = "UTC"): MoltBotConfig {
   return {
     agents: {
       defaults: {

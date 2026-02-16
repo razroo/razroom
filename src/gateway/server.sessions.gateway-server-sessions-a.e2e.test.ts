@@ -62,8 +62,8 @@ let port = 0;
 let previousToken: string | undefined;
 
 beforeAll(async () => {
-  previousToken = process.env.OPENCLAW_GATEWAY_TOKEN;
-  delete process.env.OPENCLAW_GATEWAY_TOKEN;
+  previousToken = process.env.MOLTBOT_GATEWAY_TOKEN;
+  delete process.env.MOLTBOT_GATEWAY_TOKEN;
   port = await getFreePort();
   server = await startGatewayServer(port);
 });
@@ -71,9 +71,9 @@ beforeAll(async () => {
 afterAll(async () => {
   await server.close();
   if (previousToken === undefined) {
-    delete process.env.OPENCLAW_GATEWAY_TOKEN;
+    delete process.env.MOLTBOT_GATEWAY_TOKEN;
   } else {
-    process.env.OPENCLAW_GATEWAY_TOKEN = previousToken;
+    process.env.MOLTBOT_GATEWAY_TOKEN = previousToken;
   }
 });
 
@@ -92,7 +92,7 @@ describe("gateway server sessions", () => {
   });
 
   test("lists and patches session store via sessions.* RPC", async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-sessions-"));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-sessions-"));
     const storePath = path.join(dir, "sessions.json");
     const now = Date.now();
     const recent = now - 30_000;
@@ -392,7 +392,7 @@ describe("gateway server sessions", () => {
   });
 
   test("sessions.preview returns transcript previews", async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-sessions-preview-"));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-sessions-preview-"));
     const storePath = path.join(dir, "sessions.json");
     testState.sessionStorePath = storePath;
     const sessionId = "sess-preview";
@@ -437,7 +437,7 @@ describe("gateway server sessions", () => {
   });
 
   test("sessions.preview resolves legacy mixed-case main alias with custom mainKey", async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-sessions-preview-alias-"));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-sessions-preview-alias-"));
     const storePath = path.join(dir, "sessions.json");
     testState.sessionStorePath = storePath;
     testState.agentsConfig = { list: [{ id: "ops", default: true }] };
@@ -483,7 +483,7 @@ describe("gateway server sessions", () => {
   });
 
   test("sessions.resolve and mutators clean legacy main-alias ghost keys", async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-sessions-cleanup-alias-"));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-sessions-cleanup-alias-"));
     const storePath = path.join(dir, "sessions.json");
     testState.sessionStorePath = storePath;
     testState.agentsConfig = { list: [{ id: "ops", default: true }] };
@@ -560,7 +560,7 @@ describe("gateway server sessions", () => {
   });
 
   test("sessions.delete rejects main and aborts active runs", async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-sessions-"));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-sessions-"));
     const storePath = path.join(dir, "sessions.json");
     testState.sessionStorePath = storePath;
 
@@ -614,7 +614,7 @@ describe("gateway server sessions", () => {
   });
 
   test("sessions.reset aborts active runs and clears queues", async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-sessions-"));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-sessions-"));
     const storePath = path.join(dir, "sessions.json");
     testState.sessionStorePath = storePath;
 
@@ -659,7 +659,7 @@ describe("gateway server sessions", () => {
   });
 
   test("sessions.reset emits internal command hook with reason", async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-sessions-"));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-sessions-"));
     const storePath = path.join(dir, "sessions.json");
     testState.sessionStorePath = storePath;
 
@@ -696,7 +696,7 @@ describe("gateway server sessions", () => {
   });
 
   test("sessions.reset returns unavailable when active run does not stop", async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-sessions-"));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-sessions-"));
     const storePath = path.join(dir, "sessions.json");
     testState.sessionStorePath = storePath;
 
@@ -745,7 +745,7 @@ describe("gateway server sessions", () => {
   });
 
   test("sessions.delete returns unavailable when active run does not stop", async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-sessions-"));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-sessions-"));
     const storePath = path.join(dir, "sessions.json");
     testState.sessionStorePath = storePath;
 

@@ -13,7 +13,7 @@ import {
   saveSessionStore,
 } from "./store.js";
 
-// Mock loadConfig so resolveMaintenanceConfig() never reads a real openclaw.json.
+// Mock loadConfig so resolveMaintenanceConfig() never reads a real moltbot.json.
 // Unit tests always pass explicit overrides so this mock is inert for them.
 // Integration tests set return values to control the config.
 mock("../config.js", () => ({
@@ -32,7 +32,7 @@ async function createCaseDir(prefix: string): Promise<string> {
 }
 
 beforeAll(async () => {
-  fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-pruning-suite-"));
+  fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-pruning-suite-"));
 });
 
 afterAll(async () => {
@@ -362,8 +362,8 @@ describe("Integration: saveSessionStore with pruning", () => {
   beforeEach(async () => {
     testDir = await createCaseDir("pruning-integ");
     storePath = path.join(testDir, "sessions.json");
-    savedCacheTtl = process.env.OPENCLAW_SESSION_CACHE_TTL_MS;
-    process.env.OPENCLAW_SESSION_CACHE_TTL_MS = "0";
+    savedCacheTtl = process.env.MOLTBOT_SESSION_CACHE_TTL_MS;
+    process.env.MOLTBOT_SESSION_CACHE_TTL_MS = "0";
     clearSessionStoreCacheForTest();
 
     const configModule = await import("../config.js");
@@ -374,9 +374,9 @@ describe("Integration: saveSessionStore with pruning", () => {
     // TODO: Review mock restoration;
     clearSessionStoreCacheForTest();
     if (savedCacheTtl === undefined) {
-      delete process.env.OPENCLAW_SESSION_CACHE_TTL_MS;
+      delete process.env.MOLTBOT_SESSION_CACHE_TTL_MS;
     } else {
-      process.env.OPENCLAW_SESSION_CACHE_TTL_MS = savedCacheTtl;
+      process.env.MOLTBOT_SESSION_CACHE_TTL_MS = savedCacheTtl;
     }
   });
 

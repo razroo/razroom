@@ -92,10 +92,10 @@ const spawnGatewayInstance = async (name: string): Promise<GatewayInstance> => {
   const port = await getFreePort();
   const hookToken = `token-${name}-${randomUUID()}`;
   const gatewayToken = `gateway-${name}-${randomUUID()}`;
-  const homeDir = await fs.mkdtemp(path.join(os.tmpdir(), `openclaw-e2e-${name}-`));
-  const configDir = path.join(homeDir, ".openclaw");
+  const homeDir = await fs.mkdtemp(path.join(os.tmpdir(), `moltbot-e2e-${name}-`));
+  const configDir = path.join(homeDir, ".moltbot");
   await fs.mkdir(configDir, { recursive: true });
-  const configPath = path.join(configDir, "openclaw.json");
+  const configPath = path.join(configDir, "moltbot.json");
   const stateDir = path.join(configDir, "state");
   const config = {
     gateway: { port, auth: { mode: "token", token: gatewayToken } },
@@ -124,13 +124,13 @@ const spawnGatewayInstance = async (name: string): Promise<GatewayInstance> => {
         env: {
           ...process.env,
           HOME: homeDir,
-          OPENCLAW_CONFIG_PATH: configPath,
-          OPENCLAW_STATE_DIR: stateDir,
-          OPENCLAW_GATEWAY_TOKEN: "",
-          OPENCLAW_GATEWAY_PASSWORD: "",
-          OPENCLAW_SKIP_CHANNELS: "1",
-          OPENCLAW_SKIP_BROWSER_CONTROL_SERVER: "1",
-          OPENCLAW_SKIP_CANVAS_HOST: "1",
+          MOLTBOT_CONFIG_PATH: configPath,
+          MOLTBOT_STATE_DIR: stateDir,
+          MOLTBOT_GATEWAY_TOKEN: "",
+          MOLTBOT_GATEWAY_PASSWORD: "",
+          MOLTBOT_SKIP_CHANNELS: "1",
+          MOLTBOT_SKIP_BROWSER_CONTROL_SERVER: "1",
+          MOLTBOT_SKIP_CANVAS_HOST: "1",
         },
         stdio: ["ignore", "pipe", "pipe"],
       },
@@ -397,7 +397,7 @@ describe("gateway multi-instance e2e", () => {
             text: "wake a",
             mode: "now",
           },
-          { "x-openclaw-token": gwA.hookToken },
+          { "x-moltbot-token": gwA.hookToken },
         ),
         postJson(
           `http://127.0.0.1:${gwB.port}/hooks/wake`,
@@ -405,7 +405,7 @@ describe("gateway multi-instance e2e", () => {
             text: "wake b",
             mode: "now",
           },
-          { "x-openclaw-token": gwB.hookToken },
+          { "x-moltbot-token": gwB.hookToken },
         ),
       ]);
       expect(hookResA.status).toBe(200);

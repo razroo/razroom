@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { MoltBotConfig } from "../../config/config.js";
 import { compactEmbeddedPiSession } from "../../agents/pi-embedded.js";
 import { handleCompactCommand } from "./commands-compact.js";
 import { buildCommandTestParams } from "./commands.test-harness.js";
@@ -28,7 +28,7 @@ describe("/compact command", () => {
     const cfg = {
       commands: { text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
-    } as OpenClawConfig;
+    } as MoltBotConfig;
     const params = buildCommandTestParams("/status", cfg);
 
     const result = await handleCompactCommand(
@@ -46,7 +46,7 @@ describe("/compact command", () => {
     const cfg = {
       commands: { text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
-    } as OpenClawConfig;
+    } as MoltBotConfig;
     const params = buildCommandTestParams("/compact", cfg);
 
     const result = await handleCompactCommand(
@@ -69,8 +69,8 @@ describe("/compact command", () => {
     const cfg = {
       commands: { text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
-      session: { store: "/tmp/openclaw-session-store.json" },
-    } as OpenClawConfig;
+      session: { store: "/tmp/moltbot-session-store.json" },
+    } as MoltBotConfig;
     const params = buildCommandTestParams("/compact: focus on decisions", cfg, {
       From: "+15550001",
       To: "+15550002",

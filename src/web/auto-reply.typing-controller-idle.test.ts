@@ -1,6 +1,6 @@
 import "./test-helpers.js";
 import { describe, expect, it, mock, spyOn } from "bun:test";
-import type { OpenClawConfig } from "../config/config.js";
+import type { MoltBotConfig } from "../config/config.js";
 import { monitorWebChannel } from "./auto-reply.js";
 import {
   installWebAutoReplyTestHomeHooks,
@@ -35,7 +35,7 @@ describe("typing controller idle", () => {
       return { text: "final reply" };
     });
 
-    const mockConfig: OpenClawConfig = {
+    const mockConfig: MoltBotConfig = {
       channels: { whatsapp: { allowFrom: ["*"] } },
     };
 

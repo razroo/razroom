@@ -148,26 +148,26 @@ export function buildServiceEnvironment(params: {
   launchdLabel?: string;
 }): Record<string, string | undefined> {
   const { env, port, token, launchdLabel } = params;
-  const profile = env.OPENCLAW_PROFILE;
+  const profile = env.MOLTBOT_PROFILE;
   const resolvedLaunchdLabel =
     launchdLabel ||
     (process.platform === "darwin" ? resolveGatewayLaunchAgentLabel(profile) : undefined);
   const systemdUnit = `${resolveGatewaySystemdServiceName(profile)}.service`;
-  const stateDir = env.OPENCLAW_STATE_DIR;
-  const configPath = env.OPENCLAW_CONFIG_PATH;
+  const stateDir = env.MOLTBOT_STATE_DIR;
+  const configPath = env.MOLTBOT_CONFIG_PATH;
   return {
     HOME: env.HOME,
     PATH: buildMinimalServicePath({ env }),
-    OPENCLAW_PROFILE: profile,
-    OPENCLAW_STATE_DIR: stateDir,
-    OPENCLAW_CONFIG_PATH: configPath,
-    OPENCLAW_GATEWAY_PORT: String(port),
-    OPENCLAW_GATEWAY_TOKEN: token,
-    OPENCLAW_LAUNCHD_LABEL: resolvedLaunchdLabel,
-    OPENCLAW_SYSTEMD_UNIT: systemdUnit,
-    OPENCLAW_SERVICE_MARKER: GATEWAY_SERVICE_MARKER,
-    OPENCLAW_SERVICE_KIND: GATEWAY_SERVICE_KIND,
-    OPENCLAW_SERVICE_VERSION: VERSION,
+    MOLTBOT_PROFILE: profile,
+    MOLTBOT_STATE_DIR: stateDir,
+    MOLTBOT_CONFIG_PATH: configPath,
+    MOLTBOT_GATEWAY_PORT: String(port),
+    MOLTBOT_GATEWAY_TOKEN: token,
+    MOLTBOT_LAUNCHD_LABEL: resolvedLaunchdLabel,
+    MOLTBOT_SYSTEMD_UNIT: systemdUnit,
+    MOLTBOT_SERVICE_MARKER: GATEWAY_SERVICE_MARKER,
+    MOLTBOT_SERVICE_KIND: GATEWAY_SERVICE_KIND,
+    MOLTBOT_SERVICE_VERSION: VERSION,
   };
 }
 
@@ -175,20 +175,20 @@ export function buildNodeServiceEnvironment(params: {
   env: Record<string, string | undefined>;
 }): Record<string, string | undefined> {
   const { env } = params;
-  const stateDir = env.OPENCLAW_STATE_DIR;
-  const configPath = env.OPENCLAW_CONFIG_PATH;
+  const stateDir = env.MOLTBOT_STATE_DIR;
+  const configPath = env.MOLTBOT_CONFIG_PATH;
   return {
     HOME: env.HOME,
     PATH: buildMinimalServicePath({ env }),
-    OPENCLAW_STATE_DIR: stateDir,
-    OPENCLAW_CONFIG_PATH: configPath,
-    OPENCLAW_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
-    OPENCLAW_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
-    OPENCLAW_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
-    OPENCLAW_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
-    OPENCLAW_LOG_PREFIX: "node",
-    OPENCLAW_SERVICE_MARKER: NODE_SERVICE_MARKER,
-    OPENCLAW_SERVICE_KIND: NODE_SERVICE_KIND,
-    OPENCLAW_SERVICE_VERSION: VERSION,
+    MOLTBOT_STATE_DIR: stateDir,
+    MOLTBOT_CONFIG_PATH: configPath,
+    MOLTBOT_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
+    MOLTBOT_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
+    MOLTBOT_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
+    MOLTBOT_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
+    MOLTBOT_LOG_PREFIX: "node",
+    MOLTBOT_SERVICE_MARKER: NODE_SERVICE_MARKER,
+    MOLTBOT_SERVICE_KIND: NODE_SERVICE_KIND,
+    MOLTBOT_SERVICE_VERSION: VERSION,
   };
 }

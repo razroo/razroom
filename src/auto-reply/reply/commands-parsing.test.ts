@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { MoltBotConfig } from "../../config/config.js";
 import { extractMessageText } from "./commands-subagents.js";
 import { handleCommands } from "./commands.js";
 import { buildCommandTestParams } from "./commands.test-harness.js";
@@ -76,7 +76,7 @@ describe("handleCommands /config configWrites gating", () => {
     const cfg = {
       commands: { config: true, text: true },
       channels: { whatsapp: { allowFrom: ["*"], configWrites: false } },
-    } as OpenClawConfig;
+    } as MoltBotConfig;
     const params = buildCommandTestParams('/config set messages.ackReaction=":)"', cfg);
     const result = await handleCommands(params);
     expect(result.shouldContinue).toBe(false);

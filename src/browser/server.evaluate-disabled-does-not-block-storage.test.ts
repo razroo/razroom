@@ -43,9 +43,9 @@ mock("../config/config.js", async (importOriginal) => {
       browser: {
         enabled: true,
         evaluateEnabled: false,
-        defaultProfile: "openclaw",
+        defaultProfile: "moltbot",
         profiles: {
-          openclaw: { cdpPort: testPort + 1, color: "#FF4500" },
+          moltbot: { cdpPort: testPort + 1, color: "#FF4500" },
         },
       },
     }),
@@ -82,12 +82,12 @@ async function getFreePort(): Promise<number> {
 describe("browser control evaluate gating", () => {
   beforeEach(async () => {
     testPort = await getFreePort();
-    prevGatewayPort = process.env.OPENCLAW_GATEWAY_PORT;
-    process.env.OPENCLAW_GATEWAY_PORT = String(testPort - 2);
-    prevGatewayToken = process.env.OPENCLAW_GATEWAY_TOKEN;
-    prevGatewayPassword = process.env.OPENCLAW_GATEWAY_PASSWORD;
-    delete process.env.OPENCLAW_GATEWAY_TOKEN;
-    delete process.env.OPENCLAW_GATEWAY_PASSWORD;
+    prevGatewayPort = process.env.MOLTBOT_GATEWAY_PORT;
+    process.env.MOLTBOT_GATEWAY_PORT = String(testPort - 2);
+    prevGatewayToken = process.env.MOLTBOT_GATEWAY_TOKEN;
+    prevGatewayPassword = process.env.MOLTBOT_GATEWAY_PASSWORD;
+    delete process.env.MOLTBOT_GATEWAY_TOKEN;
+    delete process.env.MOLTBOT_GATEWAY_PASSWORD;
 
     pwMocks.cookiesGetViaPlaywright.mockClear();
     pwMocks.storageGetViaPlaywright.mockClear();
@@ -99,19 +99,19 @@ describe("browser control evaluate gating", () => {
   afterEach(async () => {
     // TODO: Review mock restoration;
     if (prevGatewayPort === undefined) {
-      delete process.env.OPENCLAW_GATEWAY_PORT;
+      delete process.env.MOLTBOT_GATEWAY_PORT;
     } else {
-      process.env.OPENCLAW_GATEWAY_PORT = prevGatewayPort;
+      process.env.MOLTBOT_GATEWAY_PORT = prevGatewayPort;
     }
     if (prevGatewayToken === undefined) {
-      delete process.env.OPENCLAW_GATEWAY_TOKEN;
+      delete process.env.MOLTBOT_GATEWAY_TOKEN;
     } else {
-      process.env.OPENCLAW_GATEWAY_TOKEN = prevGatewayToken;
+      process.env.MOLTBOT_GATEWAY_TOKEN = prevGatewayToken;
     }
     if (prevGatewayPassword === undefined) {
-      delete process.env.OPENCLAW_GATEWAY_PASSWORD;
+      delete process.env.MOLTBOT_GATEWAY_PASSWORD;
     } else {
-      process.env.OPENCLAW_GATEWAY_PASSWORD = prevGatewayPassword;
+      process.env.MOLTBOT_GATEWAY_PASSWORD = prevGatewayPassword;
     }
 
     await stopBrowserControlServer();

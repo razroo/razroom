@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { MoltBotConfig } from "../../config/config.js";
 import type { MsgContext } from "../templating.js";
 import { buildCommandContext, handleCommands } from "./commands.js";
 import { parseInlineDirectives } from "./directive-handling.js";
@@ -55,7 +55,7 @@ mock("../../agents/model-catalog.js", () => ({
   ]),
 }));
 
-function buildParams(commandBody: string, cfg: OpenClawConfig, ctxOverrides?: Partial<MsgContext>) {
+function buildParams(commandBody: string, cfg: MoltBotConfig, ctxOverrides?: Partial<MsgContext>) {
   const ctx = {
     Body: commandBody,
     CommandBody: commandBody,
@@ -104,7 +104,7 @@ describe("handleCommands /allowlist", () => {
     const cfg = {
       commands: { text: true },
       channels: { telegram: { allowFrom: ["123", "@Alice"] } },
-    } as OpenClawConfig;
+    } as MoltBotConfig;
     const params = buildParams("/allowlist list dm", cfg);
     const result = await handleCommands(params);
 
@@ -133,7 +133,7 @@ describe("handleCommands /allowlist", () => {
     const cfg = {
       commands: { text: true, config: true },
       channels: { telegram: { allowFrom: ["123"] } },
-    } as OpenClawConfig;
+    } as MoltBotConfig;
     const params = buildParams("/allowlist add dm 789", cfg);
     const result = await handleCommands(params);
 
@@ -177,7 +177,7 @@ describe("handleCommands /allowlist", () => {
           configWrites: true,
         },
       },
-    } as OpenClawConfig;
+    } as MoltBotConfig;
 
     const params = buildParams("/allowlist remove dm U111", cfg, {
       Provider: "slack",
@@ -187,7 +187,7 @@ describe("handleCommands /allowlist", () => {
 
     expect(result.shouldContinue).toBe(false);
     expect(writeConfigFileMock).toHaveBeenCalledTimes(1);
-    const written = writeConfigFileMock.mock.calls[0]?.[0] as OpenClawConfig;
+    const written = writeConfigFileMock.mock.calls[0]?.[0] as MoltBotConfig;
     expect(written.channels?.slack?.allowFrom).toEqual(["U222"]);
     expect(written.channels?.slack?.dm?.allowFrom).toBeUndefined();
     expect(result.reply?.text).toContain("channels.slack.allowFrom");
@@ -220,7 +220,7 @@ describe("handleCommands /allowlist", () => {
           configWrites: true,
         },
       },
-    } as OpenClawConfig;
+    } as MoltBotConfig;
 
     const params = buildParams("/allowlist remove dm 111", cfg, {
       Provider: "discord",
@@ -230,7 +230,7 @@ describe("handleCommands /allowlist", () => {
 
     expect(result.shouldContinue).toBe(false);
     expect(writeConfigFileMock).toHaveBeenCalledTimes(1);
-    const written = writeConfigFileMock.mock.calls[0]?.[0] as OpenClawConfig;
+    const written = writeConfigFileMock.mock.calls[0]?.[0] as MoltBotConfig;
     expect(written.channels?.discord?.allowFrom).toEqual(["222"]);
     expect(written.channels?.discord?.dm?.allowFrom).toBeUndefined();
     expect(result.reply?.text).toContain("channels.discord.allowFrom");
@@ -241,7 +241,7 @@ describe("/models command", () => {
   const cfg = {
     commands: { text: true },
     agents: { defaults: { model: { primary: "anthropic/claude-opus-4-5" } } },
-  } as unknown as OpenClawConfig;
+  } as unknown as MoltBotConfig;
 
   it.each(["discord", "whatsapp"])("lists providers on %s (text)", async (surface) => {
     const params = buildParams("/models", cfg, { Provider: surface, Surface: surface });
@@ -315,7 +315,7 @@ describe("/models command", () => {
           imageModel: "visionpro/studio-v1",
         },
       },
-    } as unknown as OpenClawConfig;
+    } as unknown as MoltBotConfig;
 
     // Use discord surface for text-based output tests
     const providerList = await handleCommands(

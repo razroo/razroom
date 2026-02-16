@@ -1,6 +1,6 @@
 import { describe, expect, it, mock, spyOn } from "bun:test";
 
-mock("openclaw/plugin-sdk", () => ({
+mock("moltbot/plugin-sdk", () => ({
   getChatChannelMeta: () => ({ id: "googlechat", label: "Google Chat" }),
   missingTargetError: (provider: string, hint: string) =>
     new Error(`Delivering to ${provider} requires target ${hint}`),

@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "openclaw/plugin-sdk";
+import type { MoltBotConfig } from "moltbot/plugin-sdk";
 import { describe, expect, it, mock, spyOn } from "bun:test";
 
 const probeFeishuMock = vi.hoisted(() => mock());
@@ -24,7 +24,7 @@ describe("feishuPlugin.status.probeAccount", () => {
           },
         },
       },
-    } as OpenClawConfig;
+    } as MoltBotConfig;
 
     const account = feishuPlugin.config.resolveAccount(cfg, "main");
     probeFeishuMock.mockResolvedValueOnce({ ok: true, appId: "cli_main" });

@@ -31,7 +31,7 @@ describe("createTelegramBot", () => {
         date: 1736380800,
         message_id: 101,
       },
-      me: { username: "openclaw_bot" },
+      me: { username: "moltbot_bot" },
       getFile: async () => ({ download: async () => new Uint8Array() }),
     });
 
@@ -58,7 +58,7 @@ describe("createTelegramBot", () => {
         date: 1736380800,
         message_id: 101,
       },
-      me: { username: "openclaw_bot" },
+      me: { username: "moltbot_bot" },
       getFile: async () => ({ download: async () => new Uint8Array() }),
     });
 
@@ -89,7 +89,7 @@ describe("createTelegramBot", () => {
         text: "hi",
         date: 1736380800,
       },
-      me: { username: "openclaw_bot" },
+      me: { username: "moltbot_bot" },
       getFile: async () => ({ download: async () => new Uint8Array() }),
     });
 
@@ -114,7 +114,7 @@ describe("createTelegramBot", () => {
         date: 1736380800,
         message_id: 101,
       },
-      me: { username: "openclaw_bot" },
+      me: { username: "moltbot_bot" },
       getFile: async () => ({ download: async () => new Uint8Array() }),
     });
 
@@ -142,10 +142,10 @@ describe("createTelegramBot", () => {
     await handler({
       message: {
         chat: { id: 456, type: "group", title: "Ops" },
-        text: "@openclaw_bot hello",
+        text: "@moltbot_bot hello",
         date: 1736380800,
       },
-      me: { username: "openclaw_bot" },
+      me: { username: "moltbot_bot" },
       getFile: async () => ({ download: async () => new Uint8Array() }),
     });
 
@@ -169,7 +169,7 @@ describe("createTelegramBot", () => {
         text: "hello",
         date: 1736380800,
       },
-      me: { username: "openclaw_bot" },
+      me: { username: "moltbot_bot" },
       getFile: async () => ({ download: async () => new Uint8Array() }),
     });
 
@@ -178,7 +178,7 @@ describe("createTelegramBot", () => {
   it("honors routed group activation from session store", async () => {
     onSpy.mockReset();
     replySpy.mockReset();
-    const storeDir = fs.mkdtempSync(path.join(os.tmpdir(), "openclaw-telegram-"));
+    const storeDir = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-telegram-"));
     const storePath = path.join(storeDir, "sessions.json");
     fs.writeFileSync(
       storePath,
@@ -215,7 +215,7 @@ describe("createTelegramBot", () => {
         text: "hello",
         date: 1736380800,
       },
-      me: { username: "openclaw_bot" },
+      me: { username: "moltbot_bot" },
       getFile: async () => ({ download: async () => new Uint8Array() }),
     });
 

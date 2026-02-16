@@ -5,7 +5,7 @@ import { afterEach, describe, expect, it, mock, spyOn } from "bun:test";
 import { loadCronStore, resolveCronStorePath } from "./store.js";
 
 async function makeStorePath() {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-cron-store-"));
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-cron-store-"));
   return {
     dir,
     storePath: path.join(dir, "jobs.json"),
@@ -20,12 +20,12 @@ describe("resolveCronStorePath", () => {
     vi.unstubAllEnvs();
   });
 
-  it("uses OPENCLAW_HOME for tilde expansion", () => {
-    vi.stubEnv("OPENCLAW_HOME", "/srv/openclaw-home");
+  it("uses MOLTBOT_HOME for tilde expansion", () => {
+    vi.stubEnv("MOLTBOT_HOME", "/srv/moltbot-home");
     vi.stubEnv("HOME", "/home/other");
 
     const result = resolveCronStorePath("~/cron/jobs.json");
-    expect(result).toBe(path.resolve("/srv/openclaw-home", "cron", "jobs.json"));
+    expect(result).toBe(path.resolve("/srv/moltbot-home", "cron", "jobs.json"));
   });
 });
 

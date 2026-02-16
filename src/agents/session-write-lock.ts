@@ -16,8 +16,8 @@ type HeldLock = {
 
 const CLEANUP_SIGNALS = ["SIGINT", "SIGTERM", "SIGQUIT", "SIGABRT"] as const;
 type CleanupSignal = (typeof CLEANUP_SIGNALS)[number];
-const CLEANUP_STATE_KEY = Symbol.for("openclaw.sessionWriteLockCleanupState");
-const HELD_LOCKS_KEY = Symbol.for("openclaw.sessionWriteLockHeldLocks");
+const CLEANUP_STATE_KEY = Symbol.for("moltbot.sessionWriteLockCleanupState");
+const HELD_LOCKS_KEY = Symbol.for("moltbot.sessionWriteLockHeldLocks");
 
 type CleanupState = {
   registered: boolean;

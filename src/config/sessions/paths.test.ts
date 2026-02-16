@@ -14,16 +14,16 @@ describe("resolveStorePath", () => {
     vi.unstubAllEnvs();
   });
 
-  it("uses OPENCLAW_HOME for tilde expansion", () => {
-    vi.stubEnv("OPENCLAW_HOME", "/srv/openclaw-home");
+  it("uses MOLTBOT_HOME for tilde expansion", () => {
+    vi.stubEnv("MOLTBOT_HOME", "/srv/moltbot-home");
     vi.stubEnv("HOME", "/home/other");
 
-    const resolved = resolveStorePath("~/.openclaw/agents/{agentId}/sessions/sessions.json", {
+    const resolved = resolveStorePath("~/.moltbot/agents/{agentId}/sessions/sessions.json", {
       agentId: "research",
     });
 
     expect(resolved).toBe(
-      path.resolve("/srv/openclaw-home/.openclaw/agents/research/sessions/sessions.json"),
+      path.resolve("/srv/moltbot-home/.moltbot/agents/research/sessions/sessions.json"),
     );
   });
 });
@@ -42,14 +42,14 @@ describe("session path safety", () => {
   });
 
   it("resolves transcript path inside an explicit sessions dir", () => {
-    const sessionsDir = "/tmp/openclaw/agents/main/sessions";
+    const sessionsDir = "/tmp/moltbot/agents/main/sessions";
     const resolved = resolveSessionTranscriptPathInDir("sess-1", sessionsDir, "topic/a+b");
 
     expect(resolved).toBe(path.resolve(sessionsDir, "sess-1-topic-topic%2Fa%2Bb.jsonl"));
   });
 
   it("rejects unsafe sessionFile candidates that escape the sessions dir", () => {
-    const sessionsDir = "/tmp/openclaw/agents/main/sessions";
+    const sessionsDir = "/tmp/moltbot/agents/main/sessions";
 
     expect(() =>
       resolveSessionFilePath("sess-1", { sessionFile: "../../etc/passwd" }, { sessionsDir }),
@@ -61,7 +61,7 @@ describe("session path safety", () => {
   });
 
   it("accepts sessionFile candidates within the sessions dir", () => {
-    const sessionsDir = "/tmp/openclaw/agents/main/sessions";
+    const sessionsDir = "/tmp/moltbot/agents/main/sessions";
 
     const resolved = resolveSessionFilePath(
       "sess-1",
@@ -73,11 +73,11 @@ describe("session path safety", () => {
   });
 
   it("accepts absolute sessionFile paths that resolve within the sessions dir", () => {
-    const sessionsDir = "/tmp/openclaw/agents/main/sessions";
+    const sessionsDir = "/tmp/moltbot/agents/main/sessions";
 
     const resolved = resolveSessionFilePath(
       "sess-1",
-      { sessionFile: "/tmp/openclaw/agents/main/sessions/abc-123.jsonl" },
+      { sessionFile: "/tmp/moltbot/agents/main/sessions/abc-123.jsonl" },
       { sessionsDir },
     );
 
@@ -85,11 +85,11 @@ describe("session path safety", () => {
   });
 
   it("accepts absolute sessionFile with topic suffix within the sessions dir", () => {
-    const sessionsDir = "/tmp/openclaw/agents/main/sessions";
+    const sessionsDir = "/tmp/moltbot/agents/main/sessions";
 
     const resolved = resolveSessionFilePath(
       "sess-1",
-      { sessionFile: "/tmp/openclaw/agents/main/sessions/abc-123-topic-42.jsonl" },
+      { sessionFile: "/tmp/moltbot/agents/main/sessions/abc-123-topic-42.jsonl" },
       { sessionsDir },
     );
 
@@ -97,12 +97,12 @@ describe("session path safety", () => {
   });
 
   it("rejects absolute sessionFile paths outside known agent sessions dirs", () => {
-    const sessionsDir = "/tmp/openclaw/agents/main/sessions";
+    const sessionsDir = "/tmp/moltbot/agents/main/sessions";
 
     expect(() =>
       resolveSessionFilePath(
         "sess-1",
-        { sessionFile: "/tmp/openclaw/agents/work/not-sessions/abc-123.jsonl" },
+        { sessionFile: "/tmp/moltbot/agents/work/not-sessions/abc-123.jsonl" },
         { sessionsDir },
       ),
     ).toThrow(/within sessions directory/);

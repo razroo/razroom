@@ -14,28 +14,28 @@ Use this page for scheduler and delivery issues (`cron` + `heartbeat`).
 ## Command ladder
 
 ```bash
-openclaw status
-openclaw gateway status
-openclaw logs --follow
-openclaw doctor
-openclaw channels status --probe
+moltbot status
+moltbot gateway status
+moltbot logs --follow
+moltbot doctor
+moltbot channels status --probe
 ```
 
 Then run automation checks:
 
 ```bash
-openclaw cron status
-openclaw cron list
-openclaw system heartbeat last
+moltbot cron status
+moltbot cron list
+moltbot system heartbeat last
 ```
 
 ## Cron not firing
 
 ```bash
-openclaw cron status
-openclaw cron list
-openclaw cron runs --id <jobId> --limit 20
-openclaw logs --follow
+moltbot cron status
+moltbot cron list
+moltbot cron runs --id <jobId> --limit 20
+moltbot logs --follow
 ```
 
 Good output looks like:
@@ -53,10 +53,10 @@ Common signatures:
 ## Cron fired but no delivery
 
 ```bash
-openclaw cron runs --id <jobId> --limit 20
-openclaw cron list
-openclaw channels status --probe
-openclaw logs --follow
+moltbot cron runs --id <jobId> --limit 20
+moltbot cron list
+moltbot channels status --probe
+moltbot logs --follow
 ```
 
 Good output looks like:
@@ -74,10 +74,10 @@ Common signatures:
 ## Heartbeat suppressed or skipped
 
 ```bash
-openclaw system heartbeat last
-openclaw logs --follow
-openclaw config get agents.defaults.heartbeat
-openclaw channels status --probe
+moltbot system heartbeat last
+moltbot logs --follow
+moltbot config get agents.defaults.heartbeat
+moltbot channels status --probe
 ```
 
 Good output looks like:
@@ -95,11 +95,11 @@ Common signatures:
 ## Timezone and activeHours gotchas
 
 ```bash
-openclaw config get agents.defaults.heartbeat.activeHours
-openclaw config get agents.defaults.heartbeat.activeHours.timezone
-openclaw config get agents.defaults.userTimezone || echo "agents.defaults.userTimezone not set"
-openclaw cron list
-openclaw logs --follow
+moltbot config get agents.defaults.heartbeat.activeHours
+moltbot config get agents.defaults.heartbeat.activeHours.timezone
+moltbot config get agents.defaults.userTimezone || echo "agents.defaults.userTimezone not set"
+moltbot cron list
+moltbot logs --follow
 ```
 
 Quick rules:

@@ -1,5 +1,5 @@
 import { describe, expect, it, mock, spyOn } from "bun:test";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { MoltBotConfig } from "../../config/config.js";
 import { createModelSelectionState } from "./model-selection.js";
 
 mock("../../agents/model-catalog.js", () => ({
@@ -21,7 +21,7 @@ const makeEntry = (overrides: Record<string, unknown> = {}) => ({
 
 describe("createModelSelectionState respects session model override", () => {
   it("applies session modelOverride when set", async () => {
-    const cfg = {} as OpenClawConfig;
+    const cfg = {} as MoltBotConfig;
     const sessionKey = "agent:main:main";
     const sessionEntry = makeEntry({
       providerOverride: "kimi-coding",
@@ -47,7 +47,7 @@ describe("createModelSelectionState respects session model override", () => {
   });
 
   it("falls back to default when no modelOverride is set", async () => {
-    const cfg = {} as OpenClawConfig;
+    const cfg = {} as MoltBotConfig;
     const sessionKey = "agent:main:main";
     const sessionEntry = makeEntry();
     const sessionStore = { [sessionKey]: sessionEntry };
@@ -73,7 +73,7 @@ describe("createModelSelectionState respects session model override", () => {
     // This tests the scenario from issue #14783: user switches model via /model,
     // the override is stored, but session.model still reflects the last-used
     // fallback model. The override should take precedence.
-    const cfg = {} as OpenClawConfig;
+    const cfg = {} as MoltBotConfig;
     const sessionKey = "agent:main:main";
     const sessionEntry = makeEntry({
       // Last-used model (from fallback) - should NOT be used for selection
@@ -105,7 +105,7 @@ describe("createModelSelectionState respects session model override", () => {
   });
 
   it("uses default provider when providerOverride is not set but modelOverride is", async () => {
-    const cfg = {} as OpenClawConfig;
+    const cfg = {} as MoltBotConfig;
     const sessionKey = "agent:main:main";
     const sessionEntry = makeEntry({
       modelOverride: "deepseek-v3-4bit-mlx",

@@ -37,7 +37,7 @@ mock("../config/sessions.js", async (importOriginal) => {
   const actual = await importOriginal<typeof import("../config/sessions.js")>();
   return {
     ...actual,
-    resolveStorePath: mock(() => "/tmp/openclaw-sessions.json"),
+    resolveStorePath: mock(() => "/tmp/moltbot-sessions.json"),
     updateLastRoute: (...args: unknown[]) => updateLastRouteMock(...args),
     resolveSessionKey: mock(),
   };
@@ -60,10 +60,10 @@ const BASE_CFG = {
   agents: {
     defaults: {
       model: "anthropic/claude-opus-4-5",
-      workspace: "/tmp/openclaw",
+      workspace: "/tmp/moltbot",
     },
   },
-  session: { store: "/tmp/openclaw-sessions.json" },
+  session: { store: "/tmp/moltbot-sessions.json" },
 } as const;
 
 const CATEGORY_GUILD_CFG = {

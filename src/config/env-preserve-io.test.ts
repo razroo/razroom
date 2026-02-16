@@ -12,8 +12,8 @@ async function withTempConfig(
   configContent: string,
   run: (configPath: string) => Promise<void>,
 ): Promise<void> {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-env-io-"));
-  const configPath = path.join(dir, "openclaw.json");
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-env-io-"));
+  const configPath = path.join(dir, "moltbot.json");
   await fs.writeFile(configPath, configContent);
   try {
     await run(configPath);
@@ -119,8 +119,8 @@ describe("env snapshot TOCTOU via wrapper APIs", () => {
     await withTempConfig(configJson, async (configPath) => {
       await withEnvOverrides(
         {
-          OPENCLAW_CONFIG_PATH: configPath,
-          OPENCLAW_DISABLE_CONFIG_CACHE: "1",
+          MOLTBOT_CONFIG_PATH: configPath,
+          MOLTBOT_DISABLE_CONFIG_CACHE: "1",
           MY_API_KEY: "original-key-123",
         },
         async () => {
@@ -147,8 +147,8 @@ describe("env snapshot TOCTOU via wrapper APIs", () => {
     await withTempConfig(configJson, async (configPath) => {
       await withEnvOverrides(
         {
-          OPENCLAW_CONFIG_PATH: configPath,
-          OPENCLAW_DISABLE_CONFIG_CACHE: "1",
+          MOLTBOT_CONFIG_PATH: configPath,
+          MOLTBOT_DISABLE_CONFIG_CACHE: "1",
           MY_API_KEY: "original-key-123",
         },
         async () => {

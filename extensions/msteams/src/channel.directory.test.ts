@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "openclaw/plugin-sdk";
+import type { MoltBotConfig } from "moltbot/plugin-sdk";
 import { describe, expect, it } from "bun:test";
 import { msteamsPlugin } from "./channel.js";
 
@@ -19,7 +19,7 @@ describe("msteams directory", () => {
           },
         },
       },
-    } as unknown as OpenClawConfig;
+    } as unknown as MoltBotConfig;
 
     expect(msteamsPlugin.directory).toBeTruthy();
     expect(msteamsPlugin.directory?.listPeers).toBeTruthy();

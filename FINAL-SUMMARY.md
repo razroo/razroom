@@ -1,4 +1,4 @@
-# 🎉 OpenClaw → Vitamin: Migration Complete!
+# 🎉 MoltBot → Vitamin: Migration Complete!
 
 **Migration Date:** February 15-16, 2026
 **Runtime:** Node.js 22+ → Bun 1.3.9
@@ -58,13 +58,13 @@
 
 ### CLI Commands Verified ✅
 ```bash
-✓ bun openclaw.mjs --version      # Works
-✓ bun openclaw.mjs --help         # Works
-✓ bun openclaw.mjs doctor         # Works
-✓ bun openclaw.mjs channels list  # Works
-✓ bun openclaw.mjs agents list    # Works
-✓ bun openclaw.mjs skills list    # Works
-✓ bun openclaw.mjs plugins list   # Works
+✓ bun moltbot.mjs --version      # Works
+✓ bun moltbot.mjs --help         # Works
+✓ bun moltbot.mjs doctor         # Works
+✓ bun moltbot.mjs channels list  # Works
+✓ bun moltbot.mjs agents list    # Works
+✓ bun moltbot.mjs skills list    # Works
+✓ bun moltbot.mjs plugins list   # Works
 ```
 
 ### Available Features ✅
@@ -74,21 +74,21 @@
 - **31 channel extensions** present
 
 ### Key Channels Available ✅
-✅ WhatsApp (@openclaw/whatsapp)
-✅ Telegram (@openclaw/telegram)
-✅ Discord (@openclaw/discord)
-✅ Slack (@openclaw/slack)
-✅ Matrix (@openclaw/matrix)
-✅ Signal (@openclaw/signal)
-✅ Google Chat (@openclaw/googlechat)
-✅ Microsoft Teams (@openclaw/msteams)
-✅ LINE (@openclaw/line)
-✅ BlueBubbles (@openclaw/bluebubbles)
-✅ IRC (@openclaw/irc)
-✅ Mattermost (@openclaw/mattermost)
-✅ Twitch (@openclaw/twitch)
-✅ Nostr (@openclaw/nostr)
-✅ Voice Call (@openclaw/voice-call)
+✅ WhatsApp (@moltbot/whatsapp)
+✅ Telegram (@moltbot/telegram)
+✅ Discord (@moltbot/discord)
+✅ Slack (@moltbot/slack)
+✅ Matrix (@moltbot/matrix)
+✅ Signal (@moltbot/signal)
+✅ Google Chat (@moltbot/googlechat)
+✅ Microsoft Teams (@moltbot/msteams)
+✅ LINE (@moltbot/line)
+✅ BlueBubbles (@moltbot/bluebubbles)
+✅ IRC (@moltbot/irc)
+✅ Mattermost (@moltbot/mattermost)
+✅ Twitch (@moltbot/twitch)
+✅ Nostr (@moltbot/nostr)
+✅ Voice Call (@moltbot/voice-call)
 
 ---
 
@@ -113,7 +113,7 @@
 
 ### Updated
 - ✅ package.json (engines, scripts, packageManager)
-- ✅ openclaw.mjs (Bun shebang)
+- ✅ moltbot.mjs (Bun shebang)
 - ✅ src/entry.ts (Bun detection)
 - ✅ src/infra/runtime-guard.ts (Bun support)
 - ✅ src/memory/sqlite.ts (bun:sqlite)
@@ -136,9 +136,9 @@ bun run build  # 1.99 seconds
 
 ### Run CLI
 ```bash
-bun openclaw.mjs --version
-bun openclaw.mjs --help
-bun openclaw.mjs doctor
+bun moltbot.mjs --version
+bun moltbot.mjs --help
+bun moltbot.mjs doctor
 ```
 
 ### Run Tests
@@ -159,7 +159,7 @@ bun run gateway:dev # Gateway with hot reload
 ## 📝 Files Modified Summary
 
 ### Critical Runtime Files
-1. **openclaw.mjs** - Changed shebang to bun, removed Node compile cache
+1. **moltbot.mjs** - Changed shebang to bun, removed Node compile cache
 2. **src/entry.ts** - Added Bun detection, skip Node respawn
 3. **src/infra/runtime-guard.ts** - Added RuntimeKind="bun", version checking
 4. **src/infra/runtime-detect.ts** - New: isBun(), isNode(), getRuntimeName()
@@ -264,8 +264,8 @@ await Bun.sleep(1000);
 ### Immediate (If Needed)
 - [ ] Fix remaining test issues (vi.stubEnv, timers)
 - [ ] Build UI assets: `bun ui:build`
-- [ ] Run initial setup: `bun openclaw.mjs setup`
-- [ ] Configure gateway: `bun openclaw.mjs configure`
+- [ ] Run initial setup: `bun moltbot.mjs setup`
+- [ ] Configure gateway: `bun moltbot.mjs configure`
 
 ### Future Enhancements
 - [ ] Consider migrating to Bun.serve() for native WebSocket (performance++)
@@ -300,7 +300,7 @@ await Bun.sleep(1000);
 
 ## 🎉 Conclusion
 
-**The migration from OpenClaw (Node.js) to Vitamin (Bun) is complete and successful!**
+**The migration from MoltBot (Node.js) to Vitamin (Bun) is complete and successful!**
 
 ✅ All core features working
 ✅ Complete feature parity achieved
@@ -314,7 +314,7 @@ await Bun.sleep(1000);
 ---
 
 **Migrated by:** Claude Sonnet 4.5
-**Project:** OpenClaw → Vitamin
+**Project:** MoltBot → Vitamin
 **Date:** February 15-16, 2026
 **Status:** ✅ **COMPLETE & OPERATIONAL**
 

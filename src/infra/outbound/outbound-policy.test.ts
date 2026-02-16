@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { MoltBotConfig } from "../../config/config.js";
 import {
   applyCrossContextDecoration,
   buildCrossContextDecoration,
@@ -13,13 +13,13 @@ const slackConfig = {
       appToken: "xapp-test",
     },
   },
-} as OpenClawConfig;
+} as MoltBotConfig;
 
 const discordConfig = {
   channels: {
     discord: {},
   },
-} as OpenClawConfig;
+} as MoltBotConfig;
 
 describe("outbound policy", () => {
   it("blocks cross-provider sends by default", () => {
@@ -40,7 +40,7 @@ describe("outbound policy", () => {
       tools: {
         message: { crossContext: { allowAcrossProviders: true } },
       },
-    } as OpenClawConfig;
+    } as MoltBotConfig;
 
     expect(() =>
       enforceCrossContextPolicy({
@@ -57,7 +57,7 @@ describe("outbound policy", () => {
     const cfg = {
       ...slackConfig,
       tools: { message: { crossContext: { allowWithinProvider: false } } },
-    } as OpenClawConfig;
+    } as MoltBotConfig;
 
     expect(() =>
       enforceCrossContextPolicy({

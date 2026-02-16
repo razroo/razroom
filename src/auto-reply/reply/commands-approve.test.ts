@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { MoltBotConfig } from "../../config/config.js";
 import { callGateway } from "../../gateway/call.js";
 import { handleCommands } from "./commands.js";
 import { buildCommandTestParams } from "./commands.test-harness.js";
@@ -17,7 +17,7 @@ describe("/approve command", () => {
     const cfg = {
       commands: { text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
-    } as OpenClawConfig;
+    } as MoltBotConfig;
     const params = buildCommandTestParams("/approve", cfg);
     const result = await handleCommands(params);
     expect(result.shouldContinue).toBe(false);
@@ -28,7 +28,7 @@ describe("/approve command", () => {
     const cfg = {
       commands: { text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
-    } as OpenClawConfig;
+    } as MoltBotConfig;
     const params = buildCommandTestParams("/approve abc allow-once", cfg, { SenderId: "123" });
 
     const mockCallGateway = vi.mocked(callGateway);
@@ -48,7 +48,7 @@ describe("/approve command", () => {
   it("rejects gateway clients without approvals scope", async () => {
     const cfg = {
       commands: { text: true },
-    } as OpenClawConfig;
+    } as MoltBotConfig;
     const params = buildCommandTestParams("/approve abc allow-once", cfg, {
       Provider: "webchat",
       Surface: "webchat",
@@ -67,7 +67,7 @@ describe("/approve command", () => {
   it("allows gateway clients with approvals scope", async () => {
     const cfg = {
       commands: { text: true },
-    } as OpenClawConfig;
+    } as MoltBotConfig;
     const params = buildCommandTestParams("/approve abc allow-once", cfg, {
       Provider: "webchat",
       Surface: "webchat",
@@ -91,7 +91,7 @@ describe("/approve command", () => {
   it("allows gateway clients with admin scope", async () => {
     const cfg = {
       commands: { text: true },
-    } as OpenClawConfig;
+    } as MoltBotConfig;
     const params = buildCommandTestParams("/approve abc allow-once", cfg, {
       Provider: "webchat",
       Surface: "webchat",

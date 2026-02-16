@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
-import type { OpenClawConfig } from "../config/config.js";
+import type { MoltBotConfig } from "../config/config.js";
 import { telegramPlugin } from "../../extensions/telegram/src/channel.js";
 import { setTelegramRuntime } from "../../extensions/telegram/src/runtime.js";
 import * as replyModule from "../auto-reply/reply.js";
@@ -33,9 +33,9 @@ afterEach(() => {
 describe("Ghost reminder bug (issue #13317)", () => {
   const createConfig = async (
     tmpDir: string,
-  ): Promise<{ cfg: OpenClawConfig; sessionKey: string }> => {
+  ): Promise<{ cfg: MoltBotConfig; sessionKey: string }> => {
     const storePath = path.join(tmpDir, "sessions.json");
-    const cfg: OpenClawConfig = {
+    const cfg: MoltBotConfig = {
       agents: {
         defaults: {
           workspace: tmpDir,
@@ -87,7 +87,7 @@ describe("Ghost reminder bug (issue #13317)", () => {
   };
 
   it("does not use CRON_EVENT_PROMPT when only a HEARTBEAT_OK event is present", async () => {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-ghost-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-ghost-"));
     const sendTelegram = mock().mockResolvedValue({
       messageId: "m1",
       chatId: "155462274",
@@ -122,7 +122,7 @@ describe("Ghost reminder bug (issue #13317)", () => {
   });
 
   it("uses CRON_EVENT_PROMPT when an actionable cron event exists", async () => {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-cron-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-cron-"));
     const sendTelegram = mock().mockResolvedValue({
       messageId: "m1",
       chatId: "155462274",
@@ -155,7 +155,7 @@ describe("Ghost reminder bug (issue #13317)", () => {
   });
 
   it("uses CRON_EVENT_PROMPT when cron events are mixed with heartbeat noise", async () => {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-cron-mixed-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-cron-mixed-"));
     const sendTelegram = mock().mockResolvedValue({
       messageId: "m1",
       chatId: "155462274",
@@ -187,7 +187,7 @@ describe("Ghost reminder bug (issue #13317)", () => {
   });
 
   it("uses CRON_EVENT_PROMPT for tagged cron events on interval wake", async () => {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-cron-interval-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-cron-interval-"));
     const sendTelegram = mock().mockResolvedValue({
       messageId: "m1",
       chatId: "155462274",

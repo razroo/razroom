@@ -4,7 +4,7 @@ description: iMessage/SMS CLI for listing chats, history, watch, and sending.
 homepage: https://imsg.to
 metadata:
   {
-    "openclaw":
+    "moltbot":
       {
         "emoji": "📨",
         "os": ["darwin"],

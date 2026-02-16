@@ -1,6 +1,6 @@
 import type { ButtonInteraction, ComponentData, StringSelectMenuInteraction } from "@buape/carbon";
 import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { MoltBotConfig } from "../../config/config.js";
 import { createAgentComponentButton, createAgentSelectMenu } from "./agent-components.js";
 
 const readAllowFromStoreMock = vi.hoisted(() => mock());
@@ -20,7 +20,7 @@ mock("../../infra/system-events.js", async (importOriginal) => {
   };
 });
 
-const createCfg = (): OpenClawConfig => ({}) as OpenClawConfig;
+const createCfg = (): MoltBotConfig => ({}) as MoltBotConfig;
 
 const createDmButtonInteraction = (overrides: Partial<ButtonInteraction> = {}) => {
   const reply = mock().mockResolvedValue(undefined);

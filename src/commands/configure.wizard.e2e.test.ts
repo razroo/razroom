@@ -1,5 +1,5 @@
 import { describe, expect, it, mock, spyOn } from "bun:test";
-import type { OpenClawConfig } from "../config/config.js";
+import type { MoltBotConfig } from "../config/config.js";
 
 const mocks = vi.hoisted(() => ({
   clackIntro: mock(),
@@ -29,7 +29,7 @@ mock("@clack/prompts", () => ({
 }));
 
 mock("../config/config.js", () => ({
-  CONFIG_PATH: "~/.openclaw/openclaw.json",
+  CONFIG_PATH: "~/.moltbot/moltbot.json",
   readConfigFileSnapshot: mocks.readConfigFileSnapshot,
   writeConfigFile: mocks.writeConfigFile,
   resolveGatewayPort: mocks.resolveGatewayPort,
@@ -48,8 +48,8 @@ mock("../terminal/note.js", () => ({
 }));
 
 mock("./onboard-helpers.js", () => ({
-  DEFAULT_WORKSPACE: "~/.openclaw/workspace",
-  applyWizardMetadata: (cfg: OpenClawConfig) => cfg,
+  DEFAULT_WORKSPACE: "~/.moltbot/workspace",
+  applyWizardMetadata: (cfg: MoltBotConfig) => cfg,
   ensureWorkspaceAndSessions: mock(),
   guardCancel: <T>(value: T) => value,
   printWizardHeader: mocks.printWizardHeader,

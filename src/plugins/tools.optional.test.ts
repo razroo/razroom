@@ -7,7 +7,7 @@ import { resolvePluginTools } from "./tools.js";
 
 type TempPlugin = { dir: string; file: string; id: string };
 
-const fixtureRoot = path.join(os.tmpdir(), `openclaw-plugin-tools-${randomUUID()}`);
+const fixtureRoot = path.join(os.tmpdir(), `moltbot-plugin-tools-${randomUUID()}`);
 const EMPTY_PLUGIN_SCHEMA = { type: "object", additionalProperties: false, properties: {} };
 
 function makeFixtureDir(id: string) {
@@ -21,7 +21,7 @@ function writePlugin(params: { id: string; body: string }): TempPlugin {
   const file = path.join(dir, `${params.id}.js`);
   fs.writeFileSync(file, params.body, "utf-8");
   fs.writeFileSync(
-    path.join(dir, "openclaw.plugin.json"),
+    path.join(dir, "moltbot.plugin.json"),
     JSON.stringify(
       {
         id: params.id,

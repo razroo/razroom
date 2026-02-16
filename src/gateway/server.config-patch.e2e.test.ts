@@ -95,7 +95,7 @@ describe("gateway config methods", () => {
 
 describe("gateway server sessions", () => {
   it("filters sessions by agentId", async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-sessions-agents-"));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-sessions-agents-"));
     testState.sessionConfig = {
       store: path.join(dir, "{agentId}", "sessions.json"),
     };
@@ -156,7 +156,7 @@ describe("gateway server sessions", () => {
   });
 
   it("resolves and patches main alias to default agent main key", async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-sessions-"));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-sessions-"));
     const storePath = path.join(dir, "sessions.json");
     testState.sessionStorePath = storePath;
     testState.agentsConfig = { list: [{ id: "ops", default: true }] };

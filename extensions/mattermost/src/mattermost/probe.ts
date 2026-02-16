@@ -1,4 +1,4 @@
-import type { BaseProbeResult } from "openclaw/plugin-sdk";
+import type { BaseProbeResult } from "moltbot/plugin-sdk";
 import { normalizeMattermostBaseUrl, type MattermostUser } from "./client.js";
 
 export type MattermostProbe = BaseProbeResult & {

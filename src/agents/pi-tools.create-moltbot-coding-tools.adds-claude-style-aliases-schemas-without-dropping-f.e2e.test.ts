@@ -3,11 +3,11 @@ import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "bun:test";
 import "./test-helpers/fast-coding-tools.js";
-import { createOpenClawCodingTools } from "./pi-tools.js";
+import { createMoltBotCodingTools } from "./pi-tools.js";
 
-describe("createOpenClawCodingTools", () => {
+describe("createMoltBotCodingTools", () => {
   it("uses workspaceDir for Read tool path resolution", async () => {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-ws-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-ws-"));
     try {
       // Create a test file in the "workspace"
       const testFile = "test-workspace-file.txt";
@@ -15,7 +15,7 @@ describe("createOpenClawCodingTools", () => {
       await fs.writeFile(path.join(tmpDir, testFile), testContent, "utf8");
 
       // Create tools with explicit workspaceDir
-      const tools = createOpenClawCodingTools({ workspaceDir: tmpDir });
+      const tools = createMoltBotCodingTools({ workspaceDir: tmpDir });
       const readTool = tools.find((tool) => tool.name === "read");
       expect(readTool).toBeDefined();
 
@@ -34,13 +34,13 @@ describe("createOpenClawCodingTools", () => {
     }
   });
   it("uses workspaceDir for Write tool path resolution", async () => {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-ws-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-ws-"));
     try {
       const testFile = "test-write-file.txt";
       const testContent = "written via workspace path";
 
       // Create tools with explicit workspaceDir
-      const tools = createOpenClawCodingTools({ workspaceDir: tmpDir });
+      const tools = createMoltBotCodingTools({ workspaceDir: tmpDir });
       const writeTool = tools.find((tool) => tool.name === "write");
       expect(writeTool).toBeDefined();
 
@@ -58,7 +58,7 @@ describe("createOpenClawCodingTools", () => {
     }
   });
   it("uses workspaceDir for Edit tool path resolution", async () => {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-ws-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-ws-"));
     try {
       const testFile = "test-edit-file.txt";
       const originalContent = "hello world";
@@ -66,7 +66,7 @@ describe("createOpenClawCodingTools", () => {
       await fs.writeFile(path.join(tmpDir, testFile), originalContent, "utf8");
 
       // Create tools with explicit workspaceDir
-      const tools = createOpenClawCodingTools({ workspaceDir: tmpDir });
+      const tools = createMoltBotCodingTools({ workspaceDir: tmpDir });
       const editTool = tools.find((tool) => tool.name === "edit");
       expect(editTool).toBeDefined();
 
@@ -85,9 +85,9 @@ describe("createOpenClawCodingTools", () => {
     }
   });
   it("accepts Claude Code parameter aliases for read/write/edit", async () => {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-alias-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-alias-"));
     try {
-      const tools = createOpenClawCodingTools({ workspaceDir: tmpDir });
+      const tools = createMoltBotCodingTools({ workspaceDir: tmpDir });
       const readTool = tools.find((tool) => tool.name === "read");
       const writeTool = tools.find((tool) => tool.name === "write");
       const editTool = tools.find((tool) => tool.name === "edit");
@@ -122,9 +122,9 @@ describe("createOpenClawCodingTools", () => {
   });
 
   it("coerces structured content blocks for write", async () => {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-structured-write-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-structured-write-"));
     try {
-      const tools = createOpenClawCodingTools({ workspaceDir: tmpDir });
+      const tools = createMoltBotCodingTools({ workspaceDir: tmpDir });
       const writeTool = tools.find((tool) => tool.name === "write");
       expect(writeTool).toBeDefined();
 
@@ -146,12 +146,12 @@ describe("createOpenClawCodingTools", () => {
   });
 
   it("coerces structured old/new text blocks for edit", async () => {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-structured-edit-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-structured-edit-"));
     try {
       const filePath = path.join(tmpDir, "structured-edit.js");
       await fs.writeFile(filePath, "const value = 'old';\n", "utf8");
 
-      const tools = createOpenClawCodingTools({ workspaceDir: tmpDir });
+      const tools = createMoltBotCodingTools({ workspaceDir: tmpDir });
       const editTool = tools.find((tool) => tool.name === "edit");
       expect(editTool).toBeDefined();
 

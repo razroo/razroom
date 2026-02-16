@@ -19,17 +19,17 @@ async function withServer<T>(
     ws.close();
     await server.close();
     if (prevToken === undefined) {
-      delete process.env.OPENCLAW_GATEWAY_TOKEN;
+      delete process.env.MOLTBOT_GATEWAY_TOKEN;
     } else {
-      process.env.OPENCLAW_GATEWAY_TOKEN = prevToken;
+      process.env.MOLTBOT_GATEWAY_TOKEN = prevToken;
     }
   }
 }
 
 describe("gateway skills.status", () => {
   it("does not expose raw config values to operator.read clients", async () => {
-    const prevBundledSkillsDir = process.env.OPENCLAW_BUNDLED_SKILLS_DIR;
-    process.env.OPENCLAW_BUNDLED_SKILLS_DIR = path.join(process.cwd(), "skills");
+    const prevBundledSkillsDir = process.env.MOLTBOT_BUNDLED_SKILLS_DIR;
+    process.env.MOLTBOT_BUNDLED_SKILLS_DIR = path.join(process.cwd(), "skills");
     const secret = "discord-token-secret-abc";
     const { writeConfigFile } = await import("../config/config.js");
     await writeConfigFile({
@@ -63,9 +63,9 @@ describe("gateway skills.status", () => {
       });
     } finally {
       if (prevBundledSkillsDir === undefined) {
-        delete process.env.OPENCLAW_BUNDLED_SKILLS_DIR;
+        delete process.env.MOLTBOT_BUNDLED_SKILLS_DIR;
       } else {
-        process.env.OPENCLAW_BUNDLED_SKILLS_DIR = prevBundledSkillsDir;
+        process.env.MOLTBOT_BUNDLED_SKILLS_DIR = prevBundledSkillsDir;
       }
     }
   });

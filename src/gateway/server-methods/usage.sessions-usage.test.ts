@@ -117,9 +117,9 @@ describe("sessions.usage", () => {
 
   it("resolves store entries by sessionId when queried via discovered agent-prefixed key", async () => {
     const storeKey = "agent:opus:slack:dm:u123";
-    const stateDir = fs.mkdtempSync(path.join(os.tmpdir(), "openclaw-usage-test-"));
-    const previousStateDir = process.env.OPENCLAW_STATE_DIR;
-    process.env.OPENCLAW_STATE_DIR = stateDir;
+    const stateDir = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-usage-test-"));
+    const previousStateDir = process.env.MOLTBOT_STATE_DIR;
+    process.env.MOLTBOT_STATE_DIR = stateDir;
 
     try {
       const agentSessionsDir = path.join(stateDir, "agents", "opus", "sessions");
@@ -164,9 +164,9 @@ describe("sessions.usage", () => {
       ).toBe(true);
     } finally {
       if (previousStateDir === undefined) {
-        delete process.env.OPENCLAW_STATE_DIR;
+        delete process.env.MOLTBOT_STATE_DIR;
       } else {
-        process.env.OPENCLAW_STATE_DIR = previousStateDir;
+        process.env.MOLTBOT_STATE_DIR = previousStateDir;
       }
       fs.rmSync(stateDir, { recursive: true, force: true });
     }

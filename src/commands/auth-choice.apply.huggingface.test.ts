@@ -11,7 +11,7 @@ const noop = () => {};
 const authProfilePathFor = (agentDir: string) => path.join(agentDir, "auth-profiles.json");
 
 describe("applyAuthChoiceHuggingface", () => {
-  const previousAgentDir = process.env.OPENCLAW_AGENT_DIR;
+  const previousAgentDir = process.env.MOLTBOT_AGENT_DIR;
   const previousHfToken = process.env.HF_TOKEN;
   const previousHubToken = process.env.HUGGINGFACE_HUB_TOKEN;
   let tempStateDir: string | null = null;
@@ -22,9 +22,9 @@ describe("applyAuthChoiceHuggingface", () => {
       tempStateDir = null;
     }
     if (previousAgentDir === undefined) {
-      delete process.env.OPENCLAW_AGENT_DIR;
+      delete process.env.MOLTBOT_AGENT_DIR;
     } else {
-      process.env.OPENCLAW_AGENT_DIR = previousAgentDir;
+      process.env.MOLTBOT_AGENT_DIR = previousAgentDir;
     }
     if (previousHfToken === undefined) {
       delete process.env.HF_TOKEN;
@@ -50,9 +50,9 @@ describe("applyAuthChoiceHuggingface", () => {
   });
 
   it("prompts for key and model, then writes config and auth profile", async () => {
-    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-hf-"));
+    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-hf-"));
     const agentDir = path.join(tempStateDir, "agent");
-    process.env.OPENCLAW_AGENT_DIR = agentDir;
+    process.env.MOLTBOT_AGENT_DIR = agentDir;
     await fs.mkdir(agentDir, { recursive: true });
 
     const text = mock().mockResolvedValue("hf-test-token");
@@ -107,9 +107,9 @@ describe("applyAuthChoiceHuggingface", () => {
   });
 
   it("does not prompt to reuse env token when opts.token already provided", async () => {
-    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-hf-"));
+    tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-hf-"));
     const agentDir = path.join(tempStateDir, "agent");
-    process.env.OPENCLAW_AGENT_DIR = agentDir;
+    process.env.MOLTBOT_AGENT_DIR = agentDir;
     process.env.HF_TOKEN = "hf-env-token";
     delete process.env.HUGGINGFACE_HUB_TOKEN;
     await fs.mkdir(agentDir, { recursive: true });

@@ -103,7 +103,7 @@ describe("hooks mapping", () => {
   });
 
   it("runs transform module", async () => {
-    const configDir = fs.mkdtempSync(path.join(os.tmpdir(), "openclaw-config-"));
+    const configDir = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-config-"));
     const transformsRoot = path.join(configDir, "hooks", "transforms");
     fs.mkdirSync(transformsRoot, { recursive: true });
     const modPath = path.join(transformsRoot, "transform.mjs");
@@ -143,7 +143,7 @@ describe("hooks mapping", () => {
   });
 
   it("rejects transform module traversal outside transformsDir", () => {
-    const configDir = fs.mkdtempSync(path.join(os.tmpdir(), "openclaw-config-traversal-"));
+    const configDir = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-config-traversal-"));
     const transformsRoot = path.join(configDir, "hooks", "transforms");
     fs.mkdirSync(transformsRoot, { recursive: true });
     expect(() =>
@@ -163,7 +163,7 @@ describe("hooks mapping", () => {
   });
 
   it("rejects absolute transform module path outside transformsDir", () => {
-    const configDir = fs.mkdtempSync(path.join(os.tmpdir(), "openclaw-config-abs-"));
+    const configDir = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-config-abs-"));
     const transformsRoot = path.join(configDir, "hooks", "transforms");
     fs.mkdirSync(transformsRoot, { recursive: true });
     const outside = path.join(os.tmpdir(), "evil.mjs");
@@ -184,7 +184,7 @@ describe("hooks mapping", () => {
   });
 
   it("rejects transformsDir traversal outside the transforms root", () => {
-    const configDir = fs.mkdtempSync(path.join(os.tmpdir(), "openclaw-config-xformdir-trav-"));
+    const configDir = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-config-xformdir-trav-"));
     const transformsRoot = path.join(configDir, "hooks", "transforms");
     fs.mkdirSync(transformsRoot, { recursive: true });
     expect(() =>
@@ -205,7 +205,7 @@ describe("hooks mapping", () => {
   });
 
   it("rejects transformsDir absolute path outside the transforms root", () => {
-    const configDir = fs.mkdtempSync(path.join(os.tmpdir(), "openclaw-config-xformdir-abs-"));
+    const configDir = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-config-xformdir-abs-"));
     const transformsRoot = path.join(configDir, "hooks", "transforms");
     fs.mkdirSync(transformsRoot, { recursive: true });
     expect(() =>
@@ -226,12 +226,12 @@ describe("hooks mapping", () => {
   });
 
   it("accepts transformsDir subdirectory within the transforms root", async () => {
-    const configDir = fs.mkdtempSync(path.join(os.tmpdir(), "openclaw-config-xformdir-ok-"));
+    const configDir = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-config-xformdir-ok-"));
     const result = await applyNullTransformFromTempConfig({ configDir, transformsDir: "subdir" });
     expectSkippedTransformResult(result);
   });
   it("treats null transform as a handled skip", async () => {
-    const configDir = fs.mkdtempSync(path.join(os.tmpdir(), "openclaw-config-skip-"));
+    const configDir = fs.mkdtempSync(path.join(os.tmpdir(), "moltbot-config-skip-"));
     const result = await applyNullTransformFromTempConfig({ configDir });
     expectSkippedTransformResult(result);
   });

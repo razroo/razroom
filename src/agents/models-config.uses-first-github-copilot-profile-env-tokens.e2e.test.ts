@@ -1,12 +1,12 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { describe, expect, it, mock, spyOn } from "bun:test";
-import { resolveOpenClawAgentDir } from "./agent-paths.js";
+import { resolveMoltBotAgentDir } from "./agent-paths.js";
 import {
   installModelsConfigTestHooks,
   withModelsTempHome as withTempHome,
 } from "./models-config.e2e-harness.js";
-import { ensureOpenClawModelsJson } from "./models-config.js";
+import { ensureMoltBotModelsJson } from "./models-config.js";
 
 installModelsConfigTestHooks({ restoreFetch: true });
 
@@ -56,7 +56,7 @@ describe("models-config", () => {
           ),
         );
 
-        await ensureOpenClawModelsJson({ models: { providers: {} } }, agentDir);
+        await ensureMoltBotModelsJson({ models: { providers: {} } }, agentDir);
 
         const [, opts] = fetchMock.mock.calls[0] as [string, { headers?: Record<string, string> }];
         expect(opts?.headers?.Authorization).toBe("Bearer alpha-token");
@@ -95,7 +95,7 @@ describe("models-config", () => {
       globalThis.fetch = fetchMock as unknown as typeof fetch;
 
       try {
-        await ensureOpenClawModelsJson({
+        await ensureMoltBotModelsJson({
           models: {
             providers: {
               "github-copilot": {
@@ -107,7 +107,7 @@ describe("models-config", () => {
           },
         });
 
-        const agentDir = resolveOpenClawAgentDir();
+        const agentDir = resolveMoltBotAgentDir();
         const raw = await fs.readFile(path.join(agentDir, "models.json"), "utf8");
         const parsed = JSON.parse(raw) as {
           providers: Record<string, { baseUrl?: string }>;

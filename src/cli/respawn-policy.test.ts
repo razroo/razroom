@@ -3,11 +3,11 @@ import { shouldSkipRespawnForArgv } from "./respawn-policy.js";
 
 describe("shouldSkipRespawnForArgv", () => {
   it("skips respawn for help/version calls", () => {
-    expect(shouldSkipRespawnForArgv(["node", "openclaw", "--help"])).toBe(true);
-    expect(shouldSkipRespawnForArgv(["node", "openclaw", "-V"])).toBe(true);
+    expect(shouldSkipRespawnForArgv(["node", "moltbot", "--help"])).toBe(true);
+    expect(shouldSkipRespawnForArgv(["node", "moltbot", "-V"])).toBe(true);
   });
 
   it("keeps respawn path for normal commands", () => {
-    expect(shouldSkipRespawnForArgv(["node", "openclaw", "status"])).toBe(false);
+    expect(shouldSkipRespawnForArgv(["node", "moltbot", "status"])).toBe(false);
   });
 });

@@ -30,7 +30,7 @@ describe("trigger handling", () => {
         agents: {
           defaults: {
             model: "anthropic/claude-opus-4-5",
-            workspace: join(home, "openclaw"),
+            workspace: join(home, "moltbot"),
           },
         },
         tools: {
@@ -68,7 +68,7 @@ describe("trigger handling", () => {
         agents: {
           defaults: {
             model: "anthropic/claude-opus-4-5",
-            workspace: join(home, "openclaw"),
+            workspace: join(home, "moltbot"),
           },
         },
         tools: { elevated: { allowFrom: { discord: ["steipete"] } } },
@@ -103,7 +103,7 @@ describe("trigger handling", () => {
         agents: {
           defaults: {
             model: "anthropic/claude-opus-4-5",
-            workspace: join(home, "openclaw"),
+            workspace: join(home, "moltbot"),
           },
         },
         tools: {

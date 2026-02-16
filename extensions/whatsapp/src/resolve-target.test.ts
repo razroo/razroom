@@ -1,6 +1,6 @@
 import { describe, expect, it, mock, spyOn } from "bun:test";
 
-mock("openclaw/plugin-sdk", () => ({
+mock("moltbot/plugin-sdk", () => ({
   getChatChannelMeta: () => ({ id: "whatsapp", label: "WhatsApp" }),
   normalizeWhatsAppTarget: (value: string) => {
     if (value === "invalid-target") return null;

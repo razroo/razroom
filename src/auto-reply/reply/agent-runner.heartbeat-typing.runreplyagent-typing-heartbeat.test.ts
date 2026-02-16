@@ -24,18 +24,18 @@ let fixtureRoot = "";
 let caseId = 0;
 
 type StateEnvSnapshot = {
-  OPENCLAW_STATE_DIR: string | undefined;
+  MOLTBOT_STATE_DIR: string | undefined;
 };
 
 function snapshotStateEnv(): StateEnvSnapshot {
-  return { OPENCLAW_STATE_DIR: process.env.OPENCLAW_STATE_DIR };
+  return { MOLTBOT_STATE_DIR: process.env.MOLTBOT_STATE_DIR };
 }
 
 function restoreStateEnv(snapshot: StateEnvSnapshot) {
-  if (snapshot.OPENCLAW_STATE_DIR === undefined) {
-    delete process.env.OPENCLAW_STATE_DIR;
+  if (snapshot.MOLTBOT_STATE_DIR === undefined) {
+    delete process.env.MOLTBOT_STATE_DIR;
   } else {
-    process.env.OPENCLAW_STATE_DIR = snapshot.OPENCLAW_STATE_DIR;
+    process.env.MOLTBOT_STATE_DIR = snapshot.MOLTBOT_STATE_DIR;
   }
 }
 
@@ -43,7 +43,7 @@ async function withTempStateDir<T>(fn: (stateDir: string) => Promise<T>): Promis
   const stateDir = path.join(fixtureRoot, `case-${++caseId}`);
   await fs.mkdir(stateDir, { recursive: true });
   const envSnapshot = snapshotStateEnv();
-  process.env.OPENCLAW_STATE_DIR = stateDir;
+  process.env.MOLTBOT_STATE_DIR = stateDir;
   try {
     return await fn(stateDir);
   } finally {
@@ -76,7 +76,7 @@ describe("runReplyAgent typing (heartbeat)", () => {
   installRunReplyAgentTypingHeartbeatTestHooks();
 
   beforeAll(async () => {
-    fixtureRoot = await fs.mkdtemp(path.join(tmpdir(), "openclaw-typing-heartbeat-"));
+    fixtureRoot = await fs.mkdtemp(path.join(tmpdir(), "moltbot-typing-heartbeat-"));
   });
 
   afterAll(async () => {
@@ -86,7 +86,7 @@ describe("runReplyAgent typing (heartbeat)", () => {
   });
 
   beforeEach(() => {
-    vi.stubEnv("OPENCLAW_TEST_FAST", "1");
+    vi.stubEnv("MOLTBOT_TEST_FAST", "1");
   });
 
   it("signals typing for normal runs", async () => {

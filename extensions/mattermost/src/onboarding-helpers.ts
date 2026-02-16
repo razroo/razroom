@@ -1,1 +1,1 @@
-export { promptAccountId } from "openclaw/plugin-sdk";
+export { promptAccountId } from "moltbot/plugin-sdk";

@@ -1,13 +1,13 @@
 {
-  "name": "@openclaw/line",
+  "name": "@moltbot/line",
   "version": "2026.2.15",
   "private": true,
-  "description": "OpenClaw LINE channel plugin",
+  "description": "MoltBot LINE channel plugin",
   "type": "module",
   "devDependencies": {
-    "openclaw": "workspace:*"
+    "moltbot": "workspace:*"
   },
-  "openclaw": {
+  "moltbot": {
     "extensions": [
       "./index.ts"
     ],
@@ -22,7 +22,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@openclaw/line",
+      "npmSpec": "@moltbot/line",
       "localPath": "extensions/line",
       "defaultChoice": "npm"
     }

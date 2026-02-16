@@ -4,7 +4,7 @@ import {
   isRequestBodyLimitError,
   readRequestBodyWithLimit,
   requestBodyErrorToText,
-} from "openclaw/plugin-sdk";
+} from "moltbot/plugin-sdk";
 import type {
   CoreConfig,
   NextcloudTalkInboundMessage,

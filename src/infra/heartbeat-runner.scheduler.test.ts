@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, mock, spyOn } from "bun:test";
-import type { OpenClawConfig } from "../config/config.js";
+import type { MoltBotConfig } from "../config/config.js";
 import { startHeartbeatRunner } from "./heartbeat-runner.js";
 
 describe("startHeartbeatRunner", () => {
@@ -17,7 +17,7 @@ describe("startHeartbeatRunner", () => {
     const runner = startHeartbeatRunner({
       cfg: {
         agents: { defaults: { heartbeat: { every: "30m" } } },
-      } as OpenClawConfig,
+      } as MoltBotConfig,
       runOnce: runSpy,
     });
 
@@ -36,7 +36,7 @@ describe("startHeartbeatRunner", () => {
           { id: "ops", heartbeat: { every: "15m" } },
         ],
       },
-    } as OpenClawConfig);
+    } as MoltBotConfig);
 
     await vi.advanceTimersByTimeAsync(10 * 60_000 + 1_000);
 
@@ -72,7 +72,7 @@ describe("startHeartbeatRunner", () => {
     const runner = startHeartbeatRunner({
       cfg: {
         agents: { defaults: { heartbeat: { every: "30m" } } },
-      } as OpenClawConfig,
+      } as MoltBotConfig,
       runOnce: runSpy,
     });
 
@@ -96,7 +96,7 @@ describe("startHeartbeatRunner", () => {
 
     const cfg = {
       agents: { defaults: { heartbeat: { every: "30m" } } },
-    } as OpenClawConfig;
+    } as MoltBotConfig;
 
     // Start runner A
     const runnerA = startHeartbeatRunner({ cfg, runOnce: runSpy1 });
@@ -127,7 +127,7 @@ describe("startHeartbeatRunner", () => {
     const runner = startHeartbeatRunner({
       cfg: {
         agents: { defaults: { heartbeat: { every: "30m" } } },
-      } as OpenClawConfig,
+      } as MoltBotConfig,
       runOnce: runSpy,
     });
 
@@ -154,7 +154,7 @@ describe("startHeartbeatRunner", () => {
     const runner = startHeartbeatRunner({
       cfg: {
         agents: { defaults: { heartbeat: { every: "30m" } } },
-      } as OpenClawConfig,
+      } as MoltBotConfig,
       runOnce: runSpy,
     });
 

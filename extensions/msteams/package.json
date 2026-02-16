@@ -1,7 +1,7 @@
 {
-  "name": "@openclaw/msteams",
+  "name": "@moltbot/msteams",
   "version": "2026.2.15",
-  "description": "OpenClaw Microsoft Teams channel plugin",
+  "description": "MoltBot Microsoft Teams channel plugin",
   "type": "module",
   "dependencies": {
     "@microsoft/agents-hosting": "^1.2.3",
@@ -10,9 +10,9 @@
     "express": "^5.2.1"
   },
   "devDependencies": {
-    "openclaw": "workspace:*"
+    "moltbot": "workspace:*"
   },
-  "openclaw": {
+  "moltbot": {
     "extensions": [
       "./index.ts"
     ],
@@ -29,7 +29,7 @@
       "order": 60
     },
     "install": {
-      "npmSpec": "@openclaw/msteams",
+      "npmSpec": "@moltbot/msteams",
       "localPath": "extensions/msteams",
       "defaultChoice": "npm"
     }

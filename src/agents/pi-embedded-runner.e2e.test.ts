@@ -3,8 +3,8 @@ import os from "node:os";
 import path from "node:path";
 import { afterAll, beforeAll, describe, expect, it, mock, spyOn } from "bun:test";
 import "./test-helpers/fast-coding-tools.js";
-import type { OpenClawConfig } from "../config/config.js";
-import { ensureOpenClawModelsJson } from "./models-config.js";
+import type { MoltBotConfig } from "../config/config.js";
+import { ensureMoltBotModelsJson } from "./models-config.js";
 
 mock("@mariozechner/pi-ai", async () => {
   const actual = await vi.importActual<typeof import("@mariozechner/pi-ai")>("@mariozechner/pi-ai");
@@ -99,7 +99,7 @@ let sessionCounter = 0;
 beforeAll(async () => {
   // TODO: Restore real timers;
   ({ runEmbeddedPiAgent } = await import("./pi-embedded-runner.js"));
-  tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-embedded-agent-"));
+  tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), "moltbot-embedded-agent-"));
   agentDir = path.join(tempRoot, "agent");
   workspaceDir = path.join(tempRoot, "workspace");
   await fs.mkdir(agentDir, { recursive: true });
@@ -134,9 +134,9 @@ const makeOpenAiConfig = (modelIds: string[]) =>
         },
       },
     },
-  }) satisfies OpenClawConfig;
+  }) satisfies MoltBotConfig;
 
-const ensureModels = (cfg: OpenClawConfig) => ensureOpenClawModelsJson(cfg, agentDir) as unknown;
+const ensureModels = (cfg: MoltBotConfig) => ensureMoltBotModelsJson(cfg, agentDir) as unknown;
 
 const nextSessionFile = () => {
   sessionCounter += 1;
@@ -197,7 +197,7 @@ describe("runEmbeddedPiAgent", () => {
           },
         },
       },
-    } satisfies OpenClawConfig;
+    } satisfies MoltBotConfig;
 
     await expect(
       runEmbeddedPiAgent({
@@ -228,7 +228,7 @@ describe("runEmbeddedPiAgent", () => {
           workspace: fallbackWorkspace,
         },
       },
-    } satisfies OpenClawConfig;
+    } satisfies MoltBotConfig;
     await ensureModels(cfg);
 
     const result = await runEmbeddedPiAgent({
@@ -265,7 +265,7 @@ describe("runEmbeddedPiAgent", () => {
           },
         ],
       },
-    } satisfies OpenClawConfig;
+    } satisfies MoltBotConfig;
     await ensureModels(cfg);
 
     await expect(
