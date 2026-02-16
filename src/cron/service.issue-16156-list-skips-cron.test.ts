@@ -65,7 +65,7 @@ describe("#16156: cron.list() must not silently advance past-due recurring jobs"
   });
 
   beforeEach(() => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     vi.setSystemTime(new Date("2025-12-13T00:00:00.000Z"));
     noopLogger.debug.mockClear();
     noopLogger.info.mockClear();
@@ -74,7 +74,7 @@ describe("#16156: cron.list() must not silently advance past-due recurring jobs"
   });
 
   afterEach(() => {
-    // TODO: Restore real timers;
+    vi.useRealTimers();
   });
 
   it("does not skip a cron job when list() is called while the job is past-due", async () => {

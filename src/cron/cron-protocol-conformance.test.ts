@@ -38,6 +38,15 @@ async function resolveSwiftFiles(cwd: string, candidates: string[]): Promise<str
   return matches;
 }
 
+async function hasSwiftSources(cwd: string): Promise<boolean> {
+  try {
+    await fs.access(path.join(cwd, MACOS_APP_SOURCES_DIR));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 describe("cron protocol conformance", () => {
   it("ui + swift include all cron delivery modes from gateway schema", async () => {
     const modes = extractDeliveryModes(CronDeliverySchema as SchemaLike);
@@ -53,12 +62,14 @@ describe("cron protocol conformance", () => {
       }
     }
 
-    const swiftModelFiles = await resolveSwiftFiles(cwd, SWIFT_MODEL_CANDIDATES);
-    for (const relPath of swiftModelFiles) {
-      const content = await fs.readFile(path.join(cwd, relPath), "utf-8");
-      for (const mode of modes) {
-        const pattern = new RegExp(`\\bcase\\s+${mode}\\b`);
-        expect(pattern.test(content), `${relPath} missing case ${mode}`).toBe(true);
+    if (await hasSwiftSources(cwd)) {
+      const swiftModelFiles = await resolveSwiftFiles(cwd, SWIFT_MODEL_CANDIDATES);
+      for (const relPath of swiftModelFiles) {
+        const content = await fs.readFile(path.join(cwd, relPath), "utf-8");
+        for (const mode of modes) {
+          const pattern = new RegExp(`\\bcase\\s+${mode}\\b`);
+          expect(pattern.test(content), `${relPath} missing case ${mode}`).toBe(true);
+        }
       }
     }
   });
@@ -70,10 +81,12 @@ describe("cron protocol conformance", () => {
     expect(uiTypes.includes("jobs:")).toBe(true);
     expect(uiTypes.includes("jobCount")).toBe(false);
 
-    const [swiftRelPath] = await resolveSwiftFiles(cwd, SWIFT_STATUS_CANDIDATES);
-    const swiftPath = path.join(cwd, swiftRelPath);
-    const swift = await fs.readFile(swiftPath, "utf-8");
-    expect(swift.includes("struct CronSchedulerStatus")).toBe(true);
-    expect(swift.includes("let jobs:")).toBe(true);
+    if (await hasSwiftSources(cwd)) {
+      const [swiftRelPath] = await resolveSwiftFiles(cwd, SWIFT_STATUS_CANDIDATES);
+      const swiftPath = path.join(cwd, swiftRelPath);
+      const swift = await fs.readFile(swiftPath, "utf-8");
+      expect(swift.includes("struct CronSchedulerStatus")).toBe(true);
+      expect(swift.includes("let jobs:")).toBe(true);
+    }
   });
 });

@@ -1,6 +1,6 @@
 import type { AgentMessage } from "@mariozechner/pi-agent-core";
 import { SessionManager } from "@mariozechner/pi-coding-agent";
-import { afterEach, describe, expect, it, mock, spyOn } from "bun:test";
+import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 import { flushPendingToolResultsAfterIdle } from "./pi-embedded-runner/wait-for-idle-before-flush.js";
 import { guardSessionManager } from "./session-tool-result-guard-wrapper.js";
 
@@ -37,8 +37,12 @@ function getMessages(sm: ReturnType<typeof guardSessionManager>): AgentMessage[]
 }
 
 describe("flushPendingToolResultsAfterIdle", () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+
   afterEach(() => {
-    // TODO: Restore real timers;
+    vi.useRealTimers();
   });
 
   it("waits for idle so real tool results can land before flush", async () => {
@@ -72,7 +76,6 @@ describe("flushPendingToolResultsAfterIdle", () => {
 
   it("flushes pending tool call after timeout when idle never resolves", async () => {
     const sm = guardSessionManager(SessionManager.inMemory());
-    // TODO: Implement fake timers for Bun;
     const agent = { waitForIdle: () => new Promise<void>(() => {}) };
 
     sm.appendMessage(assistantToolCall("call_orphan_1"));
@@ -97,7 +100,6 @@ describe("flushPendingToolResultsAfterIdle", () => {
 
   it("clears timeout handle when waitForIdle resolves first", async () => {
     const sm = guardSessionManager(SessionManager.inMemory());
-    // TODO: Implement fake timers for Bun;
     const agent = {
       waitForIdle: async () => {},
     };

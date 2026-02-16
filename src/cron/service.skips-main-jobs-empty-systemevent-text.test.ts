@@ -40,7 +40,7 @@ async function waitForFirstJob(
 
 describe("CronService", () => {
   beforeEach(() => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     vi.setSystemTime(new Date("2025-12-13T00:00:00.000Z"));
     noopLogger.debug.mockClear();
     noopLogger.info.mockClear();
@@ -49,7 +49,7 @@ describe("CronService", () => {
   });
 
   afterEach(() => {
-    // TODO: Restore real timers;
+    vi.useRealTimers();
   });
 
   it("skips main jobs with empty systemEvent text", async () => {

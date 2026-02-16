@@ -75,7 +75,7 @@ describe("Cron issue regressions", () => {
   });
 
   beforeEach(() => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     vi.setSystemTime(new Date("2026-02-06T10:05:00.000Z"));
   });
 
@@ -84,7 +84,7 @@ describe("Cron issue regressions", () => {
   });
 
   afterEach(() => {
-    // TODO: Restore real timers;
+    vi.useRealTimers();
     // mock.restore() // TODO: Review mock cleanup;
   });
 
