@@ -15,12 +15,17 @@
     "oxc/no-async-endpoint-handlers": "off",
     "oxc/no-map-spread": "off",
     "typescript/no-explicit-any": "error",
+    "typescript/no-floating-promises": "warn",
+    "typescript/await-thenable": "warn",
     "typescript/no-extraneous-class": "off",
     "typescript/no-unsafe-type-assertion": "off",
     "unicorn/consistent-function-scoping": "off",
     "unicorn/require-post-message-target-origin": "off"
   },
   "ignorePatterns": [
+    "**/*.test.ts",
+    "**/*.e2e.test.ts",
+    "**/*.live.test.ts",
     "assets/",
     "dist/",
     "docs/_layouts/",
@@ -31,6 +36,7 @@
     "skills/",
     "src/canvas-host/a2ui/a2ui.bundle.js",
     "Swabble/",
+    "test/",
     "vendor/"
   ]
 }

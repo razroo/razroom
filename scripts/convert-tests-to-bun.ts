@@ -127,7 +127,7 @@ function convertDirectory(dirPath: string): void {
       let stat;
       try {
         stat = statSync(fullPath);
-      } catch (err) {
+      } catch {
         // Skip files that can't be stat'd (broken symlinks, etc.)
         continue;
       }
@@ -184,4 +184,4 @@ async function main() {
   console.log("   3. Fix any remaining test failures");
 }
 
-main();
+void main();

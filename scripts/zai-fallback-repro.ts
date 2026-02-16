@@ -107,8 +107,6 @@ async function main() {
     ...process.env,
     RAZROOM_CONFIG_PATH: configPath,
     RAZROOM_STATE_DIR: stateDir,
-    RAZROOM_CONFIG_PATH: configPath,
-    RAZROOM_STATE_DIR: stateDir,
     ZAI_API_KEY: zaiKey,
     Z_AI_API_KEY: "",
   };

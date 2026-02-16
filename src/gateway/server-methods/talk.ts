@@ -104,7 +104,13 @@ export const talkHandlers: GatewayRequestHandlers = {
 
     respond(true, { config: configPayload }, undefined);
   },
-  "talk.mode": ({ params, respond, context, client, isWebchatConnect }) => {
+  "talk.mode": ({
+    params,
+    respond,
+    context,
+    client: _client,
+    isWebchatConnect: _isWebchatConnect,
+  }) => {
     if (!validateTalkModeParams(params)) {
       respond(
         false,

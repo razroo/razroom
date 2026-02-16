@@ -14,7 +14,7 @@ export type ExtraGatewayService = {
   label: string;
   detail: string;
   scope: "user" | "system";
-  marker?: "razroom" | "razroom" | "razroom";
+  marker?: "razroom";
   legacy?: boolean;
 };
 

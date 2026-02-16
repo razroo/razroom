@@ -46,7 +46,7 @@ const PROCESSABLE_EXTENSIONS = new Set([
 ]);
 
 // Directories to skip
-const SKIP_DIRS = ["node_modules", ".git", "dist", ".next", ".turbo"];
+const SKIP_DIRS = new Set(["node_modules", ".git", "dist", ".next", ".turbo"]);
 
 /**
  * Rename all razroom references in file content
@@ -150,7 +150,7 @@ function processDirectory(dirPath: string): void {
 
     for (const entry of entries) {
       // Skip certain directories
-      if (SKIP_DIRS.includes(entry)) {
+      if (SKIP_DIRS.has(entry)) {
         continue;
       }
 
@@ -160,7 +160,7 @@ function processDirectory(dirPath: string): void {
       let stat;
       try {
         stat = statSync(fullPath);
-      } catch (err) {
+      } catch {
         continue;
       }
 
@@ -186,7 +186,7 @@ function renameImportantFiles(): void {
       renameSync(from, to);
       stats.filesRenamed++;
       console.log(`✓ Renamed: ${from} -> ${to}`);
-    } catch (err) {
+    } catch {
       // File might not exist or already renamed
     }
   }
@@ -231,4 +231,4 @@ async function main() {
   console.log("   4. Commit changes: git add . && git commit -m 'Rename razroom to razroom'");
 }
 
-main();
+void main();
