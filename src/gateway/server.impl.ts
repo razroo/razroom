@@ -561,6 +561,8 @@ export async function startGatewayServer(
       nodeSubscribe,
       nodeUnsubscribe,
       nodeUnsubscribeAll,
+      broadcastVoiceWakeChanged: (triggers: string[]) =>
+        broadcast("voicewake.changed", { triggers }),
       nodeRegistry,
       agentRunSeq,
       chatAbortControllers,
