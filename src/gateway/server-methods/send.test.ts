@@ -1,0 +1,289 @@
+import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
+import type { GatewayRequestContext } from "./types.js";
+import { sendHandlers } from "./send.js";
+
+const mocks = vi.hoisted(() => ({
+  deliverOutboundPayloads: mock(),
+  appendAssistantMessageToSessionTranscript: mock(async () => ({ ok: true, sessionFile: "x" })),
+  recordSessionMetaFromInbound: mock(async () => ({ ok: true })),
+}));
+
+mock("../../config/config.js", async () => {
+  const actual =
+    await vi.importActual<typeof import("../../config/config.js")>("../../config/config.js");
+  return {
+    ...actual,
+    loadConfig: () => ({}),
+  };
+});
+
+mock("../../channels/plugins/index.js", () => ({
+  getChannelPlugin: () => ({ outbound: {} }),
+  normalizeChannelId: (value: string) => (value === "webchat" ? null : value),
+}));
+
+mock("../../infra/outbound/targets.js", () => ({
+  resolveOutboundTarget: () => ({ ok: true, to: "resolved" }),
+}));
+
+mock("../../infra/outbound/deliver.js", () => ({
+  deliverOutboundPayloads: mocks.deliverOutboundPayloads,
+}));
+
+mock("../../config/sessions.js", async () => {
+  const actual = await vi.importActual<typeof import("../../config/sessions.js")>(
+    "../../config/sessions.js",
+  );
+  return {
+    ...actual,
+    appendAssistantMessageToSessionTranscript: mocks.appendAssistantMessageToSessionTranscript,
+    recordSessionMetaFromInbound: mocks.recordSessionMetaFromInbound,
+  };
+});
+
+const makeContext = (): GatewayRequestContext =>
+  ({
+    dedupe: new Map(),
+  }) as unknown as GatewayRequestContext;
+
+describe("gateway send mirroring", () => {
+  beforeEach(() => {
+    // mock.restore() // TODO: Review mock cleanup;
+  });
+
+  it("accepts media-only sends without message", async () => {
+    mocks.deliverOutboundPayloads.mockResolvedValue([{ messageId: "m-media", channel: "slack" }]);
+
+    const respond = mock();
+    await sendHandlers.send({
+      params: {
+        to: "channel:C1",
+        mediaUrl: "https://example.com/a.png",
+        channel: "slack",
+        idempotencyKey: "idem-media-only",
+      },
+      respond,
+      context: makeContext(),
+      req: { type: "req", id: "1", method: "send" },
+      client: null,
+      isWebchatConnect: () => false,
+    });
+
+    expect(mocks.deliverOutboundPayloads).toHaveBeenCalledWith(
+      expect.objectContaining({
+        payloads: [{ text: "", mediaUrl: "https://example.com/a.png", mediaUrls: undefined }],
+      }),
+    );
+    expect(respond).toHaveBeenCalledWith(
+      true,
+      expect.objectContaining({ messageId: "m-media" }),
+      undefined,
+      expect.objectContaining({ channel: "slack" }),
+    );
+  });
+
+  it("rejects empty sends when neither text nor media is present", async () => {
+    const respond = mock();
+    await sendHandlers.send({
+      params: {
+        to: "channel:C1",
+        message: "   ",
+        channel: "slack",
+        idempotencyKey: "idem-empty",
+      },
+      respond,
+      context: makeContext(),
+      req: { type: "req", id: "1", method: "send" },
+      client: null,
+      isWebchatConnect: () => false,
+    });
+
+    expect(mocks.deliverOutboundPayloads).not.toHaveBeenCalled();
+    expect(respond).toHaveBeenCalledWith(
+      false,
+      undefined,
+      expect.objectContaining({
+        message: expect.stringContaining("text or media is required"),
+      }),
+    );
+  });
+
+  it("returns actionable guidance when channel is internal webchat", async () => {
+    const respond = mock();
+    await sendHandlers.send({
+      params: {
+        to: "x",
+        message: "hi",
+        channel: "webchat",
+        idempotencyKey: "idem-webchat",
+      },
+      respond,
+      context: makeContext(),
+      req: { type: "req", id: "1", method: "send" },
+      client: null,
+      isWebchatConnect: () => false,
+    });
+
+    expect(mocks.deliverOutboundPayloads).not.toHaveBeenCalled();
+    expect(respond).toHaveBeenCalledWith(
+      false,
+      undefined,
+      expect.objectContaining({
+        message: expect.stringContaining("unsupported channel: webchat"),
+      }),
+    );
+    expect(respond).toHaveBeenCalledWith(
+      false,
+      undefined,
+      expect.objectContaining({
+        message: expect.stringContaining("Use `chat.send`"),
+      }),
+    );
+  });
+
+  it("does not mirror when delivery returns no results", async () => {
+    mocks.deliverOutboundPayloads.mockResolvedValue([]);
+
+    const respond = mock();
+    await sendHandlers.send({
+      params: {
+        to: "channel:C1",
+        message: "hi",
+        channel: "slack",
+        idempotencyKey: "idem-1",
+        sessionKey: "agent:main:main",
+      },
+      respond,
+      context: makeContext(),
+      req: { type: "req", id: "1", method: "send" },
+      client: null,
+      isWebchatConnect: () => false,
+    });
+
+    expect(mocks.deliverOutboundPayloads).toHaveBeenCalledWith(
+      expect.objectContaining({
+        mirror: expect.objectContaining({
+          sessionKey: "agent:main:main",
+        }),
+      }),
+    );
+  });
+
+  it("mirrors media filenames when delivery succeeds", async () => {
+    mocks.deliverOutboundPayloads.mockResolvedValue([{ messageId: "m1", channel: "slack" }]);
+
+    const respond = mock();
+    await sendHandlers.send({
+      params: {
+        to: "channel:C1",
+        message: "caption",
+        mediaUrl: "https://example.com/files/report.pdf?sig=1",
+        channel: "slack",
+        idempotencyKey: "idem-2",
+        sessionKey: "agent:main:main",
+      },
+      respond,
+      context: makeContext(),
+      req: { type: "req", id: "1", method: "send" },
+      client: null,
+      isWebchatConnect: () => false,
+    });
+
+    expect(mocks.deliverOutboundPayloads).toHaveBeenCalledWith(
+      expect.objectContaining({
+        mirror: expect.objectContaining({
+          sessionKey: "agent:main:main",
+          text: "caption",
+          mediaUrls: ["https://example.com/files/report.pdf?sig=1"],
+        }),
+      }),
+    );
+  });
+
+  it("mirrors MEDIA tags as attachments", async () => {
+    mocks.deliverOutboundPayloads.mockResolvedValue([{ messageId: "m2", channel: "slack" }]);
+
+    const respond = mock();
+    await sendHandlers.send({
+      params: {
+        to: "channel:C1",
+        message: "Here\nMEDIA:https://example.com/image.png",
+        channel: "slack",
+        idempotencyKey: "idem-3",
+        sessionKey: "agent:main:main",
+      },
+      respond,
+      context: makeContext(),
+      req: { type: "req", id: "1", method: "send" },
+      client: null,
+      isWebchatConnect: () => false,
+    });
+
+    expect(mocks.deliverOutboundPayloads).toHaveBeenCalledWith(
+      expect.objectContaining({
+        mirror: expect.objectContaining({
+          sessionKey: "agent:main:main",
+          text: "Here",
+          mediaUrls: ["https://example.com/image.png"],
+        }),
+      }),
+    );
+  });
+
+  it("lowercases provided session keys for mirroring", async () => {
+    mocks.deliverOutboundPayloads.mockResolvedValue([{ messageId: "m-lower", channel: "slack" }]);
+
+    const respond = mock();
+    await sendHandlers.send({
+      params: {
+        to: "channel:C1",
+        message: "hi",
+        channel: "slack",
+        idempotencyKey: "idem-lower",
+        sessionKey: "agent:main:slack:channel:C123",
+      },
+      respond,
+      context: makeContext(),
+      req: { type: "req", id: "1", method: "send" },
+      client: null,
+      isWebchatConnect: () => false,
+    });
+
+    expect(mocks.deliverOutboundPayloads).toHaveBeenCalledWith(
+      expect.objectContaining({
+        mirror: expect.objectContaining({
+          sessionKey: "agent:main:slack:channel:c123",
+        }),
+      }),
+    );
+  });
+
+  it("derives a target session key when none is provided", async () => {
+    mocks.deliverOutboundPayloads.mockResolvedValue([{ messageId: "m3", channel: "slack" }]);
+
+    const respond = mock();
+    await sendHandlers.send({
+      params: {
+        to: "channel:C1",
+        message: "hello",
+        channel: "slack",
+        idempotencyKey: "idem-4",
+      },
+      respond,
+      context: makeContext(),
+      req: { type: "req", id: "1", method: "send" },
+      client: null,
+      isWebchatConnect: () => false,
+    });
+
+    expect(mocks.recordSessionMetaFromInbound).toHaveBeenCalled();
+    expect(mocks.deliverOutboundPayloads).toHaveBeenCalledWith(
+      expect.objectContaining({
+        mirror: expect.objectContaining({
+          sessionKey: "agent:main:slack:channel:resolved",
+          agentId: "main",
+        }),
+      }),
+    );
+  });
+});

@@ -1,0 +1,22 @@
+# Bun configuration for Vitamin (OpenClaw port)
+# https://bun.sh/docs/runtime/bunfig
+
+[install]
+# Install options
+optional = true
+dev = true
+peer = true
+
+# Cache directory
+cache = "node_modules/.cache/bun"
+
+[install.scopes]
+# Add any scoped registries here if needed
+
+[test]
+# Test runner configuration
+coverage = true
+
+[run]
+# Runtime configuration
+# Equivalent env vars: BUN_*
