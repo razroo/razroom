@@ -1,8 +1,8 @@
 name: Setup pnpm + store cache
-description: Prepare pnpm via corepack and restore pnpm store cache.
+description: Install pnpm and restore pnpm store cache.
 inputs:
   pnpm-version:
-    description: pnpm version to activate via corepack.
+    description: pnpm version to install.
     required: false
     default: "10.23.0"
   cache-key-suffix:
@@ -12,17 +12,16 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Setup pnpm (corepack retry)
+    - name: Setup pnpm (npm retry)
       shell: bash
       run: |
         set -euo pipefail
-        corepack enable
         for attempt in 1 2 3; do
-          if corepack prepare "pnpm@${{ inputs.pnpm-version }}" --activate; then
+          if npm install --global "pnpm@${{ inputs.pnpm-version }}"; then
             pnpm -v
             exit 0
           fi
-          echo "corepack prepare failed (attempt $attempt/3). Retrying..."
+          echo "pnpm install failed (attempt $attempt/3). Retrying..."
           sleep $((attempt * 10))
         done
         exit 1

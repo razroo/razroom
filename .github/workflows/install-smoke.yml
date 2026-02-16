@@ -33,16 +33,15 @@ jobs:
       - name: Checkout CLI
         uses: actions/checkout@v4
 
-      - name: Setup pnpm (corepack retry)
+      - name: Setup pnpm (npm retry)
         run: |
           set -euo pipefail
-          corepack enable
           for attempt in 1 2 3; do
-            if corepack prepare pnpm@10.23.0 --activate; then
+            if npm install --global pnpm@10.23.0; then
               pnpm -v
               exit 0
             fi
-            echo "corepack prepare failed (attempt $attempt/3). Retrying..."
+            echo "pnpm install failed (attempt $attempt/3). Retrying..."
             sleep $((attempt * 10))
           done
           exit 1
