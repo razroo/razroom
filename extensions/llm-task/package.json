@@ -1,6 +1,6 @@
 {
   "name": "@razroo/llm-task",
-  "version": "2026.2.15",
+  "version": "2026.2.16",
   "private": true,
   "description": "Razroom JSON-only LLM task plugin",
   "type": "module",

@@ -1,6 +1,6 @@
 {
   "name": "@razroo/google-gemini-cli-auth",
-  "version": "2026.2.15",
+  "version": "2026.2.16",
   "private": true,
   "description": "Razroom Gemini CLI OAuth provider plugin",
   "type": "module",

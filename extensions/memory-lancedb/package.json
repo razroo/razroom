@@ -1,6 +1,6 @@
 {
   "name": "@razroo/memory-lancedb",
-  "version": "2026.2.15",
+  "version": "2026.2.16",
   "private": true,
   "description": "Razroom LanceDB-backed long-term memory plugin with auto-recall/capture",
   "type": "module",

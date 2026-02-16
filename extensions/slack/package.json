@@ -1,6 +1,6 @@
 {
   "name": "@razroo/slack",
-  "version": "2026.2.15",
+  "version": "2026.2.16",
   "private": true,
   "description": "Razroom Slack channel plugin",
   "type": "module",

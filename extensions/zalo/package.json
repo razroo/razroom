@@ -1,6 +1,6 @@
 {
   "name": "@razroo/zalo",
-  "version": "2026.2.15",
+  "version": "2026.2.16",
   "description": "Razroom Zalo channel plugin",
   "type": "module",
   "dependencies": {

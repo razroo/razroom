@@ -1,6 +1,6 @@
 {
   "name": "@razroo/voice-call",
-  "version": "2026.2.15",
+  "version": "2026.2.16",
   "description": "Razroom voice-call plugin",
   "type": "module",
   "dependencies": {

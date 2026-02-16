@@ -1,6 +1,6 @@
 {
   "name": "@razroo/tlon",
-  "version": "2026.2.15",
+  "version": "2026.2.16",
   "private": true,
   "description": "Razroom Tlon/Urbit channel plugin",
   "type": "module",

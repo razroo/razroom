@@ -1,6 +1,6 @@
 {
   "name": "@razroo/discord",
-  "version": "2026.2.15",
+  "version": "2026.2.16",
   "description": "Razroom Discord channel plugin",
   "type": "module",
   "devDependencies": {
