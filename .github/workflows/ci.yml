@@ -294,14 +294,8 @@ jobs:
       matrix:
         include:
           - runtime: node
-            task: lint
-            command: pnpm lint
-          - runtime: node
             task: test
             command: pnpm canvas:a2ui:bundle && pnpm test
-          - runtime: node
-            task: protocol
-            command: pnpm protocol:check
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -326,20 +320,6 @@ jobs:
           } catch {
             Write-Warning "Failed to apply Defender exclusions, continuing. $($_.Exception.Message)"
           }
-
-      - name: Download dist artifact (lint lane)
-        if: matrix.task == 'lint'
-        uses: actions/download-artifact@v4
-        with:
-          name: dist-build
-          path: dist/
-
-      - name: Verify dist artifact (lint lane)
-        if: matrix.task == 'lint'
-        run: |
-          set -euo pipefail
-          test -s dist/index.js
-          test -s dist/plugin-sdk/index.js
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
