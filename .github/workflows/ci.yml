@@ -362,10 +362,11 @@ jobs:
 
       - name: Runtime versions
         run: |
+          export npm_config_package_manager_strict=false
           node -v
           npm -v
           bun -v
-          pnpm --config.package-manager-strict=false -v
+          pnpm -v
 
       - name: Capture node path
         run: echo "NODE_BIN=$(dirname \"$(node -p \"process.execPath\")\")" >> "$GITHUB_ENV"
@@ -374,11 +375,12 @@ jobs:
         env:
           CI: true
         run: |
+          export npm_config_package_manager_strict=false
           export PATH="$NODE_BIN:$PATH"
           which node
           node -v
-          pnpm --config.package-manager-strict=false -v
-          pnpm install --frozen-lockfile --ignore-scripts=false --config.engine-strict=false --config.enable-pre-post-scripts=true --config.package-manager-strict=false || pnpm install --frozen-lockfile --ignore-scripts=false --config.engine-strict=false --config.enable-pre-post-scripts=true --config.package-manager-strict=false
+          pnpm -v
+          pnpm install --frozen-lockfile --ignore-scripts=false --config.engine-strict=false --config.enable-pre-post-scripts=true || pnpm install --frozen-lockfile --ignore-scripts=false --config.engine-strict=false --config.enable-pre-post-scripts=true
 
       - name: Configure vitest JSON reports
         if: matrix.task == 'test'

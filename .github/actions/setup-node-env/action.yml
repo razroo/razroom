@@ -57,9 +57,10 @@ runs:
     - name: Runtime versions
       shell: bash
       run: |
+        export npm_config_package_manager_strict=false
         node -v
         npm -v
-        pnpm --config.package-manager-strict=false -v
+        pnpm -v
         if command -v bun &>/dev/null; then bun -v; fi
 
     - name: Capture node path
@@ -71,13 +72,14 @@ runs:
       env:
         CI: "true"
       run: |
+        export npm_config_package_manager_strict=false
         export PATH="$NODE_BIN:$PATH"
         which node
         node -v
-        pnpm --config.package-manager-strict=false -v
+        pnpm -v
         LOCKFILE_FLAG=""
         if [ "${{ inputs.frozen-lockfile }}" = "true" ]; then
           LOCKFILE_FLAG="--frozen-lockfile"
         fi
-        pnpm install $LOCKFILE_FLAG --ignore-scripts=false --config.engine-strict=false --config.enable-pre-post-scripts=true --config.package-manager-strict=false || \
-        pnpm install $LOCKFILE_FLAG --ignore-scripts=false --config.engine-strict=false --config.enable-pre-post-scripts=true --config.package-manager-strict=false
+        pnpm install $LOCKFILE_FLAG --ignore-scripts=false --config.engine-strict=false --config.enable-pre-post-scripts=true || \
+        pnpm install $LOCKFILE_FLAG --ignore-scripts=false --config.engine-strict=false --config.enable-pre-post-scripts=true
