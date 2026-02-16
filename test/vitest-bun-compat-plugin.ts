@@ -4,9 +4,8 @@
  * 1. Top-level `mock("module-path", ...)` → `vi.mock("module-path", ...)`
  *    so vitest's hoister picks them up for module mocking.
  *
- * 2. `vi.hoisted(() => mock(...))` → `vi.hoisted(() => vi.fn(...))`
- *    because `mock` (from the bun:test shim) isn't available inside
- *    hoisted callbacks that run before module imports.
+ * 2. Injects a hoisted `mock` binding so `mock()` calls inside
+ *    `vi.hoisted()` callbacks resolve to `vi.fn()`.
  */
 import type { Plugin } from "vite";
 
@@ -18,10 +17,10 @@ import type { Plugin } from "vite";
 const MODULE_MOCK_RE = /^(mock\(["'](?:[^"']*\/[^"']*|node:[^"']+)["'])/gm;
 
 /**
- * Match `mock()` calls inside `vi.hoisted()` callbacks and replace with `vi.fn()`.
- * These run before module imports so the bun:test shim `mock` isn't available.
+ * Early-binding injection: ensures `mock` is available as `vi.fn` before
+ * any imports, so `vi.hoisted(() => mock(...))` patterns work.
  */
-const HOISTED_MOCK_RE = /(vi\.hoisted\(\(\)\s*=>\s*)mock\(/g;
+const MOCK_INJECTION = `const { mock: mock } = vi.hoisted(() => ({ mock: (...args) => vi.fn(...args) }));\n`;
 
 export function bunTestCompatPlugin(): Plugin {
   return {
@@ -35,10 +34,39 @@ export function bunTestCompatPlugin(): Plugin {
         return null;
       }
       let transformed = code;
+
       // Replace top-level module mocking: mock("path") → vi.mock("path")
       transformed = transformed.replace(MODULE_MOCK_RE, (match) => `vi.${match}`);
-      // Replace mock() inside vi.hoisted callbacks with vi.fn()
-      transformed = transformed.replace(HOISTED_MOCK_RE, "$1vi.fn(");
+
+      // Remove `mock` from the bun:test import (we inject it via vi.hoisted
+      // so it's available before imports — critical for vi.hoisted callbacks).
+      transformed = transformed.replace(
+        /import\s*\{([^}]*)\}\s*from\s*["']bun:test["']/g,
+        (match, imports: string) => {
+          const parts = imports
+            .split(",")
+            .map((s: string) => s.trim())
+            .filter(Boolean);
+          const withoutMock = parts.filter(
+            (p: string) => p !== "mock" && !p.startsWith("mock ") && !p.startsWith("mock,"),
+          );
+          const hadMock = withoutMock.length < parts.length;
+          if (!hadMock) {
+            return match;
+          }
+          if (withoutMock.length === 0) {
+            // All imports were `mock`; keep the import for side effects
+            return `import {} from "bun:test"`;
+          }
+          return `import { ${withoutMock.join(", ")} } from "bun:test"`;
+        },
+      );
+
+      // Inject the hoisted mock binding at the top of the file
+      if (code.includes("mock")) {
+        transformed = MOCK_INJECTION + transformed;
+      }
+
       if (transformed === code) {
         return null;
       }
