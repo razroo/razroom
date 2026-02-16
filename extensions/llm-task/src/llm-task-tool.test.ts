@@ -30,7 +30,9 @@ function fakeApi(overrides: any = {}) {
 }
 
 describe("llm-task tool (json-only)", () => {
-  beforeEach(() => // mock.restore() // TODO: Review mock cleanup);
+  beforeEach(() => {
+    // mock.restore() // TODO: Review mock cleanup
+  });
 
   it("returns parsed json", async () => {
     // oxlint-disable-next-line typescript/no-explicit-any

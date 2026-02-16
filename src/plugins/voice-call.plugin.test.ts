@@ -1,5 +1,5 @@
-import { Command } from "commander";
 import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
+import { Command } from "commander";
 
 let runtimeStub: {
   config: { toNumber?: string };
@@ -73,7 +73,9 @@ describe("voice-call plugin", () => {
     };
   });
 
-  afterEach(() => // TODO: Review mock restoration);
+  afterEach(() => {
+    // TODO: Review mock restoration
+  });
 
   it("registers gateway methods", () => {
     const { methods } = setup({ provider: "mock" });
