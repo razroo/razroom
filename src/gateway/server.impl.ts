@@ -62,7 +62,6 @@ import { GATEWAY_EVENTS, listGatewayMethods } from "./server-methods-list.js";
 import { coreGatewayHandlers } from "./server-methods.js";
 import { createExecApprovalHandlers } from "./server-methods/exec-approval.js";
 import { safeParseJson } from "./server-methods/nodes.helpers.js";
-import { hasConnectedMobileNode } from "./server-mobile-nodes.js";
 import { loadGatewayModelCatalog } from "./server-model-catalog.js";
 import { createNodeSubscriptionManager } from "./server-node-subscriptions.js";
 import { loadGatewayPlugins } from "./server-plugins.js";
@@ -391,7 +390,6 @@ export async function startGatewayServer(
   const broadcastVoiceWakeChanged = (triggers: string[]) => {
     broadcast("voicewake.changed", { triggers }, { dropIfSlow: true });
   };
-  const hasMobileNodeConnected = () => hasConnectedMobileNode(nodeRegistry);
   applyGatewayLaneConcurrency(cfgAtStart);
 
   let cronState = buildGatewayCronService({
@@ -566,7 +564,6 @@ export async function startGatewayServer(
       nodeSubscribe,
       nodeUnsubscribe,
       nodeUnsubscribeAll,
-      hasConnectedMobileNode: hasMobileNodeConnected,
       nodeRegistry,
       agentRunSeq,
       chatAbortControllers,

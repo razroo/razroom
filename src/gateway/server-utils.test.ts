@@ -1,18 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { defaultVoiceWakeTriggers } from "../infra/voicewake.js";
-import { formatError, normalizeVoiceWakeTriggers } from "./server-utils.js";
-
-describe("normalizeVoiceWakeTriggers", () => {
-  test("returns defaults when input is empty", () => {
-    expect(normalizeVoiceWakeTriggers([])).toEqual(defaultVoiceWakeTriggers());
-    expect(normalizeVoiceWakeTriggers(null)).toEqual(defaultVoiceWakeTriggers());
-  });
-
-  test("trims and limits entries", () => {
-    const result = normalizeVoiceWakeTriggers(["  hello  ", "", "world"]);
-    expect(result).toEqual(["hello", "world"]);
-  });
-});
+import { formatError } from "./server-utils.js";
 
 describe("formatError", () => {
   test("prefers message for Error", () => {

@@ -22,7 +22,6 @@ import {
 import { updatePairedNodeMetadata } from "../../../infra/node-pairing.js";
 import { recordRemoteNodeInfo, refreshRemoteNodeBins } from "../../../infra/skills-remote.js";
 import { upsertPresence } from "../../../infra/system-presence.js";
-import { loadVoiceWakeConfig } from "../../../infra/voicewake.js";
 import { rawDataToString } from "../../../infra/ws.js";
 import { isGatewayCliClient, isWebchatClient } from "../../../utils/message-channel.js";
 import {
@@ -897,17 +896,6 @@ export function attachGatewayWsMessageHandler(params: {
               `remote bin probe failed for ${nodeSession.nodeId}: ${formatForLog(err)}`,
             ),
           );
-          void loadVoiceWakeConfig()
-            .then((cfg) => {
-              context.nodeRegistry.sendEvent(nodeSession.nodeId, "voicewake.changed", {
-                triggers: cfg.triggers,
-              });
-            })
-            .catch((err) =>
-              logGateway.warn(
-                `voicewake snapshot failed for ${nodeSession.nodeId}: ${formatForLog(err)}`,
-              ),
-            );
         }
 
         logWs("out", "hello-ok", {

@@ -36,9 +36,6 @@ const MOTION_COMMANDS = ["motion.activity", "motion.pedometer"];
 
 const SMS_DANGEROUS_COMMANDS = ["sms.send"];
 
-// iOS nodes don't implement system.run/which, but they do support notifications.
-const IOS_SYSTEM_COMMANDS = ["system.notify"];
-
 const SYSTEM_COMMANDS = ["system.run", "system.which", "system.notify", "browser.proxy"];
 
 // "High risk" node commands. These can be enabled by explicitly adding them to
@@ -53,29 +50,6 @@ export const DEFAULT_DANGEROUS_NODE_COMMANDS = [
 ];
 
 const PLATFORM_DEFAULTS: Record<string, string[]> = {
-  ios: [
-    ...CANVAS_COMMANDS,
-    ...CAMERA_COMMANDS,
-    ...LOCATION_COMMANDS,
-    ...DEVICE_COMMANDS,
-    ...CONTACTS_COMMANDS,
-    ...CALENDAR_COMMANDS,
-    ...REMINDERS_COMMANDS,
-    ...PHOTOS_COMMANDS,
-    ...MOTION_COMMANDS,
-    ...IOS_SYSTEM_COMMANDS,
-  ],
-  android: [
-    ...CANVAS_COMMANDS,
-    ...CAMERA_COMMANDS,
-    ...LOCATION_COMMANDS,
-    ...DEVICE_COMMANDS,
-    ...CONTACTS_COMMANDS,
-    ...CALENDAR_COMMANDS,
-    ...REMINDERS_COMMANDS,
-    ...PHOTOS_COMMANDS,
-    ...MOTION_COMMANDS,
-  ],
   macos: [
     ...CANVAS_COMMANDS,
     ...CAMERA_COMMANDS,
@@ -95,12 +69,6 @@ const PLATFORM_DEFAULTS: Record<string, string[]> = {
 
 function normalizePlatformId(platform?: string, deviceFamily?: string): string {
   const raw = (platform ?? "").trim().toLowerCase();
-  if (raw.startsWith("ios")) {
-    return "ios";
-  }
-  if (raw.startsWith("android")) {
-    return "android";
-  }
   if (raw.startsWith("mac")) {
     return "macos";
   }
@@ -114,12 +82,6 @@ function normalizePlatformId(platform?: string, deviceFamily?: string): string {
     return "linux";
   }
   const family = (deviceFamily ?? "").trim().toLowerCase();
-  if (family.includes("iphone") || family.includes("ipad") || family.includes("ios")) {
-    return "ios";
-  }
-  if (family.includes("android")) {
-    return "android";
-  }
   if (family.includes("mac")) {
     return "macos";
   }

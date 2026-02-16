@@ -325,8 +325,8 @@ function formatSetupReply(payload: SetupPayload, authLabel: string): string {
   return [
     "Pairing setup code generated.",
     "",
-    "1) Open the iOS app → Settings → Gateway",
-    "2) Paste the setup code below and tap Connect",
+    "1) Open the node app settings and navigate to Gateway",
+    "2) Paste the setup code below and connect",
     "3) Back here, run /pair approve",
     "",
     "Setup code:",
@@ -341,8 +341,8 @@ function formatSetupInstructions(): string {
   return [
     "Pairing setup code generated.",
     "",
-    "1) Open the iOS app → Settings → Gateway",
-    "2) Paste the setup code from my next message and tap Connect",
+    "1) Open the node app settings and navigate to Gateway",
+    "2) Paste the setup code from my next message and connect",
     "3) Back here, run /pair approve",
   ].join("\n");
 }
