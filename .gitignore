@@ -22,7 +22,6 @@ ui/test-results/
 *.bun-build
 **/ModuleCache/
 bin/
-bin/clawdbot-mac
 bin/docs-list
 vendor/
 **/*.bun-build
@@ -32,18 +31,6 @@ vendor/a2ui/renderers/lit/dist/
 src/canvas-host/a2ui/*.bundle.js
 src/canvas-host/a2ui/*.map
 .bundle.hash
-
-apps/ios/fastlane/screenshots/
-apps/ios/fastlane/test_output/
-apps/ios/fastlane/logs/
-apps/ios/fastlane/.env
-
-# fastlane build artifacts (local)
-apps/ios/*.ipa
-apps/ios/*.dSYM.zip
-
-# provisioning profiles (local)
-apps/ios/*.mobileprovision
 
 # Local untracked files
 .local/

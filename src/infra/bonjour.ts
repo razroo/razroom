@@ -96,7 +96,7 @@ export async function startGatewayBonjourAdvertiser(
   // Keep only the first label and normalize away a trailing `.local`.
   const hostnameRaw =
     process.env.MOLTBOT_MDNS_HOSTNAME?.trim() ||
-    process.env.CLAWDBOT_MDNS_HOSTNAME?.trim() ||
+    process.env.MOLTBOT_MDNS_HOSTNAME?.trim() ||
     "moltbot";
   const hostname =
     hostnameRaw

@@ -88,7 +88,7 @@ export async function runDaemonInstall(opts: DaemonInstallOptions) {
     opts.token ||
     cfg.gateway?.auth?.token ||
     process.env.MOLTBOT_GATEWAY_TOKEN ||
-    process.env.CLAWDBOT_GATEWAY_TOKEN;
+    process.env.MOLTBOT_GATEWAY_TOKEN;
 
   if (!token && needsToken) {
     token = randomToken();

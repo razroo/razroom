@@ -85,7 +85,7 @@ async function main() {
   const portRaw =
     argValue(args, "--port") ??
     process.env.MOLTBOT_GATEWAY_PORT ??
-    process.env.CLAWDBOT_GATEWAY_PORT ??
+    process.env.MOLTBOT_GATEWAY_PORT ??
     (typeof cfg.gateway?.port === "number" ? String(cfg.gateway.port) : "") ??
     "18789";
   const port = Number.parseInt(portRaw, 10);
@@ -97,7 +97,7 @@ async function main() {
   const bindRaw =
     argValue(args, "--bind") ??
     process.env.MOLTBOT_GATEWAY_BIND ??
-    process.env.CLAWDBOT_GATEWAY_BIND ??
+    process.env.MOLTBOT_GATEWAY_BIND ??
     cfg.gateway?.bind ??
     "loopback";
   const bind =

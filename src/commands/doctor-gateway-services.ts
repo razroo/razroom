@@ -229,7 +229,7 @@ export async function maybeScanExtraGatewayServices(
   const legacyServices = extraServices.filter((svc) => svc.legacy === true);
   if (legacyServices.length > 0) {
     const shouldRemove = await prompter.confirmSkipInNonInteractive({
-      message: "Remove legacy gateway services (clawdbot/moltbot) now?",
+      message: "Remove legacy gateway services (moltbot/moltbot) now?",
       initialValue: true,
     });
     if (shouldRemove) {

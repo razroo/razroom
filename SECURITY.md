@@ -8,8 +8,6 @@ Report vulnerabilities directly to the repository where the issue lives:
 
 - **Core CLI and gateway** — [moltbot/moltbot](https://github.com/moltbot/moltbot)
 - **macOS desktop app** — [moltbot/moltbot](https://github.com/moltbot/moltbot) (apps/macos)
-- **iOS app** — [moltbot/moltbot](https://github.com/moltbot/moltbot) (apps/ios)
-- **Android app** — [moltbot/moltbot](https://github.com/moltbot/moltbot) (apps/android)
 - **ClawHub** — [moltbot/clawhub](https://github.com/moltbot/clawhub)
 - **Trust and threat model** — [moltbot/trust](https://github.com/moltbot/trust)
 

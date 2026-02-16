@@ -1,12 +1,12 @@
 type StateDirEnvSnapshot = {
   moltbotStateDir: string | undefined;
-  clawdbotStateDir: string | undefined;
+  moltbotStateDir: string | undefined;
 };
 
 export function snapshotStateDirEnv(): StateDirEnvSnapshot {
   return {
     moltbotStateDir: process.env.MOLTBOT_STATE_DIR,
-    clawdbotStateDir: process.env.CLAWDBOT_STATE_DIR,
+    moltbotStateDir: process.env.MOLTBOT_STATE_DIR,
   };
 }
 
@@ -16,14 +16,14 @@ export function restoreStateDirEnv(snapshot: StateDirEnvSnapshot): void {
   } else {
     process.env.MOLTBOT_STATE_DIR = snapshot.moltbotStateDir;
   }
-  if (snapshot.clawdbotStateDir === undefined) {
-    delete process.env.CLAWDBOT_STATE_DIR;
+  if (snapshot.moltbotStateDir === undefined) {
+    delete process.env.MOLTBOT_STATE_DIR;
   } else {
-    process.env.CLAWDBOT_STATE_DIR = snapshot.clawdbotStateDir;
+    process.env.MOLTBOT_STATE_DIR = snapshot.moltbotStateDir;
   }
 }
 
 export function setStateDirEnv(stateDir: string): void {
   process.env.MOLTBOT_STATE_DIR = stateDir;
-  delete process.env.CLAWDBOT_STATE_DIR;
+  delete process.env.MOLTBOT_STATE_DIR;
 }

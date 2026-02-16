@@ -47,7 +47,7 @@ const parseArgs = (): Args => {
 const loadAuthProfiles = (agentId: string) => {
   const stateRoot =
     process.env.MOLTBOT_STATE_DIR?.trim() ||
-    process.env.CLAWDBOT_STATE_DIR?.trim() ||
+    process.env.MOLTBOT_STATE_DIR?.trim() ||
     path.join(os.homedir(), ".moltbot");
   const authPath = path.join(stateRoot, "agents", agentId, "agent", "auth-profiles.json");
   if (!fs.existsSync(authPath)) {
