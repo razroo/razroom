@@ -22,6 +22,9 @@ COPY scripts ./scripts
 RUN bun install --frozen-lockfile
 
 COPY . .
+# A2UI sources live outside the Docker context; skip the copy step if the
+# bundle was not generated (canvas feature is optional for the gateway image).
+ENV RAZROOM_A2UI_SKIP_MISSING=1
 RUN bun run build
 RUN bun run ui:build
 

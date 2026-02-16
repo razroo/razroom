@@ -13,15 +13,18 @@ OUTPUT_FILE="$ROOT_DIR/src/canvas-host/a2ui/a2ui.bundle.js"
 A2UI_RENDERER_DIR="$ROOT_DIR/vendor/a2ui/renderers/lit"
 A2UI_APP_DIR="$ROOT_DIR/apps/shared/RazroomKit/Tools/CanvasA2UI"
 
-# Docker builds exclude vendor/apps via .dockerignore.
-# In that environment we can keep a prebuilt bundle only if it exists.
+# Docker builds exclude vendor/apps via .dockerignore, and a clean CI checkout
+# won't have the prebuilt bundle (it's .gitignored). In either case, the A2UI
+# canvas feature is simply unavailable — the runtime handles this gracefully
+# (returns 503 for A2UI requests).
 if [[ ! -d "$A2UI_RENDERER_DIR" || ! -d "$A2UI_APP_DIR" ]]; then
   if [[ -f "$OUTPUT_FILE" ]]; then
     echo "A2UI sources missing; keeping prebuilt bundle."
     exit 0
   fi
   echo "A2UI sources missing and no prebuilt bundle found at: $OUTPUT_FILE" >&2
-  exit 1
+  echo "Skipping A2UI bundle (canvas feature will be unavailable at runtime)." >&2
+  exit 0
 fi
 
 INPUT_PATHS=(
