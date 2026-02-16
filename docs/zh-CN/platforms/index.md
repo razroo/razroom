@@ -18,15 +18,12 @@ x-i18n:
 MoltBot 核心使用 TypeScript 编写。**Node 是推荐的运行时**。
 不推荐 Bun 用于 Gateway 网关（WhatsApp/Telegram 存在 bug）。
 
-配套应用适用于 macOS（菜单栏应用）和移动节点（iOS/Android）。Windows 和
-Linux 配套应用已在计划中，但 Gateway 网关目前已完全支持。
+配套应用适用于 macOS（菜单栏应用）。Windows 和 Linux 配套应用已在计划中，但 Gateway 网关目前已完全支持。
 Windows 原生配套应用也在计划中；推荐通过 WSL2 使用 Gateway 网关。
 
 ## 选择你的操作系统
 
 - macOS：[macOS](/platforms/macos)
-- iOS：[iOS](/platforms/ios)
-- Android：[Android](/platforms/android)
 - Windows：[Windows](/platforms/windows)
 - Linux：[Linux](/platforms/linux)
 

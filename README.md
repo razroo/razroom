@@ -19,7 +19,7 @@
 </p>
 
 **MoltBot** is a _personal AI assistant_ you run on your own devices.
-It answers you on the channels you already use (WhatsApp, Telegram, Slack, Discord, Google Chat, Signal, iMessage, Microsoft Teams, WebChat), plus extension channels like BlueBubbles, Matrix, Zalo, and Zalo Personal. It can speak and listen on macOS/iOS/Android, and can render a live Canvas you control. The Gateway is just the control plane — the product is the assistant.
+It answers you on the channels you already use (WhatsApp, Telegram, Slack, Discord, Google Chat, Signal, iMessage, Microsoft Teams, WebChat), plus extension channels like BlueBubbles, Matrix, Zalo, and Zalo Personal. It can speak and listen on macOS, and can render a live Canvas you control. The Gateway is just the control plane — the product is the assistant.
 
 If you want a personal, single-user assistant that feels local, fast, and always-on, this is it.
 
@@ -121,12 +121,12 @@ Run `moltbot doctor` to surface risky/misconfigured DM policies.
 ## Highlights
 
 - **[Local-first Gateway](https://docs.moltbot.ai/gateway)** — single control plane for sessions, channels, tools, and events.
-- **[Multi-channel inbox](https://docs.moltbot.ai/channels)** — WhatsApp, Telegram, Slack, Discord, Google Chat, Signal, BlueBubbles (iMessage), iMessage (legacy), Microsoft Teams, Matrix, Zalo, Zalo Personal, WebChat, macOS, iOS/Android.
+- **[Multi-channel inbox](https://docs.moltbot.ai/channels)** — WhatsApp, Telegram, Slack, Discord, Google Chat, Signal, BlueBubbles (iMessage), iMessage (legacy), Microsoft Teams, Matrix, Zalo, Zalo Personal, WebChat, macOS.
 - **[Multi-agent routing](https://docs.moltbot.ai/gateway/configuration)** — route inbound channels/accounts/peers to isolated agents (workspaces + per-agent sessions).
-- **[Voice Wake](https://docs.moltbot.ai/nodes/voicewake) + [Talk Mode](https://docs.moltbot.ai/nodes/talk)** — always-on speech for macOS/iOS/Android with ElevenLabs.
+- **[Voice Wake](https://docs.moltbot.ai/nodes/voicewake) + [Talk Mode](https://docs.moltbot.ai/nodes/talk)** — always-on speech for macOS with ElevenLabs.
 - **[Live Canvas](https://docs.moltbot.ai/platforms/mac/canvas)** — agent-driven visual workspace with [A2UI](https://docs.moltbot.ai/platforms/mac/canvas#canvas-a2ui).
 - **[First-class tools](https://docs.moltbot.ai/tools)** — browser, canvas, nodes, cron, sessions, and Discord/Slack actions.
-- **[Companion apps](https://docs.moltbot.ai/platforms/macos)** — macOS menu bar app + iOS/Android [nodes](https://docs.moltbot.ai/nodes).
+- **[Companion apps](https://docs.moltbot.ai/platforms/macos)** — macOS menu bar app.
 - **[Onboarding](https://docs.moltbot.ai/start/wizard) + [skills](https://docs.moltbot.ai/tools/skills)** — wizard-driven setup with bundled/managed/workspace skills.
 
 ## Star History
@@ -151,8 +151,6 @@ Run `moltbot doctor` to surface risky/misconfigured DM policies.
 ### Apps + nodes
 
 - [macOS app](https://docs.moltbot.ai/platforms/macos): menu bar control plane, [Voice Wake](https://docs.moltbot.ai/nodes/voicewake)/PTT, [Talk Mode](https://docs.moltbot.ai/nodes/talk) overlay, [WebChat](https://docs.moltbot.ai/web/webchat), debug tools, [remote gateway](https://docs.moltbot.ai/gateway/remote) control.
-- [iOS node](https://docs.moltbot.ai/platforms/ios): [Canvas](https://docs.moltbot.ai/platforms/mac/canvas), [Voice Wake](https://docs.moltbot.ai/nodes/voicewake), [Talk Mode](https://docs.moltbot.ai/nodes/talk), camera, screen recording, Bonjour pairing.
-- [Android node](https://docs.moltbot.ai/platforms/android): [Canvas](https://docs.moltbot.ai/platforms/mac/canvas), [Talk Mode](https://docs.moltbot.ai/nodes/talk), camera, screen recording, optional SMS.
 - [macOS node mode](https://docs.moltbot.ai/nodes): system.run/notify + canvas/camera exposure.
 
 ### Tools + automation
@@ -192,8 +190,7 @@ WhatsApp / Telegram / Slack / Discord / Google Chat / Signal / iMessage / BlueBu
                ├─ Pi agent (RPC)
                ├─ CLI (moltbot …)
                ├─ WebChat UI
-               ├─ macOS app
-               └─ iOS / Android nodes
+               └─ macOS app
 ```
 
 ## Key subsystems
@@ -224,7 +221,7 @@ Details: [Tailscale guide](https://docs.moltbot.ai/gateway/tailscale) · [Web su
 
 ## Remote Gateway (Linux is great)
 
-It’s perfectly fine to run the Gateway on a small Linux instance. Clients (macOS app, CLI, WebChat) can connect over **Tailscale Serve/Funnel** or **SSH tunnels**, and you can still pair device nodes (macOS/iOS/Android) to execute device‑local actions when needed.
+It's perfectly fine to run the Gateway on a small Linux instance. Clients (macOS app, CLI, WebChat) can connect over **Tailscale Serve/Funnel** or **SSH tunnels**, and you can still pair device nodes (macOS) to execute device‑local actions when needed.
 
 - **Gateway host** runs the exec tool and channel connections by default.
 - **Device nodes** run device‑local actions (`system.run`, camera, screen recording, notifications) via `node.invoke`.
@@ -290,19 +287,6 @@ If you plan to build/run companion apps, follow the platform runbooks below.
 
 Note: signed builds required for macOS permissions to stick across rebuilds (see `docs/mac/permissions.md`).
 
-### iOS node (optional)
-
-- Pairs as a node via the Bridge.
-- Voice trigger forwarding + Canvas surface.
-- Controlled via `moltbot nodes …`.
-
-Runbook: [iOS connect](https://docs.moltbot.ai/platforms/ios).
-
-### Android node (optional)
-
-- Pairs via the same Bridge + pairing flow as iOS.
-- Exposes Canvas, Camera, and Screen capture commands.
-- Runbook: [Android connect](https://docs.moltbot.ai/platforms/android).
 
 ## Agent workspace + skills
 
@@ -421,7 +405,7 @@ Use these when you’re past the onboarding flow and want the deeper reference.
 - [Wire external triggers via the webhook surface.](https://docs.moltbot.ai/automation/webhook)
 - [Set up Gmail Pub/Sub triggers.](https://docs.moltbot.ai/automation/gmail-pubsub)
 - [Learn the macOS menu bar companion details.](https://docs.moltbot.ai/platforms/mac/menu-bar)
-- [Platform guides: Windows (WSL2)](https://docs.moltbot.ai/platforms/windows), [Linux](https://docs.moltbot.ai/platforms/linux), [macOS](https://docs.moltbot.ai/platforms/macos), [iOS](https://docs.moltbot.ai/platforms/ios), [Android](https://docs.moltbot.ai/platforms/android)
+- [Platform guides: Windows (WSL2)](https://docs.moltbot.ai/platforms/windows), [Linux](https://docs.moltbot.ai/platforms/linux), [macOS](https://docs.moltbot.ai/platforms/macos)
 - [Debug common failures with the troubleshooting guide.](https://docs.moltbot.ai/channels/troubleshooting)
 - [Review security guidance before exposing anything.](https://docs.moltbot.ai/gateway/security)
 
@@ -466,8 +450,6 @@ Use these when you’re past the onboarding flow and want the deeper reference.
 - [macOS dev setup](https://docs.moltbot.ai/platforms/mac/dev-setup)
 - [macOS menu bar](https://docs.moltbot.ai/platforms/mac/menu-bar)
 - [macOS voice wake](https://docs.moltbot.ai/platforms/mac/voicewake)
-- [iOS node](https://docs.moltbot.ai/platforms/ios)
-- [Android node](https://docs.moltbot.ai/platforms/android)
 - [Windows (WSL2)](https://docs.moltbot.ai/platforms/windows)
 - [Linux app](https://docs.moltbot.ai/platforms/linux)
 

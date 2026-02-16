@@ -52,7 +52,7 @@ export type AgentCommandOpts = {
   replyAccountId?: string;
   /** Override delivery thread/topic id (separate from session routing). */
   threadId?: string | number;
-  /** Message channel context (webchat|voicewake|whatsapp|...). */
+  /** Message channel context (webchat|whatsapp|telegram|...). */
   messageChannel?: string;
   channel?: string; // delivery channel (whatsapp|telegram|...)
   /** Account ID for multi-account channel routing (e.g., WhatsApp account). */

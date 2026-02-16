@@ -2,6 +2,12 @@
 
 Docs: https://docs.moltbot.ai
 
+## 2026.2.16
+
+### Removed
+
+- iOS and Android app support removed. The Gateway continues to support all messaging channels and node infrastructure for macOS, Linux, and Windows.
+
 ## 2026.2.15 (Unreleased)
 
 ### Changes

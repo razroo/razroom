@@ -177,13 +177,6 @@ Homebrew 安装的助手工具，用于列出/检查/监视本地 OpenAI Codex �
 上传到 Cloudflare R2/S3 并生成安全的预签名下载链接。非常适合远程 MoltBot 实例。
 </Card>
 
-<Card title="通过 Telegram 开发 iOS 应用" icon="mobile" href="#">
-  **@coard** • `ios` `xcode` `testflight`
-
-构建了一个完整的带有地图和语音录制功能的 iOS 应用，完全通过 Telegram 聊天部署到 TestFlight。
-
-  <img src="/assets/showcase/ios-testflight.jpg" alt="iOS app on TestFlight" />
-</Card>
 
 <Card title="Oura 戒指健康助手" icon="heart-pulse" href="#">
   **@AS** • `health` `oura` `calendar`

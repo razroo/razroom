@@ -81,7 +81,6 @@ export type GatewayRequestContext = {
     runtime: import("../../runtime.js").RuntimeEnv,
     prompter: import("../../wizard/prompts.js").WizardPrompter,
   ) => Promise<void>;
-  broadcastVoiceWakeChanged: (triggers: string[]) => void;
 };
 
 export type GatewayRequestOptions = {

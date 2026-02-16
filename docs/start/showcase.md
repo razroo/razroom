@@ -170,13 +170,6 @@ Automated UK school meal booking via ParentPay. Uses mouse coordinates for relia
 Upload to Cloudflare R2/S3 and generate secure presigned download links. Perfect for remote MoltBot instances.
 </Card>
 
-<Card title="iOS App via Telegram" icon="mobile" href="#">
-  **@coard** • `ios` `xcode` `testflight`
-
-Built a complete iOS app with maps and voice recording, deployed to TestFlight entirely via Telegram chat.
-
-  <img src="/assets/showcase/ios-testflight.jpg" alt="iOS app on TestFlight" />
-</Card>
 
 <Card title="Oura Ring Health Assistant" icon="heart-pulse" href="#">
   **@AS** • `health` `oura` `calendar`
