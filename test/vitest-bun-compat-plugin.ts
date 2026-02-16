@@ -10,17 +10,10 @@
 import type { Plugin } from "vite";
 
 /**
- * Match top-level `mock("..." ...` that look like module-mocking calls.
- * Only rewrite when the first argument is a string literal that looks
- * like a module specifier (contains "/" or starts with "node:").
+ * Match top-level `mock("..." ...` module-mocking calls.
+ * Keep this strict to column-0 calls so we don't rewrite local helper usage.
  */
-const MODULE_MOCK_RE = /^(mock\(["'](?:[^"']*\/[^"']*|node:[^"']+)["'])/gm;
-
-/**
- * Early-binding injection: ensures `mock` is available as `vi.fn` before
- * any imports, so `vi.hoisted(() => mock(...))` patterns work.
- */
-const MOCK_INJECTION = `const { mock: mock } = vi.hoisted(() => ({ mock: (...args) => vi.fn(...args) }));\n`;
+const MODULE_MOCK_RE = /^(mock\(["'][^"']+["'])/gm;
 
 export function bunTestCompatPlugin(): Plugin {
   return {
@@ -38,8 +31,9 @@ export function bunTestCompatPlugin(): Plugin {
       // Replace top-level module mocking: mock("path") → vi.mock("path")
       transformed = transformed.replace(MODULE_MOCK_RE, (match) => `vi.${match}`);
 
-      // Remove `mock` from the bun:test import (we inject it via vi.hoisted
-      // so it's available before imports — critical for vi.hoisted callbacks).
+      // Remove `mock` from the bun:test import and replace with
+      // a vitest import that defines `mock` properly.
+      let needsMockImport = false;
       transformed = transformed.replace(
         /import\s*\{([^}]*)\}\s*from\s*["']bun:test["']/g,
         (match, imports: string) => {
@@ -51,25 +45,31 @@ export function bunTestCompatPlugin(): Plugin {
             (p: string) => p !== "mock" && !p.startsWith("mock ") && !p.startsWith("mock,"),
           );
           const hadMock = withoutMock.length < parts.length;
+          if (hadMock) {
+            needsMockImport = true;
+          }
           if (!hadMock) {
             return match;
           }
           if (withoutMock.length === 0) {
-            // All imports were `mock`; keep the import for side effects
             return `import {} from "bun:test"`;
           }
           return `import { ${withoutMock.join(", ")} } from "bun:test"`;
         },
       );
 
-      // Inject the hoisted mock binding at the top of the file
-      if (code.includes("mock")) {
-        transformed = MOCK_INJECTION + transformed;
+      // Always import vi from vitest so it's available in mock factories
+      // and hoisted callbacks.
+      const viImport = `import { vi } from "vitest";\n`;
+
+      // Inject the hoisted mock binding using vi.hoisted + vi.fn.
+      if (needsMockImport) {
+        const injection = `const { mock: mock } = vi.hoisted(() => ({ mock: (...args) => vi.fn(...args) }));`;
+        transformed = viImport + injection + "\n" + transformed;
+      } else {
+        transformed = viImport + transformed;
       }
 
-      if (transformed === code) {
-        return null;
-      }
       return { code: transformed, map: null };
     },
   };

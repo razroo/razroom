@@ -215,7 +215,7 @@ describe("inbound dedupe", () => {
 
 describe("createInboundDebouncer", () => {
   it("debounces and combines items", async () => {
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     const calls: Array<string[]> = [];
 
     const debouncer = createInboundDebouncer<{ key: string; id: string }>({
@@ -226,14 +226,16 @@ describe("createInboundDebouncer", () => {
       },
     });
 
-    await debouncer.enqueue({ key: "a", id: "1" });
-    await debouncer.enqueue({ key: "a", id: "2" });
+    try {
+      await debouncer.enqueue({ key: "a", id: "1" });
+      await debouncer.enqueue({ key: "a", id: "2" });
 
-    expect(calls).toEqual([]);
-    await vi.advanceTimersByTimeAsync(10);
-    expect(calls).toEqual([["1", "2"]]);
-
-    // TODO: Restore real timers;
+      expect(calls).toEqual([]);
+      await vi.advanceTimersByTimeAsync(10);
+      expect(calls).toEqual([["1", "2"]]);
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it("flushes buffered items before non-debounced item", async () => {
@@ -315,7 +317,7 @@ describe("mention helpers", () => {
   });
 
   it("normalizes zero-width characters", () => {
-    expect(normalizeMentionText("open\u200bclaw")).toBe("razroom");
+    expect(normalizeMentionText("open\u200bclaw")).toBe("openclaw");
   });
 
   it("matches patterns case-insensitively", () => {

@@ -167,6 +167,7 @@ describe("pw-ai", () => {
     const p1 = createPage({ targetId: "T1", snapshotFull: "ONE" });
     const browser = createBrowser([p1.page]);
     const connect = spyOn(chromiumMock, "connectOverCDP");
+    connect.mockClear();
     connect.mockResolvedValue(browser);
 
     await snapshotAiViaPlaywright({

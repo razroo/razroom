@@ -28,7 +28,7 @@ describe("version resolution", () => {
       await fs.mkdir(path.join(root, "dist", "plugin-sdk"), { recursive: true });
       await fs.writeFile(
         path.join(root, "package.json"),
-        JSON.stringify({ name: "razroom", version: "1.2.3" }),
+        JSON.stringify({ name: "@razroo/razroom", version: "1.2.3" }),
         "utf-8",
       );
 
@@ -43,7 +43,7 @@ describe("version resolution", () => {
       await fs.mkdir(path.join(root, "dist", "plugin-sdk"), { recursive: true });
       await fs.writeFile(
         path.join(root, "package.json"),
-        JSON.stringify({ name: "razroom", version: "2.3.4" }),
+        JSON.stringify({ name: "@razroo/razroom", version: "2.3.4" }),
         "utf-8",
       );
       await fs.writeFile(

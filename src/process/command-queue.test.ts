@@ -134,7 +134,7 @@ describe("command queue", () => {
       await blocker;
     });
 
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     try {
       const drainPromise = waitForActiveTasks(5000);
 
@@ -147,7 +147,7 @@ describe("command queue", () => {
 
       await task;
     } finally {
-      // TODO: Restore real timers;
+      vi.useRealTimers();
     }
   });
 
@@ -161,7 +161,7 @@ describe("command queue", () => {
       await blocker;
     });
 
-    // TODO: Implement fake timers for Bun;
+    vi.useFakeTimers();
     try {
       const waitPromise = waitForActiveTasks(50);
       await vi.advanceTimersByTimeAsync(100);
@@ -171,7 +171,7 @@ describe("command queue", () => {
       resolve1();
       await task;
     } finally {
-      // TODO: Restore real timers;
+      vi.useRealTimers();
     }
   });
 
