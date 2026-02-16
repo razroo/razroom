@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  <strong>Your Command Center. Any Chat App.</strong>
+  <strong>Your Command Center. Any Chat App!</strong>
 </p>
 
 <p align="center">
@@ -286,7 +286,6 @@ If you plan to build/run companion apps, follow the platform runbooks below.
 - Remote gateway control over SSH.
 
 Note: signed builds required for macOS permissions to stick across rebuilds (see `docs/mac/permissions.md`).
-
 
 ## Agent workspace + skills
 
