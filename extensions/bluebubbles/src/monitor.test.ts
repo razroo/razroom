@@ -307,7 +307,7 @@ describe("BlueBubbles webhook monitor", () => {
   let unregister: () => void;
 
   beforeEach(() => {
-    // mock.restore() // TODO: Review mock cleanup;
+    vi.clearAllMocks();
     // Reset short ID state between tests for predictable behavior
     _resetBlueBubblesShortIdState();
     mockReadAllowFromStore.mockResolvedValue([]);
@@ -408,7 +408,7 @@ describe("BlueBubbles webhook monitor", () => {
     });
 
     it("returns 408 when request body times out (Slow-Loris protection)", async () => {
-      // TODO: Implement fake timers for Bun;
+      vi.useFakeTimers();
       try {
         const account = createMockAccount();
         const config: RazroomConfig = {};
@@ -445,7 +445,7 @@ describe("BlueBubbles webhook monitor", () => {
         expect(res.statusCode).toBe(408);
         expect(req.destroy).toHaveBeenCalled();
       } finally {
-        // TODO: Restore real timers;
+        vi.useRealTimers();
       }
     });
 
@@ -1586,7 +1586,7 @@ describe("BlueBubbles webhook monitor", () => {
 
   describe("inbound debouncing", () => {
     it("coalesces text-only then attachment webhook events by messageId", async () => {
-      // TODO: Implement fake timers for Bun;
+      vi.useFakeTimers();
       try {
         const account = createMockAccount({ dmPolicy: "open" });
         const config: RazroomConfig = {};
@@ -1718,7 +1718,7 @@ describe("BlueBubbles webhook monitor", () => {
         expect(callArgs.ctx.MediaPaths).toEqual(["/tmp/test-media.jpg"]);
         expect(callArgs.ctx.Body).toContain("hello");
       } finally {
-        // TODO: Restore real timers;
+        vi.useRealTimers();
       }
     });
   });
