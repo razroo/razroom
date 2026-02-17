@@ -272,49 +272,59 @@ describe("callGateway error details", () => {
   });
 
   it("includes connection details on timeout", async () => {
-    startMode = "silent";
-    loadConfig.mockReturnValue({
-      gateway: { mode: "local", bind: "loopback" },
-    });
-    resolveGatewayPort.mockReturnValue(18789);
-    pickPrimaryTailnetIPv4.mockReturnValue(undefined);
+    vi.useFakeTimers();
+    try {
+      startMode = "silent";
+      loadConfig.mockReturnValue({
+        gateway: { mode: "local", bind: "loopback" },
+      });
+      resolveGatewayPort.mockReturnValue(18789);
+      pickPrimaryTailnetIPv4.mockReturnValue(undefined);
 
-    // TODO: Implement fake timers for Bun;
-    let err: Error | null = null;
-    const promise = callGateway({ method: "health", timeoutMs: 5 }).catch((caught) => {
-      err = caught as Error;
-    });
+      let err: Error | null = null;
+      const promise = callGateway({ method: "health", timeoutMs: 5 }).catch((caught) => {
+        err = caught as Error;
+      });
 
-    await vi.advanceTimersByTimeAsync(5);
-    await promise;
+      await vi.advanceTimersByTimeAsync(5);
+      await promise;
 
-    expect(err?.message).toContain("gateway timeout after 5ms");
-    expect(err?.message).toContain("Gateway target: ws://127.0.0.1:18789");
-    expect(err?.message).toContain("Source: local loopback");
-    expect(err?.message).toContain("Bind: loopback");
+      expect(err?.message).toContain("gateway timeout after 5ms");
+      expect(err?.message).toContain("Gateway target: ws://127.0.0.1:18789");
+      expect(err?.message).toContain("Source: local loopback");
+      expect(err?.message).toContain("Bind: loopback");
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it("does not overflow very large timeout values", async () => {
-    startMode = "silent";
-    loadConfig.mockReturnValue({
-      gateway: { mode: "local", bind: "loopback" },
-    });
-    resolveGatewayPort.mockReturnValue(18789);
-    pickPrimaryTailnetIPv4.mockReturnValue(undefined);
+    vi.useFakeTimers();
+    try {
+      startMode = "silent";
+      loadConfig.mockReturnValue({
+        gateway: { mode: "local", bind: "loopback" },
+      });
+      resolveGatewayPort.mockReturnValue(18789);
+      pickPrimaryTailnetIPv4.mockReturnValue(undefined);
 
-    // TODO: Implement fake timers for Bun;
-    let err: Error | null = null;
-    const promise = callGateway({ method: "health", timeoutMs: 2_592_010_000 }).catch((caught) => {
-      err = caught as Error;
-    });
+      let err: Error | null = null;
+      const promise = callGateway({ method: "health", timeoutMs: 2_592_010_000 }).catch(
+        (caught) => {
+          err = caught as Error;
+        },
+      );
 
-    await vi.advanceTimersByTimeAsync(1);
-    expect(err).toBeNull();
+      await vi.advanceTimersByTimeAsync(1);
+      expect(err).toBeNull();
 
-    lastClientOptions?.onClose?.(1006, "");
-    await promise;
+      lastClientOptions?.onClose?.(1006, "");
+      await promise;
 
-    expect(err?.message).toContain("gateway closed (1006");
+      expect(err?.message).toContain("gateway closed (1006");
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it("fails fast when remote mode is missing remote url", async () => {

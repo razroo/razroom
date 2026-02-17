@@ -39,8 +39,8 @@ describe("gateway auth", () => {
       resolveGatewayAuth({
         authConfig: {},
         env: {
-          RAZROOM_GATEWAY_TOKEN: "legacy-token",
-          RAZROOM_GATEWAY_PASSWORD: "legacy-password",
+          RAZROOM_TOKEN: "legacy-token",
+          RAZROOM_PASSWORD: "legacy-password",
         } as NodeJS.ProcessEnv,
       }),
     ).toMatchObject({

@@ -48,7 +48,7 @@ const makeContext = (): GatewayRequestContext =>
 
 describe("gateway send mirroring", () => {
   beforeEach(() => {
-    // mock.restore() // TODO: Review mock cleanup;
+    vi.clearAllMocks();
   });
 
   it("accepts media-only sends without message", async () => {

@@ -44,8 +44,8 @@ describe("auth rate limiter", () => {
 
   // ---------- lockout expiry ----------
 
-  it("unblocks after the lockout period expires", () => {
-    // TODO: Implement fake timers for Bun;
+  it("unblocks after the lockout period expires", async () => {
+    vi.useFakeTimers();
     try {
       limiter = createAuthRateLimiter({ maxAttempts: 2, windowMs: 60_000, lockoutMs: 5_000 });
       limiter.recordFailure("10.0.0.3");
@@ -53,19 +53,19 @@ describe("auth rate limiter", () => {
       expect(limiter.check("10.0.0.3").allowed).toBe(false);
 
       // Advance just past the lockout.
-      // TODO: Advance timers(5_001);
+      await vi.advanceTimersByTimeAsync(5_001);
       const result = limiter.check("10.0.0.3");
       expect(result.allowed).toBe(true);
       expect(result.remaining).toBe(2);
     } finally {
-      // TODO: Restore real timers;
+      vi.useRealTimers();
     }
   });
 
   // ---------- sliding window expiry ----------
 
-  it("expires old failures outside the window", () => {
-    // TODO: Implement fake timers for Bun;
+  it("expires old failures outside the window", async () => {
+    vi.useFakeTimers();
     try {
       limiter = createAuthRateLimiter({ maxAttempts: 3, windowMs: 10_000, lockoutMs: 60_000 });
       limiter.recordFailure("10.0.0.4");
@@ -73,10 +73,10 @@ describe("auth rate limiter", () => {
       expect(limiter.check("10.0.0.4").remaining).toBe(1);
 
       // Move past the window so the two old failures expire.
-      // TODO: Advance timers(11_000);
+      await vi.advanceTimersByTimeAsync(11_000);
       expect(limiter.check("10.0.0.4").remaining).toBe(3);
     } finally {
-      // TODO: Restore real timers;
+      vi.useRealTimers();
     }
   });
 
@@ -153,18 +153,18 @@ describe("auth rate limiter", () => {
 
   // ---------- prune ----------
 
-  it("prune removes stale entries", () => {
-    // TODO: Implement fake timers for Bun;
+  it("prune removes stale entries", async () => {
+    vi.useFakeTimers();
     try {
       limiter = createAuthRateLimiter({ maxAttempts: 5, windowMs: 5_000, lockoutMs: 5_000 });
       limiter.recordFailure("10.0.0.30");
       expect(limiter.size()).toBe(1);
 
-      // TODO: Advance timers(6_000);
+      await vi.advanceTimersByTimeAsync(6_000);
       limiter.prune();
       expect(limiter.size()).toBe(0);
     } finally {
-      // TODO: Restore real timers;
+      vi.useRealTimers();
     }
   });
 

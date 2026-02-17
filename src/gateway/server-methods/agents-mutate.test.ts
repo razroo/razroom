@@ -140,7 +140,7 @@ beforeEach(() => {
 
 describe("agents.create", () => {
   beforeEach(() => {
-    // mock.restore() // TODO: Review mock cleanup;
+    vi.clearAllMocks();
     mocks.loadConfigReturn = {};
     mocks.findAgentEntryIndex.mockReturnValue(-1);
     mocks.applyAgentConfig.mockImplementation((_cfg, _opts) => ({}));
@@ -263,7 +263,7 @@ describe("agents.create", () => {
 
 describe("agents.update", () => {
   beforeEach(() => {
-    // mock.restore() // TODO: Review mock cleanup;
+    vi.clearAllMocks();
     mocks.loadConfigReturn = {};
     mocks.findAgentEntryIndex.mockReturnValue(0);
     mocks.applyAgentConfig.mockImplementation((_cfg, _opts) => ({}));
@@ -319,7 +319,7 @@ describe("agents.update", () => {
 
 describe("agents.delete", () => {
   beforeEach(() => {
-    // mock.restore() // TODO: Review mock cleanup;
+    vi.clearAllMocks();
     mocks.loadConfigReturn = {};
     mocks.findAgentEntryIndex.mockReturnValue(0);
     mocks.pruneAgentConfig.mockReturnValue({ config: {}, removedBindings: 2 });

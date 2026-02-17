@@ -75,6 +75,9 @@ function normalizePlatformId(platform?: string, deviceFamily?: string): string {
   if (raw.startsWith("darwin")) {
     return "macos";
   }
+  if (raw.startsWith("ios")) {
+    return "macos";
+  }
   if (raw.startsWith("win")) {
     return "windows";
   }
@@ -83,6 +86,9 @@ function normalizePlatformId(platform?: string, deviceFamily?: string): string {
   }
   const family = (deviceFamily ?? "").trim().toLowerCase();
   if (family.includes("mac")) {
+    return "macos";
+  }
+  if (family.includes("iphone") || family.includes("ipad") || family.includes("ipod")) {
     return "macos";
   }
   if (family.includes("windows")) {
