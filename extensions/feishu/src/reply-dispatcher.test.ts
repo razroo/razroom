@@ -39,7 +39,7 @@ import { createFeishuReplyDispatcher } from "./reply-dispatcher.js";
 
 describe("createFeishuReplyDispatcher streaming behavior", () => {
   beforeEach(() => {
-    // mock.restore() // TODO: Review mock cleanup;
+    vi.clearAllMocks();
     streamingInstances.length = 0;
 
     resolveFeishuAccountMock.mockReturnValue({

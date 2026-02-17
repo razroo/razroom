@@ -18,7 +18,7 @@ describe("downloadMatrixMedia", () => {
   } as unknown as PluginRuntime;
 
   beforeEach(() => {
-    // mock.restore() // TODO: Review mock cleanup;
+    vi.clearAllMocks();
     setMatrixRuntime(runtimeStub);
   });
 

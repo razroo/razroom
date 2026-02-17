@@ -31,7 +31,7 @@ function fakeApi(overrides: any = {}) {
 
 describe("llm-task tool (json-only)", () => {
   beforeEach(() => {
-    // mock.restore() // TODO: Review mock cleanup
+    vi.clearAllMocks();
   });
 
   it("returns parsed json", async () => {

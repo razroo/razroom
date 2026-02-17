@@ -35,7 +35,7 @@ import { sendMediaFeishu } from "./media.js";
 
 describe("sendMediaFeishu msg_type routing", () => {
   beforeEach(() => {
-    // mock.restore() // TODO: Review mock cleanup;
+    vi.clearAllMocks();
 
     resolveFeishuAccountMock.mockReturnValue({
       configured: true,

@@ -102,7 +102,7 @@ describe("TwitchClientManager", () => {
 
   beforeEach(async () => {
     // Clear all mocks first
-    // mock.restore() // TODO: Review mock cleanup;
+    vi.clearAllMocks();
 
     // Clear handler arrays
     messageHandlers.length = 0;

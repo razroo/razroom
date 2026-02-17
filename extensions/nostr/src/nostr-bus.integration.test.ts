@@ -140,52 +140,56 @@ describe("SeenTracker", () => {
 
   describe("TTL expiration", () => {
     it("expires entries after TTL", async () => {
-      // TODO: Implement fake timers for Bun;
+      vi.useFakeTimers();
+      try {
+        const tracker = createSeenTracker({
+          maxEntries: 100,
+          ttlMs: 100,
+          pruneIntervalMs: 50,
+        });
 
-      const tracker = createSeenTracker({
-        maxEntries: 100,
-        ttlMs: 100,
-        pruneIntervalMs: 50,
-      });
+        tracker.add("id1");
+        expect(tracker.peek("id1")).toBe(true);
 
-      tracker.add("id1");
-      expect(tracker.peek("id1")).toBe(true);
+        // Advance past TTL
+        await vi.advanceTimersByTimeAsync(150);
 
-      // Advance past TTL
-      // TODO: Advance timers(150);
+        // Entry should be expired
+        expect(tracker.peek("id1")).toBe(false);
 
-      // Entry should be expired
-      expect(tracker.peek("id1")).toBe(false);
-
-      tracker.stop();
-      // TODO: Restore real timers;
+        tracker.stop();
+      } finally {
+        vi.useRealTimers();
+      }
     });
 
     it("has() refreshes TTL", async () => {
-      // TODO: Implement fake timers for Bun;
+      vi.useFakeTimers();
+      try {
+        const tracker = createSeenTracker({
+          maxEntries: 100,
+          ttlMs: 100,
+          pruneIntervalMs: 50,
+        });
 
-      const tracker = createSeenTracker({
-        maxEntries: 100,
-        ttlMs: 100,
-        pruneIntervalMs: 50,
-      });
+        tracker.add("id1");
 
-      tracker.add("id1");
+        // Advance halfway
+        await vi.advanceTimersByTimeAsync(50);
 
-      // Advance halfway
-      // TODO: Advance timers(50);
+        // Access to refresh
+        expect(tracker.has("id1")).toBe(true);
 
-      // Access to refresh
-      expect(tracker.has("id1")).toBe(true);
+        // Advance another 75ms (total 125ms from add, but only 75ms from last access)
+        await vi.advanceTimersByTimeAsync(75);
 
-      // Advance another 75ms (total 125ms from add, but only 75ms from last access)
-      // TODO: Advance timers(75);
+        // Should still be valid (refreshed at 50ms)
+        expect(tracker.peek("id1")).toBe(true);
 
-      // Should still be valid (refreshed at 50ms)
-      expect(tracker.peek("id1")).toBe(true);
-
-      tracker.stop();
-      // TODO: Restore real timers;
+        tracker.stop();
+      } finally {
+        vi.useRealTimers();
+      }
     });
   });
 });

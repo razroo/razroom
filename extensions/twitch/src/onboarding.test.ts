@@ -37,7 +37,7 @@ const mockAccount: TwitchAccountConfig = {
 
 describe("onboarding helpers", () => {
   beforeEach(() => {
-    // mock.restore() // TODO: Review mock cleanup;
+    vi.clearAllMocks();
   });
 
   afterEach(() => {

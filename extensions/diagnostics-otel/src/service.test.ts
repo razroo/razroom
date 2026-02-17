@@ -109,16 +109,9 @@ import { createDiagnosticsOtelService } from "./service.js";
 
 describe("diagnostics-otel service", () => {
   beforeEach(() => {
+    vi.clearAllMocks();
     telemetryState.counters.clear();
     telemetryState.histograms.clear();
-    telemetryState.tracer.startSpan.mockClear();
-    telemetryState.meter.createCounter.mockClear();
-    telemetryState.meter.createHistogram.mockClear();
-    sdkStart.mockClear();
-    sdkShutdown.mockClear();
-    logEmit.mockClear();
-    logShutdown.mockClear();
-    registerLogTransportMock.mockReset();
   });
 
   test("records message-flow metrics and spans", async () => {

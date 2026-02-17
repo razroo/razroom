@@ -37,7 +37,7 @@ describe("handleFeishuMessage command authorization", () => {
   const mockBuildPairingReply = mock(() => "Pairing response");
 
   beforeEach(() => {
-    // mock.restore() // TODO: Review mock cleanup;
+    vi.clearAllMocks();
     setFeishuRuntime({
       system: {
         enqueueSystemEvent: mock(),
